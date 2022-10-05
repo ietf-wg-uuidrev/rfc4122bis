@@ -2,7 +2,7 @@
 v: 3
 docname: draft-ietf-uuidrev-rfc4122bis-00
 cat: std
-replaces: '4122'
+obsoletes: '4122'
 consensus: 'true'
 submissiontype: IETF
 pi:
@@ -65,8 +65,8 @@ normative:
     date: 2004
   ref-4: RFC1321
   ref-5: RFC4086
-  ref-6: RFC2141
-  ref-7: RFC2234
+  ref-6: RFC8141
+  ref-7: RFC4234
   ref-8:
     target: http://www.itl.nist.gov/fipspubs/fip180-1.htm
     title: Secure Hash Standard
@@ -307,13 +307,13 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 
 
-1. Many of the implementation details specified in {{RFC4122}} involve trade
+1. Many of the implementation details specified in RFC4122 involved trade
   offs that are neither possible to specify for all applications nor
   necessary to produce interoperable implementations.
 
 
 
-1.  {{RFC4122}} does not distinguish between the requirements for generation
+1.  RFC4122 did not distinguish between the requirements for generation
   of a UUID versus an application which simply stores one, which are often
   different.
 
@@ -365,7 +365,7 @@ The following abbreviations are used in this document:
 
 {: indent="14"}
 UUID
-: Universally Unique Identifier {{RFC4122}}
+: Universally Unique Identifier
 
 CSPRNG
 : Cryptographically Secure Pseudo-Random Number Generator
@@ -386,15 +386,57 @@ draft-00
 
 {: spacing="compact"}
 - Merge RFC4122 with draft-peabody-dispatch-new-uuid-format-04.md
+- Change: Reference RFC1321 to RFC6151
+- Change: Reference RFC2141 to RFC8141
+- Change: Reference RFC2234 to RFC4234
+- Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
+- Change: Trimmed down the ABNF representation
+- Errata: Bad Reference to RFC1750 \| 3641 #4
+- Errata: Change MD5 website to example.com \| 3476 #6 (Also Fixes Errata: Fix uuid_create_md5_from_name() \| 1352 #2)
+- Errata: Typo in code comment \| 6665 #11
+- Errata: Fix BAD OID acronym \| 6225 #9
+- Errata: Incorrect Parenthesis usage Section 4.3 \| 184 #5
+- Errata: Lexicographically Sorting Paragraph Fix \| 1428 #3
+- Errata: Fix 4.1.3 reference to the correct bits \| 1957 #13
+- Errata: Fix reference to variant in octet 8 \| 4975
+- Errata: Further clarify 3rd/last bit of Variant for spec \| 5560 #8
+- Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120
+- Draft 05: MUST veribage in Reliability of 6.1 #121
+- New: Further Clarity of exact octet and bit of var/ver in this spec
+- New: Block diagram and bit layout for UUIDv4
 
 # UUID Format {#format}
 
-The UUID format is 16 octets; the variant bits in conjunction with the version
-bits described in the next section in determine finer structure.
+The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
+bits described in the next sections in determine finer structure.
 
-## Structure {#structure}
 
-TODO: Discuss hex and dashes format.
+When in use with URNs or applications, any given 128 bit UUID MAY be represented by the "hex-and-dash" string format consisting of multiple
+groups of upper or lowercase alphanumeric hex characters seperated by a single dash/hyphen.
+When used with Datbases please refer to {{database_considerations}}
+
+The formal definition of the UUID string representation is provided by the following ABNF {{ref-7}}.
+
+~~~~ abnf
+   UUID                   = 4hexOctet "-"
+                            2hexOctet "-"
+                            2hexOctet "-"
+                            2hexOctet "-"
+   					   6hexOctet
+   hexOctet               = hexDigit hexDigit
+   hexDigit =
+         "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
+         "a" / "b" / "c" / "d" / "e" / "f" /
+         "A" / "B" / "C" / "D" / "E" / "F"
+~~~~		
+
+An example UUID using this textual representation from the previous table observed in {{sampleUUID}}.
+Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixe case as per {{ref-7, Section 2.3}}
+
+~~~~
+f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+~~~~
+{: #sampleUUID title='Example UUID'}
 
 ## Variant Field {#variant_field}
 
@@ -409,23 +451,25 @@ the most significant bits of octet 8 of the UUID.
 the letter "x" indicates a "don't-care" value.
 
 | Msb0 | Msb1 | Msb2 | Description                                            |
-| :--: | :--: | :--: | -----------------------------------------------------  |
 |    0 |    x | x    | Reserved, NCS backward compatibility.                  |
 |    1 |    0 | x    | The variant specified in this document.                |
 |    1 |    1 | 0    | Reserved, Microsoft Corporation backward compatibility |
 |    1 |    1 | 1    | Reserved for future definition.                        |
-{: #table1}
+{: #table1 title='UUID Variants'}
 
 Interoperability, in any form, with variants other than the one
 defined here is not guaranteed, and is not likely to be an issue in
 practice.
 
-## Version Field {#version_field}
-The version number is in the most significant 4 bits of the time
-stamp (bits 4 through 7 of the time_hi_and_version field).
+Specifically for UUIDs in this document bits 64 and 65 of octet 8 MUST be set to 1 and 0 as per row 2 of {{table1}}.
+As such all bit and feild layouts will detail a 2 bit variant entry as guidance.
 
-{{table3}} lists the currently-defined versions for this
-UUID variant.
+## Version Field {#version_field}
+The version number is in the most significant 4 bits of octet 6.
+More specifically bits 48 through 51. The remaining 4 bits of Octet 6 vary by layout.
+
+{{table2}} lists all of the versions for this
+UUID variant specified in this document.
 
   | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
   |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
@@ -444,11 +488,9 @@ UUID variant.
   |    1 |    1 |    0 |    1 |      13 | Reserved for future definition.                                               |
   |    1 |    1 |    1 |    0 |      14 | Reserved for future definition.                                               |
   |    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
-{: title='UUID variant 10xx (8/9/A/B) versions defined by this specification'}
+{: #table2 title='UUID variant 10xx (8/9/A/B) versions defined by this specification'}
 
-For UUID version 6, 7 and 8 the variant field placement from {{RFC4122}} are unchanged.
-An example version/variant layout for UUIDv6 follows the table where M is
-the version and N is the variant.
+An example version/variant layout for UUIDv6 follows the table where
 
 ~~~~
 00000000-0000-6000-8000-000000000000
@@ -459,78 +501,86 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 ~~~~
 {: title='UUIDv6 Variant Examples'}
 
-# UUID Layout {#layout}
+# UUID Layouts {#layout}
 
-To minimize confusion about bit assignments within octets, the UUID
-record definition is defined only in terms of fields that are
+To minimize confusion about bit assignments within octets and among differing versions,
+the UUID record definition is defined only in terms of fields that are
 integral numbers of octets.  The fields are presented with the most
 significant one first.
 
 In the absence of explicit application or presentation protocol
-specification to the contrary, a UUID is encoded as a 128-bit object,
-as follows:
+specification to the contrary, each field is encoded with the Most
+Significant Byte first (known as network byte order).
 
-The fields are encoded as 16 octets, with the sizes and order of the
-fields defined above, and with each field encoded with the Most
-Significant Byte first (known as network byte order).  Note that the
-field names, particularly for multiplexed fields, follow historical
+Note that in some instances the field names, particularly for multiplexed fields, follow historical
 practice.
 
 ## UUID Version 1 {#uuidv1}
-TODO sect-4.2.2
-TODO replace table with similar layout of v6
-TODO concat timestamp, clock seq, and node into aformentioned table items
-~~~~
-0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                          time_low                             |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|       time_mid                |         time_hi_and_version   |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                         node (2-5)                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-~~~~
-
-| Field                     | Data Type               | Octet # | "  Note                                                             |
-|---------------------------|-------------------------|---------|---------------------------------------------------------------------|
-| time_low                  | unsigned 32 bit integer |     0-3 | The low field of the timestamp                                      |
-| time_mid                  | unsigned 16 bit integer |     4-5 | The middle field of the timestamp                                   |
-| time_hi_and_version       | unsigned 16 bit integer |     6-7 | The high field of the timestamp multiplexed with the version number |
-| clock_seq_hi_and_reserved | unsigned 8 bit integer  |       8 | The high field of the  clock sequence multiplexed with the variant  |
-| clock_seq_low             | unsigned 8 bit integer  |       9 | The low field of the clock sequence                                 |
-| node                      | unsigned 48 bit integer |   10-15 | The spatially unique node identifier                                |
-{: #table2}
-
-### Timestamp
-{: id="sect-4.1.4"}
-
-The timestamp is a 60-bit value.  For UUID version 1, this is
+UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
 represented by Coordinated Universal Time (UTC) as a count of 100-
 nanosecond intervals since 00:00:00.00, 15 October 1582 (the date of
 Gregorian reform to the Christian calendar).
+
+UUID Version 1 also features clock sequence feild which is used to help avoid
+duplicates that could arise when the clock is set backwards in time
+or if the node ID changes.
+
+Finally the node field consists of an IEEE 802 MAC
+address, usually the host address.  For systems with multiple IEEE
+802 addresses, any available one can be used.  The lowest addressed
+octet (octet number 10) contains the global/local bit and the
+unicast/multicast bit, and is the first octet of the address
+transmitted on an 802.3 LAN.
+
+~~~~
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                          time_low                             |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |       time_mid                |         time_hi_and_version   |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                         node (2-5)                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+~~~~
+{: title='UUIDv1 Field and Bit Layout'}
+
+{: vspace='0'}
+
+time_low:
+: The least significant 32 bits of the 60 bit starting timestamp.
+  Occupies bits 0 through 31 (octets 0-3)
+
+time_mid:
+: The middle 16 bits of the 60 bit starting timestamp.
+  Occupies bits 32 through 47 (octets 4-5)
+
+time_hi_and_version:
+: The first four most significant bits MUST contain
+  the UUIDv1 version (0001) while the remaining 12 bits will contain
+  the most significant 12 bits from the 60 bit starting timestamp.
+  Occupies bits 48 through 63 (octets 6-7)
+
+clock_seq_hi_and_res:
+: The first two bits MUST be set to the UUID variant (10)
+  The remaining 6 bits contain the high portion of the clock sequence.
+  Occupies bits 64 through 71 (octet 8) for a full 8 bits.
+
+clock_seq_low:
+: The 8 bit low portion of the clock sequence.
+  Occupies bits 72 through 79 (octet 9)
+
+node:
+: 48 bit spatially unique identifier
+  Occupies bits 80 through 127 (octets 10-15)
 
 For systems that do not have UTC available, but do have the local
 time, they may use that instead of UTC, as long as they do so
 consistently throughout the system.  However, this is not recommended
 since generating the UTC from local time only needs a time zone
 offset.
-
-For UUID version 3 or 5, the timestamp is a 60-bit value constructed
-from a name as described in {{sect-4.3}}.
-
-For UUID version 4, the timestamp is a randomly or pseudo-randomly
-generated 60-bit value, as described in {{sect-4.4}}.
-
-
-### Clock Sequence
-{: id="sect-4.1.5"}
-
-For UUID version 1, the clock sequence is used to help avoid
-duplicates that could arise when the clock is set backwards in time
-or if the node ID changes.
 
 If the clock is set backwards, or might have been set backwards
 (e.g., while the system was powered off), and the UUID generator can
@@ -553,47 +603,35 @@ across systems.  This provides maximum protection against node
 identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
-For UUID version 3 or 5, the clock sequence is a 14-bit value
-constructed from a name as described in {{sect-4.3}}.
-
-For UUID version 4, clock sequence is a randomly or pseudo-randomly
-generated 14-bit value as described in {{sect-4.4}}.
-
-
-### Node
-{: id="sect-4.1.6"}
-
-For UUID version 1, the node field consists of an IEEE 802 MAC
-address, usually the host address.  For systems with multiple IEEE
-802 addresses, any available one can be used.  The lowest addressed
-octet (octet number 10) contains the global/local bit and the
-unicast/multicast bit, and is the first octet of the address
-transmitted on an 802.3 LAN.
-
 For systems with no IEEE address, a randomly or pseudo-randomly
-generated value may be used; see {{sect-4.5}}.  The multicast bit must
+generated value may be used; see {{unguessability}}.  The multicast bit must
 be set in such addresses, in order that they will never conflict with
 addresses obtained from network cards.
-
-For UUID version 3 or 5, the node field is a 48-bit value constructed
-from a name as described in {{sect-4.3}}.
-
-For UUID version 4, the node field is a randomly or pseudo-randomly
-generated 48-bit value as described in {{sect-4.4}}.
 
 ## UUID Version 2 {#uuidv2}
 TODO: Block Diagram and text
 
 ## UUID Version 3 {#uuidv3}
 TODO: Block Diagram
+
 TODO: split version 5 out
+
 TODO: create 'Name-based UUID" best practice section with "nice to know" items for both
+
+For UUID version 3 or 5, the timestamp is a 60-bit value constructed
+from a name.
+
+For UUID version 3 or 5, the clock sequence is a 14-bit value
+constructed from a name.
+
+For UUID version 3 or 5, the node field is a 48-bit value constructed
+from a name.
 
 The version 3 or 5 UUID is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space".  The
 concept of name and name space should be broadly construed, and not
 limited to textual names.  For example, some name spaces are the
-domain name system, URLs, ISO Object IDs (OIDs), X.500 Distinguished
+domain name system, URLs, Object Identifiers (OIDs), X.500 Distinguished
 Names (DNs), and reserved words in a programming language.  The
 mechanisms or conventions used for allocating names and ensuring
 their uniqueness within their name spaces are beyond the scope of
@@ -608,7 +646,7 @@ The requirements for these types of UUIDs are as follows:
   should be different (with very high probability).
 
 * The UUIDs generated from the same name in two different namespaces
-  should be different with (very high probability).
+  should be different (with very high probability).
 
 * If two UUIDs that were generated from names are equal, then they
   were generated from the same name in the same namespace (with very
@@ -642,7 +680,7 @@ as follows:
 
 * Set the four most significant bits (bits 12 through 15) of the
   time_hi_and_version field to the appropriate 4-bit version number
-  from {{sect-4.1.3}}.
+  from {{version_field}}.
 
 * Set the clock_seq_hi_and_reserved field to octet 8 of the hash.
 
@@ -657,22 +695,42 @@ as follows:
 * Convert the resulting UUID to local byte order.
 
 ## UUID Version 4 {#uuidv4}
-TODO: block Diagram
-
 The version 4 UUID is meant for generating UUIDs from truly-random or
 pseudo-random numbers.
 
-The algorithm is as follows:
+~~~~
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           random_a                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          random_a             |  ver  |       random_b        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                       random_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           random_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+~~~~
+{: title='UUIDv8 Field and Bit Layout'}
 
-* Set the two most significant bits (bits 6 and 7) of the
-  clock_seq_hi_and_reserved to zero and one, respectively.
+{: vspace='0'}
 
-* Set the four most significant bits (bits 12 through 15) of the
-  time_hi_and_version field to the 4-bit version number from {{sect-4.1.3}}.
+random_a:
+: The first 48 bits of the layout that can be filled with random data as per {{unguessability}}
+  fit.
 
-* Set all the other bits to randomly (or pseudo-randomly) chosen
-  values.
+ver:
+: The 4 bit version field as defined by {{version_field}}
 
+random_b:
+: 12 more bits of the layout that can be filled random data as per {{unguessability}}
+
+var:
+: The 2 bit variant field as defined by {{variant_field}}.
+
+random_c:
+: The final 62 bits of the layout immediatly following the var field to be
+  filled with random data as per {{unguessability}}
 
 ## UUID Version 5 {#uuidv5}
 TODO block diagram and text
@@ -688,17 +746,17 @@ Systems that do not involve legacy UUIDv1 SHOULD consider using UUIDv7 instead.
 Instead of splitting the timestamp into the low, mid and high sections from
 UUIDv1, UUIDv6 changes this sequence so timestamp bytes are stored from most
 to least significant.
-That is, given a 60 bit timestamp value as specified for UUIDv1 in {{RFC4122}}{: section="4.1.4" sectionFormat="comma"},
+That is, given a 60 bit timestamp value as specified for UUIDv1 in {{uuidv1}},
 for UUIDv6, the first 48 most significant bits are stored
 first, followed by the 4 bit version (same position), followed by the remaining
 12 bits of the original 60 bit timestamp.
 
-The clock sequence bits remain unchanged from their usage and position in {{RFC4122}}{: section="4.1.5" sectionFormat="comma"}.
+The clock sequence bits remain unchanged from their usage and position in {{uuidv1}}.
 
 The 48 bit node SHOULD be set to a pseudo-random value however implementations
-MAY choose to retain the old MAC address behavior from {{RFC4122}}{: section="4.1.6" sectionFormat="comma"} and {{RFC4122}}{: section="4.5" sectionFormat="comma"}. For more information on MAC address usage within UUIDs see the {{Security}}
+MAY choose to retain the old MAC address behavior from {{uuidv1}} and {{unidentifiable}}. For more information on MAC address usage within UUIDs see the {{Security}}
 
-The format for the 16-byte, 128 bit UUIDv6 is shown in Figure 1
+The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
 
 ~~~~
@@ -714,7 +772,7 @@ The format for the 16-byte, 128 bit UUIDv6 is shown in Figure 1
     |                         node (2-5)                            |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
-{: title='UUIDv6 Field and Bit Layout'}
+{: id='v6layout' title='UUIDv6 Field and Bit Layout'}
 
 {: vspace='0'}
 
@@ -735,7 +793,7 @@ time_low_and_version:
 clk_seq_hi_res:
 : The first two bits MUST be set to the UUID variant (10)
   The remaining 6 bits contain the high portion of the clock sequence.
-  Occupies bits 64 through 71 (octet 8)
+  Occupies bits 64 through 71 (octet 8) for a full 8 bits.
 
 clock_seq_low:
 : The 8 bit low portion of the clock sequence.
@@ -786,13 +844,13 @@ unix_ts_ms:
 : 48 bit big-endian unsigned number of Unix epoch timestamp as per {{timestamp_granularity}}.
 
 ver:
-: 4 bit UUIDv7 version set as per {{variant_and_version_fields}}
+: 4 bit UUIDv7 version set as per {{version_field}}
 
 rand_a:
 : 12 bits pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
 
 var:
-: The 2 bit variant defined by {{variant_and_version_fields}}.
+: The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
 : The final 62 bits of pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
@@ -803,7 +861,7 @@ rand_b:
 UUID version 8 provides an RFC-compatible format for experimental or vendor-specific
 use cases.
 The only requirement is that the variant and version bits MUST be set as
-defined in {{variant_and_version_fields}}.
+defined in {{variant_field}} and {{version_field}}.
 UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed.
 
 The only explicitly defined bits are the Version and Variant leaving 122
@@ -822,8 +880,6 @@ Some example situations in which UUIDv8 usage could occur:
 
 * An implementation has other application/language restrictions which
   inhibit the use of one of the current UUIDs.
-
-
 
 
 ~~~~
@@ -848,13 +904,13 @@ custom_a:
   fit.
 
 ver:
-: The 4 bit version field as defined by {{variant_and_version_fields}}
+: The 4 bit version field as defined by {{version_field}}
 
 custom_b:
 : 12 more bits of the layout that can be filled as an implementation sees fit.
 
 var:
-: The 2 bit variant field as defined by {{variant_and_version_fields}}.
+: The 2 bit variant field as defined by {{variant_field}}.
 
 custom_c:
 : The final 62 bits of the layout immediatly following the var field to be
@@ -873,7 +929,7 @@ The nil UUID is special form of UUID that is specified to have all
 
 The Max UUID is special form of UUID that is specified to have all 128 bits
 set to 1. This UUID can be thought of as the inverse of Nil UUID defined
-in {{RFC4122}}{: section="4.1.7" sectionFormat="comma"}
+in {{nilluuid}}.
 
 
 ~~~~
@@ -943,7 +999,7 @@ Reliability:
   requirements.
   For example, if it is possible for the system clock to move backward due
   to either manual adjustment or corrections from a time synchronization protocol,
-  implementations must decide how to handle such cases. (See Altering, Fuzzing,
+  implementations need to determine how to handle such cases. (See Altering, Fuzzing,
   or Smearing bullet below.)
 
 Source:
@@ -1195,7 +1251,7 @@ for implementing UUIDs in this specification. However implementations SHOULD
 utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.
 
-### Name-Based UUID Generation {#name_based_uuid_generation}
+## Name-Based UUID Generation {#name_based_uuid_generation}
 TODO placeholder for "nice to have" name-based UUID implementation best practices
 
 ## Collision Resistance {#collision_resistance}
@@ -1237,7 +1293,7 @@ or around the world is not required.
 Although true global uniqueness is impossible to guarantee without a shared
 knowledge scheme; a shared knowledge scheme is not required by UUID to provide
 uniqueness guarantees.
-Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed this specification and {{RFC4122}}.
+Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed this specification.
 
 
 ## Unguessability {#unguessability}
@@ -1249,8 +1305,47 @@ Care SHOULD be taken to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
-Advice on generating cryptographic-quality random numbers can be found in {{RFC4086}}
+Advice on generating cryptographic-quality random numbers can be found in {{ref-5}}
 
+## Node IDs that Do Not Identify the Host {#unidentifiable}
+TODO possibly merge this with the prevous section
+
+This section describes how to generate a version 1 UUID if an IEEE
+802 address is not available, or its use is not desired.
+
+One approach is to contact the IEEE and get a separate block of
+addresses.  At the time of writing, the application could be found at
+[](http://standards.ieee.org/regauth/oui/pilot-ind.html), and the cost
+was US$550.
+
+A better solution is to obtain a 47-bit cryptographic quality random
+number and use it as the low 47 bits of the node ID, with the least
+significant bit of the first octet of the node ID set to one.  This
+bit is the unicast/multicast bit, which will never be set in IEEE 802
+addresses obtained from network cards.  Hence, there can never be a
+conflict between UUIDs generated by machines with and without network
+cards.  (Recall that the IEEE 802 spec talks about transmission
+order, which is the opposite of the in-memory representation that is
+discussed in this document.)
+
+For compatibility with earlier specifications, note that this
+document uses the unicast/multicast bit, instead of the arguably more
+correct local/global bit.
+
+Advice on generating cryptographic-quality random numbers can be
+found in {{ref-5}}.
+
+In addition, items such as the computer's name and the name of the
+operating system, while not strictly speaking random, will help
+differentiate the results from those obtained by other systems.
+
+The exact algorithm to generate a node ID using these data is system
+specific, because both the data available and the functions to obtain
+them are often very system specific.  A generic approach, however, is
+to accumulate as many sources as possible into a buffer, use a
+message digest such as MD5 {{ref-4}} or SHA-1 {{ref-8}}, take an arbitrary 6
+bytes from the hash value, and set the multicast bit as described
+above.
 
 ## Sorting {#sorting}
 
@@ -1276,7 +1371,7 @@ UUID format SHOULD be created using UUIDv8.
 
 UUIDs SHOULD be treated as opaque values and implementations SHOULD NOT examine
 the bits in a UUID to whatever extent is possible. However, where necessary,
-inspectors should refer to {{variant_and_version_fields}} for more information on determining UUID version and variant.
+inspectors should refer to {{variant_field}} and {{version_field}} for more information on determining UUID version and variant.
 
 
 ## DBMS and Database Considerations {#database_considerations}
@@ -1314,12 +1409,13 @@ and feedback.
 
 # IANA Considerations {#IANA}
 TODO: Should Namespace Registration Template be here?
+
 TODO: Do we need to re-submit anything or is the old template "good enough" since this is already registered with IANA?
 
 This document has no IANA actions.
 
 # Community Considerations {#community}
- 
+
 The use of UUIDs is extremely pervasive in computing.  They comprise
 the core identifier infrastructure for many operating systems
 (Microsoft Windows) and applications (the Mozilla browser) and in
@@ -1357,7 +1453,7 @@ it's corresponding data but
 does not define anything about the data itself or the application as a whole.
 If UUIDs are required for
 use with any security operation within an application context in any shape
-or form then {{RFC4122}} UUIDv4 SHOULD be utilized.
+or form then UUIDv4, {{uuidv4}} SHOULD be utilized.
 
 
 # Acknowledgements {#Acknowledgements}
@@ -1415,7 +1511,7 @@ Declaration of syntactic structure:
   very persistent objects across a network.
 
   The internal representation of a UUID is a specific sequence of
-  bits in memory, as described in {{sect-4}}.  To accurately
+  bits in memory, as described in {{format}}.  To accurately
   represent a UUID as a URN, it is necessary to convert the bit
   sequence to a string representation.
 
@@ -1475,7 +1571,7 @@ Process of identifier assignment:
   address, usually already available on network-connected hosts.
   The address can be assigned from an address block obtained from
   the IEEE registration authority.  If no such address is available,
-  or privacy concerns make its use undesirable, {{sect-4.5}} specifies
+  or privacy concerns make its use undesirable, {{unidentifiable}} specifies
   two alternatives.  Another approach is to use version 3
   or version 4 UUIDs as defined below.
 
@@ -1484,7 +1580,7 @@ Process for identifier resolution:
 
 Rules for Lexical Equivalence:
 : Consider each field of the UUID to be an unsigned integer as shown
-  in the table in section {{sect-4.1.2}}.  Then, to compare a pair of
+  in the tables in section {{layout}}.  Then, to compare a pair of
   UUIDs, arithmetically compare the corresponding fields from each
   UUID in order of significance and according to their data type.
   Two UUIDs are equal if and only if all the corresponding fields
@@ -1497,7 +1593,7 @@ Rules for Lexical Equivalence:
   UUIDs, as defined in this document, can also be ordered
   lexicographically.  For a pair of UUIDs, the first one follows the
   second if the most significant field in which the UUIDs differ is
-  greater for the first UUID.  The second precedes the first if the
+  greater for the first UUID.  The second follows the first if the
   most significant field in which the UUIDs differ is greater for
   the second UUID.
 
@@ -1624,7 +1720,7 @@ static void format_uuid_v3or5(uuid_t *uuid, unsigned char hash[16],
 static void get_current_time(uuid_time_t *timestamp);
 static unsigned16 true_random(void);
 
-/* uuid_create -- generator a UUID */
+/* uuid_create -- generate a UUID */
 int uuid_create(uuid_t *uuid)
 {
      uuid_time_t timestamp, last_time;
@@ -2094,19 +2190,58 @@ void main(int argc, char **argv)
     printf("uuid_compare(u, NameSpace_DNS): %d\n", f); /* s.b. 1 */
     f = uuid_compare(&NameSpace_DNS, &u);
     printf("uuid_compare(NameSpace_DNS, u): %d\n", f); /* s.b. -1 */
-    uuid_create_md5_from_name(&u, NameSpace_DNS, "www.widgets.com", 15);
+    uuid_create_md5_from_name(&u, NameSpace_DNS, "www.example.com", 15);
     printf("uuid_create_md5_from_name(): "); puid(u);
 }
 ~~~
 
-### Sample Output of utest {#utest}
-
+Sample Output of utest
 ~~~
      uuid_create(): 7d444840-9dc0-11d1-b245-5ffdce74fad2
      uuid_compare(u,u): 0
      uuid_compare(u, NameSpace_DNS): 1
      uuid_compare(NameSpace_DNS, u): -1
-     uuid_create_md5_from_name(): e902893a-9d22-3c7e-a7b8-d6e313b71d9f
+     uuid_create_md5_from_name(): 5df41881-3aed-3515-88a7-2f4a814cf09e
+~~~
+
+# Some Name Space IDs
+
+   This appendix lists the name space IDs for some potentially
+   interesting name spaces, as initialized C structures and in the
+   string representation defined above.
+
+~~~
+   /* Name string is a fully-qualified domain name */
+   uuid_t NameSpace_DNS = { /* 6ba7b810-9dad-11d1-80b4-00c04fd430c8 */
+       0x6ba7b810,
+       0x9dad,
+       0x11d1,
+       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
+   };
+
+   /* Name string is a URL */
+   uuid_t NameSpace_URL = { /* 6ba7b811-9dad-11d1-80b4-00c04fd430c8 */
+       0x6ba7b811,
+       0x9dad,
+       0x11d1,
+       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
+   };
+
+   /* Name string is an ISO OID */
+   uuid_t NameSpace_OID = { /* 6ba7b812-9dad-11d1-80b4-00c04fd430c8 */
+       0x6ba7b812,
+       0x9dad,
+       0x11d1,
+       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
+   };
+
+   /* Name string is an X.500 DN (in DER or a text output format) */
+   uuid_t NameSpace_X500 = { /* 6ba7b814-9dad-11d1-80b4-00c04fd430c8 */
+       0x6ba7b814,
+       0x9dad,
+       0x11d1,
+       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
+   };
 ~~~
 
 ## Creating a UUIDv6 Value {#creating_a_uuidv6_value}
@@ -2272,46 +2407,6 @@ int generate_uuidv8(uint8_t *uuid, uint8_t node_id) {
 ~~~~
 {: title='UUIDv8 Function in C'}
 
-# Some Name Space IDs
-
-   This appendix lists the name space IDs for some potentially
-   interesting name spaces, as initialized C structures and in the
-   string representation defined above.
-
-~~~
-   /* Name string is a fully-qualified domain name */
-   uuid_t NameSpace_DNS = { /* 6ba7b810-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b810,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-
-   /* Name string is a URL */
-   uuid_t NameSpace_URL = { /* 6ba7b811-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b811,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-
-   /* Name string is an ISO OID */
-   uuid_t NameSpace_OID = { /* 6ba7b812-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b812,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-
-   /* Name string is an X.500 DN (in DER or a text output format) */
-   uuid_t NameSpace_X500 = { /* 6ba7b814-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b814,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-~~~
-
 # Test Vectors {#test_vectors}
 
 Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit timestamp: 0x1EC9414C232AB00
@@ -2402,7 +2497,7 @@ as 0x17F22E279B0 or 1645557742000
 field      bits    value
 -------------------------------
 unix_ts_ms   48    0x17F22E279B0
-var           4    0x7
+ver           4    0x7
 rand_a       12    0xCC3
 var           2    b10
 rand_b       62    0x18C4DC0C0C07398F
