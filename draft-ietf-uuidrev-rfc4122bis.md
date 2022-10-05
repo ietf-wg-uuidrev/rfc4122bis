@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-00
+docname: draft-ietf-uuidrev-rfc4122bis
 cat: std
 obsoletes: '4122'
 consensus: 'true'
