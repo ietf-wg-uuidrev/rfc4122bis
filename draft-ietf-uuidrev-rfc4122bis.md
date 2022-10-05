@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis
+docname: draft-ietf-uuidrev-rfc4122bis-latest
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -398,7 +398,7 @@ draft-00
 - Errata: Incorrect Parenthesis usage Section 4.3 \| 184 #5
 - Errata: Lexicographically Sorting Paragraph Fix \| 1428 #3
 - Errata: Fix 4.1.3 reference to the correct bits \| 1957 #13
-- Errata: Fix reference to variant in octet 8 \| 4975
+- Errata: Fix reference to variant in octet 8 \| 4975 #7
 - Errata: Further clarify 3rd/last bit of Variant for spec \| 5560 #8
 - Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120
 - Draft 05: MUST veribage in Reliability of 6.1 #121
