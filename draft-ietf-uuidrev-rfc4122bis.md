@@ -30,7 +30,7 @@ author:
 - ins: M. Mealling
   name: M. Mealling
   org: VeriSign, Inc.
-
+# TODO where do ref-3 and ref-6 actually fit?
 normative:
   ref-1:
     title: Network Computing Architecture
@@ -48,6 +48,7 @@ normative:
     seriesinfo:
       ISBN: 0-13-611674-4
   ref-2:
+    target: https://pubs.opengroup.org/onlinepubs/9696999099/toc.pdf
     title: "DCE: Remote Procedure Call"
     rc: Open Group CAE Specification C309
     seriesinfo:
@@ -75,6 +76,11 @@ normative:
     date: 1995-04
     seriesinfo:
       FIPS: PUB 180-1
+  ref-9:
+    target: https://pubs.opengroup.org/onlinepubs/9696989899/toc.pdf
+    title: "DCE 1.1: Authentication and Security Services"
+    rc: Open Group CAE Specification C311
+    date: 1997
 informative:
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
@@ -367,6 +373,12 @@ The following abbreviations are used in this document:
 UUID
 : Universally Unique Identifier
 
+URN
+: Uniform Resource Names
+
+ABNF
+: Augmented Backus-Naur Form
+
 CSPRNG
 : Cryptographically Secure Pseudo-Random Number Generator
 
@@ -403,7 +415,9 @@ draft-00
 - Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120
 - Draft 05: MUST veribage in Reliability of 6.1 #121
 - New: Further Clarity of exact octet and bit of var/ver in this spec
-- New: Block diagram and bit layout for UUIDv4
+- New: Block diagram, bit layout, test vectors for UUIDv4
+- New: Block diagram, bit layout, test vectors for UUIDv3
+- New: Block diagram, bit layout, test vectors for UUIDv5
 
 # UUID Format {#format}
 
@@ -415,20 +429,20 @@ When in use with URNs or applications, any given 128 bit UUID MAY be represented
 groups of upper or lowercase alphanumeric hex characters seperated by a single dash/hyphen.
 When used with Datbases please refer to {{database_considerations}}
 
-The formal definition of the UUID string representation is provided by the following ABNF {{ref-7}}.
+The formal definition of the UUID string representation is provided by the following (ABNF) {{ref-7}}.
 
 ~~~~ abnf
    UUID                   = 4hexOctet "-"
                             2hexOctet "-"
                             2hexOctet "-"
                             2hexOctet "-"
-   					   6hexOctet
+                            6hexOctet
    hexOctet               = hexDigit hexDigit
    hexDigit =
          "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
          "a" / "b" / "c" / "d" / "e" / "f" /
          "A" / "B" / "C" / "D" / "E" / "F"
-~~~~		
+~~~~
 
 An example UUID using this textual representation from the previous table observed in {{sampleUUID}}.
 Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixe case as per {{ref-7, Section 2.3}}
@@ -466,10 +480,9 @@ As such all bit and feild layouts will detail a 2 bit variant entry as guidance.
 
 ## Version Field {#version_field}
 The version number is in the most significant 4 bits of octet 6.
-More specifically bits 48 through 51. The remaining 4 bits of Octet 6 vary by layout.
+More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynamic.
 
-{{table2}} lists all of the versions for this
-UUID variant specified in this document.
+{{table2}} lists all of the versions for this UUID variant specified in this document.
 
   | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
   |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
@@ -490,16 +503,19 @@ UUID variant specified in this document.
   |    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
 {: #table2 title='UUID variant 10xx (8/9/A/B) versions defined by this specification'}
 
-An example version/variant layout for UUIDv6 follows the table where
+An example version/variant layout for UUIDv4 follows the table
+where M represents the version placement for the hex representtion of 4 (0100)
+and the N reprsents the variant placement for one of the four possible hex representions of variant 10x:
+8 (1000), 9 (1001), A (1010), B (1011)
 
 ~~~~
-00000000-0000-6000-8000-000000000000
-00000000-0000-6000-9000-000000000000
-00000000-0000-6000-A000-000000000000
-00000000-0000-6000-B000-000000000000
+00000000-0000-4000-8000-000000000000
+00000000-0000-4000-9000-000000000000
+00000000-0000-4000-A000-000000000000
+00000000-0000-4000-B000-000000000000
 xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 ~~~~
-{: title='UUIDv6 Variant Examples'}
+{: title='UUIDv4 Variant Examples'}
 
 # UUID Layouts {#layout}
 
@@ -609,109 +625,89 @@ be set in such addresses, in order that they will never conflict with
 addresses obtained from network cards.
 
 ## UUID Version 2 {#uuidv2}
-TODO: Block Diagram and text
+UUID Version 2 is known as DCE Security UUIDs {{ref-4}} and {{ref-9}}.
+As such the definition of these UUIDs are outside the scope of this specification.
 
 ## UUID Version 3 {#uuidv3}
-TODO: Block Diagram
+UUID Version 3 is meant for generating UUIDs from "names"
+that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
-TODO: split version 5 out
+UUIDv3 values are created by computing an MD5 {{ref-4}}
+hash over a given name space value concatenated with the desired name value
+after both have been converted to a canonical sequence of octets in network byte order.
+This MD5 value is then uses to populate all 128 bits of the UUID layout.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
-TODO: create 'Name-based UUID" best practice section with "nice to know" items for both
+Some common name space values have been defined via {{namespaces}}.
 
-For UUID version 3 or 5, the timestamp is a 60-bit value constructed
-from a name.
+Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
 
-For UUID version 3 or 5, the clock sequence is a 14-bit value
-constructed from a name.
+~~~~
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                            md5_high                           |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |          md5_high             |  ver  |       md5_mid         |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |var|                        md5_low                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                            md5_low                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+~~~~
+{: title='UUIDv3 Field and Bit Layout'}
 
-For UUID version 3 or 5, the node field is a 48-bit value constructed
-from a name.
+{: vspace='0'}
 
-The version 3 or 5 UUID is meant for generating UUIDs from "names"
-that are drawn from, and unique within, some "name space".  The
-concept of name and name space should be broadly construed, and not
-limited to textual names.  For example, some name spaces are the
-domain name system, URLs, Object Identifiers (OIDs), X.500 Distinguished
-Names (DNs), and reserved words in a programming language.  The
-mechanisms or conventions used for allocating names and ensuring
-their uniqueness within their name spaces are beyond the scope of
-this specification.
+md5_high:
+: The first 48 bits of the layout are filled
+  with the most significant, left-most 48 bits
+  from the computed MD5 value.
 
-The requirements for these types of UUIDs are as follows:
+ver:
+: The 4 bit version field as defined by {{version_field}}
 
-* The UUIDs generated at different times from the same name in the
-  same namespace MUST be equal.
+md5_mid:
+: 12 more bits of the layout consisting of the least significant,
+  right-most 12 bits of 16 bits immediatly following md5_high
+  from the computed MD5 value.
 
-* The UUIDs generated from two different names in the same namespace
-  should be different (with very high probability).
+var:
+: The 2 bit variant field as defined by {{variant_field}}.
 
-* The UUIDs generated from the same name in two different namespaces
-  should be different (with very high probability).
-
-* If two UUIDs that were generated from names are equal, then they
-  were generated from the same name in the same namespace (with very
-  high probability).
-
-
-The algorithm for generating a UUID from a name and a name space are
-as follows:
-
-* Allocate a UUID to use as a "name space ID" for all UUIDs
-  generated from names in that name space; see Appendix C for some
-  pre-defined values.
-
-* Choose either MD5 {{ref-4}} or SHA-1 {{ref-8}} as the hash algorithm; If
-  backward compatibility is not an issue, SHA-1 is preferred.
-
-* Convert the name to a canonical sequence of octets (as defined by
-  the standards or conventions of its name space); put the name
-  space ID in network byte order.
-
-* Compute the hash of the name space ID concatenated with the name.
-
-* Set octets zero through 3 of the time_low field to octets zero
-  through 3 of the hash.
-
-* Set octets zero and one of the time_mid field to octets 4 and 5 of
-  the hash.
-
-* Set octets zero and one of the time_hi_and_version field to octets
-  6 and 7 of the hash.
-
-* Set the four most significant bits (bits 12 through 15) of the
-  time_hi_and_version field to the appropriate 4-bit version number
-  from {{version_field}}.
-
-* Set the clock_seq_hi_and_reserved field to octet 8 of the hash.
-
-* Set the two most significant bits (bits 6 and 7) of the
-  clock_seq_hi_and_reserved to zero and one, respectively.
-
-* Set the clock_seq_low field to octet 9 of the hash.
-
-* Set octets zero through five of the node field to octets 10
-  through 15 of the hash.
-
-* Convert the resulting UUID to local byte order.
+md5_low:
+: The final 62 bits of the layout immediatly following the var field to be
+  filled with the least-significant, right-most bits of the final 64 bits
+  from the computed MD5 value.
 
 ## UUID Version 4 {#uuidv4}
 The version 4 UUID is meant for generating UUIDs from truly-random or
 pseudo-random numbers.
 
+An implementation may generate 128 bits of random random data which is
+used to fill out the UUID fields in {{uuidv4fields}}. The UUID version
+and variant then replace the respective bits as defined by {{version_field}}
+and {{variant_field}},
+
+Alternativly, an implementation MAY choose to randomly generate the exact required number of bits for
+for random_a, random_b, and random_c then concatenate the version and variant in the required position.
+
+For guidelines on random data generation see {{unguessability}}.
+
 ~~~~
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                           random_a                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          random_a             |  ver  |       random_b        |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|var|                       random_c                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                           random_c                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           random_a                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |          random_a             |  ver  |       random_b        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |var|                       random_c                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           random_c                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
-{: title='UUIDv8 Field and Bit Layout'}
+{: id='uuidv4fields' title='UUIDv4 Field and Bit Layout'}
 
 {: vspace='0'}
 
@@ -733,7 +729,55 @@ random_c:
   filled with random data as per {{unguessability}}
 
 ## UUID Version 5 {#uuidv5}
-TODO block diagram and text
+UUID Version 3 is meant for generating UUIDs from "names"
+that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
+
+UUIDv3 values are created by computing an SHA1 {{ref-8}}}
+hash over a given name space value concatenated with the desired name value
+after both have been converted to a canonical sequence of octets in network byte order.
+This SHA1 value is then uses to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
+
+Some common name space values have been defined via {{namespaces}}.
+
+~~~~
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                            sha_high                           |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |          sha_high             |  ver  |       sha_mid         |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |var|                        sha_low                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                            md5_low                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+~~~~
+{: title='UUIDv5 Field and Bit Layout'}
+
+{: vspace='0'}
+
+sha_high:
+: The first 48 bits of the layout are filled
+  with the most significant, left-most 48 bits
+  from the computed SHA1 value.
+
+ver:
+: The 4 bit version field as defined by {{version_field}}
+
+sha_mid:
+: 12 more bits of the layout consisting of the least significant,
+  right-most 12 bits of 16 bits immediatly following md5_high
+  from the computed SHA1 value.
+
+var:
+: The 2 bit variant field as defined by {{variant_field}}.
+
+sha_low:
+: The final 62 bits of the layout immediatly following the var field to be
+  filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
+  and then using the next 62 most significant, left-most bits.
+  Any leftover SHA1 bits are discarded and unused.
 
 ## UUID Version 6 {#uuidv6}
 
@@ -824,17 +868,17 @@ possible.
 
 
 ~~~~
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                           unix_ts_ms                          |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          unix_ts_ms           |  ver  |       rand_a          |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|var|                        rand_b                             |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                            rand_b                             |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           unix_ts_ms                          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |          unix_ts_ms           |  ver  |       rand_a          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |var|                        rand_b                             |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                            rand_b                             |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv7 Field and Bit Layout'}
 
@@ -883,17 +927,17 @@ Some example situations in which UUIDv8 usage could occur:
 
 
 ~~~~
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                           custom_a                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          custom_a             |  ver  |       custom_b        |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|var|                       custom_c                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                           custom_c                            |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           custom_a                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |          custom_a             |  ver  |       custom_b        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |var|                       custom_c                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           custom_c                            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv8 Field and Bit Layout'}
 
@@ -1252,7 +1296,30 @@ utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.
 
 ## Name-Based UUID Generation {#name_based_uuid_generation}
-TODO placeholder for "nice to have" name-based UUID implementation best practices
+TODO, define how to compute a namespace ID if I don't want to use one from {{namespaces}}
+
+The concept of name and name space should be broadly construed, and not
+limited to textual names.  For example, some name spaces are the
+domain name system, URLs, Object Identifiers (OIDs), X.500 Distinguished
+Names (DNs), and reserved words in a programming language.  The
+mechanisms or conventions used for allocating names and ensuring
+their uniqueness within their name spaces are beyond the scope of
+this specification.
+
+The requirements for these types of UUIDs are as follows:
+
+* The UUIDs generated at different times from the same name in the
+  same namespace MUST be equal.
+
+* The UUIDs generated from two different names in the same namespace
+  should be different (with very high probability).
+
+* The UUIDs generated from the same name in two different namespaces
+  should be different (with very high probability).
+
+* If two UUIDs that were generated from names are equal, then they
+  were generated from the same name in the same namespace (with very
+  high probability).
 
 ## Collision Resistance {#collision_resistance}
 
@@ -1305,7 +1372,7 @@ Care SHOULD be taken to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
-Advice on generating cryptographic-quality random numbers can be found in {{ref-5}}
+Further advice on generating cryptographic-quality random numbers can be found in {{ref-5}}
 
 ## Node IDs that Do Not Identify the Host {#unidentifiable}
 TODO possibly merge this with the prevous section
@@ -2084,7 +2151,7 @@ void get_system_time(uuid_time_t *uuid_time)
     *uuid_time = time.QuadPart;
 }
 
-/* Sample code, not for use in production; see RFC 1750 */
+/* Sample code, not for use in production; see RFC 4086 */
 void get_random_info(char seed[16])
 {
     MD5_CTX c;
@@ -2126,7 +2193,7 @@ void get_system_time(uuid_time_t *uuid_time)
         + I64(0x01B21DD213814000);
 }
 
-/* Sample code, not for use in production; see RFC 1750 */
+/* Sample code, not for use in production; see RFC 4086 */
 void get_random_info(char seed[16])
 {
     MD5_CTX c;
@@ -2204,7 +2271,7 @@ Sample Output of utest
      uuid_create_md5_from_name(): 5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~
 
-# Some Name Space IDs
+# Some Name Space IDs {#namespaces}
 
    This appendix lists the name space IDs for some potentially
    interesting name spaces, as initialized C structures and in the
@@ -2442,8 +2509,116 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 ~~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
-## Example of a UUIDv6 Value {#uuidv6_example}
+## Example of UUIDv1 Value {uuidv1_example}
+TODO
 
+## Example of UUIDv3 Value {uuidv3_example}
+The MD5 computation from {{sample_implementation}} is detailed in {{v3md5}}
+while the field mapping and all values are illustrated in {{v3fields}}.
+Finally to further illustrate the bit swaping for version and variant see {{v3vervar}}.
+
+~~~~
+Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:                   www.example.com
+-----------------------------------------------
+MD5:                    5df418813aed051548a72f4a814cf09e
+~~~~
+{: id='v3md5' title='UUIDv3 Example MD5'}
+
+~~~~
+-------------------------------
+field      bits    value
+-------------------------------
+md5_high   48    0x5df418813aed
+ver         4    0x3
+md5_mid    12    0x515
+var         2    b10
+md5_low    62    0x08a72f4a814cf09e
+-------------------------------
+total     128
+-------------------------------
+final: 5df41881-3aed-3515-88a7-2f4a814cf09e
+~~~~
+{: id='v3fields' title='UUIDv3 Example Test Vector'}
+
+~~~~
+MD5 hex and dash:       5df41881-3aed-0515-48a7-2f4a814cf09e
+Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                  5df41881-3aed-3515-88a7-2f4a814cf09e
+~~~~
+{: id='v3vervar' title='UUIDv3 Example Ver Var bit swaps'}
+
+## Example of UUIDv4 Value (uuidv4_example)
+This UUIDv4 example was created by generating 16 bytes
+of random data resulting in the hex value of
+919108F752D133205BACF847DB4148A8. This is then used to
+fill out the feilds as shown in {{v4fields}}.
+
+Finally to further illustrate the bit swaping for version and variant see {{v4vervar}}.
+
+~~~~
+-------------------------------
+field      bits    value
+-------------------------------
+random_a   48    0x919108f752d1
+ver         4    0x4
+random_b   12    0x320
+var         2    b10
+random_c   62    0x1bacf847db4148a8
+-------------------------------
+total      128
+-------------------------------
+final: 919108f7-52d1-4320-9bac-f847db4148a8
+~~~~
+{: id='v4fields' title='UUIDv4 Example Test Vector'}
+
+~~~~
+Random hex:             919108f752d133205bacf847db4148a8
+Random hex and dash:    919108f7-52d1-3320-5bac-f847db4148a8
+Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                  919108f7-52d1-4320-9bac-f847db4148a8
+~~~~
+{: id='v4vervar' title='UUIDv4 Example Ver Var bit swaps '}
+
+
+## Example of UUIDv5 Value {uuidv5_example}
+The SHA1 computation from {{sample_implementation}} is detailed in {{v5sha1}}
+while the field mapping and all values are illustrated in {{v5fields}}.
+Finally to further illustrate the bit swaping for version and variant and the unused/discarded part of the SHA1 value see {{v5vervar}}.
+
+~~~~
+Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:                   www.example.com
+-----------------------------------------------
+SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
+~~~~
+{: id='v5sha1' title='UUIDv5 Example SHA1'}
+
+~~~~
+-------------------------------
+field      bits    value
+-------------------------------
+sha_high   48    0x2ed6657de927
+ver         4    0x5
+sha_mid    12    0x68b
+var         2    b10
+sha_low    62    0x15e12665a8aea6a2
+-------------------------------
+total     128
+-------------------------------
+final: 2ed6657d-e927-568b-95e1-2665a8aea6a2
+~~~~
+{: id='v5fields' title='UUIDv5 Example Test Vector'}
+
+~~~~
+SHA1 hex and dash:      2ed6657d-e927-468b-55e1-2665a8aea6a2-2dee3e35
+Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                  2ed6657d-e927-568b-95e1-2665a8aea6a2
+Discarded:                                                  -2dee3e35
+~~~~
+{: id='v5vervar' title='UUIDv5 Example Ver Var bit swaps and discarded SHA1 segment'}
+
+## Example of a UUIDv6 Value {#uuidv6_example}
 
 ~~~~
 ----------------------------------------------
