@@ -1,8 +1,8 @@
-*.html
+/*.html
 *.pdf
 *.redxml
 *.swp
-*.txt
+/*.txt
 *.upload
 *~
 .tags
@@ -21,3 +21,6 @@ draft-ietf-uuidrev-rfc4122bis.xml
 package-lock.json
 report.xml
 !requirements.txt
+!docs/*
+!docs/*
+
