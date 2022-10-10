@@ -5,5 +5,5 @@ cat draft-ietf-uuidrev-rfc4122bis.html | sed '/<style/{:b;$!N;/style>/!bb;s/.*/<
 
 ### Same but within this folder
 ``` 
-cat draft-ietf-uuidrev-rfc4122bis.html | sed '/<style/{:b;$!N;/style>/!bb;s/.*/<link rel="stylesheet" href="./better-rfc.css">/}' > draft-ietf-uuidrev-rfc4122bis-00.html
+cat draft-ietf-uuidrev-rfc4122bis.html | sed '/<style/{:b;$!N;/style>/!bb;s/.*/<link rel="stylesheet" href="../better-rfc.css">/}' > draft-ietf-uuidrev-rfc4122bis-00.html
 ```
