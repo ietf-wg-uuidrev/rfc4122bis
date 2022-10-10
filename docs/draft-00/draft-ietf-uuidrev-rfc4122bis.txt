@@ -119,18 +119,18 @@ Table of Contents
    Appendix A.  Namespace Registration Template
    Appendix B.  Example Code
      B.1.  Creating UUIDv1 through UUIDv5 Value
-   Appendix C.  Some Name Space IDs
-     C.1.  Creating a UUIDv6 Value
-     C.2.  Creating a UUIDv7 Value
-     C.3.  Creating a UUIDv8 Value
-   Appendix D.  Test Vectors
-     D.1.  Example of UUIDv1 Value
-     D.2.  Example of UUIDv3 Value
-     D.3.  Example of UUIDv4 Value
-     D.4.  Example of UUIDv5 Value
-     D.5.  Example of a UUIDv6 Value
-     D.6.  Example of a UUIDv7 Value
-     D.7.  Example of a UUIDv8 Value
+     B.2.  Some Name Space IDs
+     B.3.  Creating a UUIDv6 Value
+     B.4.  Creating a UUIDv7 Value
+     B.5.  Creating a UUIDv8 Value
+   Appendix C.  Test Vectors
+     C.1.  Example of UUIDv1 Value
+     C.2.  Example of UUIDv3 Value
+     C.3.  Example of UUIDv4 Value
+     C.4.  Example of UUIDv5 Value
+     C.5.  Example of a UUIDv6 Value
+     C.6.  Example of a UUIDv7 Value
+     C.7.  Example of a UUIDv8 Value
    Authors' Addresses
 
 1.  Introduction
@@ -624,7 +624,7 @@ Table of Contents
    the UUID layout.  The UUID version and variant then replace the
    respective bits as defined by Section 4.2 and Section 4.1.
 
-   Some common name space values have been defined via Appendix C.
+   Some common name space values have been defined via Appendix B.2.
 
    Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.  For more
    information on MD5 security considerations see [RFC6151].
@@ -725,7 +725,7 @@ Table of Contents
    version and variant then replace the respective bits as defined by
    Section 4.2 and Section 4.1
 
-   Some common name space values have been defined via Appendix C.
+   Some common name space values have been defined via Appendix B.2.
 
    For more information on MD5 security considerations see [RFC6194].
 
@@ -1252,7 +1252,7 @@ Table of Contents
 6.5.  Name-Based UUID Generation
 
    TODO, define how to compute a namespace ID if I don't want to use one
-   from Appendix C
+   from Appendix B.2
 
    The concept of name and name space should be broadly construed, and
    not limited to textual names.  For example, some name spaces are the
@@ -2328,7 +2328,7 @@ void main(int argc, char **argv)
    uuid_compare(u, NameSpace_DNS): 1 uuid_compare(NameSpace_DNS, u): -1
    uuid_create_md5_from_name(): 5df41881-3aed-3515-88a7-2f4a814cf09e ~~~
 
-Appendix C.  Some Name Space IDs
+B.2.  Some Name Space IDs
 
    This appendix lists the name space IDs for some potentially
    interesting name spaces, as initialized C structures and in the
@@ -2366,7 +2366,7 @@ Appendix C.  Some Name Space IDs
         0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
     };
 
-C.1.  Creating a UUIDv6 Value
+B.3.  Creating a UUIDv6 Value
 
    This section details a function in C which converts from a UUID
    version 1 to version 6:
@@ -2403,7 +2403,7 @@ C.1.  Creating a UUIDv6 Value
 
                       Figure 15: UUIDv6 Function in C
 
-C.2.  Creating a UUIDv7 Value
+B.4.  Creating a UUIDv7 Value
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2450,7 +2450,7 @@ u[6] = 0x70 | (u[6] & 0x0F); // set version field, top four bits are 0, 1, 1, 1
 
                    Figure 16: UUIDv7 Function in C
 
-C.3.  Creating a UUIDv8 Value
+B.5.  Creating a UUIDv8 Value
 
    UUIDv8 will vary greatly from implementation to implementation.
 
@@ -2510,7 +2510,7 @@ int generate_uuidv8(uint8_t *uuid, uint8_t node_id) {
 
                    Figure 17: UUIDv8 Function in C
 
-Appendix D.  Test Vectors
+Appendix C.  Test Vectors
 
    Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit
    timestamp: 0x1EC9414C232AB00 (138648505420000000) Tuesday, February
@@ -2545,7 +2545,7 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 
              Figure 18: Test Vector Timestamp Pseudo-code
 
-D.1.  Example of UUIDv1 Value
+C.1.  Example of UUIDv1 Value
 
    ----------------------------------------------
    field                 bits    value_hex
@@ -2563,7 +2563,7 @@ D.1.  Example of UUIDv1 Value
 
                    Figure 19: UUIDv1 Example Test Vector
 
-D.2.  Example of UUIDv3 Value
+C.2.  Example of UUIDv3 Value
 
    The MD5 computation from Appendix B.1 is detailed in Figure 20 while
    the field mapping and all values are illustrated in Figure 21.
@@ -2598,7 +2598,7 @@ D.2.  Example of UUIDv3 Value
 
                 Figure 22: UUIDv3 Example Ver Var bit swaps
 
-D.3.  Example of UUIDv4 Value
+C.3.  Example of UUIDv4 Value
 
    This UUIDv4 example was created by generating 16 bytes of random data
    resulting in the hex value of 919108F752D133205BACF847DB4148A8.  This
@@ -2629,7 +2629,7 @@ D.3.  Example of UUIDv4 Value
 
                 Figure 24: UUIDv4 Example Ver/Var bit swaps
 
-D.4.  Example of UUIDv5 Value
+C.4.  Example of UUIDv5 Value
 
    The SHA1 computation from Appendix B.1 is detailed in Figure 25 while
    the field mapping and all values are illustrated in Figure 26.
@@ -2667,7 +2667,7 @@ D.4.  Example of UUIDv5 Value
        Figure 27: UUIDv5 Example Ver/Var bit swaps and discarded SHA1
                                   segment
 
-D.5.  Example of a UUIDv6 Value
+C.5.  Example of a UUIDv6 Value
 
    -----------------------------------------------
    field                 bits    value_hex
@@ -2685,7 +2685,7 @@ D.5.  Example of a UUIDv6 Value
 
                    Figure 28: UUIDv6 Example Test Vector
 
-D.6.  Example of a UUIDv7 Value
+C.6.  Example of a UUIDv7 Value
 
    This example UUIDv7 test vector utilizes a well-known 32 bit Unix
    epoch with additional millisecond precision to fill the first 48 bits
@@ -2710,7 +2710,7 @@ D.6.  Example of a UUIDv7 Value
 
                    Figure 29: UUIDv7 Example Test Vector
 
-D.7.  Example of a UUIDv8 Value
+C.7.  Example of a UUIDv8 Value
 
    This example UUIDv8 test vector utilizes a well-known 64 bit Unix
    epoch with nanosecond precision, truncated to the least-significant,

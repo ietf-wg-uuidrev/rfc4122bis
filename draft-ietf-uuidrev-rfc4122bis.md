@@ -2305,7 +2305,7 @@ Sample Output of utest
      uuid_create_md5_from_name(): 5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~
 
-# Some Name Space IDs {#namespaces}
+## Some Name Space IDs {#namespaces}
 
    This appendix lists the name space IDs for some potentially
    interesting name spaces, as initialized C structures and in the
