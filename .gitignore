@@ -21,3 +21,6 @@ draft-ietf-uuidrev-rfc4122bis.xml
 package-lock.json
 report.xml
 !requirements.txt
+!/editor-files/*.html
+!/editor-files/*.txt
+

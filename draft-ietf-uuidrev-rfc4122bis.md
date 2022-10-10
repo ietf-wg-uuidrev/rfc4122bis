@@ -19,20 +19,20 @@ kw: uuid
 date: 2022
 
 author:
-- name: Kyzer R. Davis
-  email: kydavis@cisco.com
-  org: Cisco Systems
-- name: Brad G. Peabody
-  email: brad@peabody.io
 - ins: P. Leach
   name: P. Leach
   org: Microsoft
 - ins: M. Mealling
   name: M. Mealling
   org: VeriSign, Inc.
-# TODO where do ref-3 and ref-6 actually fit?
+- name: Brad G. Peabody
+  email: brad@peabody.io
+- name: Kyzer R. Davis
+  email: kydavis@cisco.com
+  org: Cisco Systems
+
 normative:
-  ref-1:
+  NCA:
     title: Network Computing Architecture
     author:
     - ins: L. Zahn
@@ -47,14 +47,14 @@ normative:
     date: 1990-01
     seriesinfo:
       ISBN: 0-13-611674-4
-  ref-2:
+  C309:
     target: https://pubs.opengroup.org/onlinepubs/9696999099/toc.pdf
     title: "DCE: Remote Procedure Call"
     rc: Open Group CAE Specification C309
     seriesinfo:
       ISBN: 1-85912-041-5
     date: August 1994
-  ref-3:
+  X667:
     seriesinfo:
       ISO/IEC: '9834-8:2004'
       ITU-T Rec.: X.667
@@ -64,11 +64,13 @@ normative:
       registration of Universally Unique Identifiers (UUIDs) and their
       use as ASN.1 Object Identifier components"
     date: 2004
-  ref-4: RFC1321
-  ref-5: RFC4086
-  ref-6: RFC8141
-  ref-7: RFC4234
-  ref-8:
+  RFC1321: RFC1321
+  RFC6151: RFC6151
+  RFC4086: RFC4086
+  RFC8141: RFC8141
+  RFC4234: RFC4234
+  RFC6194: RFC6194
+  SHA1:
     target: http://www.itl.nist.gov/fipspubs/fip180-1.htm
     title: Secure Hash Standard
     author:
@@ -76,7 +78,7 @@ normative:
     date: 1995-04
     seriesinfo:
       FIPS: PUB 180-1
-  ref-9:
+  C311:
     target: https://pubs.opengroup.org/onlinepubs/9696989899/toc.pdf
     title: "DCE 1.1: Authentication and Security Services"
     rc: Open Group CAE Specification C311
@@ -238,15 +240,15 @@ Unique IDentifier).  A UUID is 128 bits long, and requires no central
 registration process.
 
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs as URNs.  Nothing in this document
+to implement services using UUIDs as URNs {{RFC8141}}.  Nothing in this document
 should be construed to override the DCE standards that defined UUIDs.
 
-There is an ITU-T Recommendation and ISO/IEC Standard [3] that are
+There is an ITU-T Recommendation and ISO/IEC Standard {{X667}} that are
 derived from earlier versions of this document.  Both sets of
 specifications have been aligned, and are fully technically
 compatible.  In addition, a global registration function is being
-provided by the Telecommunications Standardisation Bureau of ITU-T;
-for details see [](http://www.itu.int/ITU-T/asn1/uuid.html).
+provided by the Telecommunications Standardization Bureau of ITU-T;
+for details see [](https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx).
 
 # Motivation {#motivation}
 
@@ -268,7 +270,7 @@ Resource Names.  The unique ability to generate a new UUID without a
 registration process allows for UUIDs to be one of the URNs with the
 lowest minting cost.
 
-Many things have changed in the time since UUIDs were originally created.
+Furthermore, many things have changed in the time since UUIDs were originally created.
 Modern applications have a need to create and utilize UUIDs as the primary
 identifier for a variety of different items in complex computational systems,
 including but not limited to database keys, file names, machine or system
@@ -391,6 +393,23 @@ MSB
 DBMS
 : Database Management System
 
+IEEE
+: Institute of Electrical and Electronics Engineers, Inc.
+
+ITU
+: International Telecommunication Union
+
+MD5
+: Message Digest 5
+
+SHA1
+: Secure Hash Algorithm 1
+
+UTC
+: Coordinated Universal Time
+
+
+
 ## changelog {#changelog}
 {:removeinrfc}
 
@@ -403,6 +422,7 @@ draft-00
 - Change: Reference RFC2234 to RFC4234
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
+- Change: ITU http website to https equivalent
 - Errata: Bad Reference to RFC1750 \| 3641 #4
 - Errata: Change MD5 website to example.com \| 3476 #6 (Also Fixes Errata: Fix uuid_create_md5_from_name() \| 1352 #2)
 - Errata: Typo in code comment \| 6665 #11
@@ -414,22 +434,26 @@ draft-00
 - Errata: Further clarify 3rd/last bit of Variant for spec \| 5560 #8
 - Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120
 - Draft 05: MUST veribage in Reliability of 6.1 #121
+- Draft 05: Further discourage centralized registry for distributed UUID Generation.
 - New: Further Clarity of exact octet and bit of var/ver in this spec
 - New: Block diagram, bit layout, test vectors for UUIDv4
 - New: Block diagram, bit layout, test vectors for UUIDv3
 - New: Block diagram, bit layout, test vectors for UUIDv5
+- New: Add MD5 Security Considerations reference, RFC6151
+- New: Add SHA1 Security Considerations reference, RFC6194
 
 # UUID Format {#format}
 
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
 bits described in the next sections in determine finer structure.
 
+UUIDs MAY be represented as binary data or integers.
+When in use with URNs or applications, any given 128 bit UUID SHOULD
+be represented by the "hex-and-dash" string format consisting of multiple
+groups of upper or lowercase alphanumeric hex characters separated by a single dash/hyphen.
+When used with databases please refer to {{database_considerations}}.
 
-When in use with URNs or applications, any given 128 bit UUID MAY be represented by the "hex-and-dash" string format consisting of multiple
-groups of upper or lowercase alphanumeric hex characters seperated by a single dash/hyphen.
-When used with Datbases please refer to {{database_considerations}}
-
-The formal definition of the UUID string representation is provided by the following (ABNF) {{ref-7}}.
+The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC4234}}.
 
 ~~~~ abnf
    UUID                   = 4hexOctet "-"
@@ -444,13 +468,30 @@ The formal definition of the UUID string representation is provided by the follo
          "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
-An example UUID using this textual representation from the previous table observed in {{sampleUUID}}.
-Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixe case as per {{ref-7, Section 2.3}}
+An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
+Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixe case as per {{RFC4234, Section 2.3}}
 
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
-{: #sampleUUID title='Example UUID'}
+{: #sampleHexUUID title='Example Hex UUID'}
+
+The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
+
+~~~~
+11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
+~~~~
+{: #sampleBinaryUUID title='Example Hex UUID'}
+
+~~~~
+329800735698586629295641978511506172918
+~~~~
+{: #sampleIntegerUUID title='Example Hex UUID'}
+
+~~~~
+urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+~~~~
+{: #sampleURNUUID title='Example Hex UUID'}
 
 ## Variant Field {#variant_field}
 
@@ -476,7 +517,7 @@ defined here is not guaranteed, and is not likely to be an issue in
 practice.
 
 Specifically for UUIDs in this document bits 64 and 65 of octet 8 MUST be set to 1 and 0 as per row 2 of {{table1}}.
-As such all bit and feild layouts will detail a 2 bit variant entry as guidance.
+As such all bit and field layouts will detail a 2 bit variant entry as guidance.
 
 ## Version Field {#version_field}
 The version number is in the most significant 4 bits of octet 6.
@@ -487,7 +528,7 @@ More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynami
   | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
   |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
   |    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID from in this document.                          |
-  |    0 |    0 |    1 |    0 |       2 | DCE Security version, with embedded POSIX UIDs from this document             |
+  |    0 |    0 |    1 |    0 |       2 | Reserved for DCE Security version, with embedded POSIX UUIDs.                 |
   |    0 |    0 |    1 |    1 |       3 | The name-based version specified in this document that uses MD5 hashing.      |
   |    0 |    1 |    0 |    0 |       4 | The randomly or pseudo-randomly generated version specified in this document. |
   |    0 |    1 |    0 |    1 |       5 | The name-based version specified in this document that uses SHA-1 hashing.    |
@@ -504,8 +545,8 @@ More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynami
 {: #table2 title='UUID variant 10xx (8/9/A/B) versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
-where M represents the version placement for the hex representtion of 4 (0100)
-and the N reprsents the variant placement for one of the four possible hex representions of variant 10x:
+where M represents the version placement for the hex representation of 4 (0100)
+and the N represents the variant placement for one of the four possible hex representation of variant 10x:
 8 (1000), 9 (1001), A (1010), B (1011)
 
 ~~~~
@@ -531,13 +572,15 @@ Significant Byte first (known as network byte order).
 Note that in some instances the field names, particularly for multiplexed fields, follow historical
 practice.
 
+While discussing UUID field layouts, bit definitions start at 0 and end at 127 while octets definitions start at 0 and end at 15.
+
 ## UUID Version 1 {#uuidv1}
 UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
 represented by Coordinated Universal Time (UTC) as a count of 100-
 nanosecond intervals since 00:00:00.00, 15 October 1582 (the date of
 Gregorian reform to the Christian calendar).
 
-UUID Version 1 also features clock sequence feild which is used to help avoid
+UUID Version 1 also features clock sequence field which is used to help avoid
 duplicates that could arise when the clock is set backwards in time
 or if the node ID changes.
 
@@ -620,19 +663,17 @@ identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
 For systems with no IEEE address, a randomly or pseudo-randomly
-generated value may be used; see {{unguessability}}.  The multicast bit must
-be set in such addresses, in order that they will never conflict with
-addresses obtained from network cards.
+generated value may be used; see {{unguessability}} and {{unidentifiable}}.
 
 ## UUID Version 2 {#uuidv2}
-UUID Version 2 is known as DCE Security UUIDs {{ref-4}} and {{ref-9}}.
+UUID Version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
 As such the definition of these UUIDs are outside the scope of this specification.
 
 ## UUID Version 3 {#uuidv3}
 UUID Version 3 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
-UUIDv3 values are created by computing an MD5 {{ref-4}}
+UUIDv3 values are created by computing an MD5 {{RFC1321}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This MD5 value is then uses to populate all 128 bits of the UUID layout.
@@ -641,6 +682,7 @@ The UUID version and variant then replace the respective bits as defined by {{ve
 Some common name space values have been defined via {{namespaces}}.
 
 Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
+For more information on MD5 security considerations see {{RFC6151}}.
 
 ~~~~
      0                   1                   2                   3
@@ -669,14 +711,14 @@ ver:
 
 md5_mid:
 : 12 more bits of the layout consisting of the least significant,
-  right-most 12 bits of 16 bits immediatly following md5_high
+  right-most 12 bits of 16 bits immediately following md5_high
   from the computed MD5 value.
 
 var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
 md5_low:
-: The final 62 bits of the layout immediatly following the var field to be
+: The final 62 bits of the layout immediately following the var field to be
   filled with the least-significant, right-most bits of the final 64 bits
   from the computed MD5 value.
 
@@ -689,7 +731,7 @@ used to fill out the UUID fields in {{uuidv4fields}}. The UUID version
 and variant then replace the respective bits as defined by {{version_field}}
 and {{variant_field}},
 
-Alternativly, an implementation MAY choose to randomly generate the exact required number of bits for
+Alternatively, an implementation MAY choose to randomly generate the exact required number of bits for
 for random_a, random_b, and random_c then concatenate the version and variant in the required position.
 
 For guidelines on random data generation see {{unguessability}}.
@@ -725,20 +767,22 @@ var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
 random_c:
-: The final 62 bits of the layout immediatly following the var field to be
+: The final 62 bits of the layout immediately following the var field to be
   filled with random data as per {{unguessability}}
 
 ## UUID Version 5 {#uuidv5}
-UUID Version 3 is meant for generating UUIDs from "names"
+UUID Version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
-UUIDv3 values are created by computing an SHA1 {{ref-8}}}
+UUIDv5 values are created by computing an SHA1 {{SHA1}}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA1 value is then uses to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
 
 Some common name space values have been defined via {{namespaces}}.
+
+For more information on MD5 security considerations see {{RFC6194}}.
 
 ~~~~
      0                   1                   2                   3
@@ -767,14 +811,14 @@ ver:
 
 sha_mid:
 : 12 more bits of the layout consisting of the least significant,
-  right-most 12 bits of 16 bits immediatly following md5_high
+  right-most 12 bits of 16 bits immediately following md5_high
   from the computed SHA1 value.
 
 var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
 sha_low:
-: The final 62 bits of the layout immediatly following the var field to be
+: The final 62 bits of the layout immediately following the var field to be
   filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
   and then using the next 62 most significant, left-most bits.
   Any leftover SHA1 bits are discarded and unused.
@@ -957,23 +1001,23 @@ var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
 custom_c:
-: The final 62 bits of the layout immediatly following the var field to be
+: The final 62 bits of the layout immediately following the var field to be
   filled as an implementation sees fit.
 
-## Nill UUID {#nilluuid}
+## Nil UUID {#niluuid}
 The nil UUID is special form of UUID that is specified to have all
 128 bits set to zero.
 
 ~~~~
 00000000-0000-0000-0000-000000000000
 ~~~~
-{: title='Nill UUID Format'}
+{: title='Nil UUID Format'}
 
 ## Max UUID {#maxuuid}
 
 The Max UUID is special form of UUID that is specified to have all 128 bits
 set to 1. This UUID can be thought of as the inverse of Nil UUID defined
-in {{nilluuid}}.
+in {{niluuid}}.
 
 
 ~~~~
@@ -993,43 +1037,10 @@ implementation. That being said, various relevant factors are covered
 below to help guide an implementer through the different trade-offs among
 differing UUID implementations.
 
-## UUID Generator States {#generator_states}
-TODO clean this up since merge of 3 sections from 4122
-
-The state only needs to be read from stable storage once at boot
-time, if it is read into a system-wide shared volatile store (and
-updated whenever the stable store is updated).
-
-If an implementation does not have any stable store available, then
-it can always say that the values were unavailable.  This is the
-least desirable implementation because it will increase the frequency
-of creation of new clock sequence numbers, which increases the
-probability of duplicates.
-
-If the node ID can never change (e.g., the net card is inseparable
-from the system), or if any change also reinitializes the clock
-sequence to a random value, then instead of keeping it in stable
-store, the current node ID may be returned
-
-The state does not always need to be written to stable store every
-time a UUID is generated.  The timestamp in the stable store can be
-periodically set to a value larger than any yet used in a UUID.  As
-long as the generated UUIDs have timestamps less than that value, and
-the clock sequence and node ID remain unchanged, only the shared
-volatile copy of the state needs to be updated.  Furthermore, if the
-timestamp value in stable store is in the future by less than the
-typical time it takes the system to reboot, a crash will not cause a
-reinitialization of the clock sequence.
-
-If it is too expensive to access shared state each time a UUID is
-generated, then the system-wide generator can be implemented to
-allocate a block of time stamps each time it is called; a per-
-process generator can allocate from that block until it is exhausted.
-
 ## Timestamp Granularity {#timestamp_granularity}
 
 UUID timestamp source, precision and length was the topic of great debate
-while creating this specification. As such choosing the right timestamp for
+while creating UUIDv7 for this specification. As such choosing the right timestamp for
 your application is a very important topic. This section will detail some
 of the most common points on this topic.
 
@@ -1062,6 +1073,12 @@ Sub-second Precision and Accuracy:
   UUIDv7 features fixed millisecond level of precision within the Unix epoch
   that does not exceed the granularity capable in most modern systems.
   For other levels of precision UUIDv8 SHOULD be utilized.
+  Similar to {{monotonicity_counters}}, with UUIDv1 or UUIDv6,
+  a high resolution timestamp can be simulated by keeping a count of
+  the number of UUIDs that have been generated with the same value of
+  the system time, and using it to construct the low order bits of the
+  timestamp.  The count will range between zero and the number of
+  100-nanosecond intervals per system time interval.
 
 Length:
 : The length of a given timestamp directly impacts how long a given UUID will
@@ -1079,6 +1096,9 @@ Altering, Fuzzing, or Smearing:
   inaccurate clocks or to handle leap seconds. This specification makes no
   requirement or guarantee about how close the clock value needs to be to actual
   time.
+  If UUIDs do not need to be frequently generated, the UUIDv1 or UUIDv6 timestamp can
+  simply be the system time multiplied by the number of 100-nanosecond
+  intervals per system time interval.
 
 Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
@@ -1091,31 +1111,16 @@ Truncating:
   bits MUST be used. An example would be truncating a 64 bit Unix timestamp
   to the least significant, right-most 48 bits for UUIDv7.
 
-## System Clock Resolution {#clock_resolution}
-TODO rename or merge this with previous section
-
-The timestamp is generated from the system time, whose resolution may
-be less than the resolution of the UUID timestamp.
-
-If UUIDs do not need to be frequently generated, the timestamp can
-simply be the system time multiplied by the number of 100-nanosecond
-intervals per system time interval.
-
-If a system overruns the generator by requesting too many UUIDs
-within a single system time interval, the UUID service MUST either
-return an error, or stall the UUID generator until the system clock
-catches up.
-
-A high resolution timestamp can be simulated by keeping a count of
-the number of UUIDs that have been generated with the same value of
-the system time, and using it to construct the low order bits of the
-timestamp.  The count will range between zero and the number of
-100-nanosecond intervals per system time interval.
-
-Note: If the processors overrun the UUID generation frequently,
-additional node identifiers can be allocated to the system, which
-will permit higher speed allocation by making multiple UUIDs
-potentially available for each time stamp value.
+Error Handling:
+: If a system overruns the generator by requesting too many UUIDs
+  within a single system time interval, the UUID service MUST either
+  return an error, or stall the UUID generator until the system clock
+  catches up.
+  Note that if the processors overrun the UUID generation frequently,
+  additional node identifiers can be allocated to the system, which
+  will permit higher speed allocation by making multiple UUIDs
+  potentially available for each time stamp value.
+  Similar to {{distributed_shared_knowledge}} techniques
 
 ## Monotonicity and Counters {#monotonicity_counters}
 
@@ -1128,7 +1133,7 @@ Additionally, care SHOULD be taken to ensure UUIDs generated in batches are
 also monotonic. That is, if one-thousand UUIDs are generated for the same
 timestamp; there is sufficient logic for organizing the creation order of
 those one-thousand UUIDs.
-For batch UUID creation implementions MAY utilize a monotonic counter which
+For batch UUID creation implementations MAY utilize a monotonic counter which
 SHOULD increment for each UUID created during a given timestamp.
 
 For single-node UUID implementations that do not need to create batches of
@@ -1146,7 +1151,7 @@ Fixed-Length Dedicated Counter Bits (Method 1):
 : This references the practice of allocating a specific number of bits in the
   UUID layout to the sole purpose of tallying the total number of UUIDs created
   during a given UUID timestamp tick.
-  Positioning of a fixed bit-length counter SHOULD be immediatly after the
+  Positioning of a fixed bit-length counter SHOULD be immediately after the
   embedded timestamp. This promotes sortability and allows random data generation
   for each counter increment.
   With this method rand_a section of UUIDv7 SHOULD be utilized as fixed-length
@@ -1255,6 +1260,37 @@ UUID generated is greater than the previous. To handle this scenario, the
 general guidance is that application MAY reuse the previous timestamp and
 increment the previous counter method.
 
+## UUID Generator States {#generator_states}
+
+The UUID Generator state only needs to be read from stable storage once at boot
+time, if it is read into a system-wide shared volatile store (and
+updated whenever the stable store is updated).
+
+If an implementation does not have any stable store available, then
+it can always say that the values were unavailable.  This is the
+least desirable implementation because it will increase the frequency
+of creation of values such as clock sequence, counters or random data which increases the
+probability of duplicates.
+
+For UUIDv1 and UUIDv6, if the node ID can never change (e.g., the net card is inseparable
+from the system), or if any change also reinitializes the clock
+sequence to a random value, then instead of keeping it in stable
+store, the current node ID may be returned
+
+For UUIDv1 and UUIDv6, the state does not always need to be written to stable store every
+time a UUID is generated.  The timestamp in the stable store can be
+periodically set to a value larger than any yet used in a UUID.  As
+long as the generated UUIDs have timestamps less than that value, and
+the clock sequence and node ID remain unchanged, only the shared
+volatile copy of the state needs to be updated.  Furthermore, if the
+timestamp value in stable store is in the future by less than the
+typical time it takes the system to reboot, a crash will not cause a
+reinitialization of the clock sequence.
+
+If it is too expensive to access shared state each time a UUID is
+generated, then the system-wide generator can be implemented to
+allocate a block of time stamps each time it is called; a per-
+process generator can allocate from that block until it is exhausted.
 
 ## Distributed UUID Generation {#distributed_shared_knowledge}
 
@@ -1264,7 +1300,8 @@ nodes independently generating UUIDs that will be stored in a common location.
 While UUIDs already feature sufficient entropy to ensure that the chances
 of collision are low as the total number of nodes increase; so does the likelihood
 of a collision.
-This section will detail the approaches that MAY be utilized by multi-node
+
+This section will detail the approaches that have been observed by by multi-node
 UUID implementations in distributed environments.
 
 {: vspace='0'}
@@ -1274,7 +1311,7 @@ Centralized Registry:
   and confirm the generated value is unique. As applications scale the communication
   with the central registry could become a bottleneck and impact UUID generation
   in a negative way. Utilization of shared knowledge schemes with central/global
-  registries is outside the scope of this specification.
+  registries is outside the scope of this specification and should generally be discouraged.
 
 Node IDs:
 : With this method, a pseudo-random Node ID value is placed within the UUID
@@ -1364,6 +1401,7 @@ Implementations MAY implement a shared knowledge scheme introduced in {{distribu
 
 
 ## Unguessability {#unguessability}
+TODO: Here or in security considerations, discuss security considerations with with "running out of random"
 
 Implementations SHOULD utilize a cryptographically secure pseudo-random number
 generator (CSPRNG) to provide values that are both difficult to predict ("unguessable")
@@ -1372,18 +1410,15 @@ Care SHOULD be taken to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
-Further advice on generating cryptographic-quality random numbers can be found in {{ref-5}}
+Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}}
 
-## Node IDs that Do Not Identify the Host {#unidentifiable}
-TODO possibly merge this with the prevous section
-
-This section describes how to generate a version 1 UUID if an IEEE
+## UUIDs that Do Not Identify the Host {#unidentifiable}
+This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
 802 address is not available, or its use is not desired.
 
 One approach is to contact the IEEE and get a separate block of
 addresses.  At the time of writing, the application could be found at
-[](http://standards.ieee.org/regauth/oui/pilot-ind.html), and the cost
-was US$550.
+[](https://standards.ieee.org/products-programs/regauth/).
 
 A better solution is to obtain a 47-bit cryptographic quality random
 number and use it as the low 47 bits of the node ID, with the least
@@ -1399,9 +1434,6 @@ For compatibility with earlier specifications, note that this
 document uses the unicast/multicast bit, instead of the arguably more
 correct local/global bit.
 
-Advice on generating cryptographic-quality random numbers can be
-found in {{ref-5}}.
-
 In addition, items such as the computer's name and the name of the
 operating system, while not strictly speaking random, will help
 differentiate the results from those obtained by other systems.
@@ -1410,7 +1442,7 @@ The exact algorithm to generate a node ID using these data is system
 specific, because both the data available and the functions to obtain
 them are often very system specific.  A generic approach, however, is
 to accumulate as many sources as possible into a buffer, use a
-message digest such as MD5 {{ref-4}} or SHA-1 {{ref-8}}, take an arbitrary 6
+message digest such as MD5 {{RFC1321}} or SHA-1 {{SHA1}}, take an arbitrary 6
 bytes from the hash value, and set the multicast bit as described
 above.
 
@@ -1475,9 +1507,9 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
-TODO: Should Namespace Registration Template be here?
+TODO: Q: Should Namespace Registration Template be here? {{namespace_reg_template}}
 
-TODO: Do we need to re-submit anything or is the old template "good enough" since this is already registered with IANA?
+TODO: Q: Do we need to re-submit anything or is the old template "good enough" since this is already registered with IANA?
 
 This document has no IANA actions.
 
@@ -1522,6 +1554,7 @@ If UUIDs are required for
 use with any security operation within an application context in any shape
 or form then UUIDv4, {{uuidv4}} SHOULD be utilized.
 
+See {{RFC6151}} for MD5 Security Considerations and {{RFC6194}} for SHA1 security considerations.
 
 # Acknowledgements {#Acknowledgements}
 
@@ -1557,6 +1590,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 --- back
 
 # Namespace Registration Template {#namespace_reg_template}
+TODO: See {{IANA}}, if not needed, put URN representation somewhere like {{layout}}
 
 {:vspace}
 Namespace ID:
@@ -1588,7 +1622,7 @@ Declaration of syntactic structure:
   lower case characters and are case insensitive on input.
 
   The formal definition of the UUID string representation is
-  provided by the following ABNF {{ref-7}}:
+  provided by the following ABNF {{RFC4234}}:
 
   ~~~~ abnf
   UUID                   = time-low "-" time-mid "-"
@@ -1614,7 +1648,7 @@ Declaration of syntactic structure:
   urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 
 Relevant ancillary documentation:
-:  {{ref-1}}{{ref-2}}
+:  {{NCA}}{{C309}}
 
 Identifier uniqueness considerations:
 : This document specifies three algorithms to generate UUIDs: the
@@ -2509,10 +2543,25 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 ~~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
-## Example of UUIDv1 Value {uuidv1_example}
-TODO
+## Example of UUIDv1 Value {#uuidv1_example}
+~~~~
+----------------------------------------------
+field                 bits    value_hex
+----------------------------------------------
+time_low              32      0xC232AB00
+time_mid              16      0x9414
+time_hi_and_version   16      0x11EC
+clk_seq_hi_res         8      0xB3
+clock_seq_low          8      0xC8
+node                  48      0x9E6BDECED846
+----------------------------------------------
+total                128
+----------------------------------------------
+final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
+~~~~
+{: title='UUIDv1 Example Test Vector'}
 
-## Example of UUIDv3 Value {uuidv3_example}
+## Example of UUIDv3 Value {#uuidv3_example}
 The MD5 computation from {{sample_implementation}} is detailed in {{v3md5}}
 while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swaping for version and variant see {{v3vervar}}.
@@ -2533,7 +2582,7 @@ md5_high   48    0x5df418813aed
 ver         4    0x3
 md5_mid    12    0x515
 var         2    b10
-md5_low    62    0x08a72f4a814cf09e
+md5_low    62    b00, 0x8a72f4a814cf09e
 -------------------------------
 total     128
 -------------------------------
@@ -2548,13 +2597,13 @@ Final:                  5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~~
 {: id='v3vervar' title='UUIDv3 Example Ver Var bit swaps'}
 
-## Example of UUIDv4 Value (uuidv4_example)
+## Example of UUIDv4 Value {#uuidv4_example}
 This UUIDv4 example was created by generating 16 bytes
 of random data resulting in the hex value of
 919108F752D133205BACF847DB4148A8. This is then used to
 fill out the feilds as shown in {{v4fields}}.
 
-Finally to further illustrate the bit swaping for version and variant see {{v4vervar}}.
+Finally to further illustrate the bit swapping for version and variant see {{v4vervar}}.
 
 ~~~~
 -------------------------------
@@ -2564,7 +2613,7 @@ random_a   48    0x919108f752d1
 ver         4    0x4
 random_b   12    0x320
 var         2    b10
-random_c   62    0x1bacf847db4148a8
+random_c   62    b01, 0xbacf847db4148a8
 -------------------------------
 total      128
 -------------------------------
@@ -2578,13 +2627,13 @@ Random hex and dash:    919108f7-52d1-3320-5bac-f847db4148a8
 Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 Final:                  919108f7-52d1-4320-9bac-f847db4148a8
 ~~~~
-{: id='v4vervar' title='UUIDv4 Example Ver Var bit swaps '}
+{: id='v4vervar' title='UUIDv4 Example Ver/Var bit swaps '}
 
 
-## Example of UUIDv5 Value {uuidv5_example}
+## Example of UUIDv5 Value {#uuidv5_example}
 The SHA1 computation from {{sample_implementation}} is detailed in {{v5sha1}}
 while the field mapping and all values are illustrated in {{v5fields}}.
-Finally to further illustrate the bit swaping for version and variant and the unused/discarded part of the SHA1 value see {{v5vervar}}.
+Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA1 value see {{v5vervar}}.
 
 ~~~~
 Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
@@ -2602,7 +2651,7 @@ sha_high   48    0x2ed6657de927
 ver         4    0x5
 sha_mid    12    0x68b
 var         2    b10
-sha_low    62    0x15e12665a8aea6a2
+sha_low    62    b01, 0x5e12665a8aea6a2
 -------------------------------
 total     128
 -------------------------------
@@ -2616,27 +2665,9 @@ Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 Final:                  2ed6657d-e927-568b-95e1-2665a8aea6a2
 Discarded:                                                  -2dee3e35
 ~~~~
-{: id='v5vervar' title='UUIDv5 Example Ver Var bit swaps and discarded SHA1 segment'}
+{: id='v5vervar' title='UUIDv5 Example Ver/Var bit swaps and discarded SHA1 segment'}
 
 ## Example of a UUIDv6 Value {#uuidv6_example}
-
-~~~~
-----------------------------------------------
-field                 bits    value_hex
-----------------------------------------------
-time_low              32      0xC232AB00
-time_mid              16      0x9414
-time_hi_and_version   16      0x11EC
-clk_seq_hi_res         8      0xB3
-clock_seq_low          8      0xC8
-node                  48      0x9E6BDECED846
-----------------------------------------------
-total                128
-----------------------------------------------
-final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
-~~~~
-{: title='UUIDv1 Example Test Vector'}
-
 
 ~~~~
 -----------------------------------------------
