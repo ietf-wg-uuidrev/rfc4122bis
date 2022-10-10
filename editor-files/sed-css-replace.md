@@ -1,9 +1,5 @@
-### Replace CSS value from make with better CSS.
-```
-cat draft-ietf-uuidrev-rfc4122bis.html | sed '/<style/{:b;$!N;/style>/!bb;s/.*/<link rel="stylesheet" href="https:\/\/raw.githubusercontent.com\/ietf-wg-uuidrev\/rfc4122bis\/draft-00-merge-1\/editor-files\/better-rfc.css">/}' > draft-ietf-uuidrev-rfc4122bis-00.html
-```
-
-### Same but within this folder
+### Replace inline CSS with css from /docs/better-rfc.css
 ``` 
-cat draft-ietf-uuidrev-rfc4122bis.html | sed '/<style/{:b;$!N;/style>/!bb;s/.*/<link rel="stylesheet" href="../better-rfc.css">/}' > draft-ietf-uuidrev-rfc4122bis-00.html
+cat draft-ietf-uuidrev-rfc4122bis.html | sed '/<style/{:b;$!N;/style>/!bb;s/.*/<link rel="stylesheet" href="..\/better-rfc.css">/}' > draft-ietf-uuidrev-rfc4122bis-00.html
+mv -f draft-ietf-uuidrev-rfc4122bis-00.html docs/draft-00/draft-ietf-uuidrev-rfc4122bis.html
 ```
