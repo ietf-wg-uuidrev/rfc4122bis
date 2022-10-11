@@ -1,0 +1,339 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2022-10-11T02:31:51.750387+00:00",
+  "repo": "ietf-wg-uuidrev/rfc4122bis",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDOH6Ln3M5TLLGk",
+      "title": "Errata: Fix uuid_create_md5_from_name() | 1352",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/2",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [1352](https://www.rfc-editor.org/errata/eid1352)\r\n- Status: Verified\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Frank Ellermann\r\n- Date Reported: 2008-03-08\r\n- Verifier Name: Alexey Melnikov\r\n- Date Verified: 2009-12-04\r\n\r\n### Errata\r\nIn Appendix B, it says:\r\n\r\n`uuid_create_md5_from_name(): e902893a-9d22-3c7e-a7b8-d6e313b71d9f`\r\n\r\nIt should say:\r\n\r\n`uuid_create_md5_from_name(): 3d813cbb-47fb-32ba-91df-831e1593ac29`\r\n\r\n### Notes:\r\n\r\nThe given value e902... etc. is based on a calculation swapping the eight octets 0..3, 4..5, 6..7 twice, for the name space UUID, and for the MD5 output, as foreseen for little endian input, but the example values were already big endian. I can reproduce the example and the proposed fix, see <http://omniplex.blogspot.com/2008/03/md5-16-pop3-and-uuid.html>.\r\n\r\nThe blog entry contains links to an identical older error report, and two (different) examples from third parties also agreeing with that theory.",
+      "createdAt": "2022-10-03T23:02:24Z",
+      "updatedAt": "2022-10-04T22:40:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Swapping to `www.example.com` in #6 should render this Errata as fixed.",
+          "createdAt": "2022-10-04T22:40:51Z",
+          "updatedAt": "2022-10-04T22:40:51Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOH6Ln3M5TLLwz",
+      "title": "Errata: Lexicographically Sorting Paragraph Fix | 1428",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/3",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [1428](https://www.rfc-editor.org/errata/eid1428)\r\n- Status: Verified\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Russ Housley\r\n- Date Reported: 2008-05-22\r\n- Verifier Name: Alexey Melnikov\r\n- Date Verified: 2009-12-04\r\n\r\n### Errata\r\nSection 3 says:\r\n\r\n```\r\nUUIDs, as defined in this document, can also be ordered lexicographically.\r\nFor a pair of UUIDs, the first one follows the second if the most significant\r\nfield in which the UUIDs differ is greater for the first UUID.  The second\r\nprecedes the first if the most significant field in which the UUIDs differ\r\nis greater for the second UUID.\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nUUIDs, as defined in this document, can also be ordered lexicographically.\r\nFor a pair of UUIDs, the first one follows the second if the most significant\r\nfield in which the UUIDs differ is greater for the first UUID.  The second\r\nfollows the first if the most significant field in which the UUIDs differ\r\nis greater for the second UUID.\r\n```\r\n\r\n### Notes:\r\n\r\nThe second and third sentences in the paragraph as originally written are\r\ninconsistent. I have proposed one of the possible fixes. There are others\r\nthat will make them consistent.",
+      "createdAt": "2022-10-03T23:05:03Z",
+      "updatedAt": "2022-10-03T23:05:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOH6Ln3M5TLMJN",
+      "title": "Errata: Bad Reference to RFC1750 | 3641",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/4",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [3641](https://www.rfc-editor.org/errata/eid3641)\r\n- Status: Verified\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Douglas Ray\r\n- Date Reported: 2013-06-06\r\n- Verifier Name: Barry Leiba\r\n- Date Verified: 2013-06-06\r\n\r\n### Errata\r\nThroughout the document, when it says:\r\n\r\n```\r\nAdvice on generating cryptographic-quality random numbers can be\r\n   found in RFC1750 [5].\r\n```\r\nIt should say:\r\n\r\n```\r\nAdvice on generating cryptographic-quality random numbers can be\r\n   found in RFC4086 [5].\r\n```\r\n\r\n### Notes:\r\n\r\n(Above sample is from section 4.5).\r\nReferences to RFC 1750 should currently refer to RFC 4086.\r\n(Likewise in Appendix A.)\r\nThe note [5] actually references RFC4086, but this is the only\r\npoint that is updated, ie, the document is inconsistent in its references.\r\nThe references in Appendix A are not cross-referenced to note [5].\r\n\r\n### Verifier notes\r\nThis is correct: reference [5] was updated to point to 4086, but the text in the\r\ndocument body was not changed accordingly.",
+      "createdAt": "2022-10-03T23:06:39Z",
+      "updatedAt": "2022-10-03T23:06:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOH6Ln3M5TLMlZ",
+      "title": "Errata: Incorrect Parenthesis usage Section 4.3 | 184",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/5",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [184](https://www.rfc-editor.org/errata/eid184)\r\n- Status: Verified\r\n- Type: Editorial\r\n- Publication Format(s) : TEXT\r\n- Reported By: Tim Wilson-Brown\r\n- Date Reported: 2006-05-03\r\n- Verifier Name: Alexey Melnikov\r\n- Date Verified: 2009-12-04\r\n\r\n### Errata\r\nSection 4.3 says:\r\n\r\n```\r\nThe UUIDs generated from the same name in two different namespaces\r\n       should be different with (very high probability).\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nThe UUIDs generated from the same name in two different namespaces\r\n       should be different (with very high probability).\r\n```\r\n\r\n### Notes:\r\n\r\nThe brackets should be set similarly to the other points.",
+      "createdAt": "2022-10-03T23:08:49Z",
+      "updatedAt": "2022-10-03T23:08:49Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOH6Ln3M5TLM4S",
+      "title": "Errata: Change MD5 website to example.com | 3476",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/6",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [3476](https://www.rfc-editor.org/errata/eid3476)\r\n- Status: Verified\r\n- Type: Editorial\r\n- Publication Format(s) : TEXT\r\n- Reported By: Simon Kissane\r\n- Date Reported: 2013-02-02\r\n- Verifier Name: Barry Leiba\r\n- Date Verified: 2013-02-03\r\n\r\n### Errata\r\nSection Appendix A,B says:\r\n\r\n```\r\nIn Appendix A, the line:\r\n    uuid_create_md5_from_name(&u, NameSpace_DNS, \"www.widgets.com\", 15);\r\nIn Appendix B, the line:\r\n     uuid_create_md5_from_name(): e902893a-9d22-3c7e-a7b8-d6e313b71d9f\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nIn Appendix A, the line:\r\n    uuid_create_md5_from_name(&u, NameSpace_DNS, \"www.example.com\", 15);\r\nIn Appendix B, the line:\r\n     uuid_create_md5_from_name(): 5df41881-3aed-3515-88a7-2f4a814cf09e\r\n```\r\n\r\n### Notes:\r\n\r\nPer RFC2606 section 5, it is best practice for standards and other documentation (including RFCs) to use the reserved example domains (e.g. example.com) rather than domains which could be in actual use. Indeed, the domain in question (www.widgets.com) is in actual use at the time of writing. So this proposed change uses \"www.example.com\" instead, and changes the example output accordingly. (Note that original output was wrong for the original input, as already noted in verified errata 1352.)",
+      "createdAt": "2022-10-03T23:10:18Z",
+      "updatedAt": "2022-10-03T23:10:18Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOH6Ln3M5TLNJG",
+      "title": "Errata: Fix reference to variant in octet 8 | 4975",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/7",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [4975](https://www.rfc-editor.org/errata/eid4975)\r\n- Status: Reported\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Joseph Boon\r\n- Date Reported: 2017-03-22\r\n\r\n### Errata\r\nSection 4.1 says:\r\n\r\n```\r\nThe UUID format is 16 octets; some bits of the eight octet variant \r\nfield specified below determine finer structure.\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nThe UUID format is 16 octets; some bits of the variant \r\nfield specified below determine finer structure.\r\n```\r\n\r\n### Notes:\r\n\r\nThe original wording implies the variant field is 8 octets long. It is between 1 and 3 bits long. An alternative correction would be:\r\n\r\n\"The UUID format is 16 octets; some bits of the variant\r\nfield in octet 8 specified below determine finer structure.\"",
+      "createdAt": "2022-10-03T23:11:39Z",
+      "updatedAt": "2022-10-03T23:11:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOH6Ln3M5TLNnj",
+      "title": "Errata: Further clarify 3rd/last bit of Variant for spec | 5560",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/8",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [5560](https://www.rfc-editor.org/errata/eid5560)\r\n- Status: Reported\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: GLOBAL UUID DATABASE\r\n- Date Reported: 2018-11-25\r\n\r\n\r\n### Errata\r\nSection 4.1.1 says:\r\n\r\n\r\n```\r\n   The following table lists the contents of the variant field, where\r\n   the letter \"x\" indicates a \"don't-care\" value.\r\n\r\n   Msb0  Msb1  Msb2  Description\r\n    0     x     x    Reserved, NCS backward compatibility.\r\n    1     0     x    The variant specified in this document.\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\n   The following table lists the contents of the variant field, where\r\n   the letter \"x\" indicates a \"don't-care\" value.\r\n\r\n   Msb0  Msb1  Msb2  Description\r\n\r\n    0     x     x    Reserved, NCS backward compatibility.\r\n\r\n    1     0     0    The variant specified in this document.\r\n```\r\n\r\n### Notes:\r\n\r\nIf Msb2 is a \u00ab don't-care \u00bb value, this means it's not wrong to set the bit to 0 or 1.\r\nIn the case of UUIDv3 and UUIDv5, this does not specify if the bit from the hash output should be left untouched or not.\r\nIt's not stated that it's illegal to reset it to 0 when setting Msb0 and Msb1 altogether (as libuuid does), since it's a \u00ab don't-care \u00bb value.\r\nBut letting it untouched whenever it's set to 1 by the hash output (as the Python stdlib does) causes two UUIDv{3,5} to be different for the same input namespaces and data. (Example: NS=Nil UUID, data = 0x44 (\u00abD\u00bb).\r\n\r\nThe RFC should enforce the value of the bit to 0 or 1, or clarify if it should be left untouched depending on the context-dependent data (Clock ID {1,2}, hash output {3,5}, random input {4}). (Which would mean it's then just a libuuid bug to forcibly set Msb2 to 0 when it should be untouched.)\r\n\r\nSee also : https://uuid.pirate-server.com/blog/brother-uuids-or-why-uuids-are-not-unique.html",
+      "createdAt": "2022-10-03T23:14:26Z",
+      "updatedAt": "2022-10-03T23:14:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOH6Ln3M5TLN1B",
+      "title": "Errata: Fix BAD OID acronym | 6225",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/9",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [6225](https://www.rfc-editor.org/errata/eid6225)\r\n- Status: Reported\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Daniel Marschall\r\n- Date Reported: 2020-07-07\r\n\r\n### Errata\r\nSection 4.3 says:\r\n\r\n```\r\nISO Object IDs (OIDs)\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nObject Identifiers (OIDs)\r\n```\r\n\r\n### Notes:\r\n\r\nAn Object Identifier (OID) is an identification mechanism jointly developed by ITU-T and ISO/IEC.\r\n\r\nIt makes no sense saying that it is an \"ISO OID\". Actually, it can be very confusing, because people could think that \"ISO OID\" means an OID which is a descendant of { iso(1) }, which would exclude OIDs descending from { itu-t(0) } and { joint-iso-itu-t(2) }.\r\n\r\nAlso in Appendix C, \"Name string is an ISO OID\" should be changed to \"Name string is an OID\".\r\n\r\nMaybe it would also be good to mention how the OID should be formatted. I guess the intention of the author is the normal dot-notation \"2.999\" which is passed as ASCII text to the name-based UUID generation function.",
+      "createdAt": "2022-10-03T23:15:35Z",
+      "updatedAt": "2022-10-03T23:15:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOH6Ln3M5TLOQT",
+      "title": "Errata: Fix clock_seq_hi_and_reserved most-significant bit verbiage | 4976",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/10",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [4976](https://www.rfc-editor.org/errata/eid4976)\r\n- Status: Reported\r\n- Type: Editorial\r\n- Publication Format(s) : TEXT\r\n- Reported By: Joseph Boon\r\n- Date Reported: 2017-03-22\r\n\r\n\r\n### Errata\r\nThroughout the document, when it says:\r\n\r\n```\r\nSet the two most significant bits (bits 6 and 7) of the\r\nclock_seq_hi_and_reserved to zero and one, respectively.\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nSet the two most significant bits (bits 7 and 6) of the\r\nclock_seq_hi_and_reserved to one and zero, respectively.\r\n```\r\n\r\n### Notes:\r\n\r\nThe original wording appears in sections 4.2.2, 4.3, and 4.4. It can lead to confusion about which bit is most significant (6 or 7), and does not align neatly with the table of Variants in section 4.1.1 (which shows 1 followed by 0 for msb0 and msb1). The revised wording specifies the bits in msb order, which helps the reader more clearly correlate the bit values with section 4.1.1. It is noted that the revised wording would not match other parts of the document which give the lsb number first (e.g. \"bits 32 through 47\"), but this case is different because it is specifying fixed values for two bits, and the sentence starts with \"Set the two most significant bits\".",
+      "createdAt": "2022-10-03T23:18:03Z",
+      "updatedAt": "2022-10-03T23:18:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOH6Ln3M5TLOfd",
+      "title": "Errata: Typo in code comment | 6665",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/11",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [6665](https://www.rfc-editor.org/errata/eid6665)\r\n- Status: Reported\r\n- Type: Editorial\r\n- Publication Format(s) : TEXT\r\n- Reported By: Andrzej Koszela\r\n- Date Reported: 2021-08-25\r\n\r\n### Errata\r\nSection Appendix A says:\r\n\r\n```\r\nstatic unsigned16 true_random(void);\r\n\r\n/* uuid_create -- generator a UUID */\r\nint uuid_create(uuid_t *uuid)\r\n{\r\n     uuid_time_t timestamp, last_time;\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nstatic unsigned16 true_random(void);\r\n\r\n/* uuid_create -- generate a UUID */\r\nint uuid_create(uuid_t *uuid)\r\n{\r\n     uuid_time_t timestamp, last_time;\r\n```\r\n\r\n### Notes:\r\n\r\nThe comment above the declaration of uuid_create() uses \"generate a UUID\", so the comment above the definition is likely intended to be identical.",
+      "createdAt": "2022-10-03T23:19:30Z",
+      "updatedAt": "2022-10-03T23:19:30Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOH6Ln3M5TLOwe",
+      "title": "Errata: Better Clarify network byte order when referencing most signfificant bits | 3546",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/12",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [3546](https://www.rfc-editor.org/errata/eid3546)\r\n- Status: Held for Document Update\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Askar Safin\r\n- Date Reported: 2013-03-14\r\n- Held for Document Update by: Barry Leiba\r\n- Date Held: 2013-03-20\r\n\r\n### Errata\r\nSection 4.1.3 says:\r\n\r\n```\r\nThe version number is in the most significant 4 bits of the time\r\nstamp (bits 4 through 7 of the time_hi_and_version field).\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nThe version number is in the most significant 4 bits of the time\r\nstamp (bits 0 through 3 of the time_hi_and_version field).\r\n```\r\n\r\n### Notes:\r\n\r\nWe use network order (as far as I know, we use network order in this RFC both for bits and bytes). So, the most significant bits comes first and they are located in first bytes. So, 0 through 3.\r\n\r\n### VERIFIER NOTES\r\nThis erratum is correct as far as it goes, but, given other text in the RFC, so is erratum 1957. There is a pervasive problem in this RFC with inconsistent and unclear usage of bit numbering, which switches between several conventions. The diagram in Section 4.1.2 uses left-to-right bit numbering (the most significant bit is numbered 0), but much of the text (such as in Section 4.2.2) uses right-to-left bit numbering (the least significant bit is numbered 0). Most of the text uses big-ending byte order (network byte order), but some seems to assume little-ending, probably mistakes that come from the authors' familiarity with that convention.\r\n\r\nWith respect to the text in question, the first sentence of Section 4.1.3, we have the following situation:\r\n\r\n- The original text is correct if we assume right-to-left bit numbering and little-endian byte order.\r\n\r\n- Erratum 1957 is correct if we assume right-to-left bit numbering and big-endian byte order. This change also makes the first sentence of Section 4.1.3 consistent with the sixth bullet in Section 4.2.2.\r\n\r\n- Erratum 3546 is correct if we assume left-to-right bit numbering and big-endian byte order.\r\n\r\nIn the end, the real point is that this document needs a revision that carefully and thoroughly fixes every instance of byte numbering (or removes the byte numbering and refers only to \"most significant\" and \"least significant\"). Such a revision should also double-check the sample code in Appendix A to be sure it works in both big-ending and little-endian machines.\r\n\r\nHappily, it's not likely that misunderstandings here will cause actual interoperability problems: this isn't a situation where things need to be disassembled and reassembled. The algorithm merely turns a UUID into a URN, and the URN is thereafter a \"black box\", an unchanged identifier. The only issue would be whether different interpretations of the document would turn two different UUIDs into the same URN, and, given the number of bits involved, the likelihood of collisions in practice is small.",
+      "createdAt": "2022-10-03T23:21:07Z",
+      "updatedAt": "2022-10-03T23:21:07Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOH6Ln3M5TLPBt",
+      "title": "Errata: Fix 4.1.3 reference to the correct bits | 1957",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/13",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "### Errata ID: [1957](https://www.rfc-editor.org/errata/eid1957)\r\n- Status: Held for Document Update\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Sergey Shandar\r\n- Date Reported: 2009-12-03\r\n- Held for Document Update by: Barry Leiba\r\n- Date Held: 2013-03-20\r\n\r\n### Errata\r\nSection 4.1.3 says:\r\n\r\n```\r\nThe version number is in the most significant 4 bits of the time\r\nstamp (bits 4 through 7 of the time_hi_and_version field).\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nThe version number is in the most significant 4 bits of the time\r\nstamp (bits 12 through 15 of the time_hi_and_version field).\r\n```\r\n\r\n### Notes:\r\n\r\ntime_hi_and_version is defined as 16 bit field.\r\n\r\n### VERIFIER NOTES\r\nThis change does make the text in Section 4.1.3 consistent with the sixth\r\nbullet in Section 4.2.2. But the issue goes well beyond that: there is a real\r\nproblem with the bit numbering throughout the RFC. Please see erratum\r\n3546 for more details.",
+      "createdAt": "2022-10-03T23:22:42Z",
+      "updatedAt": "2022-10-03T23:22:42Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOH6Ln3M4-f3Vs",
+      "title": "Ci fixes",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/1",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As a recent use of the template, you have picked up a few problems that can't be fixed automatically.  They are only performance problems in CI, but this should fix that up.",
+      "createdAt": "2022-09-07T10:01:57Z",
+      "updatedAt": "2022-09-08T11:00:09Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "925a7abe83092fa92d226fd3e3ff5a2c6a12f33e",
+      "headRepository": "martinthomson/rfc4122bis",
+      "headRefName": "ci-fixes",
+      "headRefOid": "88e13fd7fd5be1c44d8bb64073aa7539e1d6e76e",
+      "closedAt": "2022-09-08T11:00:09Z",
+      "mergedAt": "2022-09-08T11:00:08Z",
+      "mergedBy": "mcr",
+      "mergeCommit": {
+        "oid": "8d4ade67e5f4b42190b2b394a8379139a4684674"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5Bj6yI",
+          "commit": {
+            "abbreviatedOid": "88e13fd"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "I don't know much about GitHub workflows, but I'm sure Martin knows what's needed. Any comments, Michael? Otherwise I will just merge.",
+          "createdAt": "2022-09-07T23:37:36Z",
+          "updatedAt": "2022-09-07T23:37:36Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5BmLMl",
+          "commit": {
+            "abbreviatedOid": "88e13fd"
+          },
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-09-08T11:00:02Z",
+          "updatedAt": "2022-09-08T11:00:02Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOH6Ln3M5Ahsvr",
+      "title": "Draft 00 - Merge RFC 4122 into TOC draft-peabody-dispatch-new-uuid-format-04",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/14",
+      "state": "MERGED",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Merge RFC4122 with draft-peabody-dispatch-new-uuid-format-04.md\r\n- Change: Reference RFC1321 to RFC6151\r\n- Change: Reference RFC2141 to RFC8141\r\n- Change: Reference RFC2234 to RFC4234\r\n- Change: Converted UUIDv1 to match UUIDv6 section from Draft 04\r\n- Change: Trimmed down the ABNF representation\r\n- Change: ITU http website to https equivalent\r\n- Errata: Bad Reference to RFC1750 \\| 3641 #4\r\n- Errata: Change MD5 website to example.com \\| 3476 #6 (Also Fixes Errata: Fix uuid_create_md5_from_name() \\| 1352 #2)\r\n- Errata: Typo in code comment \\| 6665 #11\r\n- Errata: Fix BAD OID acronym \\| 6225 #9\r\n- Errata: Incorrect Parenthesis usage Section 4.3 \\| 184 #5\r\n- Errata: Lexicographically Sorting Paragraph Fix \\| 1428 #3\r\n- Errata: Fix 4.1.3 reference to the correct bits \\| 1957 #13\r\n- Errata: Fix reference to variant in octet 8 \\| 4975 #7\r\n- Errata: Further clarify 3rd/last bit of Variant for spec \\| 5560 #8\r\n- Draft 05: B.2. Example of a UUIDv7 Value two \"var\" in table https://github.com/uuid6/uuid6-ietf-draft/issues/120\r\n- Draft 05: MUST veribage in Reliability of 6.1 https://github.com/uuid6/uuid6-ietf-draft/issues/121\r\n- Draft 05: Further discourage centralized registry for distributed UUID Generation.\r\n- New: Further Clarity of exact octet and bit of var/ver in this spec\r\n- New: Block diagram, bit layout, test vectors for UUIDv4\r\n- New: Block diagram, bit layout, test vectors for UUIDv3\r\n- New: Block diagram, bit layout, test vectors for UUIDv5\r\n- New: Add MD5 Security Considerations reference, RFC6151\r\n- New: Add SHA1 Security Considerations reference, RFC6194",
+      "createdAt": "2022-10-10T22:48:32Z",
+      "updatedAt": "2022-10-10T22:52:00Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "8d4ade67e5f4b42190b2b394a8379139a4684674",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-00-merge-1",
+      "headRefOid": "d60a1a57ff487232ca7c77671e255ec37c506010",
+      "closedAt": "2022-10-10T22:52:00Z",
+      "mergedAt": "2022-10-10T22:52:00Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "26efbd0c00e6021c27418fe2d83449dfa30ecf45"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
