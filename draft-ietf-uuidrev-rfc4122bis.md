@@ -1513,7 +1513,7 @@ and feedback.
 
 # IANA Considerations {#IANA}
 TODO: Q: Should Namespace Registration Template be here or in {{namespace_reg_template}}?
-TODO: Need to ensure IANA doc, https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml, has this new document listed. 
+TODO: Need to ensure IANA doc, https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml, has this new document listed.
 
 # Community Considerations {#community}
 
