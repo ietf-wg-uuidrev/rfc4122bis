@@ -22,11 +22,11 @@ kind permission of the OSF (now known as The Open Group).
 Information from earlier versions of the DCE specification have been
 incorporated into this document. 
     " name="description">
-<meta content="xml2rfc 3.15.0" name="generator">
+<meta content="xml2rfc 3.15.1" name="generator">
 <meta content="uuid" name="keyword">
 <meta content="draft-ietf-uuidrev-rfc4122bis-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.15.0
+  xml2rfc 3.15.1
     Python 3.9.2
     appdirs 1.4.4
     ConfigArgParse 1.5.3
@@ -40,7 +40,7 @@ incorporated into this document.
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.28.1
-    setuptools 65.4.1
+    setuptools 65.5.0
     six 1.16.0
 -->
 <link href="draft-ietf-uuidrev-rfc4122bis.xml" rel="alternate" type="application/rfc+xml">
@@ -57,7 +57,7 @@ incorporated into this document.
 </tr></thead>
 <tfoot><tr>
 <td class="left">Leach, et al.</td>
-<td class="center">Expires 13 April 2023</td>
+<td class="center">Expires 20 April 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -73,12 +73,12 @@ incorporated into this document.
 <a href="https://www.rfc-editor.org/rfc/rfc4122" class="eref">4122</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-10-10" class="published">10 October 2022</time>
+<time datetime="2022-10-17" class="published">17 October 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-04-13">13 April 2023</time></dd>
+<dd class="expires"><time datetime="2023-04-20">20 April 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -144,7 +144,7 @@ incorporated into this document.<a href="#section-abstract-2" class="pilcrow">¶
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 April 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 April 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -611,47 +611,53 @@ appear in all capitals, as shown here.<a href="#section-3.1-1" class="pilcrow">�
 </li>
           <li class="compact" id="section-3.3-3.4">Change: Reference RFC2234 to RFC4234<a href="#section-3.3-3.4" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.5">Change: Converted UUIDv1 to match UUIDv6 section from Draft 04<a href="#section-3.3-3.5" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.5">Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1<a href="#section-3.3-3.5" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.6">Change: Trimmed down the ABNF representation<a href="#section-3.3-3.6" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.6">Change: Converted UUIDv1 to match UUIDv6 section from Draft 04<a href="#section-3.3-3.6" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.7">Change: ITU http website to https equivalent<a href="#section-3.3-3.7" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.7">Change: Trimmed down the ABNF representation<a href="#section-3.3-3.7" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.8">Errata: Bad Reference to RFC1750 | 3641 #4<a href="#section-3.3-3.8" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.8">Change: http websites to https equivalent<a href="#section-3.3-3.8" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.9">Errata: Change MD5 website to example.com | 3476 #6 (Also Fixes Errata: Fix uuid_create_md5_from_name() | 1352 #2)<a href="#section-3.3-3.9" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.9">Errata: Bad Reference to RFC1750 | 3641 #4<a href="#section-3.3-3.9" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.10">Errata: Typo in code comment | 6665 #11<a href="#section-3.3-3.10" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.10">Errata: Change MD5 website to example.com | 3476 #6 (Also Fixes Errata: Fix uuid_create_md5_from_name() | 1352 #2)<a href="#section-3.3-3.10" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.11">Errata: Fix BAD OID acronym | 6225 #9<a href="#section-3.3-3.11" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.11">Errata: Typo in code comment | 6665 #11<a href="#section-3.3-3.11" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.12">Errata: Incorrect Parenthesis usage Section 4.3 | 184 #5<a href="#section-3.3-3.12" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.12">Errata: Fix BAD OID acronym | 6225 #9<a href="#section-3.3-3.12" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.13">Errata: Lexicographically Sorting Paragraph Fix | 1428 #3<a href="#section-3.3-3.13" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.13">Errata: Incorrect Parenthesis usage Section 4.3 | 184 #5<a href="#section-3.3-3.13" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.14">Errata: Fix 4.1.3 reference to the correct bits | 1957 #13<a href="#section-3.3-3.14" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.14">Errata: Lexicographically Sorting Paragraph Fix | 1428 #3<a href="#section-3.3-3.14" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.15">Errata: Fix reference to variant in octet 8 | 4975 #7<a href="#section-3.3-3.15" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.15">Errata: Fix 4.1.3 reference to the correct bits | 1957 #13<a href="#section-3.3-3.15" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.16">Errata: Further clarify 3rd/last bit of Variant for spec | 5560 #8<a href="#section-3.3-3.16" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.16">Errata: Fix reference to variant in octet 8 | 4975 #7<a href="#section-3.3-3.16" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.17">Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120<a href="#section-3.3-3.17" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.17">Errata: Further clarify 3rd/last bit of Variant for spec | 5560 #8<a href="#section-3.3-3.17" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.18">Draft 05: <span class="bcp14">MUST</span> veribage in Reliability of 6.1 #121<a href="#section-3.3-3.18" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.18">Errata: Fix clock_seq_hi_and_reserved most-significant bit verbiage | 4976 #10<a href="#section-3.3-3.18" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.19">Draft 05: Further discourage centralized registry for distributed UUID Generation.<a href="#section-3.3-3.19" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.19">Errata: Better Clarify network byte order when referencing most significant bits | 3546 #12<a href="#section-3.3-3.19" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.20">New: Further Clarity of exact octet and bit of var/ver in this spec<a href="#section-3.3-3.20" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.20">Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120<a href="#section-3.3-3.20" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.21">New: Block diagram, bit layout, test vectors for UUIDv4<a href="#section-3.3-3.21" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.21">Draft 05: <span class="bcp14">MUST</span> veribage in Reliability of 6.1 #121<a href="#section-3.3-3.21" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.22">New: Block diagram, bit layout, test vectors for UUIDv3<a href="#section-3.3-3.22" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.22">Draft 05: Further discourage centralized registry for distributed UUID Generation.<a href="#section-3.3-3.22" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.23">New: Block diagram, bit layout, test vectors for UUIDv5<a href="#section-3.3-3.23" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.23">New: Further Clarity of exact octet and bit of var/ver in this spec<a href="#section-3.3-3.23" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.24">New: Add MD5 Security Considerations reference, RFC6151<a href="#section-3.3-3.24" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.24">New: Block diagram, bit layout, test vectors for UUIDv4<a href="#section-3.3-3.24" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-3.25">New: Add SHA1 Security Considerations reference, RFC6194<a href="#section-3.3-3.25" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-3.25">New: Block diagram, bit layout, test vectors for UUIDv3<a href="#section-3.3-3.25" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.3-3.26">New: Block diagram, bit layout, test vectors for UUIDv5<a href="#section-3.3-3.26" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.3-3.27">New: Add MD5 Security Considerations reference, RFC6151<a href="#section-3.3-3.27" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.3-3.28">New: Add SHA1 Security Considerations reference, RFC6194<a href="#section-3.3-3.28" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -1007,17 +1013,17 @@ transmitted on an 802.3 LAN.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 <span id="name-uuidv1-field-and-bit-layout"></span><figure id="figure-6">
           <div class="alignLeft art-text artwork" id="section-5.1-4.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                          time_low                             |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |       time_mid                |         time_hi_and_version   |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                         node (2-5)                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          time_low                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|       time_mid                |         time_hi_and_version   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         node (2-5)                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
@@ -1118,17 +1124,17 @@ For more information on MD5 security considerations see <span>[<a href="#RFC6151
 <span id="name-uuidv3-field-and-bit-layout"></span><figure id="figure-7">
           <div class="alignLeft art-text artwork" id="section-5.3-5.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            md5_high                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          md5_high             |  ver  |       md5_mid         |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                        md5_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            md5_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            md5_high                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          md5_high             |  ver  |       md5_mid         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                        md5_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            md5_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
@@ -1187,17 +1193,17 @@ for random_a, random_b, and random_c then concatenate the version and variant in
 <figure id="figure-8">
           <div class="alignLeft art-text artwork" id="section-5.4-5.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           random_a                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          random_a             |  ver  |       random_b        |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                       random_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           random_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           random_a                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          random_a             |  ver  |       random_b        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                       random_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           random_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1242,7 +1248,7 @@ filled with random data as per <a href="#unguessability" class="auto internal xr
         </h3>
 <p id="section-5.5-1">UUID Version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per <a href="#name_based_uuid_generation" class="auto internal xref">Section 6.5</a>.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
-<p id="section-5.5-2">UUIDv5 values are created by computing an SHA1 <span>[<a href="#SHA1" class="cite xref">SHA1</a>]</span>}
+<p id="section-5.5-2">UUIDv5 values are created by computing an SHA1 <span>[<a href="#SHA1" class="cite xref">SHA1</a>]</span>
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA1 value is then uses to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
@@ -1252,17 +1258,17 @@ The UUID version and variant then replace the respective bits as defined by <a h
 <span id="name-uuidv5-field-and-bit-layout"></span><figure id="figure-9">
           <div class="alignLeft art-text artwork" id="section-5.5-5.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            sha_high                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          sha_high             |  ver  |       sha_mid         |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                        sha_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            md5_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            sha_high                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          sha_high             |  ver  |       sha_mid         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                        sha_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            md5_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
@@ -1329,17 +1335,17 @@ first, followed by the 4 bit version (same position), followed by the remaining
 <figure id="figure-10">
           <div class="alignLeft art-text artwork" id="section-5.6-6.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           time_high                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |           time_mid            |      time_low_and_version     |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                         node (2-5)                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           time_high                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           time_mid            |      time_low_and_version     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         node (2-5)                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
@@ -1410,17 +1416,17 @@ possible.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
 <span id="name-uuidv7-field-and-bit-layout"></span><figure id="figure-11">
           <div class="alignLeft art-text artwork" id="section-5.7-3.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           unix_ts_ms                          |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          unix_ts_ms           |  ver  |       rand_a          |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                        rand_b                             |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            rand_b                             |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           unix_ts_ms                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          unix_ts_ms           |  ver  |       rand_a          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                        rand_b                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            rand_b                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
@@ -1482,17 +1488,17 @@ inhibit the use of one of the current UUIDs.<a href="#section-5.8-4.2" class="pi
 <span id="name-uuidv8-field-and-bit-layout"></span><figure id="figure-12">
           <div class="alignLeft art-text artwork" id="section-5.8-5.1">
 <pre>
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           custom_a                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          custom_a             |  ver  |       custom_b        |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                       custom_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           custom_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           custom_a                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          custom_a             |  ver  |       custom_b        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                       custom_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           custom_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
@@ -2102,9 +2108,8 @@ and feedback.<a href="#section-6.12-4" class="pilcrow">¶</a></p>
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-7-1">TODO: Q: Should Namespace Registration Template be here? <a href="#namespace_reg_template" class="auto internal xref">Appendix A</a><a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">TODO: Q: Do we need to re-submit anything or is the old template "good enough" since this is already registered with IANA?<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">This document has no IANA actions.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-1">TODO: Q: Should Namespace Registration Template be here or in <a href="#namespace_reg_template" class="auto internal xref">Appendix A</a>?
+TODO: Need to ensure IANA doc, https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml, has this new document listed.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="community">
@@ -2238,7 +2243,7 @@ was also invaluable in achieving coordination with ISO/IEC.<a href="#section-10-
 <dd class="break"></dd>
 <dt id="SHA1">[SHA1]</dt>
         <dd>
-<span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"Secure Hash Standard"</span>, <span class="seriesInfo">FIPS PUB 180-1</span>, <time datetime="1995-04" class="refDate">April 1995</time>, <span>&lt;<a href="http://www.itl.nist.gov/fipspubs/fip180-1.htm">http://www.itl.nist.gov/fipspubs/fip180-1.htm</a>&gt;</span>. </dd>
+<span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"Secure Hash Standard"</span>, <span class="seriesInfo">FIPS PUB 180-4</span>, <time datetime="2015-08" class="refDate">August 2015</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="X667">[X667]</dt>
       <dd>
@@ -2327,7 +2332,7 @@ was also invaluable in achieving coordination with ISO/IEC.<a href="#section-10-
       <h2 id="name-namespace-registration-temp">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-namespace-registration-temp" class="section-name selfRef">Namespace Registration Template</a>
       </h2>
-<p id="appendix-A-1">TODO: See <a href="#IANA" class="auto internal xref">Section 7</a>, if not needed, put URN representation somewhere like <a href="#layout" class="auto internal xref">Section 5</a><a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">TODO: Revise as per https://www.rfc-editor.org/rfc/rfc8141#appendix-A and https://www.rfc-editor.org/rfc/rfc8141#section-6.2<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="appendix-A-2">
         <dt id="appendix-A-2.1">Namespace ID:</dt>
         <dd style="margin-left: 1.5em" id="appendix-A-2.2">
@@ -2363,7 +2368,10 @@ digit first.  The hexadecimal values "a" through "f" are output as
 lower case characters and are case insensitive on input.<a href="#appendix-A-2.8.3" class="pilcrow">¶</a></p>
 <p id="appendix-A-2.8.4">The formal definition of the UUID string representation is
 provided by the following ABNF <span>[<a href="#RFC4234" class="cite xref">RFC4234</a>]</span>:<a href="#appendix-A-2.8.4" class="pilcrow">¶</a></p>
-<div id="appendix-A-2.8.5">
+</dd>
+      <dd class="break"></dd>
+</dl>
+<div id="appendix-A-3">
 <pre class="lang-abnf sourcecode">
 UUID                   = time-low "-" time-mid "-"
                          time-high-and-version "-"
@@ -2380,40 +2388,39 @@ hexDigit =
       "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
       "a" / "b" / "c" / "d" / "e" / "f" /
       "A" / "B" / "C" / "D" / "E" / "F"
-</pre><a href="#appendix-A-2.8.5" class="pilcrow">¶</a>
+</pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A-2.8.6">The following is an example of the string representation of a UUID as
-a URN:<a href="#appendix-A-2.8.6" class="pilcrow">¶</a></p>
-<p id="appendix-A-2.8.7">urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6<a href="#appendix-A-2.8.7" class="pilcrow">¶</a></p>
+<p id="appendix-A-4">The following is an example of the string representation of a UUID as
+  a URN:<a href="#appendix-A-4" class="pilcrow">¶</a></p>
+<p id="appendix-A-5">urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="appendix-A-6">
+        <dt id="appendix-A-6.1">Relevant ancillary documentation:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.2">
+          <p id="appendix-A-6.2.1"><span>[<a href="#NCA" class="cite xref">NCA</a>]</span><span>[<a href="#C309" class="cite xref">C309</a>]</span><a href="#appendix-A-6.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.9">Relevant ancillary documentation:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.10">
-          <p id="appendix-A-2.10.1"><span>[<a href="#NCA" class="cite xref">NCA</a>]</span><span>[<a href="#C309" class="cite xref">C309</a>]</span><a href="#appendix-A-2.10.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-<dt id="appendix-A-2.11">Identifier uniqueness considerations:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.12">
-          <p id="appendix-A-2.12.1">This document specifies three algorithms to generate UUIDs: the
+<dt id="appendix-A-6.3">Identifier uniqueness considerations:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.4">
+          <p id="appendix-A-6.4.1">This document specifies three algorithms to generate UUIDs: the
 first leverages the unique values of 802 MAC addresses to
 guarantee uniqueness, the second uses pseudo-random number
 generators, and the third uses cryptographic hashing and
 application-provided text strings.  As a result, the UUIDs
 generated according to the mechanisms here will be unique from all
-other UUIDs that have been or will be assigned.<a href="#appendix-A-2.12.1" class="pilcrow">¶</a></p>
+other UUIDs that have been or will be assigned.<a href="#appendix-A-6.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.13">Identifier persistence considerations:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.14">
-          <p id="appendix-A-2.14.1">UUIDs are inherently very difficult to resolve in a global sense.
+<dt id="appendix-A-6.5">Identifier persistence considerations:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.6">
+          <p id="appendix-A-6.6.1">UUIDs are inherently very difficult to resolve in a global sense.
 This, coupled with the fact that UUIDs are temporally unique
 within their spatial context, ensures that UUIDs will remain as
-persistent as possible.<a href="#appendix-A-2.14.1" class="pilcrow">¶</a></p>
+persistent as possible.<a href="#appendix-A-6.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.15">Process of identifier assignment:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.16">
-          <p id="appendix-A-2.16.1">Generating a UUID does not require that a registration authority
+<dt id="appendix-A-6.7">Process of identifier assignment:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.8">
+          <p id="appendix-A-6.8.1">Generating a UUID does not require that a registration authority
 be contacted.  One algorithm requires a unique value over space
 for each generator.  This value is typically an IEEE 802 MAC
 address, usually already available on network-connected hosts.
@@ -2421,52 +2428,52 @@ The address can be assigned from an address block obtained from
 the IEEE registration authority.  If no such address is available,
 or privacy concerns make its use undesirable, <a href="#unidentifiable" class="auto internal xref">Section 6.9</a> specifies
 two alternatives.  Another approach is to use version 3
-or version 4 UUIDs as defined below.<a href="#appendix-A-2.16.1" class="pilcrow">¶</a></p>
+or version 4 UUIDs as defined below.<a href="#appendix-A-6.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.17">Process for identifier resolution:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.18">
-          <p id="appendix-A-2.18.1">Since UUIDs are not globally resolvable, this is not applicable.<a href="#appendix-A-2.18.1" class="pilcrow">¶</a></p>
+<dt id="appendix-A-6.9">Process for identifier resolution:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.10">
+          <p id="appendix-A-6.10.1">Since UUIDs are not globally resolvable, this is not applicable.<a href="#appendix-A-6.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.19">Rules for Lexical Equivalence:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.20">
-          <p id="appendix-A-2.20.1">Consider each field of the UUID to be an unsigned integer as shown
+<dt id="appendix-A-6.11">Rules for Lexical Equivalence:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.12">
+          <p id="appendix-A-6.12.1">Consider each field of the UUID to be an unsigned integer as shown
 in the tables in section <a href="#layout" class="auto internal xref">Section 5</a>.  Then, to compare a pair of
 UUIDs, arithmetically compare the corresponding fields from each
 UUID in order of significance and according to their data type.
 Two UUIDs are equal if and only if all the corresponding fields
-are equal.<a href="#appendix-A-2.20.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-2.20.2">As an implementation note, equality comparison can be performed on
+are equal.<a href="#appendix-A-6.12.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-6.12.2">As an implementation note, equality comparison can be performed on
 many systems by doing the appropriate byte-order canonicalization,
-and then treating the two UUIDs as 128-bit unsigned integers.<a href="#appendix-A-2.20.2" class="pilcrow">¶</a></p>
-<p id="appendix-A-2.20.3">UUIDs, as defined in this document, can also be ordered
+and then treating the two UUIDs as 128-bit unsigned integers.<a href="#appendix-A-6.12.2" class="pilcrow">¶</a></p>
+<p id="appendix-A-6.12.3">UUIDs, as defined in this document, can also be ordered
 lexicographically.  For a pair of UUIDs, the first one follows the
 second if the most significant field in which the UUIDs differ is
 greater for the first UUID.  The second follows the first if the
 most significant field in which the UUIDs differ is greater for
-the second UUID.<a href="#appendix-A-2.20.3" class="pilcrow">¶</a></p>
+the second UUID.<a href="#appendix-A-6.12.3" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.21">Conformance with URN Syntax:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.22">
-          <p id="appendix-A-2.22.1">The string representation of a UUID is fully compatible with the
+<dt id="appendix-A-6.13">Conformance with URN Syntax:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.14">
+          <p id="appendix-A-6.14.1">The string representation of a UUID is fully compatible with the
 URN syntax.  When converting from a bit-oriented, in-memory
 representation of a UUID into a URN, care must be taken to
 strictly adhere to the byte order issues mentioned in the string
-representation section.<a href="#appendix-A-2.22.1" class="pilcrow">¶</a></p>
+representation section.<a href="#appendix-A-6.14.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.23">Validation mechanism:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.24">
-          <p id="appendix-A-2.24.1">Apart from determining whether the timestamp portion of the UUID
+<dt id="appendix-A-6.15">Validation mechanism:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.16">
+          <p id="appendix-A-6.16.1">Apart from determining whether the timestamp portion of the UUID
 is in the future and therefore not yet assignable, there is no
-mechanism for determining whether a UUID is 'valid'.<a href="#appendix-A-2.24.1" class="pilcrow">¶</a></p>
+mechanism for determining whether a UUID is 'valid'.<a href="#appendix-A-6.16.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="appendix-A-2.25">Scope:</dt>
-        <dd style="margin-left: 1.5em" id="appendix-A-2.26">
-          <p id="appendix-A-2.26.1">UUIDs are global in scope.<a href="#appendix-A-2.26.1" class="pilcrow">¶</a></p>
+<dt id="appendix-A-6.17">Scope:</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-6.18">
+          <p id="appendix-A-6.18.1">UUIDs are global in scope.<a href="#appendix-A-6.18.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -3335,7 +3342,7 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
           <div class="alignLeft art-text artwork" id="appendix-C.1-1.1">
 <pre>
 ----------------------------------------------
-field                 bits    value_hex
+field                 bits    value
 ----------------------------------------------
 time_low              32      0xC232AB00
 time_mid              16      0x9414
@@ -3383,11 +3390,11 @@ MD5:                    5df418813aed051548a72f4a814cf09e
 -------------------------------
 field      bits    value
 -------------------------------
-md5_high   48    0x5df418813aed
-ver         4    0x3
-md5_mid    12    0x515
-var         2    b10
-md5_low    62    b00, 0x8a72f4a814cf09e
+md5_high   48      0x5df418813aed
+ver         4      0x3
+md5_mid    12      0x515
+var         2      b10
+md5_low    62      b00, 0x8a72f4a814cf09e
 -------------------------------
 total     128
 -------------------------------
@@ -3430,11 +3437,11 @@ fill out the feilds as shown in <a href="#v4fields" class="auto internal xref">F
 -------------------------------
 field      bits    value
 -------------------------------
-random_a   48    0x919108f752d1
-ver         4    0x4
-random_b   12    0x320
-var         2    b10
-random_c   62    b01, 0xbacf847db4148a8
+random_a   48      0x919108f752d1
+ver         4      0x4
+random_b   12      0x320
+var         2      b10
+random_c   62      b01, 0xbacf847db4148a8
 -------------------------------
 total      128
 -------------------------------
@@ -3490,11 +3497,11 @@ SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
 -------------------------------
 field      bits    value
 -------------------------------
-sha_high   48    0x2ed6657de927
-ver         4    0x5
-sha_mid    12    0x68b
-var         2    b10
-sha_low    62    b01, 0x5e12665a8aea6a2
+sha_high   48      0x2ed6657de927
+ver         4      0x5
+sha_mid    12      0x68b
+var         2      b10
+sha_low    62      b01, 0x5e12665a8aea6a2
 -------------------------------
 total     128
 -------------------------------
@@ -3530,14 +3537,14 @@ Discarded:                                                  -2dee3e35
           <div class="alignLeft art-text artwork" id="appendix-C.5-1.1">
 <pre>
 -----------------------------------------------
-field                 bits    value_hex
+field                 bits    value
 -----------------------------------------------
-time_high              32      0x1EC9414C
-time_mid               16      0x232A
-time_low_and_version   16      0x6B00
-clk_seq_hi_res          8      0xB3
-clock_seq_low           8      0xC8
-node                   48      0x9E6BDECED846
+time_high              32     0x1EC9414C
+time_mid               16     0x232A
+time_low_and_version   16     0x6B00
+clk_seq_hi_res          8     0xB3
+clock_seq_low           8     0xC8
+node                   48     0x9E6BDECED846
 -----------------------------------------------
 total                 128
 -----------------------------------------------
@@ -3569,7 +3576,7 @@ unix_ts_ms   48    0x17F22E279B0
 ver           4    0x7
 rand_a       12    0xCC3
 var           2    b10
-rand_b       62    0x18C4DC0C0C07398F
+rand_b       62    b01, 0x8C4DC0C0C07398F
 -------------------------------
 total       128
 -------------------------------
@@ -3606,7 +3613,7 @@ custom_a     48    0x320C3D4DCC00
 ver           4    0x8
 custom_b     12    0x75B
 var           2    b10
-custom_c     62    0xEC932D5F69181C0
+custom_c     62    b00, 0xEC932D5F69181C0
 -------------------------------
 total       128
 -------------------------------
@@ -3628,10 +3635,18 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">P. Leach</span></div>
 <div dir="auto" class="left"><span class="org">Microsoft</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:paulle@microsoft.com" class="email">paulle@microsoft.com</a>
+</div>
 </address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">M. Mealling</span></div>
 <div dir="auto" class="left"><span class="org">VeriSign, Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:michael@refactored-networks.com" class="email">michael@refactored-networks.com</a>
+</div>
 </address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Brad G. Peabody</span></div>

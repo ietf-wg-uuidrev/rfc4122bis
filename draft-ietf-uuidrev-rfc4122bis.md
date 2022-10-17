@@ -21,9 +21,11 @@ date: 2022
 author:
 - ins: P. Leach
   name: P. Leach
+  email: paulle@microsoft.com
   org: Microsoft
 - ins: M. Mealling
   name: M. Mealling
+  email: michael@refactored-networks.com
   org: VeriSign, Inc.
 - name: Brad G. Peabody
   email: brad@peabody.io
@@ -71,13 +73,13 @@ normative:
   RFC4234: RFC4234
   RFC6194: RFC6194
   SHA1:
-    target: http://www.itl.nist.gov/fipspubs/fip180-1.htm
+    target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
     author:
     - org: National Institute of Standards and Technology
-    date: 1995-04
+    date: August 2015
     seriesinfo:
-      FIPS: PUB 180-1
+      FIPS: PUB 180-4
   C311:
     target: https://pubs.opengroup.org/onlinepubs/9696989899/toc.pdf
     title: "DCE 1.1: Authentication and Security Services"
@@ -420,9 +422,10 @@ draft-00
 - Change: Reference RFC1321 to RFC6151
 - Change: Reference RFC2141 to RFC8141
 - Change: Reference RFC2234 to RFC4234
+- Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
-- Change: ITU http website to https equivalent
+- Change: http websites to https equivalent
 - Errata: Bad Reference to RFC1750 \| 3641 #4
 - Errata: Change MD5 website to example.com \| 3476 #6 (Also Fixes Errata: Fix uuid_create_md5_from_name() \| 1352 #2)
 - Errata: Typo in code comment \| 6665 #11
@@ -432,6 +435,8 @@ draft-00
 - Errata: Fix 4.1.3 reference to the correct bits \| 1957 #13
 - Errata: Fix reference to variant in octet 8 \| 4975 #7
 - Errata: Further clarify 3rd/last bit of Variant for spec \| 5560 #8
+- Errata: Fix clock_seq_hi_and_reserved most-significant bit verbiage \| 4976 #10
+- Errata: Better Clarify network byte order when referencing most significant bits \| 3546 #12
 - Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120
 - Draft 05: MUST veribage in Reliability of 6.1 #121
 - Draft 05: Further discourage centralized registry for distributed UUID Generation.
@@ -476,7 +481,7 @@ f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleHexUUID title='Example Hex UUID'}
 
-The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
+The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID}} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
 
 ~~~~
 11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
@@ -525,23 +530,23 @@ More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynami
 
 {{table2}} lists all of the versions for this UUID variant specified in this document.
 
-  | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
-  |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
-  |    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID from in this document.                          |
-  |    0 |    0 |    1 |    0 |       2 | Reserved for DCE Security version, with embedded POSIX UUIDs.                 |
-  |    0 |    0 |    1 |    1 |       3 | The name-based version specified in this document that uses MD5 hashing.      |
-  |    0 |    1 |    0 |    0 |       4 | The randomly or pseudo-randomly generated version specified in this document. |
-  |    0 |    1 |    0 |    1 |       5 | The name-based version specified in this document that uses SHA-1 hashing.    |
-  |    0 |    1 |    1 |    0 |       6 | Reordered Gregorian time-based UUID specified in this document.               |
-  |    0 |    1 |    1 |    1 |       7 | Unix Epoch time-based UUID specified in this document.                        |
-  |    1 |    0 |    0 |    0 |       8 | Reserved for custom UUID formats specified in this document.                  |
-  |    1 |    0 |    0 |    1 |       9 | Reserved for future definition.                                               |
-  |    1 |    0 |    1 |    0 |      10 | Reserved for future definition.                                               |
-  |    1 |    0 |    1 |    1 |      11 | Reserved for future definition.                                               |
-  |    1 |    1 |    0 |    0 |      12 | Reserved for future definition.                                               |
-  |    1 |    1 |    0 |    1 |      13 | Reserved for future definition.                                               |
-  |    1 |    1 |    1 |    0 |      14 | Reserved for future definition.                                               |
-  |    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
+| Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
+|    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
+|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID from in this document.                          |
+|    0 |    0 |    1 |    0 |       2 | Reserved for DCE Security version, with embedded POSIX UUIDs.                 |
+|    0 |    0 |    1 |    1 |       3 | The name-based version specified in this document that uses MD5 hashing.      |
+|    0 |    1 |    0 |    0 |       4 | The randomly or pseudo-randomly generated version specified in this document. |
+|    0 |    1 |    0 |    1 |       5 | The name-based version specified in this document that uses SHA-1 hashing.    |
+|    0 |    1 |    1 |    0 |       6 | Reordered Gregorian time-based UUID specified in this document.               |
+|    0 |    1 |    1 |    1 |       7 | Unix Epoch time-based UUID specified in this document.                        |
+|    1 |    0 |    0 |    0 |       8 | Reserved for custom UUID formats specified in this document.                  |
+|    1 |    0 |    0 |    1 |       9 | Reserved for future definition.                                               |
+|    1 |    0 |    1 |    0 |      10 | Reserved for future definition.                                               |
+|    1 |    0 |    1 |    1 |      11 | Reserved for future definition.                                               |
+|    1 |    1 |    0 |    0 |      12 | Reserved for future definition.                                               |
+|    1 |    1 |    0 |    1 |      13 | Reserved for future definition.                                               |
+|    1 |    1 |    1 |    0 |      14 | Reserved for future definition.                                               |
+|    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
 {: #table2 title='UUID variant 10xx (8/9/A/B) versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
@@ -592,17 +597,17 @@ unicast/multicast bit, and is the first octet of the address
 transmitted on an 802.3 LAN.
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                          time_low                             |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |       time_mid                |         time_hi_and_version   |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                         node (2-5)                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          time_low                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|       time_mid                |         time_hi_and_version   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         node (2-5)                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv1 Field and Bit Layout'}
 
@@ -685,17 +690,17 @@ Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
 For more information on MD5 security considerations see {{RFC6151}}.
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            md5_high                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          md5_high             |  ver  |       md5_mid         |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                        md5_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            md5_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            md5_high                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          md5_high             |  ver  |       md5_mid         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                        md5_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            md5_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv3 Field and Bit Layout'}
 
@@ -737,17 +742,17 @@ for random_a, random_b, and random_c then concatenate the version and variant in
 For guidelines on random data generation see {{unguessability}}.
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           random_a                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          random_a             |  ver  |       random_b        |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                       random_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           random_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           random_a                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          random_a             |  ver  |       random_b        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                       random_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           random_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: id='uuidv4fields' title='UUIDv4 Field and Bit Layout'}
 
@@ -774,7 +779,7 @@ random_c:
 UUID Version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
-UUIDv5 values are created by computing an SHA1 {{SHA1}}}
+UUIDv5 values are created by computing an SHA1 {{SHA1}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA1 value is then uses to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
@@ -785,17 +790,17 @@ Some common name space values have been defined via {{namespaces}}.
 For more information on MD5 security considerations see {{RFC6194}}.
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            sha_high                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          sha_high             |  ver  |       sha_mid         |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                        sha_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            md5_low                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            sha_high                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          sha_high             |  ver  |       sha_mid         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                        sha_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            md5_low                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv5 Field and Bit Layout'}
 
@@ -848,17 +853,17 @@ The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           time_high                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |           time_mid            |      time_low_and_version     |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                         node (2-5)                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           time_high                           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           time_mid            |      time_low_and_version     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                         node (2-5)                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: id='v6layout' title='UUIDv6 Field and Bit Layout'}
 
@@ -912,17 +917,17 @@ possible.
 
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           unix_ts_ms                          |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          unix_ts_ms           |  ver  |       rand_a          |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                        rand_b                             |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                            rand_b                             |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           unix_ts_ms                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          unix_ts_ms           |  ver  |       rand_a          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                        rand_b                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                            rand_b                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv7 Field and Bit Layout'}
 
@@ -971,17 +976,17 @@ Some example situations in which UUIDv8 usage could occur:
 
 
 ~~~~
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           custom_a                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |          custom_a             |  ver  |       custom_b        |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |var|                       custom_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                           custom_c                            |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           custom_a                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          custom_a             |  ver  |       custom_b        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|var|                       custom_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           custom_c                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv8 Field and Bit Layout'}
 
@@ -1507,11 +1512,8 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
-TODO: Q: Should Namespace Registration Template be here? {{namespace_reg_template}}
-
-TODO: Q: Do we need to re-submit anything or is the old template "good enough" since this is already registered with IANA?
-
-This document has no IANA actions.
+TODO: Q: Should Namespace Registration Template be here or in {{namespace_reg_template}}?
+TODO: Need to ensure IANA doc, https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml, has this new document listed. 
 
 # Community Considerations {#community}
 
@@ -1590,7 +1592,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 --- back
 
 # Namespace Registration Template {#namespace_reg_template}
-TODO: See {{IANA}}, if not needed, put URN representation somewhere like {{layout}}
+TODO: Revise as per https://www.rfc-editor.org/rfc/rfc8141#appendix-A and https://www.rfc-editor.org/rfc/rfc8141#section-6.2
 
 {:vspace}
 Namespace ID:
@@ -1624,23 +1626,23 @@ Declaration of syntactic structure:
   The formal definition of the UUID string representation is
   provided by the following ABNF {{RFC4234}}:
 
-  ~~~~ abnf
-  UUID                   = time-low "-" time-mid "-"
-                           time-high-and-version "-"
-                           clock-seq-and-reserved
-                           clock-seq-low "-" node
-  time-low               = 4hexOctet
-  time-mid               = 2hexOctet
-  time-high-and-version  = 2hexOctet
-  clock-seq-and-reserved = hexOctet
-  clock-seq-low          = hexOctet
-  node                   = 6hexOctet
-  hexOctet               = hexDigit hexDigit
-  hexDigit =
-        "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-        "a" / "b" / "c" / "d" / "e" / "f" /
-        "A" / "B" / "C" / "D" / "E" / "F"
-  ~~~~
+~~~~ abnf
+UUID                   = time-low "-" time-mid "-"
+                         time-high-and-version "-"
+                         clock-seq-and-reserved
+                         clock-seq-low "-" node
+time-low               = 4hexOctet
+time-mid               = 2hexOctet
+time-high-and-version  = 2hexOctet
+clock-seq-and-reserved = hexOctet
+clock-seq-low          = hexOctet
+node                   = 6hexOctet
+hexOctet               = hexDigit hexDigit
+hexDigit =
+      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
+      "a" / "b" / "c" / "d" / "e" / "f" /
+      "A" / "B" / "C" / "D" / "E" / "F"
+~~~~
 
   The following is an example of the string representation of a UUID as
   a URN:
@@ -2546,7 +2548,7 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 ## Example of UUIDv1 Value {#uuidv1_example}
 ~~~~
 ----------------------------------------------
-field                 bits    value_hex
+field                 bits    value
 ----------------------------------------------
 time_low              32      0xC232AB00
 time_mid              16      0x9414
@@ -2578,11 +2580,11 @@ MD5:                    5df418813aed051548a72f4a814cf09e
 -------------------------------
 field      bits    value
 -------------------------------
-md5_high   48    0x5df418813aed
-ver         4    0x3
-md5_mid    12    0x515
-var         2    b10
-md5_low    62    b00, 0x8a72f4a814cf09e
+md5_high   48      0x5df418813aed
+ver         4      0x3
+md5_mid    12      0x515
+var         2      b10
+md5_low    62      b00, 0x8a72f4a814cf09e
 -------------------------------
 total     128
 -------------------------------
@@ -2609,11 +2611,11 @@ Finally to further illustrate the bit swapping for version and variant see {{v4v
 -------------------------------
 field      bits    value
 -------------------------------
-random_a   48    0x919108f752d1
-ver         4    0x4
-random_b   12    0x320
-var         2    b10
-random_c   62    b01, 0xbacf847db4148a8
+random_a   48      0x919108f752d1
+ver         4      0x4
+random_b   12      0x320
+var         2      b10
+random_c   62      b01, 0xbacf847db4148a8
 -------------------------------
 total      128
 -------------------------------
@@ -2647,11 +2649,11 @@ SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
 -------------------------------
 field      bits    value
 -------------------------------
-sha_high   48    0x2ed6657de927
-ver         4    0x5
-sha_mid    12    0x68b
-var         2    b10
-sha_low    62    b01, 0x5e12665a8aea6a2
+sha_high   48      0x2ed6657de927
+ver         4      0x5
+sha_mid    12      0x68b
+var         2      b10
+sha_low    62      b01, 0x5e12665a8aea6a2
 -------------------------------
 total     128
 -------------------------------
@@ -2671,14 +2673,14 @@ Discarded:                                                  -2dee3e35
 
 ~~~~
 -----------------------------------------------
-field                 bits    value_hex
+field                 bits    value
 -----------------------------------------------
-time_high              32      0x1EC9414C
-time_mid               16      0x232A
-time_low_and_version   16      0x6B00
-clk_seq_hi_res          8      0xB3
-clock_seq_low           8      0xC8
-node                   48      0x9E6BDECED846
+time_high              32     0x1EC9414C
+time_mid               16     0x232A
+time_low_and_version   16     0x6B00
+clk_seq_hi_res          8     0xB3
+clock_seq_low           8     0xC8
+node                   48     0x9E6BDECED846
 -----------------------------------------------
 total                 128
 -----------------------------------------------
@@ -2706,7 +2708,7 @@ unix_ts_ms   48    0x17F22E279B0
 ver           4    0x7
 rand_a       12    0xCC3
 var           2    b10
-rand_b       62    0x18C4DC0C0C07398F
+rand_b       62    b01, 0x8C4DC0C0C07398F
 -------------------------------
 total       128
 -------------------------------
@@ -2740,7 +2742,7 @@ custom_a     48    0x320C3D4DCC00
 ver           4    0x8
 custom_b     12    0x75B
 var           2    b10
-custom_c     62    0xEC932D5F69181C0
+custom_c     62    b00, 0xEC932D5F69181C0
 -------------------------------
 total       128
 -------------------------------

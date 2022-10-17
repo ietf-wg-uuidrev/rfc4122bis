@@ -6,11 +6,11 @@ uuidrev                                                         P. Leach
 Internet-Draft                                                 Microsoft
 Obsoletes: 4122 (if approved)                                M. Mealling
 Intended status: Standards Track                          VeriSign, Inc.
-Expires: 13 April 2023                                     B. G. Peabody
+Expires: 20 April 2023                                     B. G. Peabody
                                                                         
                                                              K. R. Davis
                                                            Cisco Systems
-                                                         10 October 2022
+                                                         17 October 2022
 
 
           A Universally Unique IDentifier (UUID) URN Namespace
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 April 2023.
+   This Internet-Draft will expire on 20 April 2023.
 
 Copyright Notice
 
@@ -304,9 +304,10 @@ Table of Contents
    *  Change: Reference RFC1321 to RFC6151
    *  Change: Reference RFC2141 to RFC8141
    *  Change: Reference RFC2234 to RFC4234
+   *  Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
    *  Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
    *  Change: Trimmed down the ABNF representation
-   *  Change: ITU http website to https equivalent
+   *  Change: http websites to https equivalent
    *  Errata: Bad Reference to RFC1750 | 3641 #4
    *  Errata: Change MD5 website to example.com | 3476 #6 (Also Fixes
       Errata: Fix uuid_create_md5_from_name() | 1352 #2)
@@ -317,6 +318,10 @@ Table of Contents
    *  Errata: Fix 4.1.3 reference to the correct bits | 1957 #13
    *  Errata: Fix reference to variant in octet 8 | 4975 #7
    *  Errata: Further clarify 3rd/last bit of Variant for spec | 5560 #8
+   *  Errata: Fix clock_seq_hi_and_reserved most-significant bit
+      verbiage | 4976 #10
+   *  Errata: Better Clarify network byte order when referencing most
+      significant bits | 3546 #12
    *  Draft 05: B.2.  Example of a UUIDv7 Value two "var" in table #120
    *  Draft 05: MUST veribage in Reliability of 6.1 #121
    *  Draft 05: Further discourage centralized registry for distributed
@@ -535,17 +540,17 @@ Table of Contents
    10) contains the global/local bit and the unicast/multicast bit, and
    is the first octet of the address transmitted on an 802.3 LAN.
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                          time_low                             |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |       time_mid                |         time_hi_and_version   |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                         node (2-5)                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                          time_low                             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |       time_mid                |         time_hi_and_version   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         node (2-5)                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 6: UUIDv1 Field and Bit Layout
 
@@ -629,17 +634,17 @@ Table of Contents
    Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.  For more
    information on MD5 security considerations see [RFC6151].
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                            md5_high                           |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |          md5_high             |  ver  |       md5_mid         |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |var|                        md5_low                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                            md5_low                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                            md5_high                           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          md5_high             |  ver  |       md5_mid         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |var|                        md5_low                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                            md5_low                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 7: UUIDv3 Field and Bit Layout
 
@@ -680,17 +685,17 @@ Table of Contents
 
    For guidelines on random data generation see Section 6.8.
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                           random_a                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |          random_a             |  ver  |       random_b        |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |var|                       random_c                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                           random_c                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           random_a                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          random_a             |  ver  |       random_b        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |var|                       random_c                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           random_c                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 8: UUIDv4 Field and Bit Layout
 
@@ -717,7 +722,7 @@ Table of Contents
    UUID Version 5 is meant for generating UUIDs from "names" that are
    drawn from, and unique within, some "name space" as per Section 6.5.
 
-   UUIDv5 values are created by computing an SHA1 [SHA1]} hash over a
+   UUIDv5 values are created by computing an SHA1 [SHA1] hash over a
    given name space value concatenated with the desired name value after
    both have been converted to a canonical sequence of octets in network
    byte order.  This SHA1 value is then uses to populate all 128 bits of
@@ -729,17 +734,17 @@ Table of Contents
 
    For more information on MD5 security considerations see [RFC6194].
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                            sha_high                           |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |          sha_high             |  ver  |       sha_mid         |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |var|                        sha_low                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                            md5_low                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                            sha_high                           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          sha_high             |  ver  |       sha_mid         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |var|                        sha_low                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                            md5_low                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 9: UUIDv5 Field and Bit Layout
 
@@ -790,17 +795,17 @@ Table of Contents
 
    The format for the 16-byte, 128 bit UUIDv6 is shown in Figure 10
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                           time_high                           |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |           time_mid            |      time_low_and_version     |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                         node (2-5)                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           time_high                           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |           time_mid            |      time_low_and_version     |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         node (2-5)                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 10: UUIDv6 Field and Bit Layout
 
@@ -849,17 +854,17 @@ Table of Contents
    Implementations SHOULD utilize UUID version 7 over UUID version 1 and
    6 if possible.
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                           unix_ts_ms                          |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |          unix_ts_ms           |  ver  |       rand_a          |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |var|                        rand_b                             |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                            rand_b                             |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           unix_ts_ms                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          unix_ts_ms           |  ver  |       rand_a          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |var|                        rand_b                             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                            rand_b                             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 11: UUIDv7 Field and Bit Layout
 
@@ -902,17 +907,17 @@ Table of Contents
    *  An implementation has other application/language restrictions
       which inhibit the use of one of the current UUIDs.
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                           custom_a                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |          custom_a             |  ver  |       custom_b        |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |var|                       custom_c                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                           custom_c                            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           custom_a                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          custom_a             |  ver  |       custom_b        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |var|                       custom_c                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           custom_c                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 12: UUIDv8 Field and Bit Layout
 
@@ -1425,12 +1430,10 @@ Table of Contents
 
 7.  IANA Considerations
 
-   TODO: Q: Should Namespace Registration Template be here?  Appendix A
-
-   TODO: Q: Do we need to re-submit anything or is the old template
-   "good enough" since this is already registered with IANA?
-
-   This document has no IANA actions.
+   TODO: Q: Should Namespace Registration Template be here or in
+   Appendix A?  TODO: Need to ensure IANA doc,
+   https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml,
+   has this new document listed.
 
 8.  Community Considerations
 
@@ -1548,8 +1551,9 @@ Table of Contents
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [SHA1]     National Institute of Standards and Technology, "Secure
-              Hash Standard", FIPS PUB 180-1, April 1995,
-              <http://www.itl.nist.gov/fipspubs/fip180-1.htm>.
+              Hash Standard", FIPS PUB 180-4, August 2015,
+              <https://nvlpubs.nist.gov/nistpubs/FIPS/
+              NIST.FIPS.180-4.pdf>.
 
    [X667]     "Information Technology, "Procedures for the operation of
               OSI Registration Authorities: Generation and registration
@@ -1634,8 +1638,8 @@ Table of Contents
 
 Appendix A.  Namespace Registration Template
 
-   TODO: See Section 7, if not needed, put URN representation somewhere
-   like Section 5
+   TODO: Revise as per https://www.rfc-editor.org/rfc/rfc8141#appendix-A
+   and https://www.rfc-editor.org/rfc/rfc8141#section-6.2
 
    Namespace ID:
       UUID
@@ -1668,66 +1672,61 @@ Appendix A.  Namespace Registration Template
       The formal definition of the UUID string representation is
       provided by the following ABNF [RFC4234]:
 
-      UUID                   = time-low "-" time-mid "-"
-                               time-high-and-version "-"
-                               clock-seq-and-reserved
-                               clock-seq-low "-" node
-      time-low               = 4hexOctet
-      time-mid               = 2hexOctet
-      time-high-and-version  = 2hexOctet
-      clock-seq-and-reserved = hexOctet
-      clock-seq-low          = hexOctet
-      node                   = 6hexOctet
-      hexOctet               = hexDigit hexDigit
-      hexDigit =
-            "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-            "a" / "b" / "c" / "d" / "e" / "f" /
-            "A" / "B" / "C" / "D" / "E" / "F"
+   UUID                   = time-low "-" time-mid "-"
+                            time-high-and-version "-"
+                            clock-seq-and-reserved
+                            clock-seq-low "-" node
+   time-low               = 4hexOctet
+   time-mid               = 2hexOctet
+   time-high-and-version  = 2hexOctet
+   clock-seq-and-reserved = hexOctet
+   clock-seq-low          = hexOctet
+   node                   = 6hexOctet
+   hexOctet               = hexDigit hexDigit
+   hexDigit =
+         "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
+         "a" / "b" / "c" / "d" / "e" / "f" /
+         "A" / "B" / "C" / "D" / "E" / "F"
 
-      The following is an example of the string representation of a UUID
-      as a URN:
+   The following is an example of the string representation of a UUID as
+   a URN:
 
-      urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+   urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 
-   Relevant ancillary documentation:
-      [NCA][C309]
+   Relevant ancillary documentation:  [NCA][C309]
 
-   Identifier uniqueness considerations:
-      This document specifies three algorithms to generate UUIDs: the
-      first leverages the unique values of 802 MAC addresses to
-      guarantee uniqueness, the second uses pseudo-random number
-      generators, and the third uses cryptographic hashing and
-      application-provided text strings.  As a result, the UUIDs
-      generated according to the mechanisms here will be unique from all
-      other UUIDs that have been or will be assigned.
+   Identifier uniqueness considerations:  This document specifies three
+      algorithms to generate UUIDs: the first leverages the unique
+      values of 802 MAC addresses to guarantee uniqueness, the second
+      uses pseudo-random number generators, and the third uses
+      cryptographic hashing and application-provided text strings.  As a
+      result, the UUIDs generated according to the mechanisms here will
+      be unique from all other UUIDs that have been or will be assigned.
 
-   Identifier persistence considerations:
-      UUIDs are inherently very difficult to resolve in a global sense.
-      This, coupled with the fact that UUIDs are temporally unique
-      within their spatial context, ensures that UUIDs will remain as
-      persistent as possible.
+   Identifier persistence considerations:  UUIDs are inherently very
+      difficult to resolve in a global sense.  This, coupled with the
+      fact that UUIDs are temporally unique within their spatial
+      context, ensures that UUIDs will remain as persistent as possible.
 
-   Process of identifier assignment:
-      Generating a UUID does not require that a registration authority
-      be contacted.  One algorithm requires a unique value over space
-      for each generator.  This value is typically an IEEE 802 MAC
-      address, usually already available on network-connected hosts.
-      The address can be assigned from an address block obtained from
-      the IEEE registration authority.  If no such address is available,
-      or privacy concerns make its use undesirable, Section 6.9
-      specifies two alternatives.  Another approach is to use version 3
-      or version 4 UUIDs as defined below.
+   Process of identifier assignment:  Generating a UUID does not require
+      that a registration authority be contacted.  One algorithm
+      requires a unique value over space for each generator.  This value
+      is typically an IEEE 802 MAC address, usually already available on
+      network-connected hosts.  The address can be assigned from an
+      address block obtained from the IEEE registration authority.  If
+      no such address is available, or privacy concerns make its use
+      undesirable, Section 6.9 specifies two alternatives.  Another
+      approach is to use version 3 or version 4 UUIDs as defined below.
 
-   Process for identifier resolution:
-      Since UUIDs are not globally resolvable, this is not applicable.
+   Process for identifier resolution:  Since UUIDs are not globally
+      resolvable, this is not applicable.
 
-   Rules for Lexical Equivalence:
-      Consider each field of the UUID to be an unsigned integer as shown
-      in the tables in section Section 5.  Then, to compare a pair of
-      UUIDs, arithmetically compare the corresponding fields from each
-      UUID in order of significance and according to their data type.
-      Two UUIDs are equal if and only if all the corresponding fields
-      are equal.
+   Rules for Lexical Equivalence:  Consider each field of the UUID to be
+      an unsigned integer as shown in the tables in section Section 5.
+      Then, to compare a pair of UUIDs, arithmetically compare the
+      corresponding fields from each UUID in order of significance and
+      according to their data type.  Two UUIDs are equal if and only if
+      all the corresponding fields are equal.
 
       As an implementation note, equality comparison can be performed on
       many systems by doing the appropriate byte-order canonicalization,
@@ -1740,20 +1739,18 @@ Appendix A.  Namespace Registration Template
       most significant field in which the UUIDs differ is greater for
       the second UUID.
 
-   Conformance with URN Syntax:
-      The string representation of a UUID is fully compatible with the
-      URN syntax.  When converting from a bit-oriented, in-memory
-      representation of a UUID into a URN, care must be taken to
-      strictly adhere to the byte order issues mentioned in the string
-      representation section.
+   Conformance with URN Syntax:  The string representation of a UUID is
+      fully compatible with the URN syntax.  When converting from a bit-
+      oriented, in-memory representation of a UUID into a URN, care must
+      be taken to strictly adhere to the byte order issues mentioned in
+      the string representation section.
 
-   Validation mechanism:
-      Apart from determining whether the timestamp portion of the UUID
-      is in the future and therefore not yet assignable, there is no
-      mechanism for determining whether a UUID is 'valid'.
+   Validation mechanism:  Apart from determining whether the timestamp
+      portion of the UUID is in the future and therefore not yet
+      assignable, there is no mechanism for determining whether a UUID
+      is 'valid'.
 
-   Scope:
-      UUIDs are global in scope.
+   Scope:  UUIDs are global in scope.
 
 Appendix B.  Example Code
 
@@ -2548,7 +2545,7 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 C.1.  Example of UUIDv1 Value
 
    ----------------------------------------------
-   field                 bits    value_hex
+   field                 bits    value
    ----------------------------------------------
    time_low              32      0xC232AB00
    time_mid              16      0x9414
@@ -2580,11 +2577,11 @@ C.2.  Example of UUIDv3 Value
    -------------------------------
    field      bits    value
    -------------------------------
-   md5_high   48    0x5df418813aed
-   ver         4    0x3
-   md5_mid    12    0x515
-   var         2    b10
-   md5_low    62    b00, 0x8a72f4a814cf09e
+   md5_high   48      0x5df418813aed
+   ver         4      0x3
+   md5_mid    12      0x515
+   var         2      b10
+   md5_low    62      b00, 0x8a72f4a814cf09e
    -------------------------------
    total     128
    -------------------------------
@@ -2610,11 +2607,11 @@ C.3.  Example of UUIDv4 Value
    -------------------------------
    field      bits    value
    -------------------------------
-   random_a   48    0x919108f752d1
-   ver         4    0x4
-   random_b   12    0x320
-   var         2    b10
-   random_c   62    b01, 0xbacf847db4148a8
+   random_a   48      0x919108f752d1
+   ver         4      0x4
+   random_b   12      0x320
+   var         2      b10
+   random_c   62      b01, 0xbacf847db4148a8
    -------------------------------
    total      128
    -------------------------------
@@ -2647,11 +2644,11 @@ C.4.  Example of UUIDv5 Value
    -------------------------------
    field      bits    value
    -------------------------------
-   sha_high   48    0x2ed6657de927
-   ver         4    0x5
-   sha_mid    12    0x68b
-   var         2    b10
-   sha_low    62    b01, 0x5e12665a8aea6a2
+   sha_high   48      0x2ed6657de927
+   ver         4      0x5
+   sha_mid    12      0x68b
+   var         2      b10
+   sha_low    62      b01, 0x5e12665a8aea6a2
    -------------------------------
    total     128
    -------------------------------
@@ -2670,14 +2667,14 @@ C.4.  Example of UUIDv5 Value
 C.5.  Example of a UUIDv6 Value
 
    -----------------------------------------------
-   field                 bits    value_hex
+   field                 bits    value
    -----------------------------------------------
-   time_high              32      0x1EC9414C
-   time_mid               16      0x232A
-   time_low_and_version   16      0x6B00
-   clk_seq_hi_res          8      0xB3
-   clock_seq_low           8      0xC8
-   node                   48      0x9E6BDECED846
+   time_high              32     0x1EC9414C
+   time_mid               16     0x232A
+   time_low_and_version   16     0x6B00
+   clk_seq_hi_res          8     0xB3
+   clock_seq_low           8     0xC8
+   node                   48     0x9E6BDECED846
    -----------------------------------------------
    total                 128
    -----------------------------------------------
@@ -2702,7 +2699,7 @@ C.6.  Example of a UUIDv7 Value
    ver           4    0x7
    rand_a       12    0xCC3
    var           2    b10
-   rand_b       62    0x18C4DC0C0C07398F
+   rand_b       62    b01, 0x8C4DC0C0C07398F
    -------------------------------
    total       128
    -------------------------------
@@ -2733,7 +2730,7 @@ C.7.  Example of a UUIDv8 Value
    ver           4    0x8
    custom_b     12    0x75B
    var           2    b10
-   custom_c     62    0xEC932D5F69181C0
+   custom_c     62    b00, 0xEC932D5F69181C0
    -------------------------------
    total       128
    -------------------------------
@@ -2745,10 +2742,12 @@ Authors' Addresses
 
    P. Leach
    Microsoft
+   Email: paulle@microsoft.com
 
 
    M. Mealling
    VeriSign, Inc.
+   Email: michael@refactored-networks.com
 
 
    Brad G. Peabody
