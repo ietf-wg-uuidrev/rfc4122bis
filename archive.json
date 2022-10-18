@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-10-11T02:31:51.750387+00:00",
+  "timestamp": "2022-10-18T02:41:50.185065+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -221,7 +221,7 @@
     {
       "number": 12,
       "id": "I_kwDOH6Ln3M5TLOwe",
-      "title": "Errata: Better Clarify network byte order when referencing most signfificant bits | 3546",
+      "title": "Errata: Better Clarify network byte order when referencing most significant bits | 3546",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/12",
       "state": "OPEN",
       "author": "kyzer-davis",
@@ -230,7 +230,7 @@
       "labels": [],
       "body": "### Errata ID: [3546](https://www.rfc-editor.org/errata/eid3546)\r\n- Status: Held for Document Update\r\n- Type: Technical\r\n- Publication Format(s) : TEXT\r\n- Reported By: Askar Safin\r\n- Date Reported: 2013-03-14\r\n- Held for Document Update by: Barry Leiba\r\n- Date Held: 2013-03-20\r\n\r\n### Errata\r\nSection 4.1.3 says:\r\n\r\n```\r\nThe version number is in the most significant 4 bits of the time\r\nstamp (bits 4 through 7 of the time_hi_and_version field).\r\n```\r\n\r\nIt should say:\r\n\r\n```\r\nThe version number is in the most significant 4 bits of the time\r\nstamp (bits 0 through 3 of the time_hi_and_version field).\r\n```\r\n\r\n### Notes:\r\n\r\nWe use network order (as far as I know, we use network order in this RFC both for bits and bytes). So, the most significant bits comes first and they are located in first bytes. So, 0 through 3.\r\n\r\n### VERIFIER NOTES\r\nThis erratum is correct as far as it goes, but, given other text in the RFC, so is erratum 1957. There is a pervasive problem in this RFC with inconsistent and unclear usage of bit numbering, which switches between several conventions. The diagram in Section 4.1.2 uses left-to-right bit numbering (the most significant bit is numbered 0), but much of the text (such as in Section 4.2.2) uses right-to-left bit numbering (the least significant bit is numbered 0). Most of the text uses big-ending byte order (network byte order), but some seems to assume little-ending, probably mistakes that come from the authors' familiarity with that convention.\r\n\r\nWith respect to the text in question, the first sentence of Section 4.1.3, we have the following situation:\r\n\r\n- The original text is correct if we assume right-to-left bit numbering and little-endian byte order.\r\n\r\n- Erratum 1957 is correct if we assume right-to-left bit numbering and big-endian byte order. This change also makes the first sentence of Section 4.1.3 consistent with the sixth bullet in Section 4.2.2.\r\n\r\n- Erratum 3546 is correct if we assume left-to-right bit numbering and big-endian byte order.\r\n\r\nIn the end, the real point is that this document needs a revision that carefully and thoroughly fixes every instance of byte numbering (or removes the byte numbering and refers only to \"most significant\" and \"least significant\"). Such a revision should also double-check the sample code in Appendix A to be sure it works in both big-ending and little-endian machines.\r\n\r\nHappily, it's not likely that misunderstandings here will cause actual interoperability problems: this isn't a situation where things need to be disassembled and reassembled. The algorithm merely turns a UUID into a URN, and the URN is thereafter a \"black box\", an unchanged identifier. The only issue would be whether different interpretations of the document would turn two different UUIDs into the same URN, and, given the number of bits involved, the likelihood of collisions in practice is small.",
       "createdAt": "2022-10-03T23:21:07Z",
-      "updatedAt": "2022-10-03T23:21:07Z",
+      "updatedAt": "2022-10-17T20:15:04Z",
       "closedAt": null,
       "comments": []
     },
@@ -331,6 +331,34 @@
       "mergedBy": "kyzer-davis",
       "mergeCommit": {
         "oid": "26efbd0c00e6021c27418fe2d83449dfa30ecf45"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOH6Ln3M5A9ort",
+      "title": "Draft 00 - Merge 2",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/15",
+      "state": "MERGED",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Author Email Addresses\r\n- More Reference Updates\r\n- Some minor formatting changes\r\n- Fixed few test vectors for v7/v8 to match other test vectors\r\n- Modified TODOs",
+      "createdAt": "2022-10-17T20:43:17Z",
+      "updatedAt": "2022-10-17T20:44:39Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "26efbd0c00e6021c27418fe2d83449dfa30ecf45",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-00-merge-2",
+      "headRefOid": "dea2e1b8d92597788ea9d6d3968a52400211c3fc",
+      "closedAt": "2022-10-17T20:44:38Z",
+      "mergedAt": "2022-10-17T20:44:38Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "61e9ef93bce62ecce9484432f93d36a8e4b35c16"
       },
       "comments": [],
       "reviews": []
