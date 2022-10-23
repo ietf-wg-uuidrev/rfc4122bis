@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-10-18T02:41:50.185065+00:00",
+  "timestamp": "2022-10-23T02:39:07.924488+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -249,6 +249,30 @@
       "updatedAt": "2022-10-03T23:22:42Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOH6Ln3M5UioIX",
+      "title": "Reserve variant for Omni-UUID (Max-UUID)",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/16",
+      "state": "OPEN",
+      "author": "ben221199",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "At the moment, the Nil-UUID is part of variant 0 and by that definition reserved. Variant 0 uses `AF_UNSPEC` in that case.\r\n\r\nHowever, the range of the Omni-UUID isn't reserved yet. This issue suggests to reserve a variant of the Omni-UUID. I would suggest to only reserve the `0xFF` variant. Why? I will explain.\r\n\r\nIn the early days of UUID, there was no such thing as variants. There was only \"family\". This family field consisted of only one single byte, so it ranged from 0 to 255. In modern days, this is the same byte as where the variant byte is in. With this information, the new variant table will be this:\r\n| Msb0 | Msb1 | Msb2 | As Byte | Values | Description |\r\n| - | - | - | - | - | - |\r\n| 0 | * | * | `0b0*******` | From 0 to 127 | Reserved, NCS backward compatibility. |\r\n| 1 | 0 | * | `0b10******` | From 128 to 191 | The variant specified in this document. |\r\n| 1 | 1 | 0 | `0b110*****` | From 192 to 223 | Reserved, Microsoft Corporation backward compatibility |\r\n| 1 | 1 | 1 | `0b111*****`<br>---<br>`0b11111111` | From 224 to 254<br>---<br>Only 255 | Reserved for future definition.<br>---<br>Omni-UUID variant |\r\n\r\nHandling the variant/family like this, it has at least 2 advantages:\r\n - It reserves a variant for the Omni-UUID, so that there will be no conflicts when a new variant will be specificed.\r\n - You clearly see that there are 31 variant slots open for definition (32 including Omni-UUID variant).\r\n\r\nThis doesn't mean that Variant 255 always should have all bits set to 1. It only reserves the range the Omni-UUID is in. I also think it is important to add this variant in this specification, because this specification defines the Omni-UUID itself.",
+      "createdAt": "2022-10-21T13:41:59Z",
+      "updatedAt": "2022-10-21T20:05:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Seems logical enough to me. I will slate it for IETF 115 discussion in addition to cross posting to the mailing group.",
+          "createdAt": "2022-10-21T20:05:59Z",
+          "updatedAt": "2022-10-21T20:05:59Z"
+        }
+      ]
     }
   ],
   "pulls": [
