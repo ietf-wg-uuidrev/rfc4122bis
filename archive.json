@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-10-23T02:39:07.924488+00:00",
+  "timestamp": "2022-10-27T02:18:25.729494+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -271,6 +271,30 @@
           "body": "Seems logical enough to me. I will slate it for IETF 115 discussion in addition to cross posting to the mailing group.",
           "createdAt": "2022-10-21T20:05:59Z",
           "updatedAt": "2022-10-21T20:05:59Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOH6Ln3M5UzWdv",
+      "title": "Typo in UUIDv7 test vector?",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/17",
+      "state": "CLOSED",
+      "author": "oittaa",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#appendix-C.6\r\n\r\nThere might be a typo in final UUIDv7 test vector.\r\n\r\n```\r\n   -------------------------------\r\n   field      bits    value\r\n   -------------------------------\r\n   unix_ts_ms   48    0x17F22E279B0\r\n   ver           4    0x7\r\n   rand_a       12    0xCC3\r\n   var           2    b10\r\n   rand_b       62    b01, 0x8C4DC0C0C07398F\r\n   -------------------------------\r\n   total       128\r\n   -------------------------------\r\n   final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F\r\n```\r\n\r\nI think it actually yields 017F22E2-79B0-7CC3-***8***8C4-DC0C0C07398F.\r\n\r\nHere's how I generated it simply from Python command line.\r\n\r\n```python\r\nhex(0x8C4DC0C0C07398F | 2 << 62 | 0xCC3 << 62 + 2 | 0x7 << 62 + 2 + 12 | 0x17F22E279B0 << 62 + 2 + 12 + 4)\r\n'0x17f22e279b07cc388c4dc0c0c07398f'\r\n```\r\n\r\nFor example the version 6 works as expected and matches the result `1EC9414C-232A-6B00-B3C8-9E6BDECED846`.\r\n\r\n```\r\n   -----------------------------------------------\r\n   field                 bits    value\r\n   -----------------------------------------------\r\n   time_high              32     0x1EC9414C\r\n   time_mid               16     0x232A\r\n   time_low_and_version   16     0x6B00\r\n   clk_seq_hi_res          8     0xB3\r\n   clock_seq_low           8     0xC8\r\n   node                   48     0x9E6BDECED846\r\n   -----------------------------------------------\r\n   total                 128\r\n   -----------------------------------------------\r\n   final_hex: 1EC9414C-232A-6B00-B3C8-9E6BDECED846\r\n```\r\n\r\n```python\r\nhex(0x9E6BDECED846 | 0xC8 << 48 | 0xB3 << 48 + 8 | 0x6B00 << 48 + 8 + 8 | 0x232A << 48 + 8 + 8 + 16 | 0x1EC9414C << 48 + 8 + 8 + 16 + 16)\r\n'0x1ec9414c232a6b00b3c89e6bdeced846'\r\n```",
+      "createdAt": "2022-10-25T16:24:30Z",
+      "updatedAt": "2022-10-25T16:42:47Z",
+      "closedAt": "2022-10-25T16:42:46Z",
+      "comments": [
+        {
+          "author": "oittaa",
+          "authorAssociation": "NONE",
+          "body": "Oh sorry, I didn't notice `b01` part for some reason. The following works as expected.\r\n\r\n```python\r\n>>> hex(0x8C4DC0C0C07398F | 1 << 60 | 2 << 62 | 0xCC3 << 62 + 2 | 0x7 << 62 + 2 + 12 | 0x17F22E279B0 << 62 + 2 + 12 + 4)\r\n'0x17f22e279b07cc398c4dc0c0c07398f'\r\n```",
+          "createdAt": "2022-10-25T16:42:46Z",
+          "updatedAt": "2022-10-25T16:42:46Z"
         }
       ]
     }
