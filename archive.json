@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-10-27T02:18:25.729494+00:00",
+  "timestamp": "2022-11-03T02:09:00.158464+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -262,7 +262,7 @@
       "labels": [],
       "body": "At the moment, the Nil-UUID is part of variant 0 and by that definition reserved. Variant 0 uses `AF_UNSPEC` in that case.\r\n\r\nHowever, the range of the Omni-UUID isn't reserved yet. This issue suggests to reserve a variant of the Omni-UUID. I would suggest to only reserve the `0xFF` variant. Why? I will explain.\r\n\r\nIn the early days of UUID, there was no such thing as variants. There was only \"family\". This family field consisted of only one single byte, so it ranged from 0 to 255. In modern days, this is the same byte as where the variant byte is in. With this information, the new variant table will be this:\r\n| Msb0 | Msb1 | Msb2 | As Byte | Values | Description |\r\n| - | - | - | - | - | - |\r\n| 0 | * | * | `0b0*******` | From 0 to 127 | Reserved, NCS backward compatibility. |\r\n| 1 | 0 | * | `0b10******` | From 128 to 191 | The variant specified in this document. |\r\n| 1 | 1 | 0 | `0b110*****` | From 192 to 223 | Reserved, Microsoft Corporation backward compatibility |\r\n| 1 | 1 | 1 | `0b111*****`<br>---<br>`0b11111111` | From 224 to 254<br>---<br>Only 255 | Reserved for future definition.<br>---<br>Omni-UUID variant |\r\n\r\nHandling the variant/family like this, it has at least 2 advantages:\r\n - It reserves a variant for the Omni-UUID, so that there will be no conflicts when a new variant will be specificed.\r\n - You clearly see that there are 31 variant slots open for definition (32 including Omni-UUID variant).\r\n\r\nThis doesn't mean that Variant 255 always should have all bits set to 1. It only reserves the range the Omni-UUID is in. I also think it is important to add this variant in this specification, because this specification defines the Omni-UUID itself.",
       "createdAt": "2022-10-21T13:41:59Z",
-      "updatedAt": "2022-10-21T20:05:59Z",
+      "updatedAt": "2022-11-02T22:47:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -271,6 +271,55 @@
           "body": "Seems logical enough to me. I will slate it for IETF 115 discussion in addition to cross posting to the mailing group.",
           "createdAt": "2022-10-21T20:05:59Z",
           "updatedAt": "2022-10-21T20:05:59Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "Makes sense. I agree some clarification is necessary because Table 1 looks to conflict with Max UUID, but by the way, do we need to limit the variant field to one byte rather than the remaining 64 bits? Even after our great-great-grandchildren consume `0b1111_1110`, they can still define `0b1111_1111_0`. The variant field is variable-length by its nature, so perhaps it is more helpful to describe the `10` technique explicitly. I haven't come up with a good idea to do this, but how about something like this?\r\n\r\n| Msb0 | Msb1 | Msb2 | Msb3 | Description                                            |\r\n| ---- | ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | x    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | 0    | Reserved for a future variant.                        |\r\n| 1    | 1    | 1    | 1    | Reserved for future variants and Max UUID.           |\r\n\r\nOr this?\r\n\r\n| Msb0 | Msb1 | Msb2 | Description                                            |\r\n| ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | Reserved for future variants and Max UUID.           |\r\n",
+          "createdAt": "2022-11-02T12:41:29Z",
+          "updatedAt": "2022-11-02T12:51:01Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "We could also say \"Reserved for the next future variant.\" for `0b1110`.",
+          "createdAt": "2022-11-02T12:58:19Z",
+          "updatedAt": "2022-11-02T12:58:19Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "> The variant field is variable-length by its nature, so perhaps it is more helpful to describe the 10 technique explicitly.\r\n\r\nThis is not fully correct. Forget about how the table is in RFC 4122. In the good old Apollo Computer days, there was a `family` field that was exactly 8 bits. Because only 13 families where used back then, the makers of RFC 4122 decided when starting with a 0-bit, it was variant 0 and defined families, and when starting with a 1-bit, it was another variant.\r\n\r\nMaking the variant field variable length, doesn't make any sense. It was defined on the same location as the family field on purpose. I would almost rather say: the variant field IS the family field.\r\n\r\n---\r\n\r\nWhat I think should be done? Well, I would recommend to redefine all variants to their 8-bit format, where `x` is a \"don't care\", so variant `0` becomes `0xxxxxxx`, variant `10` becomes `10xxxxxx` and variant `110` becomes `110xxxxx`. Why is this useful? Because you can assign ranges to it (see column 'Values' in my table). Instead of checking seperate bits, you just read the `family` byte, check the ranges, and you know the variant. Using 8-bit notation is also easier to understand and better to use in some IANA registry.\r\n\r\n---\r\n\r\n> do we need to limit the variant field to one byte rather than the remaining 64 bits?\r\n\r\nLook at what happened to `10xxxxxx`. This variant supports multiple versions. If you are afraid of running out of variants in the future, just reserve one variant now using the 8-bit notation and write an RFC that defines how your subversioning works, just like variant 1 in RFC 4122. Problem solved.\r\n",
+          "createdAt": "2022-11-02T15:31:10Z",
+          "updatedAt": "2022-11-02T15:31:10Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "So this...\r\n\r\nMsb0 | Msb1 | Msb2 | Description\r\n-- | -- | -- | --\r\n0 | x | x | Reserved, NCS backward compatibility.\r\n1 | 0 | x | The variant specified in this document.\r\n1 | 1 | 0 | Reserved, Microsoft Corporation backward compatibility\r\n1 | 1 | 1 | Reserved for future variants and Max UUID.\r\n\r\n...should become this...\r\n\r\nMsb0 | Msb1 | Msb2 | Msb3 | Msb4 | Msb5 | Msb6 | Msb7 | Description | Range\r\n-- | -- | -- | -- | -- | -- | -- | -- | -- | --\r\n0 | x | x | x | x | x | x | x | Reserved, NCS backward compatibility. | From 0 to 127 \r\n1 | 0 | x | x | x | x | x | x | The variant specified in this document. | From 128 to 191\r\n1 | 1 | 0 | x | x | x | x | x | Reserved, Microsoft Corporation backward compatibility | From 192 to 223\r\n1 | 1 | 1 | x | x | x | x | x | This was `Reserved for future definition.` in RFC 4122. Now we can reserve variant 224 to 254 for new formats and reserve 255 for Omni-UUID. This gives us space for 31 new variants. If you are afraid of running out of these variants soon, define one now and write an RFC about it, just like how variant 128-191 works with `versions`. | From 224 to 255\r\n\r\n...in my opinion.",
+          "createdAt": "2022-11-02T15:40:36Z",
+          "updatedAt": "2022-11-02T15:40:36Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "We can just forget about the family field because, as long as Msb0 is set to 1, no ID will collide with `0b0` variant values. Technically, the `0b1` authors could have done whatever they liked using the remaining 63 bits, but they generously gave up Msb1 so the future authors could use `0b11`. We should pay it forward; those who claim `0b111` should stick to `0b1110` and reserve `0b1111` for future authors. Similarly, `0b1111` should reserve `0b1111_1`, `0b1111_1` should reserve `0b1111_11`, `0b1111_11` should reserve `0b1111_111`, and so on. Accordingly, the table should look like this in full:\r\n\r\n| Msb0 | Msb1 | Msb2 | Msb3 | Msb4 | Msb5 | Msb6 | ... | Msb63 | Msb64 | Description                                            |\r\n| ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- | ----- | ----- | ------------------------------------------------------ |\r\n| 0    | x    | x    | x    | x    | x    | x    | ... | x     | x     | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | x    | x    | x    | x    | ... | x     | x     | The variant specified in this document.                |\r\n| 1    | 1    | 0    | x    | x    | x    | x    | ... | x     | x     | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | 0    | x    | x    | x    | ... | x     | x     | Reserved for the 1st future variant.                   |\r\n| 1    | 1    | 1    | 1    | 0    | x    | x    | ... | x     | x     | Reserved for the 2nd future variant.                   |\r\n| 1    | 1    | 1    | 1    | 1    | 0    | x    | ... | x     | x     | Reserved for the 3rd future variant.                   |\r\n| 1    | 1    | 1    | 1    | 1    | 1    | 0    | ... | x     | x     | Reserved for the 4th future variant.                   |\r\n| ...  | ...  | ...  | ...  | ...  | ...  | ...  | ... | ...   | ...   | ...                                                    |\r\n| 1    | 1    | 1    | 1    | 1    | 1    | 1    | ... | 1     | 0     | Reserved for the last future variant.                  |\r\n| 1    | 1    | 1    | 1    | 1    | 1    | 1    | ... | 1     | 1     | Reserved for Max UUID.                                 |\r\n",
+          "createdAt": "2022-11-02T17:40:41Z",
+          "updatedAt": "2022-11-02T17:40:41Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": " I don't think this is useful. First, we don't need 18446744073709551616 variants, or in this case 64 variants (what actually isn't very different from 32, so I don't see a reason for having 64), I think we could better use this amount of possibilities for identifying objects, not variants. Second, maybe someone don't want have subversioning on the bytes directly after the `family` field, maybe he wants is at the beginning of the UUID or somewhere else.",
+          "createdAt": "2022-11-02T18:58:27Z",
+          "updatedAt": "2022-11-02T18:58:27Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "Perhaps, at this stage, we don't need to say in the RFC what the `0b111` taker should do. So, just keeping Table 1 as is or the following should be enough:\r\n\r\n| Msb0 | Msb1 | Msb2 | Description                                            |\r\n| ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | Reserved for future variants and Max UUID.             |\r\n\r\nIt doesn't really make sense to reserve one byte and order the next variant author to use `0b1110_0000`. It wastes precious five bits for forward compatibility, which is too costly in my opinion. A new variant will be rarely necessary; the `0b10` variant is sufficient unless there is a serious need to remove the `ver` field, so we don't need to declare a large `var` space right now. Let's just leave it to the `0b111` takers like: https://github.com/uuid6/uuid6-ietf-draft/issues/26\r\n",
+          "createdAt": "2022-11-02T22:47:56Z",
+          "updatedAt": "2022-11-02T22:47:56Z"
         }
       ]
     },
@@ -297,6 +346,54 @@
           "updatedAt": "2022-10-25T16:42:46Z"
         }
       ]
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOH6Ln3M5VbdTY",
+      "title": "Draft 01: Mixed Case Spelling error",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/18",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\"mixe case\" in text spelled wrong.",
+      "createdAt": "2022-11-02T14:37:28Z",
+      "updatedAt": "2022-11-02T14:37:28Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOH6Ln3M5VbeF1",
+      "title": "Draft 01: Add \"UUIDs that Do Not Identify the Host as well\" reference to security considerations",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/19",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> MAC addresses pose inherent security risks and SHOULD not be used within a UUID. Instead CSPRNG data SHOULD be selected from a source with sufficient entropy to ensure guaranteed uniqueness among UUID generation. See Section 6.8 for more information.\r\n\r\nAdd reference to 6.9.  UUIDs that Do Not Identify the Host as well",
+      "createdAt": "2022-11-02T14:38:53Z",
+      "updatedAt": "2022-11-02T14:38:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOH6Ln3M5VbefG",
+      "title": "Draft 01: Out of Place Distributed node text",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/20",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> Distributed applications generating UUIDs at a variety of hosts must be willing to rely on the random number source at all hosts. If this is not feasible, the namespace variant should be used.\r\n\r\nCopied from RFC4122, needs moved to distributed node section vs Security considerations for better readability.",
+      "createdAt": "2022-11-02T14:39:37Z",
+      "updatedAt": "2022-11-02T14:39:37Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
