@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-11-03T02:09:00.158464+00:00",
+  "timestamp": "2022-11-06T02:11:41.667078+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -262,7 +262,7 @@
       "labels": [],
       "body": "At the moment, the Nil-UUID is part of variant 0 and by that definition reserved. Variant 0 uses `AF_UNSPEC` in that case.\r\n\r\nHowever, the range of the Omni-UUID isn't reserved yet. This issue suggests to reserve a variant of the Omni-UUID. I would suggest to only reserve the `0xFF` variant. Why? I will explain.\r\n\r\nIn the early days of UUID, there was no such thing as variants. There was only \"family\". This family field consisted of only one single byte, so it ranged from 0 to 255. In modern days, this is the same byte as where the variant byte is in. With this information, the new variant table will be this:\r\n| Msb0 | Msb1 | Msb2 | As Byte | Values | Description |\r\n| - | - | - | - | - | - |\r\n| 0 | * | * | `0b0*******` | From 0 to 127 | Reserved, NCS backward compatibility. |\r\n| 1 | 0 | * | `0b10******` | From 128 to 191 | The variant specified in this document. |\r\n| 1 | 1 | 0 | `0b110*****` | From 192 to 223 | Reserved, Microsoft Corporation backward compatibility |\r\n| 1 | 1 | 1 | `0b111*****`<br>---<br>`0b11111111` | From 224 to 254<br>---<br>Only 255 | Reserved for future definition.<br>---<br>Omni-UUID variant |\r\n\r\nHandling the variant/family like this, it has at least 2 advantages:\r\n - It reserves a variant for the Omni-UUID, so that there will be no conflicts when a new variant will be specificed.\r\n - You clearly see that there are 31 variant slots open for definition (32 including Omni-UUID variant).\r\n\r\nThis doesn't mean that Variant 255 always should have all bits set to 1. It only reserves the range the Omni-UUID is in. I also think it is important to add this variant in this specification, because this specification defines the Omni-UUID itself.",
       "createdAt": "2022-10-21T13:41:59Z",
-      "updatedAt": "2022-11-02T22:47:57Z",
+      "updatedAt": "2022-11-04T00:23:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -320,6 +320,20 @@
           "body": "Perhaps, at this stage, we don't need to say in the RFC what the `0b111` taker should do. So, just keeping Table 1 as is or the following should be enough:\r\n\r\n| Msb0 | Msb1 | Msb2 | Description                                            |\r\n| ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | Reserved for future variants and Max UUID.             |\r\n\r\nIt doesn't really make sense to reserve one byte and order the next variant author to use `0b1110_0000`. It wastes precious five bits for forward compatibility, which is too costly in my opinion. A new variant will be rarely necessary; the `0b10` variant is sufficient unless there is a serious need to remove the `ver` field, so we don't need to declare a large `var` space right now. Let's just leave it to the `0b111` takers like: https://github.com/uuid6/uuid6-ietf-draft/issues/26\r\n",
           "createdAt": "2022-11-02T22:47:56Z",
           "updatedAt": "2022-11-02T22:47:56Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I think your last row in the table is a very bad thing to do. Also, you contradict yourself by saying that my way is too costly, but we also don't need many variants. Note that version can only hold 16 values, where half of it is already taken. Also, https://github.com/uuid6/uuid6-ietf-draft/issues/26 is out of scope.",
+          "createdAt": "2022-11-03T20:15:40Z",
+          "updatedAt": "2022-11-03T20:15:40Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "> I think your last row in the table is a very bad thing to do.\r\n\r\nCan you please elaborate on this point?\r\n\r\n> Also, you contradict yourself by saying that my way is too costly, but we also don't need many variants.\r\n\r\nNot contradictory. Because we don't need many variants, reserving one byte for `var` is too costly.\r\n\r\n> Note that version can only hold 16 values, where half of it is already taken. Also, https://github.com/uuid6/uuid6-ietf-draft/issues/26 is out of scope.\r\n\r\nI'm afraid you are confusing versions and variants. Versions are specific to the `0b10` variant and have nothing to do with the future variants. If the future `0b111` authors believe they need sub-variants, they will allocate another version bits somewhere in the 128-bit space. If not, the version field will simply go away and the four bits will be utilized differently. We should let them decide, as we can't foresee the future.\r\n\r\nOn the other hand, if the future authors are considerate enough of the future of UUID spec, they will likely take the `0b1110` variant so the next future authors can take `0b1111`, just as https://github.com/uuid6/uuid6-ietf-draft/issues/26 tried to. E variant is out of scope, but the discussion clearly demonstrates how the `var` field can be utilized in the future. Similarly, `0b1111` takers are likely to reserve `0b1111_1`, `0b1111_1` takers to reserve `0b1111_11`, and so on. In this way, the `var` field can be variable-length, which might grows over many decades. I don't mean we should reserve 64 variants right now.\r\n\r\nI now think it's a good idea to add one paragraph below Table 1 stating the above intention to guide future authors like:\r\n\r\n> Future RFC authors who consume the reserved \"111\" variant are encouraged to (or, simply, SHOULD) define the \"1110\" variant and reserve the \"1111\" variant so that the next future authors can extend the UUID specification using the \"1111\" variant as well as the new variant does not conflict with the Max UUID.\r\n\r\nWe can only encourage (but not enforce) this rule because, as long as `var` starts with `0b111`, the future authors can do whatever they want without conflicting with the old standards. We cannot enforce the \"one byte `var`\" rule either for the same reason.\r\n",
+          "createdAt": "2022-11-04T00:23:17Z",
+          "updatedAt": "2022-11-04T00:23:17Z"
         }
       ]
     },
@@ -392,6 +406,22 @@
       "body": "> Distributed applications generating UUIDs at a variety of hosts must be willing to rely on the random number source at all hosts. If this is not feasible, the namespace variant should be used.\r\n\r\nCopied from RFC4122, needs moved to distributed node section vs Security considerations for better readability.",
       "createdAt": "2022-11-02T14:39:37Z",
       "updatedAt": "2022-11-02T14:39:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOH6Ln3M5VlZ3O",
+      "title": "v6 clock_seq and node usage ambiguity",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/21",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 5.6 says \"the 48 bit node SHOULD be set to a pseudo-random value\". Which does it mean:\r\n\r\n1. the node SHOULD be reset to a pseudo-random number every time a new UUIDv6 is generated; or,\r\n2. the node SHOULD be initialized at a pseudo-random number only once at the system boot?\r\n\r\nThe old RFC 4122 doesn't seem clear enough, or it is rather so permissive as to accept many kinds of spatially unique identifiers. It's okay for v1 to be ambiguous; we must anyway keep it as ambiguous as it has been. Since v6 should be compatible with v1, everything should also be permitted under v6, but questions arise on which method v6 should recommend as default. We don't need to be ambiguous here.\r\n\r\nIf the first option is the way to go, the following text in Section 5.6:\r\n\r\n> The clock sequence bits remain unchanged from their usage and position in Section 5.1.\r\n>\r\n> The 48 bit node SHOULD be set to a pseudo-random value however implementations MAY choose to retain the old MAC address behavior from Section 5.1 and Section 6.9. For more information on MAC address usage within UUIDs see the Section 9\r\n\r\ncan be reworded in a much simpler way as:\r\n\r\n> The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the UUIDv1 behavior from Section 5.1.\r\n\r\nbecause the clock sequence bits are reset to a random number when the node ID changes. Refreshing `node` to a random number every time is equivalent to resetting both `clock_seq` and `node` to random numbers every time. This point seems clear from Section 4.2.1 and Appendix A of the old RFC 4122.\r\n\r\nIf the latter option is recommended, the RFC should state that explicitly.",
+      "createdAt": "2022-11-04T10:36:29Z",
+      "updatedAt": "2022-11-04T22:54:14Z",
       "closedAt": null,
       "comments": []
     }
