@@ -1464,7 +1464,7 @@ Table of Contents
    MAC addresses pose inherent security risks and SHOULD not be used
    within a UUID.  Instead CSPRNG data SHOULD be selected from a source
    with sufficient entropy to ensure guaranteed uniqueness among UUID
-   generation.  See Section 6.8 for more information.
+   generation.  See Section 6.8 and Section 6.9 for more information.
 
    Timestamps embedded in the UUID do pose a very small attack surface.
    The timestamp in conjunction with an embedded counter does signal the
