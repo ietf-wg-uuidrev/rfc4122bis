@@ -70,7 +70,7 @@ normative:
   RFC6151: RFC6151
   RFC4086: RFC4086
   RFC8141: RFC8141
-  RFC4234: RFC4234
+  RFC5234: RFC5234
   RFC6194: RFC6194
   SHA1:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
@@ -421,7 +421,7 @@ draft-00
 - Merge RFC4122 with draft-peabody-dispatch-new-uuid-format-04.md
 - Change: Reference RFC1321 to RFC6151
 - Change: Reference RFC2141 to RFC8141
-- Change: Reference RFC2234 to RFC4234
+- Change: Reference RFC2234 to RFC5234
 - Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
@@ -458,7 +458,7 @@ be represented by the "hex-and-dash" string format consisting of multiple
 groups of upper or lowercase alphanumeric hex characters separated by a single dash/hyphen.
 When used with databases please refer to {{database_considerations}}.
 
-The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC4234}}.
+The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
    UUID                   = 4hexOctet "-"
@@ -474,7 +474,7 @@ The formal definition of the UUID string representation is provided by the follo
 ~~~~
 
 An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
-Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC4234, Section 2.3}}
+Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC5234, Section 2.3}}
 
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -1624,7 +1624,7 @@ Declaration of syntactic structure:
   lower case characters and are case insensitive on input.
 
   The formal definition of the UUID string representation is
-  provided by the following ABNF {{RFC4234}}:
+  provided by the following ABNF {{RFC5234}}:
 
 ~~~~ abnf
 UUID                   = time-low "-" time-mid "-"
