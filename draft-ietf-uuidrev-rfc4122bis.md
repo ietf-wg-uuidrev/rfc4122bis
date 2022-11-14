@@ -934,19 +934,19 @@ possible.
 {: vspace='0'}
 
 unix_ts_ms:
-: 48 bit big-endian unsigned number of Unix epoch timestamp as per {{timestamp_granularity}}.
+: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_granularity}}.
 
 ver:
 : 4 bit UUIDv7 version set as per {{version_field}}
 
 rand_a:
-: 12 bits pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
+: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 var:
 : The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 
 ## UUID Version 8 {#v8}
