@@ -1674,11 +1674,11 @@ When used with databases please refer to <a href="#database_considerations" clas
 <p id="section-4-3">The formal definition of the UUID string representation is provided by the following (ABNF) <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>.<a href="#section-4-3" class="pilcrow">¶</a></p>
 <div id="section-4-4">
 <pre class="lang-abnf sourcecode">
-   UUID                   = 4hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            6hexOctet
+   UUID                   = 4*hexOctet "-"
+                            2*hexOctet "-"
+                            2*hexOctet "-"
+                            2*hexOctet "-"
+                            6*hexOctet
    hexOctet               = hexDigit hexDigit
    hexDigit =
          "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
