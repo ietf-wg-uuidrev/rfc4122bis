@@ -955,7 +955,7 @@ UUID version 8 provides an RFC-compatible format for experimental or vendor-spec
 use cases.
 The only requirement is that the variant and version bits MUST be set as
 defined in {{variant_field}} and {{version_field}}.
-UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed.
+UUIDv8's uniqueness will be implementation-specific and MUST NOT be assumed.
 
 The only explicitly defined bits are the Version and Variant leaving 122
 bits
