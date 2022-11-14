@@ -892,7 +892,7 @@ Table of Contents
    vendor-specific use cases.  The only requirement is that the variant
    and version bits MUST be set as defined in Section 4.1 and
    Section 4.2.  UUIDv8's uniqueness will be implementation-specific and
-   SHOULD NOT be assumed.
+   MUST NOT be assumed.
 
    The only explicitly defined bits are the Version and Variant leaving
    122 bits for implementation specific time-based UUIDs.  To be clear:
