@@ -486,17 +486,17 @@ The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID
 ~~~~
 11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
 ~~~~
-{: #sampleBinaryUUID title='Example Hex UUID'}
+{: #sampleBinaryUUID title='Example Binary UUID'}
 
 ~~~~
 329800735698586629295641978511506172918
 ~~~~
-{: #sampleIntegerUUID title='Example Hex UUID'}
+{: #sampleIntegerUUID title='Example Integer UUID'}
 
 ~~~~
 urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
-{: #sampleURNUUID title='Example Hex UUID'}
+{: #sampleURNUUID title='Example URN UUID'}
 
 ## Variant Field {#variant_field}
 
