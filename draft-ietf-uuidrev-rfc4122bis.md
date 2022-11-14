@@ -70,7 +70,7 @@ normative:
   RFC6151: RFC6151
   RFC4086: RFC4086
   RFC8141: RFC8141
-  RFC4234: RFC4234
+  RFC5234: RFC5234
   RFC6194: RFC6194
   SHA1:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
@@ -421,7 +421,7 @@ draft-00
 - Merge RFC4122 with draft-peabody-dispatch-new-uuid-format-04.md
 - Change: Reference RFC1321 to RFC6151
 - Change: Reference RFC2141 to RFC8141
-- Change: Reference RFC2234 to RFC4234
+- Change: Reference RFC2234 to RFC5234
 - Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
@@ -458,14 +458,14 @@ be represented by the "hex-and-dash" string format consisting of multiple
 groups of upper or lowercase alphanumeric hex characters separated by a single dash/hyphen.
 When used with databases please refer to {{database_considerations}}.
 
-The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC4234}}.
+The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
-   UUID                   = 4hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            6hexOctet
+   UUID                   = 4*hexOctet "-"
+                            2*hexOctet "-"
+                            2*hexOctet "-"
+                            2*hexOctet "-"
+                            6*hexOctet
    hexOctet               = hexDigit hexDigit
    hexDigit =
          "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
@@ -474,7 +474,7 @@ The formal definition of the UUID string representation is provided by the follo
 ~~~~
 
 An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
-Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixe case as per {{RFC4234, Section 2.3}}
+Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC5234, Section 2.3}}
 
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -486,17 +486,17 @@ The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID
 ~~~~
 11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
 ~~~~
-{: #sampleBinaryUUID title='Example Hex UUID'}
+{: #sampleBinaryUUID title='Example Binary UUID'}
 
 ~~~~
 329800735698586629295641978511506172918
 ~~~~
-{: #sampleIntegerUUID title='Example Hex UUID'}
+{: #sampleIntegerUUID title='Example Integer UUID'}
 
 ~~~~
 urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
-{: #sampleURNUUID title='Example Hex UUID'}
+{: #sampleURNUUID title='Example URN UUID'}
 
 ## Variant Field {#variant_field}
 
@@ -934,19 +934,19 @@ possible.
 {: vspace='0'}
 
 unix_ts_ms:
-: 48 bit big-endian unsigned number of Unix epoch timestamp as per {{timestamp_granularity}}.
+: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_granularity}}.
 
 ver:
 : 4 bit UUIDv7 version set as per {{version_field}}
 
 rand_a:
-: 12 bits pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
+: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 var:
 : The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 
 ## UUID Version 8 {#v8}
@@ -955,11 +955,11 @@ UUID version 8 provides an RFC-compatible format for experimental or vendor-spec
 use cases.
 The only requirement is that the variant and version bits MUST be set as
 defined in {{variant_field}} and {{version_field}}.
-UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed.
+UUIDv8's uniqueness will be implementation-specific and MUST NOT be assumed.
 
 The only explicitly defined bits are the Version and Variant leaving 122
 bits
-for implementation specific time-based UUIDs. To be clear:
+for implementation specific UUIDs. To be clear:
 UUIDv8 is not a replacement for UUIDv4 where all 122 extra bits are
 filled with random data.
 
@@ -1337,6 +1337,10 @@ for implementing UUIDs in this specification. However implementations SHOULD
 utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.
 
+Distributed applications generating UUIDs at a variety of hosts must
+be willing to rely on the random number source at all hosts.  If this
+is not feasible, the namespace variant should be used.
+
 ## Name-Based UUID Generation {#name_based_uuid_generation}
 TODO, define how to compute a namespace ID if I don't want to use one from {{namespaces}}
 
@@ -1537,15 +1541,11 @@ slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
-Distributed applications generating UUIDs at a variety of hosts must
-be willing to rely on the random number source at all hosts.  If this
-is not feasible, the namespace variant should be used.
-
 MAC addresses pose inherent security risks and SHOULD not be used within
 a UUID.
 Instead CSPRNG data SHOULD be selected from a source with sufficient entropy
 to ensure guaranteed
-uniqueness among UUID generation. See {{unguessability}} for more information.
+uniqueness among UUID generation. See {{unguessability}} and {{unidentifiable}} for more information.
 
 Timestamps embedded in the UUID do pose a very small attack surface. The
 timestamp in conjunction with
@@ -1624,7 +1624,7 @@ Declaration of syntactic structure:
   lower case characters and are case insensitive on input.
 
   The formal definition of the UUID string representation is
-  provided by the following ABNF {{RFC4234}}:
+  provided by the following ABNF {{RFC5234}}:
 
 ~~~~ abnf
 UUID                   = time-low "-" time-mid "-"
