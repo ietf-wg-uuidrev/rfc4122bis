@@ -895,9 +895,9 @@ Table of Contents
    MUST NOT be assumed.
 
    The only explicitly defined bits are the Version and Variant leaving
-   122 bits for implementation specific time-based UUIDs.  To be clear:
-   UUIDv8 is not a replacement for UUIDv4 where all 122 extra bits are
-   filled with random data.
+   122 bits for implementation specific UUIDs.  To be clear: UUIDv8 is
+   not a replacement for UUIDv4 where all 122 extra bits are filled with
+   random data.
 
    Some example situations in which UUIDv8 usage could occur:
 
