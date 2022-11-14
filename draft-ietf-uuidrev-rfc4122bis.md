@@ -1337,6 +1337,10 @@ for implementing UUIDs in this specification. However implementations SHOULD
 utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.
 
+Distributed applications generating UUIDs at a variety of hosts must
+be willing to rely on the random number source at all hosts.  If this
+is not feasible, the namespace variant should be used.
+
 ## Name-Based UUID Generation {#name_based_uuid_generation}
 TODO, define how to compute a namespace ID if I don't want to use one from {{namespaces}}
 
@@ -1536,10 +1540,6 @@ Do not assume that it is easy to determine if a UUID has been
 slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
-
-Distributed applications generating UUIDs at a variety of hosts must
-be willing to rely on the random number source at all hosts.  If this
-is not feasible, the namespace variant should be used.
 
 MAC addresses pose inherent security risks and SHOULD not be used within
 a UUID.
