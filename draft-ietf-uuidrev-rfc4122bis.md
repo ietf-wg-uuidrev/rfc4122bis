@@ -461,11 +461,11 @@ When used with databases please refer to {{database_considerations}}.
 The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
-   UUID                   = 4hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            6hexOctet
+   UUID                   = 4*hexOctet "-"
+                            2*hexOctet "-"
+                            2*hexOctet "-"
+                            2*hexOctet "-"
+                            6*hexOctet
    hexOctet               = hexDigit hexDigit
    hexDigit =
          "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
