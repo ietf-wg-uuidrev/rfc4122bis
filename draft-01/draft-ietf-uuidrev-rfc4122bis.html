@@ -2904,6 +2904,9 @@ is also out of scope for this specification.<a href="#section-6.4-3.4.1" class="
 for implementing UUIDs in this specification. However implementations <span class="bcp14">SHOULD</span>
 utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.<a href="#section-6.4-4" class="pilcrow">¶</a></p>
+<p id="section-6.4-5">Distributed applications generating UUIDs at a variety of hosts must
+be willing to rely on the random number source at all hosts.  If this
+is not feasible, the namespace variant should be used.<a href="#section-6.4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="name_based_uuid_generation">
@@ -3133,23 +3136,20 @@ exacerbate the situation.<a href="#section-9-1" class="pilcrow">¶</a></p>
 slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.<a href="#section-9-2" class="pilcrow">¶</a></p>
-<p id="section-9-3">Distributed applications generating UUIDs at a variety of hosts must
-be willing to rely on the random number source at all hosts.  If this
-is not feasible, the namespace variant should be used.<a href="#section-9-3" class="pilcrow">¶</a></p>
-<p id="section-9-4">MAC addresses pose inherent security risks and <span class="bcp14">SHOULD</span> not be used within
+<p id="section-9-3">MAC addresses pose inherent security risks and <span class="bcp14">SHOULD</span> not be used within
 a UUID.
 Instead CSPRNG data <span class="bcp14">SHOULD</span> be selected from a source with sufficient entropy
 to ensure guaranteed
-uniqueness among UUID generation. See <a href="#unguessability" class="auto internal xref">Section 6.8</a> and <a href="#unidentifiable" class="auto internal xref">Section 6.9</a> for more information.<a href="#section-9-4" class="pilcrow">¶</a></p>
-<p id="section-9-5">Timestamps embedded in the UUID do pose a very small attack surface. The
+uniqueness among UUID generation. See <a href="#unguessability" class="auto internal xref">Section 6.8</a> and <a href="#unidentifiable" class="auto internal xref">Section 6.9</a> for more information.<a href="#section-9-3" class="pilcrow">¶</a></p>
+<p id="section-9-4">Timestamps embedded in the UUID do pose a very small attack surface. The
 timestamp in conjunction with
 an embedded counter does signal the order of creation for a given UUID and
 it's corresponding data but
 does not define anything about the data itself or the application as a whole.
 If UUIDs are required for
 use with any security operation within an application context in any shape
-or form then UUIDv4, <a href="#uuidv4" class="auto internal xref">Section 5.4</a> <span class="bcp14">SHOULD</span> be utilized.<a href="#section-9-5" class="pilcrow">¶</a></p>
-<p id="section-9-6">See <span>[<a href="#RFC6151" class="cite xref">RFC6151</a>]</span> for MD5 Security Considerations and <span>[<a href="#RFC6194" class="cite xref">RFC6194</a>]</span> for SHA1 security considerations.<a href="#section-9-6" class="pilcrow">¶</a></p>
+or form then UUIDv4, <a href="#uuidv4" class="auto internal xref">Section 5.4</a> <span class="bcp14">SHOULD</span> be utilized.<a href="#section-9-4" class="pilcrow">¶</a></p>
+<p id="section-9-5">See <span>[<a href="#RFC6151" class="cite xref">RFC6151</a>]</span> for MD5 Security Considerations and <span>[<a href="#RFC6194" class="cite xref">RFC6194</a>]</span> for SHA1 security considerations.<a href="#section-9-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="Acknowledgements">
