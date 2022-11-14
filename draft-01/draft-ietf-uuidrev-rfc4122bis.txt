@@ -303,7 +303,7 @@ Table of Contents
    *  Merge RFC4122 with draft-peabody-dispatch-new-uuid-format-04.md
    *  Change: Reference RFC1321 to RFC6151
    *  Change: Reference RFC2141 to RFC8141
-   *  Change: Reference RFC2234 to RFC4234
+   *  Change: Reference RFC2234 to RFC5234
    *  Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
    *  Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
    *  Change: Trimmed down the ABNF representation
@@ -348,7 +348,7 @@ Table of Contents
    refer to Section 6.12.
 
    The formal definition of the UUID string representation is provided
-   by the following (ABNF) [RFC4234].
+   by the following (ABNF) [RFC5234].
 
       UUID                   = 4hexOctet "-"
                                2hexOctet "-"
@@ -364,7 +364,7 @@ Table of Contents
    An example UUID using this textual representation from the previous
    table observed in Figure 1.  Note that in this example the alphabetic
    characters may be all uppercase, all lowercase or mixed case as per
-   [RFC4234], Section 2.3
+   [RFC5234], Section 2.3
 
    f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 
@@ -1528,9 +1528,10 @@ Table of Contents
               DOI 10.17487/RFC4086, June 2005,
               <https://www.rfc-editor.org/rfc/rfc4086>.
 
-   [RFC4234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", RFC 4234, DOI 10.17487/RFC4234,
-              October 2005, <https://www.rfc-editor.org/rfc/rfc4234>.
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234,
+              DOI 10.17487/RFC5234, January 2008,
+              <https://www.rfc-editor.org/rfc/rfc5234>.
 
    [RFC6151]  Turner, S. and L. Chen, "Updated Security Considerations
               for the MD5 Message-Digest and the HMAC-MD5 Algorithms",
@@ -1670,7 +1671,7 @@ Appendix A.  Namespace Registration Template
       lower case characters and are case insensitive on input.
 
       The formal definition of the UUID string representation is
-      provided by the following ABNF [RFC4234]:
+      provided by the following ABNF [RFC5234]:
 
    UUID                   = time-low "-" time-mid "-"
                             time-high-and-version "-"
