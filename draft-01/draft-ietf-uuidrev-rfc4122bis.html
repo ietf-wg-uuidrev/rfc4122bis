@@ -2430,7 +2430,7 @@ possible.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="section-5.7-4">
           <dt id="section-5.7-4.1">unix_ts_ms:</dt>
           <dd style="margin-left: 1.5em" id="section-5.7-4.2">
-            <p id="section-5.7-4.2.1">48 bit big-endian unsigned number of Unix epoch timestamp as per <a href="#timestamp_granularity" class="auto internal xref">Section 6.1</a>.<a href="#section-5.7-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.7-4.2.1">48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per <a href="#timestamp_granularity" class="auto internal xref">Section 6.1</a>.<a href="#section-5.7-4.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-5.7-4.3">ver:</dt>
@@ -2440,7 +2440,7 @@ possible.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 <dt id="section-5.7-4.5">rand_a:</dt>
           <dd style="margin-left: 1.5em" id="section-5.7-4.6">
-            <p id="section-5.7-4.6.1">12 bits pseudo-random data to provide uniqueness as per <a href="#monotonicity_counters" class="auto internal xref">Section 6.2</a> and <a href="#unguessability" class="auto internal xref">Section 6.8</a>.<a href="#section-5.7-4.6.1" class="pilcrow">¶</a></p>
+            <p id="section-5.7-4.6.1">12 bits pseudo-random data to provide uniqueness as per <a href="#unguessability" class="auto internal xref">Section 6.8</a> and/or an optional counter to guarantee additional monotonicity as per <a href="#monotonicity_counters" class="auto internal xref">Section 6.2</a>.<a href="#section-5.7-4.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-5.7-4.7">var:</dt>
@@ -2450,7 +2450,7 @@ possible.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 <dt id="section-5.7-4.9">rand_b:</dt>
           <dd style="margin-left: 1.5em" id="section-5.7-4.10">
-            <p id="section-5.7-4.10.1">The final 62 bits of pseudo-random data to provide uniqueness as per <a href="#monotonicity_counters" class="auto internal xref">Section 6.2</a> and <a href="#unguessability" class="auto internal xref">Section 6.8</a>.<a href="#section-5.7-4.10.1" class="pilcrow">¶</a></p>
+            <p id="section-5.7-4.10.1">The final 62 bits of pseudo-random data to provide uniqueness as per <a href="#unguessability" class="auto internal xref">Section 6.8</a> and/or an optional counter to guarantee additional monotonicity as per <a href="#monotonicity_counters" class="auto internal xref">Section 6.2</a>.<a href="#section-5.7-4.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>

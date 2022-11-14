@@ -869,22 +869,24 @@ Table of Contents
                    Figure 11: UUIDv7 Field and Bit Layout
 
    unix_ts_ms:
-      48 bit big-endian unsigned number of Unix epoch timestamp as per
-      Section 6.1.
+      48 bit big-endian unsigned number of Unix epoch timestamp in
+      milliseconds as per Section 6.1.
 
    ver:
       4 bit UUIDv7 version set as per Section 4.2
 
    rand_a:
       12 bits pseudo-random data to provide uniqueness as per
-      Section 6.2 and Section 6.8.
+      Section 6.8 and/or an optional counter to guarantee additional
+      monotonicity as per Section 6.2.
 
    var:
       The 2 bit variant defined by Section 4.1.
 
    rand_b:
       The final 62 bits of pseudo-random data to provide uniqueness as
-      per Section 6.2 and Section 6.8.
+      per Section 6.8 and/or an optional counter to guarantee additional
+      monotonicity as per Section 6.2.
 
 5.8.  UUID Version 8
 
