@@ -375,15 +375,15 @@ Table of Contents
 
 11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
 
-                      Figure 2: Example Hex UUID
+                    Figure 2: Example Binary UUID
 
    329800735698586629295641978511506172918
 
-                         Figure 3: Example Hex UUID
+                       Figure 3: Example Integer UUID
 
    urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 
-                         Figure 4: Example Hex UUID
+                         Figure 4: Example URN UUID
 
 4.1.  Variant Field
 
