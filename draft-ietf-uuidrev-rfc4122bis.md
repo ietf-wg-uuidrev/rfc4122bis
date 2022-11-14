@@ -474,7 +474,7 @@ The formal definition of the UUID string representation is provided by the follo
 ~~~~
 
 An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
-Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixe case as per {{RFC4234, Section 2.3}}
+Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC4234, Section 2.3}}
 
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
