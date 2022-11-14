@@ -959,7 +959,7 @@ UUIDv8's uniqueness will be implementation-specific and MUST NOT be assumed.
 
 The only explicitly defined bits are the Version and Variant leaving 122
 bits
-for implementation specific time-based UUIDs. To be clear:
+for implementation specific UUIDs. To be clear:
 UUIDv8 is not a replacement for UUIDv4 where all 122 extra bits are
 filled with random data.
 
