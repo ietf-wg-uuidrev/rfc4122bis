@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-11-10T02:08:53.818322+00:00",
+  "timestamp": "2022-11-15T02:00:17.613135+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -42,6 +42,16 @@
       "name": "Technical",
       "description": "",
       "color": "FCEDC5"
+    },
+    {
+      "name": "Consensus Requested",
+      "description": "",
+      "color": "F0E743"
+    },
+    {
+      "name": "Consensus Acheived",
+      "description": "",
+      "color": "5AFF00"
     }
   ],
   "issues": [
@@ -389,10 +399,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "\"mixe case\" in text spelled wrong.",
       "createdAt": "2022-11-02T14:37:28Z",
-      "updatedAt": "2022-11-02T14:37:28Z",
+      "updatedAt": "2022-11-14T21:50:58Z",
       "closedAt": null,
       "comments": []
     },
@@ -405,10 +417,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "> MAC addresses pose inherent security risks and SHOULD not be used within a UUID. Instead CSPRNG data SHOULD be selected from a source with sufficient entropy to ensure guaranteed uniqueness among UUID generation. See Section 6.8 for more information.\r\n\r\nAdd reference to 6.9.  UUIDs that Do Not Identify the Host as well",
       "createdAt": "2022-11-02T14:38:53Z",
-      "updatedAt": "2022-11-02T14:38:53Z",
+      "updatedAt": "2022-11-14T21:54:09Z",
       "closedAt": null,
       "comments": []
     },
@@ -421,10 +435,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "> Distributed applications generating UUIDs at a variety of hosts must be willing to rely on the random number source at all hosts. If this is not feasible, the namespace variant should be used.\r\n\r\nCopied from RFC4122, needs moved to distributed node section vs Security considerations for better readability.",
       "createdAt": "2022-11-02T14:39:37Z",
-      "updatedAt": "2022-11-02T14:39:37Z",
+      "updatedAt": "2022-11-14T21:55:40Z",
       "closedAt": null,
       "comments": []
     },
@@ -461,10 +477,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "`Figure 2: Example Hex UUID` -> `Figure 3: Example Binary UUID`\r\n`Figure 3: Example Hex UUID` -> `Figure 3: Example Integer UUID`\r\n\r\n",
       "createdAt": "2022-11-08T18:27:23Z",
-      "updatedAt": "2022-11-08T18:27:23Z",
+      "updatedAt": "2022-11-14T21:57:00Z",
       "closedAt": null,
       "comments": []
     },
@@ -493,10 +511,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "Specifically should these be `4hexOctet` or `4*hexOctet` as per https://www.rfc-editor.org/rfc/rfc5234#section-3.6",
       "createdAt": "2022-11-08T18:40:09Z",
-      "updatedAt": "2022-11-08T18:40:09Z",
+      "updatedAt": "2022-11-14T22:07:48Z",
       "closedAt": null,
       "comments": []
     },
@@ -509,10 +529,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "https://www.rfc-editor.org/rfc/rfc5234",
       "createdAt": "2022-11-08T18:40:45Z",
-      "updatedAt": "2022-11-08T18:40:45Z",
+      "updatedAt": "2022-11-14T22:08:06Z",
       "closedAt": null,
       "comments": []
     },
@@ -541,10 +563,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "`UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed`\r\n\r\nTO\r\n\r\n`UUIDv8's uniqueness will be implementation-specific and MUST NOT be assumed`\r\n\r\nfrom Murray K. IETF 115",
       "createdAt": "2022-11-08T18:42:41Z",
-      "updatedAt": "2022-11-08T18:42:41Z",
+      "updatedAt": "2022-11-14T21:59:59Z",
       "closedAt": null,
       "comments": []
     },
@@ -573,10 +597,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "Source https://github.com/uuid6/uuid6-ietf-draft/issues/124",
       "createdAt": "2022-11-08T18:48:02Z",
-      "updatedAt": "2022-11-08T18:48:02Z",
+      "updatedAt": "2022-11-14T22:08:21Z",
       "closedAt": null,
       "comments": []
     },
@@ -589,10 +615,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "Source: https://github.com/uuid6/uuid6-ietf-draft/issues/125",
       "createdAt": "2022-11-08T18:48:21Z",
-      "updatedAt": "2022-11-08T18:48:21Z",
+      "updatedAt": "2022-11-14T22:12:40Z",
       "closedAt": null,
       "comments": []
     },
@@ -722,6 +750,32 @@
       "mergeCommit": {
         "oid": "61e9ef93bce62ecce9484432f93d36a8e4b35c16"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOH6Ln3M5C4UJl",
+      "title": "Draft 01 - Merge 1",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/32",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- #18 \r\n- #19 \r\n- #20 \r\n- #22 \r\n- #24\r\n- #25 \r\n- #27 \r\n- #29 \r\n- #30",
+      "createdAt": "2022-11-14T22:10:28Z",
+      "updatedAt": "2022-11-14T22:10:28Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "61e9ef93bce62ecce9484432f93d36a8e4b35c16",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-01",
+      "headRefOid": "0b88cbcd7328df16e002fd6dcc0c0be0e8e06bc0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
