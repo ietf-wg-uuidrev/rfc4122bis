@@ -1592,7 +1592,7 @@ Interoperability: UUIDs, and UUID values in the form of URNs in particular,
 
 Resolution: Since UUIDs are not globally resolvable, this is not applicable.
 
-Documentation: This document and {{RFC4122}}
+Documentation: This document and RFC4122
 
 Additional Information: The intention here is simply to include this document
   in any applicable references at {{URNNamespaces}}. There is no intention
