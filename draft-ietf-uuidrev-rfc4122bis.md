@@ -216,6 +216,12 @@ informative:
     date: 2019-07
     seriesinfo:
       Series: 754-2019
+  URNNamespaces:
+    target: https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml
+    title: Uniform Resource Names (URN) Namespaces
+    author:
+    - org: IANA
+    date: 2022-11-18
 
 --- abstract
 
@@ -1512,8 +1518,88 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
-TODO: Q: Should Namespace Registration Template be here or in {{namespace_reg_template}}?
-TODO: Need to ensure IANA doc, https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml, has this new document listed.
+
+Per {{RFC8141}} here is the Namespace Registration Template filled out for this namespace and hereby a request to reference this document (when the final version is published) at {{URNNamespaces}}.  Note that namespace is already listed and this is a request to update that entry to reference this document.
+
+Namespace Identifier: UUID (formal)
+
+Version: 1
+
+Date: 2003-10-01
+
+Registrant: JTC 1/SC6 (ASN.1 Rapporteur Group)
+
+Purpose: A UUID is an identifier that is unique across both space and time,
+  with respect to the space of all UUIDs.  Since a UUID is a fixed
+  size and contains a time field, it is possible for values to
+  rollover (around A.D. 3400, depending on the specific algorithm
+  used).  A UUID can be used for multiple purposes, from tagging
+  objects with an extremely short lifetime, to reliably identifying
+  very persistent objects across a network.
+
+Syntax: The internal representation of a UUID is a specific sequence of
+  bits in memory, as described in {{format}}.  To accurately
+  represent a UUID as a URN, it is necessary to convert the bit
+  sequence to a string representation.
+
+  Each field is treated as an integer and has its value printed as a
+  zero-filled hexadecimal digit string with the most significant
+  digit first.  The hexadecimal values "a" through "f" are output as
+  lower case characters and are case insensitive on input.
+
+  The formal definition of the UUID string representation is
+  provided by the following ABNF {{RFC4234}}:
+
+~~~~ abnf
+UUID                   = time-low "-" time-mid "-"
+                         time-high-and-version "-"
+                         clock-seq-and-reserved
+                         clock-seq-low "-" node
+time-low               = 4hexOctet
+time-mid               = 2hexOctet
+time-high-and-version  = 2hexOctet
+clock-seq-and-reserved = hexOctet
+clock-seq-low          = hexOctet
+node                   = 6hexOctet
+hexOctet               = hexDigit hexDigit
+hexDigit =
+      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
+      "a" / "b" / "c" / "d" / "e" / "f" /
+      "A" / "B" / "C" / "D" / "E" / "F"
+~~~~
+
+  The following is an example of the string representation of a UUID as
+  a URN:
+
+  urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+
+Assignment: Individual UUID values are generated based on the uniqueness
+  properties otherwise covered in this document with version-specific
+  considerations for each.  Mechinisms include pseudorandom
+  number generation, cryptographic hashing and the option to use
+  IEEE 802 MAC addresses.
+
+Security and Privacy: The recommended generation algorithms for UUIDs
+  per this document involve pseudorandom number generation and as 
+  such do not present additional privacy or data exposure risks 
+  beyond any such random value generated.  The use of IEEE 802 MAC
+  addresses which may present security problems has explicitly been
+  made optional and not recommended.
+
+Interoperability: UUIDs, and UUID values in the form of URNs in particular,
+  are opaque values the syntax as covered above has no proposed changes
+  and thus no known interoperability issues.
+
+Resolution: Since UUIDs are not globally resolvable, this is not applicable.
+
+Documentation: This document and {{RFC4122}}
+
+Additional Information: The intention here is simply to include this document
+  in any applicable references at {{URNNamespaces}}. There is no intention
+  to change the existing UUID URN registration.  The scope of this document
+  pertains solely to the internal structure and versions of UUIDs, the
+  textual format and URN registration are specifically out of scope and
+  not changing as part of this update.
 
 # Community Considerations {#community}
 
@@ -1590,130 +1676,6 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 
 --- back
-
-# Namespace Registration Template {#namespace_reg_template}
-TODO: Revise as per https://www.rfc-editor.org/rfc/rfc8141#appendix-A and https://www.rfc-editor.org/rfc/rfc8141#section-6.2
-
-{:vspace}
-Namespace ID:
-: UUID
-
-Registration Information:
-: Registration date: 2003-10-01
-
-Declared registrant of the namespace:
-: JTC 1/SC6 (ASN.1 Rapporteur Group)
-
-Declaration of syntactic structure:
-: A UUID is an identifier that is unique across both space and time,
-  with respect to the space of all UUIDs.  Since a UUID is a fixed
-  size and contains a time field, it is possible for values to
-  rollover (around A.D. 3400, depending on the specific algorithm
-  used).  A UUID can be used for multiple purposes, from tagging
-  objects with an extremely short lifetime, to reliably identifying
-  very persistent objects across a network.
-
-  The internal representation of a UUID is a specific sequence of
-  bits in memory, as described in {{format}}.  To accurately
-  represent a UUID as a URN, it is necessary to convert the bit
-  sequence to a string representation.
-
-  Each field is treated as an integer and has its value printed as a
-  zero-filled hexadecimal digit string with the most significant
-  digit first.  The hexadecimal values "a" through "f" are output as
-  lower case characters and are case insensitive on input.
-
-  The formal definition of the UUID string representation is
-  provided by the following ABNF {{RFC4234}}:
-
-~~~~ abnf
-UUID                   = time-low "-" time-mid "-"
-                         time-high-and-version "-"
-                         clock-seq-and-reserved
-                         clock-seq-low "-" node
-time-low               = 4hexOctet
-time-mid               = 2hexOctet
-time-high-and-version  = 2hexOctet
-clock-seq-and-reserved = hexOctet
-clock-seq-low          = hexOctet
-node                   = 6hexOctet
-hexOctet               = hexDigit hexDigit
-hexDigit =
-      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-      "a" / "b" / "c" / "d" / "e" / "f" /
-      "A" / "B" / "C" / "D" / "E" / "F"
-~~~~
-
-  The following is an example of the string representation of a UUID as
-  a URN:
-
-  urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
-
-Relevant ancillary documentation:
-:  {{NCA}}{{C309}}
-
-Identifier uniqueness considerations:
-: This document specifies three algorithms to generate UUIDs: the
-  first leverages the unique values of 802 MAC addresses to
-  guarantee uniqueness, the second uses pseudo-random number
-  generators, and the third uses cryptographic hashing and
-  application-provided text strings.  As a result, the UUIDs
-  generated according to the mechanisms here will be unique from all
-  other UUIDs that have been or will be assigned.
-
-Identifier persistence considerations:
-: UUIDs are inherently very difficult to resolve in a global sense.
-  This, coupled with the fact that UUIDs are temporally unique
-  within their spatial context, ensures that UUIDs will remain as
-  persistent as possible.
-
-Process of identifier assignment:
-: Generating a UUID does not require that a registration authority
-  be contacted.  One algorithm requires a unique value over space
-  for each generator.  This value is typically an IEEE 802 MAC
-  address, usually already available on network-connected hosts.
-  The address can be assigned from an address block obtained from
-  the IEEE registration authority.  If no such address is available,
-  or privacy concerns make its use undesirable, {{unidentifiable}} specifies
-  two alternatives.  Another approach is to use version 3
-  or version 4 UUIDs as defined below.
-
-Process for identifier resolution:
-: Since UUIDs are not globally resolvable, this is not applicable.
-
-Rules for Lexical Equivalence:
-: Consider each field of the UUID to be an unsigned integer as shown
-  in the tables in section {{layout}}.  Then, to compare a pair of
-  UUIDs, arithmetically compare the corresponding fields from each
-  UUID in order of significance and according to their data type.
-  Two UUIDs are equal if and only if all the corresponding fields
-  are equal.
-
-  As an implementation note, equality comparison can be performed on
-  many systems by doing the appropriate byte-order canonicalization,
-  and then treating the two UUIDs as 128-bit unsigned integers.
-
-  UUIDs, as defined in this document, can also be ordered
-  lexicographically.  For a pair of UUIDs, the first one follows the
-  second if the most significant field in which the UUIDs differ is
-  greater for the first UUID.  The second follows the first if the
-  most significant field in which the UUIDs differ is greater for
-  the second UUID.
-
-Conformance with URN Syntax:
-: The string representation of a UUID is fully compatible with the
-  URN syntax.  When converting from a bit-oriented, in-memory
-  representation of a UUID into a URN, care must be taken to
-  strictly adhere to the byte order issues mentioned in the string
-  representation section.
-
-Validation mechanism:
-: Apart from determining whether the timestamp portion of the UUID
-  is in the future and therefore not yet assignable, there is no
-  mechanism for determining whether a UUID is 'valid'.
-
-Scope:
-: UUIDs are global in scope.
 
 # Example Code {#example_code}
 
