@@ -1573,11 +1573,7 @@ hexDigit =
 
   urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 
-Assignment: Individual UUID values are generated based on the uniqueness
-  properties otherwise covered in this document with version-specific
-  considerations for each.  Mechinisms include pseudorandom
-  number generation, cryptographic hashing and the option to use
-  IEEE 802 MAC addresses.
+Assignment: Individual UUID values are generated based on the uniqueness properties otherwise covered in this document with version-specific considerations for each.  Mechinisms include pseudorandom number generation, cryptographic hashing and the option to use IEEE 802 MAC addresses.
 
 Security and Privacy: The recommended generation algorithms for UUIDs
   per this document involve pseudorandom number generation and as 
