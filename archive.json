@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-12-11T01:48:27.492875+00:00",
+  "timestamp": "2022-12-15T01:45:06.393142+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -461,10 +461,12 @@
       "author": "LiosK",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "Section 5.6 says \"the 48 bit node SHOULD be set to a pseudo-random value\". Which does it mean:\r\n\r\n1. the node SHOULD be reset to a pseudo-random number every time a new UUIDv6 is generated; or,\r\n2. the node SHOULD be initialized at a pseudo-random number only once at the system boot?\r\n\r\nThe old RFC 4122 doesn't seem clear enough, or it is rather so permissive as to accept many kinds of spatially unique identifiers. It's okay for v1 to be ambiguous; we must anyway keep it as ambiguous as it has been. Since v6 should be compatible with v1, everything should also be permitted under v6, but questions arise on which method v6 should recommend as default. We don't need to be ambiguous here.\r\n\r\nIf the first option is the way to go, the following text in Section 5.6:\r\n\r\n> The clock sequence bits remain unchanged from their usage and position in Section 5.1.\r\n>\r\n> The 48 bit node SHOULD be set to a pseudo-random value however implementations MAY choose to retain the old MAC address behavior from Section 5.1 and Section 6.9. For more information on MAC address usage within UUIDs see the Section 9\r\n\r\ncan be reworded in a much simpler way as:\r\n\r\n> The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the UUIDv1 behavior from Section 5.1.\r\n\r\nbecause the clock sequence bits are reset to a random number when the node ID changes. Refreshing `node` to a random number every time is equivalent to resetting both `clock_seq` and `node` to random numbers every time. This point seems clear from Section 4.2.1 and Appendix A of the old RFC 4122.\r\n\r\nIf the latter option is recommended, the RFC should state that explicitly.",
       "createdAt": "2022-11-04T10:36:29Z",
-      "updatedAt": "2022-11-08T18:31:01Z",
+      "updatedAt": "2022-12-13T18:38:59Z",
       "closedAt": null,
       "comments": [
         {
@@ -503,10 +505,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "As per IETF 115 discussion, moving this from appendix to IANA considerations + update to latest and greatest format as per RFC8141",
       "createdAt": "2022-11-08T18:36:46Z",
-      "updatedAt": "2022-11-08T18:36:46Z",
+      "updatedAt": "2022-12-13T18:38:59Z",
       "closedAt": null,
       "comments": []
     },
@@ -647,6 +651,22 @@
       "updatedAt": "2022-11-08T19:07:42Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 33,
+      "id": "I_kwDOH6Ln3M5YxaRm",
+      "title": "Typo:  Section 4.2, Version Field, \"UUID from in this\"",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/33",
+      "state": "OPEN",
+      "author": "broofa",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "\"The Gregorian time-based UUID ~~from~~ in this document\"",
+      "createdAt": "2022-12-11T03:19:37Z",
+      "updatedAt": "2022-12-11T03:19:37Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -780,6 +800,58 @@
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "draft-01",
       "headRefOid": "0b88cbcd7328df16e002fd6dcc0c0be0e8e06bc0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOH6Ln3M5FQO1O",
+      "title": "updated text per discussion at issue 21",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/34",
+      "state": "OPEN",
+      "author": "bradleypeabody",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This updates the wording on the clock sequence and node fields based on #21.  @kyzer-davis let me know if this format works and can just be merged or if something else is needed.",
+      "createdAt": "2022-12-12T23:44:24Z",
+      "updatedAt": "2022-12-12T23:44:24Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "61e9ef93bce62ecce9484432f93d36a8e4b35c16",
+      "headRepository": "bradleypeabody/rfc4122bis",
+      "headRefName": "issue-21",
+      "headRefOid": "142ed9cfae68b4a28c5a1bc8e98a7a44816cf065",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOH6Ln3M5FQdo3",
+      "title": "moved iana urn registration template as directed",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/35",
+      "state": "OPEN",
+      "author": "bradleypeabody",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@kyzer-davis here's my attempt to address #23.  Some of the text I was able to just move over from what you had there but some fields didn't have a corresponding place in the new template so I just filled it out based on what made sense to me.",
+      "createdAt": "2022-12-13T00:35:10Z",
+      "updatedAt": "2022-12-13T00:54:31Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "61e9ef93bce62ecce9484432f93d36a8e4b35c16",
+      "headRepository": "bradleypeabody/rfc4122bis",
+      "headRefName": "issue-23",
+      "headRefOid": "9ed7185da7549a6990edac48564ffe4f10a88049",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
