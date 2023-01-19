@@ -1548,7 +1548,7 @@ Syntax: The internal representation of a UUID is a specific sequence of
   lower case characters and are case insensitive on input.
 
   The formal definition of the UUID string representation is
-  provided by the following ABNF {{RFC4234}}:
+  provided by the following ABNF {{RFC5234}}:
 
 ~~~~ abnf
 UUID                   = time-low "-" time-mid "-"
