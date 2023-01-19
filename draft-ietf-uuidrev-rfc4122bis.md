@@ -16,7 +16,7 @@ abbrev: A UUID URN Namespace
 area: ART
 wg: uuidrev
 kw: uuid
-date: 2022
+date: 2023
 
 author:
 - ins: P. Leach
