@@ -846,8 +846,7 @@ first, followed by the 4 bit version (same position), followed by the remaining
 
 The clock sequence bits remain unchanged from their usage and position in {{uuidv1}}.
 
-The 48 bit node SHOULD be set to a pseudo-random value however implementations
-MAY choose to retain the old MAC address behavior from {{uuidv1}} and {{unidentifiable}}. For more information on MAC address usage within UUIDs see the {{Security}}
+The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see {{Security}}.
 
 The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
