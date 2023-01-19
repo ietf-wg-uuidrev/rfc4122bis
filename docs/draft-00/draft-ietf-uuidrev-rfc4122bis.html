@@ -1261,9 +1261,9 @@ The UUID version and variant then replace the respective bits as defined by <a h
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                            sha_high                           |
+|                            sha1_high                          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          sha_high             |  ver  |       sha_mid         |
+|          sha1_high            |  ver  |       sha1_mid        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |var|                        sha1_low                           |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -1275,7 +1275,7 @@ The UUID version and variant then replace the respective bits as defined by <a h
 <a href="#name-uuidv5-field-and-bit-layout" class="selfRef">UUIDv5 Field and Bit Layout</a>
           </figcaption></figure>
 <span class="break"></span><dl class="dlNewline" id="section-5.5-6">
-          <dt id="section-5.5-6.1">sha_high:</dt>
+          <dt id="section-5.5-6.1">sha1_high:</dt>
           <dd style="margin-left: 1.5em" id="section-5.5-6.2">
             <p id="section-5.5-6.2.1">The first 48 bits of the layout are filled
 with the most significant, left-most 48 bits
@@ -1287,7 +1287,7 @@ from the computed SHA1 value.<a href="#section-5.5-6.2.1" class="pilcrow">¶</a>
             <p id="section-5.5-6.4.1">The 4 bit version field as defined by <a href="#version_field" class="auto internal xref">Section 4.2</a><a href="#section-5.5-6.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-5.5-6.5">sha_mid:</dt>
+<dt id="section-5.5-6.5">sha1_mid:</dt>
           <dd style="margin-left: 1.5em" id="section-5.5-6.6">
             <p id="section-5.5-6.6.1">12 more bits of the layout consisting of the least significant,
 right-most 12 bits of 16 bits immediately following md5_high
@@ -1299,7 +1299,7 @@ from the computed SHA1 value.<a href="#section-5.5-6.6.1" class="pilcrow">¶</a>
             <p id="section-5.5-6.8.1">The 2 bit variant field as defined by <a href="#variant_field" class="auto internal xref">Section 4.1</a>.<a href="#section-5.5-6.8.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-5.5-6.9">sha_low:</dt>
+<dt id="section-5.5-6.9">sha1_low:</dt>
           <dd style="margin-left: 1.5em" id="section-5.5-6.10">
             <p id="section-5.5-6.10.1">The final 62 bits of the layout immediately following the var field to be
 filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
@@ -3497,11 +3497,11 @@ SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
 -------------------------------
 field      bits    value
 -------------------------------
-sha_high   48      0x2ed6657de927
+sha1_high   48     0x2ed6657de927
 ver         4      0x5
-sha_mid    12      0x68b
+sha1_mid    12     0x68b
 var         2      b10
-sha_low    62      b01, 0x5e12665a8aea6a2
+sha1_low    62     b01, 0x5e12665a8aea6a2
 -------------------------------
 total     128
 -------------------------------
