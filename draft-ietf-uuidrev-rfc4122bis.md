@@ -16,7 +16,7 @@ abbrev: A UUID URN Namespace
 area: ART
 wg: uuidrev
 kw: uuid
-date: 2022
+date: 2023
 
 author:
 - ins: P. Leach
@@ -226,8 +226,8 @@ informative:
 --- abstract
 
 This specification defines a Uniform Resource Name namespace for
-UUIDs (Universally Unique IDentifier), also known as GUIDs (Globally
-Unique IDentifier).  A UUID is 128 bits long, and can guarantee
+UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
+Unique IDentifiers).  A UUID is 128 bits long, and can guarantee
 uniqueness across space and time.  UUIDs were originally used in the
 Apollo Network Computing System and later in the Open Software
 Foundation's (OSF) Distributed Computing Environment (DCE), and then
@@ -243,15 +243,15 @@ incorporated into this document.
 # Introduction {#Background}
 
 This specification defines a Uniform Resource Name namespace for
-UUIDs (Universally Unique IDentifier), also known as GUIDs (Globally
-Unique IDentifier).  A UUID is 128 bits long, and requires no central
+UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
+Unique IDentifiers).  A UUID is 128 bits long, and requires no central
 registration process.
 
 The information here is meant to be a concise guide for those wishing
 to implement services using UUIDs as URNs {{RFC8141}}.  Nothing in this document
 should be construed to override the DCE standards that defined UUIDs.
 
-There is an ITU-T Recommendation and ISO/IEC Standard {{X667}} that are
+There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from earlier versions of this document.  Both sets of
 specifications have been aligned, and are fully technically
 compatible.  In addition, a global registration function is being
@@ -268,7 +268,7 @@ purposes.  The UUID generation algorithm described here supports very
 high allocation rates of up to 10 million per second per machine if
 necessary, so that they could even be used as transaction IDs.
 
-UUIDs are of a fixed size (128 bits) which is reasonably small
+UUIDs are of a fixed size (128 bits), which is reasonably small
 compared to other alternatives.  This lends itself well to sorting,
 ordering, and hashing of all sorts, storing in databases, simple
 allocation, and ease of programming in general.
@@ -278,37 +278,39 @@ Resource Names.  The unique ability to generate a new UUID without a
 registration process allows for UUIDs to be one of the URNs with the
 lowest minting cost.
 
-Furthermore, many things have changed in the time since UUIDs were originally created.
+## Update motivation
+
+Many things have changed in the time since UUIDs were originally created.
 Modern applications have a need to create and utilize UUIDs as the primary
 identifier for a variety of different items in complex computational systems,
 including but not limited to database keys, file names, machine or system
 names, and identifiers for event-driven transactions.
 
-One area UUIDs have gained popularity is as database keys.
+One area in which UUIDs have gained popularity is as database keys.
 This stems from the increasingly distributed nature of modern applications.
 In such cases, "auto increment" schemes often used by databases do not work
-well, as the effort required to coordinate unique numeric identifiers across
+well, as the effort required to coordinate sequential numeric identifiers across
 a network can easily become a burden.
 The fact that UUIDs can be used to create unique, reasonably short values
-in distributed systems without requiring synchronization makes them a good
+in distributed systems without requiring coordination makes them a good
 alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 
 1. Non-time-ordered UUID versions such as UUIDv4 have poor database index
   locality.
-  Meaning new values created in succession are not close to each other in
+  This means that new values created in succession are not close to each other in
   the index and thus require inserts to be performed at random
   locations.
   The negative performance effects of which on common structures used for
   this (B-tree and its variants) can be dramatic.
 
-1. The 100-nanosecond, Gregorian epoch used in UUIDv1 timestamps is uncommon
+1. The 100-nanosecond Gregorian epoch used in UUIDv1 timestamps is uncommon
   and difficult to represent accurately using a standard number format such
   as {{IEEE754}}.
 
 
 
-1. Introspection/parsing is required to order by time sequence; as opposed to
+1. Introspection/parsing is required to order by time sequence, as opposed to
   being able to perform a simple byte-by-byte comparison.
 
 
@@ -335,7 +337,7 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 
 
-Due to the aforementioned issue, many widely distributed database applications
+Due to the aforementioned issues, many widely distributed database applications
 and large application vendors have sought to solve the problem of creating
 a better
 time-based, sortable unique identifier for use as a database key. This has
@@ -459,9 +461,9 @@ The UUID format is 16 octets (128 bits); the variant bits in conjunction with th
 bits described in the next sections in determine finer structure.
 
 UUIDs MAY be represented as binary data or integers.
-When in use with URNs or applications, any given 128 bit UUID SHOULD
+When in use with URNs or applications, any given UUID SHOULD
 be represented by the "hex-and-dash" string format consisting of multiple
-groups of upper or lowercase alphanumeric hex characters separated by a single dash/hyphen.
+groups of upper or lowercase alphanumeric hex characters separated by single dashes/hyphens.
 When used with databases please refer to {{database_considerations}}.
 
 The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
@@ -483,9 +485,9 @@ Note that in this example the alphabetic characters may be all uppercase, all lo
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
-{: #sampleHexUUID title='Example Hex UUID'}
+{: #sampleStringUUID title='Example String UUID format'}
 
-The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID}} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
+The same UUID from {{sampleStringUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID}} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
 
 ~~~~
 111110000001110101001111101011100111110111101100000100011101000\
@@ -526,18 +528,18 @@ Interoperability, in any form, with variants other than the one
 defined here is not guaranteed, and is not likely to be an issue in
 practice.
 
-Specifically for UUIDs in this document bits 64 and 65 of octet 8 MUST be set to 1 and 0 as per row 2 of {{table1}}.
-As such all bit and field layouts will detail a 2 bit variant entry as guidance.
+Specifically for UUIDs in this document bits 64 and 65 of the UUID (bits 0 and 1 of octet 8) MUST be set to 1 and 0 as specified in row 2 of {{table1}}.
+Accordingly, all bit and field layouts avoid the use of these bits.
 
 ## Version Field {#version_field}
-The version number is in the most significant 4 bits of octet 6.
-More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynamic.
+The version number is in the most significant 4 bits of octet 6
+(bits 48 through 51 of the UUID).
 
 {{table2}} lists all of the versions for this UUID variant specified in this document.
 
 | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
 |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
-|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID in this document.                               |
+|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID specified in this document.                     |
 |    0 |    0 |    1 |    0 |       2 | Reserved for DCE Security version, with embedded POSIX UUIDs.                 |
 |    0 |    0 |    1 |    1 |       3 | The name-based version specified in this document that uses MD5 hashing.      |
 |    0 |    1 |    0 |    0 |       4 | The randomly or pseudo-randomly generated version specified in this document. |
@@ -552,7 +554,7 @@ More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynami
 |    1 |    1 |    0 |    1 |      13 | Reserved for future definition.                                               |
 |    1 |    1 |    1 |    0 |      14 | Reserved for future definition.                                               |
 |    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
-{: #table2 title='UUID variant 10xx (8/9/A/B) versions defined by this specification'}
+{: #table2 title='UUID variant 10x versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
 where M represents the version placement for the hex representation of 4 (0100)
@@ -590,11 +592,11 @@ represented by Coordinated Universal Time (UTC) as a count of 100-
 nanosecond intervals since 00:00:00.00, 15 October 1582 (the date of
 Gregorian reform to the Christian calendar).
 
-UUID Version 1 also features clock sequence field which is used to help avoid
+UUID Version 1 also features a clock sequence field which is used to help avoid
 duplicates that could arise when the clock is set backwards in time
 or if the node ID changes.
 
-Finally the node field consists of an IEEE 802 MAC
+The node field consists of an IEEE 802 MAC
 address, usually the host address.  For systems with multiple IEEE
 802 addresses, any available one can be used.  The lowest addressed
 octet (octet number 10) contains the global/local bit and the
@@ -686,7 +688,7 @@ that are drawn from, and unique within, some "name space" as per {{name_based_uu
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
-This MD5 value is then uses to populate all 128 bits of the UUID layout.
+This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
 Some common name space values have been defined via {{namespaces}}.
@@ -717,7 +719,7 @@ md5_high:
   from the computed MD5 value.
 
 ver:
-: The 4 bit version field as defined by {{version_field}}
+: The 4 bit version field as defined by {{version_field}} set to 0011
 
 md5_mid:
 : 12 more bits of the layout consisting of the least significant,
@@ -725,12 +727,14 @@ md5_mid:
   from the computed MD5 value.
 
 var:
-: The 2 bit variant field as defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}} set to 10
 
 md5_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled with the least-significant, right-most bits of the final 64 bits
   from the computed MD5 value.
+
+For more information on MD5 security considerations see {{RFC6194}}.
 
 ## UUID Version 4 {#uuidv4}
 The version 4 UUID is meant for generating UUIDs from truly-random or
@@ -764,17 +768,16 @@ For guidelines on random data generation see {{unguessability}}.
 {: vspace='0'}
 
 random_a:
-: The first 48 bits of the layout that can be filled with random data as per {{unguessability}}
-  fit.
+: The first 48 bits of the layout that can be filled with random data as specified in {{unguessability}}
 
 ver:
-: The 4 bit version field as defined by {{version_field}}
+: The 4 bit version field as defined by {{version_field}} set to 0100
 
 random_b:
 : 12 more bits of the layout that can be filled random data as per {{unguessability}}
 
 var:
-: The 2 bit variant field as defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}} set to 10
 
 random_c:
 : The final 62 bits of the layout immediately following the var field to be
@@ -787,7 +790,7 @@ that are drawn from, and unique within, some "name space" as per {{name_based_uu
 UUIDv5 values are created by computing an SHA1 {{SHA1}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
-This SHA1 value is then uses to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
+This SHA1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
 
 Some common name space values have been defined via {{namespaces}}.
@@ -839,7 +842,7 @@ UUID version 6 is a field-compatible version of UUIDv1, reordered for improved
 DB locality.
 It is expected that UUIDv6 will primarily be used in contexts where there
 are existing v1 UUIDs.
-Systems that do not involve legacy UUIDv1 SHOULD consider using UUIDv7 instead.
+Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 instead.
 
 Instead of splitting the timestamp into the low, mid and high sections from
 UUIDv1, UUIDv6 changes this sequence so timestamp bytes are stored from most
@@ -851,7 +854,7 @@ first, followed by the 4 bit version (same position), followed by the remaining
 
 The clock sequence bits remain unchanged from their usage and position in {{uuidv1}}.
 
-The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see {{Security}}.
+The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
 
 The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
@@ -914,9 +917,9 @@ UUIDv1 implementation.
 UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
 seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
-As well as improved entropy characteristics over versions 1 or 6.
+UUID verion 7 also has improved entropy characteristics over versions 1 or 6.
 
-Implementations SHOULD utilize UUID version 7 over UUID version 1 and 6 if
+Implementations SHOULD utilize UUID version 7 instead of UUID version 1 and 6 if
 possible.
 
 
@@ -938,7 +941,7 @@ possible.
 {: vspace='0'}
 
 unix_ts_ms:
-: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_granularity}}.
+: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_considerations}}.
 
 ver:
 : 4 bit UUIDv7 version set as per {{version_field}}
@@ -1042,14 +1045,14 @@ The minimum requirements for generating UUIDs are
 described in this document for each version.
 Everything else is an implementation detail and
 up to the implementer to decide what is appropriate for a given
-implementation. That being said, various relevant factors are covered
+implementation. Various relevant factors are covered
 below to help guide an implementer through the different trade-offs among
 differing UUID implementations.
 
-## Timestamp Granularity {#timestamp_granularity}
+## Timestamp Considerations {#timestamp_considerations}
 
 UUID timestamp source, precision and length was the topic of great debate
-while creating UUIDv7 for this specification. As such choosing the right timestamp for
+while creating UUIDv7 for this specification. Choosing the right timestamp for
 your application is a very important topic. This section will detail some
 of the most common points on this topic.
 
@@ -1069,7 +1072,7 @@ Reliability:
 Source:
 : UUID version 1 and 6 both utilize a Gregorian epoch timestamp while UUIDv7
   utilizes a Unix Epoch timestamp. If other timestamp sources or a custom timestamp
-  epoch are required UUIDv8 SHOULD be leveraged.
+  epoch are required UUIDv8 SHOULD be used.
 
 Sub-second Precision and Accuracy:
 : Many levels of precision exist for timestamps: milliseconds, microseconds,
@@ -1100,10 +1103,10 @@ Length:
   bit timestamp.
 
 Altering, Fuzzing, or Smearing:
-: Implementations MAY alter the actual timestamp. Some examples included security
+: Implementations MAY alter the actual timestamp. Some examples include security
   considerations around providing a real clock value within a UUID, to correct
-  inaccurate clocks or to handle leap seconds. This specification makes no
-  requirement or guarantee about how close the clock value needs to be to actual
+  inaccurate clocks, or to handle leap seconds. This specification makes no
+  requirement or guarantee about how close the clock value needs to be to the actual
   time.
   If UUIDs do not need to be frequently generated, the UUIDv1 or UUIDv6 timestamp can
   simply be the system time multiplied by the number of 100-nanosecond
@@ -1112,11 +1115,11 @@ Altering, Fuzzing, or Smearing:
 Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
   bits (left-most) bits with zeros. An example is padding the most significant,
-  left-most bits of a 32 bit Unix timestamp with zero's to fill out the 48
+  left-most bits of a 32 bit Unix timestamp with zeros to fill out the 48
   bit timestamp in UUIDv7.
 
 Truncating:
-: Similarly, when timestamps need to be truncated: the lower, least significant
+: When timestamps need to be truncated, the lower, least significant
   bits MUST be used. An example would be truncating a 64 bit Unix timestamp
   to the least significant, right-most 48 bits for UUIDv7.
 
@@ -1129,27 +1132,27 @@ Error Handling:
   additional node identifiers can be allocated to the system, which
   will permit higher speed allocation by making multiple UUIDs
   potentially available for each time stamp value.
-  Similar to {{distributed_shared_knowledge}} techniques
+  Similar techniques are discussed in {{distributed_shared_knowledge}}.
 
 ## Monotonicity and Counters {#monotonicity_counters}
 
-Monotonicity is the backbone of time-based sortable UUIDs. Naturally time-based
-UUIDs from this document will be monotonic due to an embedded timestamp however
+Monotonicity is the backbone of time-based sortable UUIDs. Normally, time-based
+UUIDs from this document will be monotonic due to an embedded timestamp; however,
 implementations can guarantee additional monotonicity via the concepts covered
 in this section.
 
-Additionally, care SHOULD be taken to ensure UUIDs generated in batches are
-also monotonic. That is, if one-thousand UUIDs are generated for the same
-timestamp; there is sufficient logic for organizing the creation order of
-those one-thousand UUIDs.
-For batch UUID creation implementations MAY utilize a monotonic counter which
+Care SHOULD be taken to ensure UUIDs generated in batches are
+also monotonic. That is, if one thousand UUIDs are generated for the same
+timestamp, there SHOULD be sufficient logic for organizing the creation order of
+those one thousand UUIDs.
+Batch UUID creation implementations MAY utilize a monotonic counter that
 SHOULD increment for each UUID created during a given timestamp.
 
 For single-node UUID implementations that do not need to create batches of
 UUIDs, the embedded timestamp within UUID version 1, 6, and 7 can provide
 sufficient monotonicity guarantees by simply ensuring that timestamp increments
-before creating a new UUID. For the topic of Distributed Nodes please refer
-to {{distributed_shared_knowledge}}
+before creating a new UUID. Distributed nodes are discussed in
+{{distributed_shared_knowledge}}.
 
 Implementations SHOULD choose one method for single-node UUID implementations
 that require batch UUID creation.
@@ -1157,29 +1160,29 @@ that require batch UUID creation.
 {: vspace='0'}
 
 Fixed-Length Dedicated Counter Bits (Method 1):
-: This references the practice of allocating a specific number of bits in the
+: Some implementations allocate a specific number of bits in the
   UUID layout to the sole purpose of tallying the total number of UUIDs created
   during a given UUID timestamp tick.
-  Positioning of a fixed bit-length counter SHOULD be immediately after the
+  A fixed bit-length counter, if present, SHOULD be positioned immediately after the
   embedded timestamp. This promotes sortability and allows random data generation
   for each counter increment.
-  With this method rand_a section of UUIDv7 SHOULD be utilized as fixed-length
+  With this method, the rand_a section of UUIDv7 SHOULD be used as fixed-length
   dedicated counter bits that are incremented by one for every UUID generation.
   The trailing random bits generated for each new UUID in rand_b can help produce
-  unguessable UUIDs. In the event more counter bits are required the most significant,
-  left-most, bits of rand_b MAY be leveraged as additional counter bits.
+  unguessable UUIDs. In the event more counter bits are required, the most significant
+  (left-most) bits of rand_b MAY be used as additional counter bits.
 
 Monotonic Random (Method 2):
-: With this method the random data is extended to also double as a counter.
-  This monotonic random can be thought of as a "randomly seeded counter" which
+: With this method, the random data is extended to also function as a counter.
+  This monotonic value can be thought of as a "randomly seeded counter" which
   MUST be incremented in the least significant position for each UUID created
   on a given timestamp tick.
   UUIDv7's rand_b section SHOULD be utilized with this method to handle batch
   UUID generation during a single timestamp tick.
   The increment value for every UUID generation SHOULD be a random integer
   of any desired length larger than zero. It ensures the UUIDs retain the required
-  level of unguessability characters provided by the underlying entropy.
-  The increment value MAY be one when the amount of UUIDs generated in a particular
+  level of unguessability provided by the underlying entropy.
+  The increment value MAY be one when the number of UUIDs generated in a particular
   period of time is important and guessability is not an issue. However, it
   SHOULD NOT be used by implementations that favor unguessiblity, as the resulting
   values are easily guessable.
@@ -1190,11 +1193,11 @@ fixed-length dedicated counters:
 {: vspace='0'}
 
 Fixed-Length Dedicated Counter Seeding:
-: Implementations utilizing fixed-length counter method SHOULD randomly initialize
+: Implementations utilizing the fixed-length counter method SHOULD randomly initialize
   the counter with each new timestamp tick.
-  However, when the timestamp has not incremented; the counter SHOULD be frozen
+  However, when the timestamp has not incremented, the counter SHOULD be frozen
   and incremented via the desired increment logic.
-  When utilizing a randomly seeded counter alongside Method 1; the random MAY
+  When utilizing a randomly seeded counter alongside Method 1, the random value MAY
   be regenerated with each counter increment without impacting sortability.
   The downside is that Method 1 is prone to overflows if a counter of adequate
   length is not selected or the random data generated leaves little room for
@@ -1209,7 +1212,7 @@ Fixed-Length Dedicated Counter Seeding:
 Fixed-Length Dedicated Counter Length:
 : Care MUST be taken to select a counter bit-length that can properly handle
   the level of timestamp precision in use.
-  For example, millisecond precision SHOULD require a larger counter than a
+  For example, millisecond precision generally requires a larger counter than a
   timestamp with nanosecond precision.
   General guidance is that the counter SHOULD be at least 12 bits but no longer
   than 42 bits.
@@ -1224,10 +1227,10 @@ method:
 {: vspace='0'}
 
 Counter Rollover Guards:
-: The technique from Fixed-Length Dedicated Counter Seeding which describes
+: The technique from Fixed-Length Dedicated Counter Seeding that describes
   allocating a segment of the fixed-length counter as a rollover guard is also
   helpful to mitigate counter rollover issues.
-  This same technique can be leveraged with Monotonic random counter methods
+  This same technique can be used with monotonic random counter methods
   by ensuring the total length of a possible increment in the least significant,
   right most position is less than the total length of the random being incremented.
   As such the most significant, left-most, bits can be incremented as rollover
@@ -1249,12 +1252,12 @@ counters are monotonic in nature:
 
 
 
-1. If the current timestamp is equal to the previous timestamp; increment the
+1. If the current timestamp is equal to the previous timestamp, increment the
   counter according to the desired method.
 
 
 
-1. If the current timestamp is greater than the previous timestamp; re-initialize
+1. If the current timestamp is greater than the previous timestamp, re-initialize
   the desired counter method to the new timestamp and generate new random bytes
   (if the bytes were frozen or being used as the seed for a monotonic counter).
 
@@ -1262,16 +1265,16 @@ counters are monotonic in nature:
 
 Implementations SHOULD check if the the currently generated UUID is greater
 than the previously generated UUID. If this is not the case then any number
-of things could have occurred. Such as, but not limited to, clock rollbacks,
-leap second handling or counter rollovers. Applications SHOULD embed sufficient
-logic to catch these scenarios and correct the problem ensuring the next
+of things could have occurred, such as clock rollbacks,
+leap second handling, and counter rollovers. Applications SHOULD embed sufficient
+logic to catch these scenarios and correct the problem to ensure that the next
 UUID generated is greater than the previous. To handle this scenario, the
 general guidance is that application MAY reuse the previous timestamp and
 increment the previous counter method.
 
 ## UUID Generator States {#generator_states}
 
-The UUID Generator state only needs to be read from stable storage once at boot
+The UUID generator state only needs to be read from stable storage once at boot
 time, if it is read into a system-wide shared volatile store (and
 updated whenever the stable store is updated).
 
@@ -1281,10 +1284,11 @@ least desirable implementation because it will increase the frequency
 of creation of values such as clock sequence, counters or random data which increases the
 probability of duplicates.
 
-For UUIDv1 and UUIDv6, if the node ID can never change (e.g., the net card is inseparable
+For UUIDv1 and UUIDv6, if the node ID can never change (e.g., the network interface card
+from which the node ID is derived is inseparable
 from the system), or if any change also reinitializes the clock
 sequence to a random value, then instead of keeping it in stable
-store, the current node ID may be returned
+store, the current node ID may be returned.
 
 For UUIDv1 and UUIDv6, the state does not always need to be written to stable store every
 time a UUID is generated.  The timestamp in the stable store can be
@@ -1317,10 +1321,10 @@ UUID implementations in distributed environments.
 
 Centralized Registry:
 : With this method all nodes tasked with creating UUIDs consult a central registry
-  and confirm the generated value is unique. As applications scale the communication
+  and confirm the generated value is unique. As applications scale, the communication
   with the central registry could become a bottleneck and impact UUID generation
-  in a negative way. Utilization of shared knowledge schemes with central/global
-  registries is outside the scope of this specification and should generally be discouraged.
+  in a negative way. Shared knowledge schemes with central/global
+  registries are outside the scope of this specification and should generally be discouraged.
 
 Node IDs:
 : With this method, a pseudo-random Node ID value is placed within the UUID
@@ -1336,12 +1340,12 @@ Node IDs:
   Furthermore, the creation and negotiation of unique node ids among nodes
   is also out of scope for this specification.
 
-Utilization of either a Centralized Registry or Node ID are not required
-for implementing UUIDs in this specification. However implementations SHOULD
+Utilization of either a centralized registry or Node ID is not required
+for implementing UUIDs in this specification. However, implementations SHOULD
 utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.
 
-Distributed applications generating UUIDs at a variety of hosts must
+Distributed applications generating UUIDs at a variety of hosts MUST
 be willing to rely on the random number source at all hosts.  If this
 is not feasible, the namespace variant should be used.
 
@@ -1358,13 +1362,13 @@ this specification.
 
 The requirements for these types of UUIDs are as follows:
 
-* The UUIDs generated at different times from the same name in the
+* UUIDs generated at different times from the same name in the
   same namespace MUST be equal.
 
-* The UUIDs generated from two different names in the same namespace
+* UUIDs generated from two different names in the same namespace
   should be different (with very high probability).
 
-* The UUIDs generated from the same name in two different namespaces
+* UUIDs generated from the same name in two different namespaces
   should be different (with very high probability).
 
 * If two UUIDs that were generated from names are equal, then they
@@ -1374,8 +1378,8 @@ The requirements for these types of UUIDs are as follows:
 ## Collision Resistance {#collision_resistance}
 
 Implementations SHOULD weigh the consequences of UUID collisions within their
-application and when deciding between UUID versions that use entropy (random)
-versus the other components such as {{timestamp_granularity}} and {{monotonicity_counters}}.
+application and when deciding between UUID versions that use entropy (randomness)
+versus the other components such as those in {{timestamp_considerations}} and {{monotonicity_counters}}.
 This is especially true for distributed node collision resistance as defined
 by {{distributed_shared_knowledge}}.
 
@@ -1408,13 +1412,13 @@ global uniqueness outside of the application context, in other applications,
 or around the world is not required.
 
 Although true global uniqueness is impossible to guarantee without a shared
-knowledge scheme; a shared knowledge scheme is not required by UUID to provide
+knowledge scheme, a shared knowledge scheme is not required by UUID to provide
 uniqueness guarantees.
 Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed this specification.
 
 
 ## Unguessability {#unguessability}
-TODO: Here or in security considerations, discuss security considerations with with "running out of random"
+TODO: Here or in security considerations, discuss security considerations with "running out of random"
 
 Implementations SHOULD utilize a cryptographically secure pseudo-random number
 generator (CSPRNG) to provide values that are both difficult to predict ("unguessable")
@@ -1433,7 +1437,7 @@ One approach is to contact the IEEE and get a separate block of
 addresses.  At the time of writing, the application could be found at
 [](https://standards.ieee.org/products-programs/regauth/).
 
-A better solution is to obtain a 47-bit cryptographic quality random
+A better solution is to obtain a 47-bit cryptographic-quality random
 number and use it as the low 47 bits of the node ID, with the least
 significant bit of the first octet of the node ID set to one.  This
 bit is the unicast/multicast bit, which will never be set in IEEE 802
@@ -1471,19 +1475,19 @@ As a result objects are more easily clustered together for better performance.
 The real-world differences in this approach of index locality vs random data
 inserts can be quite large.
 
-UUIDs formats created by this specification SHOULD be Lexicographically sortable
+UUIDs formats created by this specification SHOULD be lexicographically sortable
 while in the textual representation.
 
-UUIDs created by this specification are crafted with big-ending byte order
-(network byte order) in mind. If Little-endian style is required a custom
+UUIDs created by this specification are crafted with big-endian byte order
+(network byte order) in mind. If little-endian style is required a custom
 UUID format SHOULD be created using UUIDv8.
 
 
 ## Opacity {#opacity}
 
 UUIDs SHOULD be treated as opaque values and implementations SHOULD NOT examine
-the bits in a UUID to whatever extent is possible. However, where necessary,
-inspectors should refer to {{variant_field}} and {{version_field}} for more information on determining UUID version and variant.
+the bits in a UUID. However,
+inspectors MAY refer to {{variant_field}} and {{version_field}} when required to determine UUID version and variant.
 
 
 ## DBMS and Database Considerations {#database_considerations}
@@ -1494,7 +1498,7 @@ Thus, where feasible, UUIDs SHOULD be stored within database applications
 as the underlying 128 bit binary value.
 
 For other systems, UUIDs MAY be stored in binary form or as text, as appropriate.
-The trade-offs to both approaches are as such:
+The trade-offs to both approaches are:
 
 
 * Storing as binary requires less space and may result in faster data access.
@@ -1598,20 +1602,21 @@ Additional Information: The intention here is simply to include this document
 
 The use of UUIDs is extremely pervasive in computing.  They comprise
 the core identifier infrastructure for many operating systems
-(Microsoft Windows) and applications (the Mozilla browser) and in
-many cases, become exposed to the Web in many non-standard ways.
+such as Microsoft Windows and applications such as the Mozilla Web browser and in
+many cases, become exposed in many non-standard ways.
 
 This specification attempts to standardize that practice as openly as
 possible and in a way that attempts to benefit the entire Internet.
 
 # Security Considerations {#Security}
 
-Do not assume that UUIDs are hard to guess; they should not be used
+Implementations MUST NOT assume that UUIDs are hard to guess.
+Foe example, they MUT not be used
 as security capabilities (identifiers whose mere possession grants
-access), for example.  A predictable random number source will
-exacerbate the situation.
+access).  Discovery of predictablity in a random number source will
+result in a vulnerability.
 
-Do not assume that it is easy to determine if a UUID has been
+Implementations MUST NOT assume that it is easy to determine if a UUID has been
 slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
@@ -1625,7 +1630,7 @@ uniqueness among UUID generation. See {{unguessability}} and {{unidentifiable}} 
 Timestamps embedded in the UUID do pose a very small attack surface. The
 timestamp in conjunction with
 an embedded counter does signal the order of creation for a given UUID and
-it's corresponding data but
+its corresponding data but
 does not define anything about the data itself or the application as a whole.
 If UUIDs are required for
 use with any security operation within an application context in any shape
