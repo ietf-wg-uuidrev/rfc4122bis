@@ -70,7 +70,7 @@ normative:
   RFC6151: RFC6151
   RFC4086: RFC4086
   RFC8141: RFC8141
-  RFC4234: RFC4234
+  RFC5234: RFC5234
   RFC6194: RFC6194
   SHA1:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
@@ -216,6 +216,12 @@ informative:
     date: 2019-07
     seriesinfo:
       Series: 754-2019
+  URNNamespaces:
+    target: https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml
+    title: Uniform Resource Names (URN) Namespaces
+    author:
+    - org: IANA
+    date: 2022-11-18
 
 --- abstract
 
@@ -423,7 +429,7 @@ draft-00
 - Merge RFC4122 with draft-peabody-dispatch-new-uuid-format-04.md
 - Change: Reference RFC1321 to RFC6151
 - Change: Reference RFC2141 to RFC8141
-- Change: Reference RFC2234 to RFC4234
+- Change: Reference RFC2234 to RFC5234
 - Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
@@ -460,23 +466,21 @@ be represented by the "hex-and-dash" string format consisting of multiple
 groups of upper or lowercase alphanumeric hex characters separated by single dashes/hyphens.
 When used with databases please refer to {{database_considerations}}.
 
-The formal definition of the UUID string representation is provided by the following ABNF {{RFC4234}}.
+The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
-   UUID                   = 4hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            2hexOctet "-"
-                            6hexOctet
-   hexOctet               = hexDigit hexDigit
-   hexDigit =
-         "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-         "a" / "b" / "c" / "d" / "e" / "f" /
-         "A" / "B" / "C" / "D" / "E" / "F"
+   UUID     = 4hexOctet "-"
+              2hexOctet "-"
+              2hexOctet "-"
+              2hexOctet "-"
+              6hexOctet
+   hexOctet = HEXDIG HEXDIG
+   DIGIT    = %x30-39
+   HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
-An example UUID using this textual representation from the previous table observed in {{sampleStringUUID}}.
-Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC4234, Section 2.3}}
+An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
+Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC5234, Section 2.3}}
 
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -486,19 +490,20 @@ f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 The same UUID from {{sampleStringUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID}} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
 
 ~~~~
-11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
+111110000001110101001111101011100111110111101100000100011101000\
+01010011101100101000000001010000011001001000111100110101111110110
 ~~~~
-{: #sampleBinaryUUID title='Example Hex UUID'}
+{: #sampleBinaryUUID title='Example Binary UUID'}
 
 ~~~~
 329800735698586629295641978511506172918
 ~~~~
-{: #sampleIntegerUUID title='Example Hex UUID'}
+{: #sampleIntegerUUID title='Example Integer UUID'}
 
 ~~~~
 urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
-{: #sampleURNUUID title='Example Hex UUID'}
+{: #sampleURNUUID title='Example URN UUID'}
 
 ## Variant Field {#variant_field}
 
@@ -534,7 +539,7 @@ The version number is in the most significant 4 bits of octet 6
 
 | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
 |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
-|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID specified in this document.                          |
+|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID specified in this document.                     |
 |    0 |    0 |    1 |    0 |       2 | Reserved for DCE Security version, with embedded POSIX UUIDs.                 |
 |    0 |    0 |    1 |    1 |       3 | The name-based version specified in this document that uses MD5 hashing.      |
 |    0 |    1 |    0 |    0 |       4 | The randomly or pseudo-randomly generated version specified in this document. |
@@ -790,24 +795,26 @@ The UUID version and variant then replace the respective bits as defined by {{ve
 
 Some common name space values have been defined via {{namespaces}}.
 
+For more information on SHA1 security considerations see {{RFC6194}}.
+
 ~~~~
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                            sha_high                           |
+|                           sha1_high                           |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          sha_high             |  ver  |       sha_mid         |
+|         sha1_high             |  ver  |      sha1_mid         |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|var|                        sha_low                            |
+|var|                       sha1_low                            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                            md5_low                            |
+|                           sha1_low                            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv5 Field and Bit Layout'}
 
 {: vspace='0'}
 
-sha_high:
+sha1_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
   from the computed SHA1 value.
@@ -815,7 +822,7 @@ sha_high:
 ver:
 : The 4 bit version field as defined by {{version_field}}
 
-sha_mid:
+sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following md5_high
   from the computed SHA1 value.
@@ -823,7 +830,7 @@ sha_mid:
 var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
-sha_low:
+sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
   and then using the next 62 most significant, left-most bits.
@@ -847,8 +854,7 @@ first, followed by the 4 bit version (same position), followed by the remaining
 
 The clock sequence bits remain unchanged from their usage and position in {{uuidv1}}.
 
-The 48 bit node SHOULD be set to a pseudo-random value; however, implementations
-MAY choose to retain the old MAC address behavior from {{uuidv1}} and {{unidentifiable}}. For more information on MAC address usage within UUIDs see {{Security}}.
+The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
 
 The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
@@ -935,19 +941,19 @@ possible.
 {: vspace='0'}
 
 unix_ts_ms:
-: 48 bit big-endian unsigned number of Unix epoch timestamp as per {{timestamp_considerations}}.
+: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_considerations}}.
 
 ver:
 : 4 bit UUIDv7 version set as per {{version_field}}
 
 rand_a:
-: 12 bits pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
+: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 var:
 : The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{monotonicity_counters}} and {{unguessability}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 
 ## UUID Version 8 {#v8}
@@ -956,11 +962,11 @@ UUID version 8 provides an RFC-compatible format for experimental or vendor-spec
 use cases.
 The only requirement is that the variant and version bits MUST be set as
 defined in {{variant_field}} and {{version_field}}.
-UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed.
+UUIDv8's uniqueness will be implementation-specific and MUST NOT be assumed.
 
 The only explicitly defined bits are the Version and Variant leaving 122
 bits
-for implementation specific time-based UUIDs. To be clear:
+for implementation specific UUIDs. To be clear:
 UUIDv8 is not a replacement for UUIDv4 where all 122 extra bits are
 filled with random data.
 
@@ -1339,6 +1345,10 @@ for implementing UUIDs in this specification. However, implementations SHOULD
 utilize one of the two aforementioned methods if distributed UUID generation
 is a requirement.
 
+Distributed applications generating UUIDs at a variety of hosts MUST
+be willing to rely on the random number source at all hosts.  If this
+is not feasible, the namespace variant should be used.
+
 ## Name-Based UUID Generation {#name_based_uuid_generation}
 TODO, define how to compute a namespace ID if I don't want to use one from {{namespaces}}
 
@@ -1514,8 +1524,79 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
-TODO: Q: Should Namespace Registration Template be here or in {{namespace_reg_template}}?
-TODO: Need to ensure IANA doc, https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml, has this new document listed.
+
+Per {{RFC8141}} here is the Namespace Registration Template filled out for this namespace and hereby a request to reference this document (when the final version is published) at {{URNNamespaces}}.  Note that namespace is already listed and this is a request to update that entry to reference this document.
+
+Namespace Identifier: UUID (formal)
+
+Version: 1
+
+Date: 2003-10-01
+
+Registrant: JTC 1/SC6 (ASN.1 Rapporteur Group)
+
+Purpose: A UUID is an identifier that is unique across both space and time,
+  with respect to the space of all UUIDs.  Since a UUID is a fixed
+  size and contains a time field, it is possible for values to
+  rollover (around A.D. 3400, depending on the specific algorithm
+  used).  A UUID can be used for multiple purposes, from tagging
+  objects with an extremely short lifetime, to reliably identifying
+  very persistent objects across a network.
+
+Syntax: The internal representation of a UUID is a specific sequence of
+  bits in memory, as described in {{format}}.  To accurately
+  represent a UUID as a URN, it is necessary to convert the bit
+  sequence to a string representation.
+
+  Each field is treated as an integer and has its value printed as a
+  zero-filled hexadecimal digit string with the most significant
+  digit first.  The hexadecimal values "a" through "f" are output as
+  lower case characters and are case insensitive on input.
+
+  The formal definition of the UUID string representation is
+  provided by the following ABNF {{RFC5234}}:
+
+~~~~ abnf
+UUID                   = time-low "-" time-mid "-"
+                         time-high-and-version "-"
+                         clock-seq-and-reserved
+                         clock-seq-low "-" node
+time-low               = 4hexOctet
+time-mid               = 2hexOctet
+time-high-and-version  = 2hexOctet
+clock-seq-and-reserved = hexOctet
+clock-seq-low          = hexOctet
+node                   = 6hexOctet
+hexOctet               = hexDigit hexDigit
+hexDigit =
+      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
+      "a" / "b" / "c" / "d" / "e" / "f" /
+      "A" / "B" / "C" / "D" / "E" / "F"
+~~~~
+
+  The following is an example of the string representation of a UUID as
+  a URN:
+
+  urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+
+Assignment: Individual UUID values are generated based on the uniqueness properties otherwise covered in this document with version-specific considerations for each.  Mechinisms include pseudorandom number generation, cryptographic hashing and the option to use IEEE 802 MAC addresses.
+
+Security and Privacy: The recommended generation algorithms for UUIDs per this document involve pseudorandom number generation and as such do not present additional privacy or data exposure risks beyond any such random value generated.  The use of IEEE 802 MAC addresses which may present security problems has explicitly been made optional and not recommended.
+
+Interoperability: UUIDs, and UUID values in the form of URNs in particular,
+  are opaque values the syntax as covered above has no proposed changes
+  and thus no known interoperability issues.
+
+Resolution: Since UUIDs are not globally resolvable, this is not applicable.
+
+Documentation: This document and RFC4122. Relevant ancillary documentation: {{NCA}}{{C309}}
+
+Additional Information: The intention here is simply to include this document
+  in any applicable references at {{URNNamespaces}}. There is no intention
+  to change the existing UUID URN registration.  The scope of this document
+  pertains solely to the internal structure and versions of UUIDs, the
+  textual format and URN registration are specifically out of scope and
+  not changing as part of this update.
 
 # Community Considerations {#community}
 
@@ -1540,15 +1621,11 @@ slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
-Distributed applications generating UUIDs at a variety of hosts MUST
-be willing to rely on the random number source at all hosts.  If this
-is not feasible, the namespace variant should be used.
-
 MAC addresses pose inherent security risks and SHOULD not be used within
 a UUID.
 Instead CSPRNG data SHOULD be selected from a source with sufficient entropy
 to ensure guaranteed
-uniqueness among UUID generation. See {{unguessability}} for more information.
+uniqueness among UUID generation. See {{unguessability}} and {{unidentifiable}} for more information.
 
 Timestamps embedded in the UUID do pose a very small attack surface. The
 timestamp in conjunction with
@@ -1575,7 +1652,7 @@ Rob Wilton,
 Sean Leonard,
 Theodore Y. Ts'o.,
 Robert Kieffer,
-sergeyprokhorenko,
+Sergey Prokhorenko,
 LiosK
 
 As well as all of those in the IETF community and on GitHub to who contributed
@@ -1593,130 +1670,6 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 
 --- back
-
-# Namespace Registration Template {#namespace_reg_template}
-TODO: Revise as per https://www.rfc-editor.org/rfc/rfc8141#appendix-A and https://www.rfc-editor.org/rfc/rfc8141#section-6.2
-
-{:vspace}
-Namespace ID:
-: UUID
-
-Registration Information:
-: Registration date: 2003-10-01
-
-Declared registrant of the namespace:
-: JTC 1/SC6 (ASN.1 Rapporteur Group)
-
-Declaration of syntactic structure:
-: A UUID is an identifier that is unique across both space and time,
-  with respect to the space of all UUIDs.  Since a UUID is a fixed
-  size and contains a time field, it is possible for values to
-  rollover (around A.D. 3400, depending on the specific algorithm
-  used).  A UUID can be used for multiple purposes, from tagging
-  objects with an extremely short lifetime, to reliably identifying
-  very persistent objects across a network.
-
-  The internal representation of a UUID is a specific sequence of
-  bits in memory, as described in {{format}}.  To accurately
-  represent a UUID as a URN, it is necessary to convert the bit
-  sequence to a string representation.
-
-  Each field is treated as an integer and has its value printed as a
-  zero-filled hexadecimal digit string with the most significant
-  digit first.  The hexadecimal values "a" through "f" are output as
-  lower case characters and are case insensitive on input.
-
-  The formal definition of the UUID string representation is
-  provided by the following ABNF {{RFC4234}}:
-
-~~~~ abnf
-UUID                   = time-low "-" time-mid "-"
-                         time-high-and-version "-"
-                         clock-seq-and-reserved
-                         clock-seq-low "-" node
-time-low               = 4hexOctet
-time-mid               = 2hexOctet
-time-high-and-version  = 2hexOctet
-clock-seq-and-reserved = hexOctet
-clock-seq-low          = hexOctet
-node                   = 6hexOctet
-hexOctet               = hexDigit hexDigit
-hexDigit =
-      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-      "a" / "b" / "c" / "d" / "e" / "f" /
-      "A" / "B" / "C" / "D" / "E" / "F"
-~~~~
-
-  The following is an example of the string representation of a UUID as
-  a URN:
-
-  urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
-
-Relevant ancillary documentation:
-:  {{NCA}}{{C309}}
-
-Identifier uniqueness considerations:
-: This document specifies three algorithms to generate UUIDs: the
-  first leverages the unique values of 802 MAC addresses to
-  guarantee uniqueness, the second uses pseudo-random number
-  generators, and the third uses cryptographic hashing and
-  application-provided text strings.  As a result, the UUIDs
-  generated according to the mechanisms here will be unique from all
-  other UUIDs that have been or will be assigned.
-
-Identifier persistence considerations:
-: UUIDs are inherently very difficult to resolve in a global sense.
-  This, coupled with the fact that UUIDs are temporally unique
-  within their spatial context, ensures that UUIDs will remain as
-  persistent as possible.
-
-Process of identifier assignment:
-: Generating a UUID does not require that a registration authority
-  be contacted.  One algorithm requires a unique value over space
-  for each generator.  This value is typically an IEEE 802 MAC
-  address, usually already available on network-connected hosts.
-  The address can be assigned from an address block obtained from
-  the IEEE registration authority.  If no such address is available,
-  or privacy concerns make its use undesirable, {{unidentifiable}} specifies
-  two alternatives.  Another approach is to use version 3
-  or version 4 UUIDs as defined below.
-
-Process for identifier resolution:
-: Since UUIDs are not globally resolvable, this is not applicable.
-
-Rules for Lexical Equivalence:
-: Consider each field of the UUID to be an unsigned integer as shown
-  in the tables in section {{layout}}.  Then, to compare a pair of
-  UUIDs, arithmetically compare the corresponding fields from each
-  UUID in order of significance and according to their data type.
-  Two UUIDs are equal if and only if all the corresponding fields
-  are equal.
-
-  As an implementation note, equality comparison can be performed on
-  many systems by doing the appropriate byte-order canonicalization,
-  and then treating the two UUIDs as 128-bit unsigned integers.
-
-  UUIDs, as defined in this document, can also be ordered
-  lexicographically.  For a pair of UUIDs, the first one follows the
-  second if the most significant field in which the UUIDs differ is
-  greater for the first UUID.  The second follows the first if the
-  most significant field in which the UUIDs differ is greater for
-  the second UUID.
-
-Conformance with URN Syntax:
-: The string representation of a UUID is fully compatible with the
-  URN syntax.  When converting from a bit-oriented, in-memory
-  representation of a UUID into a URN, care must be taken to
-  strictly adhere to the byte order issues mentioned in the string
-  representation section.
-
-Validation mechanism:
-: Apart from determining whether the timestamp portion of the UUID
-  is in the future and therefore not yet assignable, there is no
-  mechanism for determining whether a UUID is 'valid'.
-
-Scope:
-: UUIDs are global in scope.
 
 # Example Code {#example_code}
 
@@ -2652,11 +2605,11 @@ SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
 -------------------------------
 field      bits    value
 -------------------------------
-sha_high   48      0x2ed6657de927
+sha1_high  48      0x2ed6657de927
 ver         4      0x5
-sha_mid    12      0x68b
+sha1_mid   12      0x68b
 var         2      b10
-sha_low    62      b01, 0x5e12665a8aea6a2
+sha1_low   62      b01, 0x5e12665a8aea6a2
 -------------------------------
 total     128
 -------------------------------
