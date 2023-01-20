@@ -461,16 +461,14 @@ When used with databases please refer to {{database_considerations}}.
 The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
-   UUID                   = 4*hexOctet "-"
-                            2*hexOctet "-"
-                            2*hexOctet "-"
-                            2*hexOctet "-"
-                            6*hexOctet
-   hexOctet               = hexDigit hexDigit
-   hexDigit =
-         "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-         "a" / "b" / "c" / "d" / "e" / "f" /
-         "A" / "B" / "C" / "D" / "E" / "F"
+   UUID     = 4hexOctet "-"
+              2hexOctet "-"
+              2hexOctet "-"
+              2hexOctet "-"
+              6hexOctet
+   hexOctet = HEXDIG HEXDIG
+   DIGIT    = %x30-39
+   HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
 An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
@@ -484,7 +482,8 @@ f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 The same UUID from {{sampleHexUUID}} is represented in Binary {{sampleBinaryUUID}}, Integer {{sampleIntegerUUID}} and as a URN {{sampleURNUUID}} defined by {{RFC8141}}.
 
 ~~~~
-11111000000111010100111110101110011111011110110000010001110100001010011101100101000000001010000011001001000111100110101111110110
+111110000001110101001111101011100111110111101100000100011101000\
+01010011101100101000000001010000011001001000111100110101111110110
 ~~~~
 {: #sampleBinaryUUID title='Example Binary UUID'}
 
@@ -532,7 +531,7 @@ More specifically bits 48 through 51. The remaining 4 bits of Octet 6 are dynami
 
 | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
 |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
-|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID from in this document.                          |
+|    0 |    0 |    0 |    1 |       1 | The Gregorian time-based UUID in this document.                               |
 |    0 |    0 |    1 |    0 |       2 | Reserved for DCE Security version, with embedded POSIX UUIDs.                 |
 |    0 |    0 |    1 |    1 |       3 | The name-based version specified in this document that uses MD5 hashing.      |
 |    0 |    1 |    0 |    0 |       4 | The randomly or pseudo-randomly generated version specified in this document. |
@@ -1572,7 +1571,7 @@ Rob Wilton,
 Sean Leonard,
 Theodore Y. Ts'o.,
 Robert Kieffer,
-sergeyprokhorenko,
+Sergey Prokhorenko,
 LiosK
 
 As well as all of those in the IETF community and on GitHub to who contributed
