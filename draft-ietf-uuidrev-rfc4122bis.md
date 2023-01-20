@@ -792,26 +792,26 @@ The UUID version and variant then replace the respective bits as defined by {{ve
 
 Some common name space values have been defined via {{namespaces}}.
 
-For more information on MD5 security considerations see {{RFC6194}}.
+For more information on SHA1 security considerations see {{RFC6194}}.
 
 ~~~~
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                            sha_high                           |
+|                           sha1_high                           |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          sha_high             |  ver  |       sha_mid         |
+|         sha1_high             |  ver  |      sha1_mid         |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|var|                        sha_low                            |
+|var|                       sha1_low                            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                            md5_low                            |
+|                           sha1_low                            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv5 Field and Bit Layout'}
 
 {: vspace='0'}
 
-sha_high:
+sha1_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
   from the computed SHA1 value.
@@ -819,7 +819,7 @@ sha_high:
 ver:
 : The 4 bit version field as defined by {{version_field}}
 
-sha_mid:
+sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following md5_high
   from the computed SHA1 value.
@@ -827,7 +827,7 @@ sha_mid:
 var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
-sha_low:
+sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
   and then using the next 62 most significant, left-most bits.
@@ -2600,11 +2600,11 @@ SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
 -------------------------------
 field      bits    value
 -------------------------------
-sha_high   48      0x2ed6657de927
+sha1_high  48      0x2ed6657de927
 ver         4      0x5
-sha_mid    12      0x68b
+sha1_mid   12      0x68b
 var         2      b10
-sha_low    62      b01, 0x5e12665a8aea6a2
+sha1_low   62      b01, 0x5e12665a8aea6a2
 -------------------------------
 total     128
 -------------------------------
