@@ -2,12 +2,26 @@
 
 This is the working area for the IETF [UUIDREV Working Group](https://datatracker.ietf.org/wg/uuidrev/documents/) Internet-Draft, "A Universally Unique IDentifier (UUID) URN Namespace".
 
-* [Editor's HTML Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-00/draft-ietf-uuidrev-rfc4122bis.html)
-* [Editor's TXT Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-00/draft-ietf-uuidrev-rfc4122bis.txt)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis)
+* [Editor's HTML Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-01/draft-ietf-uuidrev-rfc4122bis.html)
+* [Editor's TXT Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-01/draft-ietf-uuidrev-rfc4122bis.txt)
 * [Compare Editor's Copy to Working Group Draft](https://ietf-wg-uuidrev.github.io/rfc4122bis/#go.draft-ietf-uuidrev-rfc4122bis.diff)
 
+# Latest
+```
+Name:		draft-ietf-uuidrev-rfc4122bis
+Revision:	01
+Title:		A Universally Unique IDentifier (UUID) URN Namespace
+Document date:	2023-01-23
+Group:		uuidrev
+Pages:		62
+URL:            https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-01.txt
+Status:         https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/
+Html:           https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-01.html
+Htmlized:       https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis
+Diff:           https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-01
+```
 
 ## Contributing
 
