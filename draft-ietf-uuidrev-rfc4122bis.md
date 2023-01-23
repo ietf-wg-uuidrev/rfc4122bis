@@ -296,7 +296,7 @@ in distributed systems without requiring coordination makes them a good
 alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 
-1. Non-time-ordered UUID versions such as UUIDv4 have poor database index
+1. Non-time-ordered UUID versions such as UUIDv4 {{uuidv4}} have poor database index
   locality.
   This means that new values created in succession are not close to each other in
   the index and thus require inserts to be performed at random
@@ -304,7 +304,7 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
   The negative performance effects of which on common structures used for
   this (B-tree and its variants) can be dramatic.
 
-1. The 100-nanosecond Gregorian epoch used in UUIDv1 timestamps is uncommon
+1. The 100-nanosecond Gregorian epoch used in UUIDv1 {{uuidv1}} timestamps is uncommon
   and difficult to represent accurately using a standard number format such
   as {{IEEE754}}.
 
@@ -423,6 +423,31 @@ UTC
 ## changelog {#changelog}
 {:removeinrfc}
 
+draft-01
+
+{: spacing="compact"}
+
+- Mixed Case Spelling error #18
+- Add "UUIDs that Do Not Identify the Host as well" reference to security considerations #19
+- Out of Place Distributed node text #20
+- v6 clock_seq and node usage ambiguity #21
+- Figure 2 and 3 Fix Title #22
+- Move Namespace Registration Template to IANA Considerations #23
+- Verify ABNF formatting against RFC5234 #24
+- Bump ABNF reference to RFC 5234 #25
+- Modify v8 SHOULD NOT to MUST NOT #27
+- Remove "time-based" constraint from version 8 UUID #29
+- Further clarify v7 field description #125 #30
+- Typo: Section 4.2, Version Field, "UUID from in this" #33
+- Create better ABNF to represent Hex Digit #39
+- Break Binary form of UUID into two lines. #40
+- Move octet text from section 4 to section 5 #41
+- Add forward reference to UUIDv1 and UUIDv4 in Section 2 #42
+- Erronous reference to v1 in monotonicity #45
+- Add Label for "Monotonic Error Checking" paragraph to frame the topic #46
+- Remove IEEE paragraph from "uuids that do not identify the host" #48
+- Grammar Review #52
+
 draft-00
 
 {: spacing="compact"}
@@ -458,7 +483,7 @@ draft-00
 # UUID Format {#format}
 
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
-bits described in the next sections in determine finer structure.
+bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octets definitions start at 0 and end at 15.
 
 UUIDs MAY be represented as binary data or integers.
 When in use with URNs or applications, any given UUID SHOULD
@@ -479,7 +504,7 @@ The formal definition of the UUID string representation is provided by the follo
    HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
-An example UUID using this textual representation from the previous table observed in {{sampleHexUUID}}.
+An example UUID using this textual representation from the previous table observed in {{sampleStringUUID}}.
 Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC5234, Section 2.3}}
 
 ~~~~
@@ -583,8 +608,6 @@ Significant Byte first (known as network byte order).
 
 Note that in some instances the field names, particularly for multiplexed fields, follow historical
 practice.
-
-While discussing UUID field layouts, bit definitions start at 0 and end at 127 while octets definitions start at 0 and end at 15.
 
 ## UUID Version 1 {#uuidv1}
 UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
@@ -1149,7 +1172,7 @@ Batch UUID creation implementations MAY utilize a monotonic counter that
 SHOULD increment for each UUID created during a given timestamp.
 
 For single-node UUID implementations that do not need to create batches of
-UUIDs, the embedded timestamp within UUID version 1, 6, and 7 can provide
+UUIDs, the embedded timestamp within UUID version 6 and 7 can provide
 sufficient monotonicity guarantees by simply ensuring that timestamp increments
 before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
@@ -1262,8 +1285,8 @@ counters are monotonic in nature:
   (if the bytes were frozen or being used as the seed for a monotonic counter).
 
 
-
-Implementations SHOULD check if the the currently generated UUID is greater
+Monotonic Error Checking:
+: Implementations SHOULD check if the the currently generated UUID is greater
 than the previously generated UUID. If this is not the case then any number
 of things could have occurred, such as clock rollbacks,
 leap second handling, and counter rollovers. Applications SHOULD embed sufficient
@@ -1350,8 +1373,6 @@ be willing to rely on the random number source at all hosts.  If this
 is not feasible, the namespace variant should be used.
 
 ## Name-Based UUID Generation {#name_based_uuid_generation}
-TODO, define how to compute a namespace ID if I don't want to use one from {{namespaces}}
-
 The concept of name and name space should be broadly construed, and not
 limited to textual names.  For example, some name spaces are the
 domain name system, URLs, Object Identifiers (OIDs), X.500 Distinguished
@@ -1418,8 +1439,6 @@ Implementations MAY implement a shared knowledge scheme introduced in {{distribu
 
 
 ## Unguessability {#unguessability}
-TODO: Here or in security considerations, discuss security considerations with "running out of random"
-
 Implementations SHOULD utilize a cryptographically secure pseudo-random number
 generator (CSPRNG) to provide values that are both difficult to predict ("unguessable")
 and have a low likelihood of collision ("unique").
@@ -1432,10 +1451,6 @@ Further advice on generating cryptographic-quality random numbers can be found i
 ## UUIDs that Do Not Identify the Host {#unidentifiable}
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
 802 address is not available, or its use is not desired.
-
-One approach is to contact the IEEE and get a separate block of
-addresses.  At the time of writing, the application could be found at
-[](https://standards.ieee.org/products-programs/regauth/).
 
 A better solution is to obtain a 47-bit cryptographic-quality random
 number and use it as the low 47 bits of the node ID, with the least
