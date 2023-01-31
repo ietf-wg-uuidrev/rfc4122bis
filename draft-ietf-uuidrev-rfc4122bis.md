@@ -432,6 +432,7 @@ draft-02
 - Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
 - Appendix B, consistent naming #55
 - Remove duplicate ABNF from IANA considerations #56
+- Monotonic Error Checking missing newline #57
 
 draft-01
 
@@ -1294,6 +1295,7 @@ counters are monotonic in nature:
   the desired counter method to the new timestamp and generate new random bytes
   (if the bytes were frozen or being used as the seed for a monotonic counter).
 
+{: vspace='0'}
 
 Monotonic Error Checking:
 : Implementations SHOULD check if the the currently generated UUID is greater
