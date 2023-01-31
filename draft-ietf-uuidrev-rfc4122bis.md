@@ -429,6 +429,7 @@ draft-02
 
 - Change md5_high in SHA1 section to sha1_mid #59
 - Describe Nil/Max UUID in variant table #16
+- Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
 
 draft-01
 
@@ -1341,20 +1342,17 @@ Some implementations MAY desire to utilize multi-node, clustered, applications
 which involve two or more
 nodes independently generating UUIDs that will be stored in a common location.
 While UUIDs already feature sufficient entropy to ensure that the chances
-of collision are low as the total number of nodes increase; so does the likelihood
+of collision are low, as the total number of UUID generating nodes increase; so does the likelihood
 of a collision.
 
-This section will detail the approaches that have been observed by by multi-node
+This section will detail the two additional collision resistance approaches that have been observed by by multi-node
 UUID implementations in distributed environments.
 
-{: vspace='0'}
+It should be noted that although this section details two methods for the sake of completeness; 
+implementations SHOULD utilize the pseudo-random Node ID option if additional collision resistance for distributed UUID generation is a requirement.
+Likewise, utilization of either method is not required for implementing UUID generation in distributed enviornments.
 
-Centralized Registry:
-: With this method all nodes tasked with creating UUIDs consult a central registry
-  and confirm the generated value is unique. As applications scale, the communication
-  with the central registry could become a bottleneck and impact UUID generation
-  in a negative way. Shared knowledge schemes with central/global
-  registries are outside the scope of this specification and should generally be discouraged.
+{: vspace='0'}
 
 Node IDs:
 : With this method, a pseudo-random Node ID value is placed within the UUID
@@ -1370,10 +1368,12 @@ Node IDs:
   Furthermore, the creation and negotiation of unique node ids among nodes
   is also out of scope for this specification.
 
-Utilization of either a centralized registry or Node ID is not required
-for implementing UUIDs in this specification. However, implementations SHOULD
-utilize one of the two aforementioned methods if distributed UUID generation
-is a requirement.
+Centralized Registry:
+: With this method all nodes tasked with creating UUIDs consult a central registry
+  and confirm the generated value is unique. As applications scale, the communication
+  with the central registry could become a bottleneck and impact UUID generation
+  in a negative way. Shared knowledge schemes with central/global
+  registries are outside the scope of this specification and is NOT RECOMMENDED.
 
 Distributed applications generating UUIDs at a variety of hosts MUST
 be willing to rely on the random number source at all hosts.  If this
