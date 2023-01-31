@@ -847,7 +847,7 @@ ver:
 
 sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
-  right-most 12 bits of 16 bits immediately following md5_high
+  right-most 12 bits of 16 bits immediately following sha1_high
   from the computed SHA1 value.
 
 var:
