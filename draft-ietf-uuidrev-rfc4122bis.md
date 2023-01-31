@@ -431,6 +431,7 @@ draft-02
 - Describe Nil/Max UUID in variant table #16
 - Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
 - Appendix B, consistent naming #55
+- Remove duplicate ABNF from IANA considerations #56
 
 draft-01
 
@@ -1567,40 +1568,12 @@ Purpose: A UUID is an identifier that is unique across both space and time,
   very persistent objects across a network.
 
 Syntax: The internal representation of a UUID is a specific sequence of
-  bits in memory, as described in {{format}}.  To accurately
+  bits in memory, as described in {{format}} and {{layout}}.  To accurately
   represent a UUID as a URN, it is necessary to convert the bit
   sequence to a string representation.
 
-  Each field is treated as an integer and has its value printed as a
-  zero-filled hexadecimal digit string with the most significant
-  digit first.  The hexadecimal values "a" through "f" are output as
-  lower case characters and are case insensitive on input.
-
   The formal definition of the UUID string representation is
-  provided by the following ABNF {{RFC5234}}:
-
-~~~~ abnf
-UUID                   = time-low "-" time-mid "-"
-                         time-high-and-version "-"
-                         clock-seq-and-reserved
-                         clock-seq-low "-" node
-time-low               = 4hexOctet
-time-mid               = 2hexOctet
-time-high-and-version  = 2hexOctet
-clock-seq-and-reserved = hexOctet
-clock-seq-low          = hexOctet
-node                   = 6hexOctet
-hexOctet               = hexDigit hexDigit
-hexDigit =
-      "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" /
-      "a" / "b" / "c" / "d" / "e" / "f" /
-      "A" / "B" / "C" / "D" / "E" / "F"
-~~~~
-
-  The following is an example of the string representation of a UUID as
-  a URN:
-
-  urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+  provided by the following ABNF and definitions within {{format}} and more specifically {{sampleURNUUID}}.
 
 Assignment: Individual UUID values are generated based on the uniqueness properties otherwise covered in this document with version-specific considerations for each.  Mechinisms include pseudorandom number generation, cryptographic hashing and the option to use IEEE 802 MAC addresses.
 
