@@ -423,6 +423,13 @@ UTC
 ## changelog {#changelog}
 {:removeinrfc}
 
+draft-02
+
+{: spacing="compact"}
+
+- Change md5_high in SHA1 section to sha1_mid #59
+- Describe Nil/Max UUID in variant table #16
+
 draft-01
 
 {: spacing="compact"}
@@ -542,11 +549,11 @@ the most significant bits of octet 8 of the UUID.
 {{table1}} lists the contents of the variant field, where
 the letter "x" indicates a "don't-care" value.
 
-| Msb0 | Msb1 | Msb2 | Description                                            |
-|    0 |    x | x    | Reserved, NCS backward compatibility.                  |
-|    1 |    0 | x    | The variant specified in this document.                |
-|    1 |    1 | 0    | Reserved, Microsoft Corporation backward compatibility |
-|    1 |    1 | 1    | Reserved for future definition.                        |
+| Msb0 | Msb1 | Msb2 | Description                                                                    |
+|    0 |    x | x    | Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |
+|    1 |    0 | x    | The variant specified in this document.                                        |
+|    1 |    1 | 0    | Reserved, Microsoft Corporation backward compatibility.                        |
+|    1 |    1 | 1    | Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |
 {: #table1 title='UUID Variants'}
 
 Interoperability, in any form, with variants other than the one
