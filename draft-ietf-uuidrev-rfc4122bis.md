@@ -430,6 +430,7 @@ draft-02
 - Change md5_high in SHA1 section to sha1_mid #59
 - Describe Nil/Max UUID in variant table #16
 - Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
+- Appendix B, consistent naming #55
 
 draft-01
 
@@ -2523,7 +2524,7 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 ~~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
-## Example of UUIDv1 Value {#uuidv1_example}
+## Example of a UUIDv1 Value {#uuidv1_example}
 ~~~~
 ----------------------------------------------
 field                 bits    value
@@ -2541,7 +2542,7 @@ final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
 ~~~~
 {: title='UUIDv1 Example Test Vector'}
 
-## Example of UUIDv3 Value {#uuidv3_example}
+## Example of a UUIDv3 Value {#uuidv3_example}
 The MD5 computation from {{sample_implementation}} is detailed in {{v3md5}}
 while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swaping for version and variant see {{v3vervar}}.
@@ -2577,7 +2578,7 @@ Final:                  5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~~
 {: id='v3vervar' title='UUIDv3 Example Ver Var bit swaps'}
 
-## Example of UUIDv4 Value {#uuidv4_example}
+## Example of a UUIDv4 Value {#uuidv4_example}
 This UUIDv4 example was created by generating 16 bytes
 of random data resulting in the hex value of
 919108F752D133205BACF847DB4148A8. This is then used to
@@ -2610,7 +2611,7 @@ Final:                  919108f7-52d1-4320-9bac-f847db4148a8
 {: id='v4vervar' title='UUIDv4 Example Ver/Var bit swaps '}
 
 
-## Example of UUIDv5 Value {#uuidv5_example}
+## Example of a UUIDv5 Value {#uuidv5_example}
 The SHA1 computation from {{sample_implementation}} is detailed in {{v5sha1}}
 while the field mapping and all values are illustrated in {{v5fields}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA1 value see {{v5vervar}}.
