@@ -85,6 +85,12 @@ normative:
     title: "DCE 1.1: Authentication and Security Services"
     rc: Open Group CAE Specification C311
     date: 1997
+  RANDOM:
+    target: https://peteroupc.github.io/random.html
+    title: "Random Number Generator Recommendations for Applications"
+    author:
+    - name: Peter Occil
+    date: 2023
 informative:
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
@@ -433,6 +439,7 @@ draft-02
 - Appendix B, consistent naming #55
 - Remove duplicate ABNF from IANA considerations #56
 - Monotonic Error Checking missing newline #57
+- More Security Considerations Randomness #26
 
 draft-01
 
@@ -1457,7 +1464,7 @@ Care SHOULD be taken to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
-Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}}
+Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}} and in {{RANDOM}}.
 
 ## UUIDs that Do Not Identify the Host {#unidentifiable}
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
@@ -1609,7 +1616,7 @@ possible and in a way that attempts to benefit the entire Internet.
 # Security Considerations {#Security}
 
 Implementations MUST NOT assume that UUIDs are hard to guess.
-Foe example, they MUT not be used
+Foe example, they MUST not be used
 as security capabilities (identifiers whose mere possession grants
 access).  Discovery of predictablity in a random number source will
 result in a vulnerability.
