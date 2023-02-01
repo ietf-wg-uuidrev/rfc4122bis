@@ -440,6 +440,7 @@ draft-02
 - Remove duplicate ABNF from IANA considerations #56
 - Monotonic Error Checking missing newline #57
 - More Security Considerations Randomness #26
+- SHA265 UUID Generation #50
 
 draft-01
 
@@ -775,8 +776,6 @@ md5_low:
   filled with the least-significant, right-most bits of the final 64 bits
   from the computed MD5 value.
 
-For more information on MD5 security considerations see {{RFC6194}}.
-
 ## UUID Version 4 {#uuidv4}
 The version 4 UUID is meant for generating UUIDs from truly-random or
 pseudo-random numbers.
@@ -836,6 +835,8 @@ The UUID version and variant then replace the respective bits as defined by {{ve
 
 Some common name space values have been defined via {{namespaces}}.
 
+There may be scenarios, usually depending on organizational security policies, where SHA1 libraries may not be available or deemed unsafe for use.
+As such it may be desirable to generate name-based UUIDs derived from SHA256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
 For more information on SHA1 security considerations see {{RFC6194}}.
 
 ~~~~
