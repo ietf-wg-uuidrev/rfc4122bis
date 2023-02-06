@@ -441,6 +441,7 @@ draft-02
 - Monotonic Error Checking missing newline #57
 - More Security Considerations Randomness #26
 - SHA265 UUID Generation #50
+- Expand multiplexed fields within v1 and v6 bit definitions # 43
 
 draft-01
 
@@ -625,9 +626,6 @@ In the absence of explicit application or presentation protocol
 specification to the contrary, each field is encoded with the Most
 Significant Byte first (known as network byte order).
 
-Note that in some instances the field names, particularly for multiplexed fields, follow historical
-practice.
-
 ## UUID Version 1 {#uuidv1}
 UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
 represented by Coordinated Universal Time (UTC) as a count of 100-
@@ -649,13 +647,13 @@ transmitted on an 802.3 LAN.
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                          time_low                             |
+|                           time_low                            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|       time_mid                |         time_hi_and_version   |
+|           time_mid            |  ver  |       time_high       |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
+|var|         clock_seq         |             node              |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                         node (2-5)                            |
+|                              node                             |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: title='UUIDv1 Field and Bit Layout'}
@@ -670,20 +668,21 @@ time_mid:
 : The middle 16 bits of the 60 bit starting timestamp.
   Occupies bits 32 through 47 (octets 4-5)
 
-time_hi_and_version:
-: The first four most significant bits MUST contain
-  the UUIDv1 version (0001) while the remaining 12 bits will contain
-  the most significant 12 bits from the 60 bit starting timestamp.
-  Occupies bits 48 through 63 (octets 6-7)
+ver:
+: The 4 bit version field as defined by {{version_field}} set to 0001.
+  Ocupies bits 48 through 51 of octet 6.
 
-clock_seq_hi_and_res:
-: The first two bits MUST be set to the UUID variant (10)
-  The remaining 6 bits contain the high portion of the clock sequence.
-  Occupies bits 64 through 71 (octet 8) for a full 8 bits.
+time_high:
+: 12 bits that will contain the most significant 12 bits from the 60 bit starting timestamp.
+  Occupies bits 52 through 63 (octets 6-7)
 
-clock_seq_low:
-: The 8 bit low portion of the clock sequence.
-  Occupies bits 72 through 79 (octet 9)
+var:
+: The 2 bit variant field as defined by {{variant_field}} set to 10.
+  Occupies bits 64 and 65 of octet 8.
+
+clock_seq:
+:  The 14-bits containing the clock sequence.
+  Occupies bits 66 through 79 (octets 8-9).
 
 node:
 : 48 bit spatially unique identifier
@@ -907,11 +906,11 @@ The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           time_high                           |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|           time_mid            |      time_low_and_version     |
+|           time_mid            |  ver  |       time_low        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|clk_seq_hi_res |  clk_seq_low  |         node (0-1)            |
+|var|         clock_seq         |             node              |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                         node (2-5)                            |
+|                              node                             |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~~
 {: id='v6layout' title='UUIDv6 Field and Bit Layout'}
@@ -926,20 +925,21 @@ time_mid:
 : The middle 16 bits of the 60 bit starting timestamp.
   Occupies bits 32 through 47 (octets 4-5)
 
-time_low_and_version:
-: The first four most significant bits MUST contain
-  the UUIDv6 version (0110) while the remaining 12 bits will contain
-  the least significant 12 bits from the 60 bit starting timestamp.
-  Occupies bits 48 through 63 (octets 6-7)
+ver:
+: The 4 bit version field as defined by {{version_field}} set to 0110.
+  Ocupies bits 48 through 51 of Octet 6.
 
-clk_seq_hi_res:
-: The first two bits MUST be set to the UUID variant (10)
-  The remaining 6 bits contain the high portion of the clock sequence.
-  Occupies bits 64 through 71 (octet 8) for a full 8 bits.
+time_low:
+: 12 bits that will contain the least significant 12 bits from the 60 bit starting timestamp.
+  Occupies bits 52 through 63 (octets 6-7)
 
-clock_seq_low:
-: The 8 bit low portion of the clock sequence.
-  Occupies bits 72 through 79 (octet 9)
+var:
+: The 2 bit variant field as defined by {{variant_field}} set to 10.
+  Occupies bits 64 and 65 of octet 8.
+
+clock_seq:
+: The 14 bits containing the clock sequence.
+  Occupies bits 66 through 79 (octets 8-9).
 
 node:
 : 48 bit spatially unique identifier
@@ -2477,7 +2477,7 @@ int generate_uuidv8(uint8_t *uuid, uint8_t node_id) {
 Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit timestamp: 0x1EC9414C232AB00
 (138648505420000000) Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00
 
-Both UUIDv1 and UUIDv6 utilize the same values in clk_seq_hi_res, clock_seq_low,
+Both UUIDv1 and UUIDv6 utilize the same values in clock_seq,
 and node. All of which have been generated with random data.
 
 
@@ -2514,9 +2514,10 @@ field                 bits    value
 ----------------------------------------------
 time_low              32      0xC232AB00
 time_mid              16      0x9414
-time_hi_and_version   16      0x11EC
-clk_seq_hi_res         8      0xB3
-clock_seq_low          8      0xC8
+ver                    4      0x1
+time_high             12      0x1EC
+var                    2      b10
+clock_seq             14      b11, 0x3C8
 node                  48      0x9E6BDECED846
 ----------------------------------------------
 total                128
@@ -2639,9 +2640,10 @@ field                 bits    value
 -----------------------------------------------
 time_high              32     0x1EC9414C
 time_mid               16     0x232A
-time_low_and_version   16     0x6B00
-clk_seq_hi_res          8     0xB3
-clock_seq_low           8     0xC8
+ver                     4     0x6
+time_high              12     0xB00
+var                     2     b10
+clock_seq              14     b11, 0x3C8
 node                   48     0x9E6BDECED846
 -----------------------------------------------
 total                 128
