@@ -443,6 +443,7 @@ draft-02
 - SHA265 UUID Generation #50
 - Expand multiplexed fields within v1 and v6 bit definitions # 43
 - Clean up text in UUIDs that Do Not Identify the Host #61
+- Revise UUID Generator States section #47
 
 draft-01
 
@@ -1324,15 +1325,23 @@ The UUID generator state only needs to be read from stable storage once at boot
 time, if it is read into a system-wide shared volatile store (and
 updated whenever the stable store is updated).
 
+This stable storage MAY be used to record various portions of the UUID generation 
+which prove useful for batch UUID generation purposes and monotonic error checking with UUIDv6 and UUIDv7.
+These stored values include but are not limited to last known timestamp, clock sequence, counters and random data.  
+
 If an implementation does not have any stable store available, then
-it can always say that the values were unavailable.  This is the
-least desirable implementation because it will increase the frequency
+it SHOULD proceed with UUID generation as if this was the first UUID created within a batch. 
+This is the least desirable implementation because it will increase the frequency
 of creation of values such as clock sequence, counters or random data which increases the
 probability of duplicates.
 
+An implementation MAY also return an application error in the event that collision resistance is of the utmost concern.
+The semantics of this error are up to the application and implementation. 
+See {{collision_resistance}} for more information on weighting collision tolerance in applications.
+
 For UUIDv1 and UUIDv6, if the node ID can never change (e.g., the network interface card
 from which the node ID is derived is inseparable
-from the system), or if any change also reinitializes the clock
+from the system), or if any change also re-initializes the clock
 sequence to a random value, then instead of keeping it in stable
 store, the current node ID may be returned.
 
@@ -1344,7 +1353,7 @@ the clock sequence and node ID remain unchanged, only the shared
 volatile copy of the state needs to be updated.  Furthermore, if the
 timestamp value in stable store is in the future by less than the
 typical time it takes the system to reboot, a crash will not cause a
-reinitialization of the clock sequence.
+re-initialization of the clock sequence.
 
 If it is too expensive to access shared state each time a UUID is
 generated, then the system-wide generator can be implemented to
