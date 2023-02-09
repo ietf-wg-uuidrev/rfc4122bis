@@ -2331,7 +2331,8 @@ Sample Output of utest
 
 ## Some Hash Space IDs {#hashspaces}
 This appendix lists the hash space IDs for use with UUIDv8 name-based UUIDs.
-~~~
+
+~~~~
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
 SHA2_256     = "3fb32780-953c-4464-9cfd-e85dbbe9843d"
 SHA2_384     = "e6800581-f333-484b-8778-601ff2b58da8"
@@ -2344,7 +2345,7 @@ SHA3_384     = "872fb339-2636-4bdd-bda6-b6dc2a82b1b3"
 SHA3_512     = "a4920a5d-a8a6-426c-8d14-a6cafbe64c7b"
 SHAKE_128    = "7ea218f6-629a-425f-9f88-7439d63296bb"
 SHAKE_256    = "2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a"
-~~~
+~~~~
 
 ## Creating a UUIDv6 Value {#creating_a_uuidv6_value}
 
