@@ -444,6 +444,7 @@ draft-02
 - Expand multiplexed fields within v1 and v6 bit definitions # 43
 - Clean up text in UUIDs that Do Not Identify the Host #61
 - Revise UUID Generator States section #47
+- Expand upon why unix epoch rollover is not a problem #44
 
 draft-01
 
@@ -1145,8 +1146,8 @@ Length:
   value for the timestamp field is reached.
   Care should be given to ensure that the proper length is selected for a given
   timestamp.
-  UUID version 1 and 6 utilize a 60 bit timestamp and UUIDv7 features a 48
-  bit timestamp.
+  UUID version 1 and 6 utilize a 60 bit timestamp valid until 5623 AD and UUIDv7 features a 48
+  bit timestamp valid until the year 10889 AD.
 
 Altering, Fuzzing, or Smearing:
 : Implementations MAY alter the actual timestamp. Some examples include security
