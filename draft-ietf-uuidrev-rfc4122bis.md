@@ -80,6 +80,14 @@ normative:
     date: August 2015
     seriesinfo:
       FIPS: PUB 180-4
+  SHA3:
+    target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
+    title: SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions
+    author:
+    - org: National Institute of Standards and Technology
+    date: August 2015
+    seriesinfo:
+      FIPS: PUB 202
   C311:
     target: https://pubs.opengroup.org/onlinepubs/9696989899/toc.pdf
     title: "DCE 1.1: Authentication and Security Services"
@@ -1438,12 +1446,13 @@ A note on namespaces:
 
 Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
- These MAY leverage newer hashing protocols such as SHA256, SHA512 or even protocols that have not been defined yet.
+ These MAY leverage newer hashing protocols such as SHA256, SHA512, {{SHA3}} or even protocols that have not been defined yet.
  To ensure UUIDv8 Name-Based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
  Creation of name-based version 8 UUIDs follow the same logic defined in {{uuidv5}} but the hashspace should be used to as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout and finally trim any excess bits beyond 128.
+ An important note for secure hashing algorithms that produce variable rate outputs, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
  See {{uuidv8_example_name}} for a SHA256 UUIDv8 example test vector.
 
 ## Collision Resistance {#collision_resistance}
