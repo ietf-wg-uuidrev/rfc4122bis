@@ -129,6 +129,72 @@ echo $hash | sed -r 's/^(.{12}).{1}(.{19})/\13\2/' | sed -re "s/(.{8})(.{4}).{1}
 # 2ed6657d-e927-568b-95e1-2665a8aea6a2
 ```
 
+### SHA256 (Testing a "v8) - 401835fd-a627-870a-873f-ed73f2bc5b2c
+```bash
+# Unset vars
+unset hashspace
+unset namespace
+unset name
+unset namespaceIDoctetString
+unset hash
+unset variantSpace
+unset variant
+unset newvVariant
+
+# Set Vars
+hashspace=3fb32780-953c-4464-9cfd-e85dbbe9843d
+namespace=6ba7b810-9dad-11d1-80b4-00c04fd430c8
+name=www.example.com
+
+# Convert Hashspace into string of octets
+# \x3f\xb3\x27\x80\x95\x3c\x44\x64\x9c\xfd\xe8\x5d\xbb\xe9\x84\x3d
+hashspaceIDoctetString=$(echo -n $hashspace | sed 's/-//g' | sed 's/.\{2\}/\\x&/g')
+
+# Convert Namespace into string of octets
+# \x6b\xa7\xb8\x10\x9d\xad\x11\xd1\x80\xb4\x00\xc0\x4f\xd4\x30\xc8
+namespaceIDoctetString=$(echo -n $namespace | sed 's/-//g' | sed 's/.\{2\}/\\x&/g')
+
+# Compute hash
+# 401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
+hash=$(echo -n -e $hashspaceIDoctetString$namespaceIDoctetString$name | sha256sum)
+
+# Get the variant hex, convert to uppercase for BC in next step
+# 0
+variantSpace=$(echo $hash | sed -r 's/^.{16}(.{1}).{15}.*/\1/' | tr '[:lower:]' '[:upper:]')
+
+# Convert hex to bin ensure always 4 char length and replace upper two chars with 1 and 0
+# 1000
+variant=$(echo "obase=2; ibase=16; $variantSpace" | bc | awk '{ printf "%04d\n", $0 }' | sed -r 's/.*(..)$/10\1/')
+
+# convert back to hex
+# 8
+newVariant=$(echo "obase=16; ibase=2; $variant" | bc)
+
+# replace Ver (8) and Var, add Dashes, anything remaining is dropped, convert back to lowercase
+echo $hash | sed -r 's/^(.{12}).{1}(.{19})/\13\2/' | sed -re "s/(.{8})(.{4}).{1}(.{3}).{1}(.{3})(.{12}).*/\1-\2-8\3-$newVariant\4-\5/" | tr '[:upper:]' '[:lower:]'
+# 401835fd-a627-870a-873f-ed73f2bc5b2c
+```
+
+```python
+import hashlib
+import uuid
+
+# predefined by RFC 4122
+NAMESPACE_DNS = uuid.UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
+
+# predefined by new RFC (UUIDv4s I just made up for example)
+ALGORITHM_SHA256 = uuid.UUID("3fb32780-953c-4464-9cfd-e85dbbe9843d")
+
+# concatenate hash_algorithm_uuid + namespace_uuid + name; then hash
+sha256 = hashlib.new("sha256")
+sha256.update(ALGORITHM_SHA256.bytes)
+sha256.update(NAMESPACE_DNS.bytes)
+sha256.update(bytes("www.example.com", "utf-8"))
+print(sha256.hexdigest())
+```
+
+---
+
 ### SHA256 (Testing a "v9") - 5c146b14-3c52-9afd-938a-375d0df1fbf6
 ```bash
 # Unset vars
