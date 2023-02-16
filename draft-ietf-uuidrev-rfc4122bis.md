@@ -682,7 +682,7 @@ time_mid:
 
 ver:
 : The 4 bit version field as defined by {{version_field}} set to 0001.
-  Ocupies bits 48 through 51 of octet 6.
+  Occupies bits 48 through 51 of octet 6.
 
 time_high:
 : 12 bits that will contain the most significant 12 bits from the 60 bit starting timestamp.
@@ -941,7 +941,7 @@ time_mid:
 
 ver:
 : The 4 bit version field as defined by {{version_field}} set to 0110.
-  Ocupies bits 48 through 51 of Octet 6.
+  Occupies bits 48 through 51 of Octet 6.
 
 time_low:
 : 12 bits that will contain the least significant 12 bits from the 60 bit starting timestamp.
@@ -1384,7 +1384,7 @@ UUID implementations in distributed environments.
 
 It should be noted that although this section details two methods for the sake of completeness; 
 implementations SHOULD utilize the pseudo-random Node ID option if additional collision resistance for distributed UUID generation is a requirement.
-Likewise, utilization of either method is not required for implementing UUID generation in distributed enviornments.
+Likewise, utilization of either method is not required for implementing UUID generation in distributed environments.
 
 {: vspace='0'}
 
@@ -1444,7 +1444,6 @@ A note on namespaces:
   For example, any other UUID MAY be generated and uses as the desired namespace input for a given application context to
   ensure all names created are unique within the newly created namespace.
 
-
 Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
  These MAY leverage newer hashing protocols such as SHA256, SHA512, {{SHA3}} or even protocols that have not been defined yet.
@@ -1455,6 +1454,12 @@ Name-based UUIDs using version 8:
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout and finally trim any excess bits beyond 128.
  An important note for secure hashing algorithms that produce variable rate outputs, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
  See {{uuidv8_example_name}} for a SHA256 UUIDv8 example test vector.
+
+Advertising the Hash Algorithm:
+: Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying a the algorithm.
+  That is, to detail SHA2-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA2-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  The protocol of choice, communication channels and actual method of sharing this data between systems it outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
 
@@ -1625,7 +1630,7 @@ Syntax: The internal representation of a UUID is a specific sequence of
   The formal definition of the UUID string representation is
   provided by the following ABNF and definitions within {{format}} and more specifically {{sampleURNUUID}}.
 
-Assignment: Individual UUID values are generated based on the uniqueness properties otherwise covered in this document with version-specific considerations for each.  Mechinisms include pseudorandom number generation, cryptographic hashing and the option to use IEEE 802 MAC addresses.
+Assignment: Individual UUID values are generated based on the uniqueness properties otherwise covered in this document with version-specific considerations for each.  Mechanisms include pseudorandom number generation, cryptographic hashing and the option to use IEEE 802 MAC addresses.
 
 Security and Privacy: The recommended generation algorithms for UUIDs per this document involve pseudorandom number generation and as such do not present additional privacy or data exposure risks beyond any such random value generated.  The use of IEEE 802 MAC addresses which may present security problems has explicitly been made optional and not recommended.
 
@@ -1643,6 +1648,8 @@ Additional Information: The intention here is simply to include this document
   pertains solely to the internal structure and versions of UUIDs, the
   textual format and URN registration are specifically out of scope and
   not changing as part of this update.
+
+Further, the authors and working group have decided that IANA is not required to track UUIDs used for identifying items such as namespaces or hashspaces from {{namespaces}} and {{hashspaces}}.
 
 # Community Considerations {#community}
 
