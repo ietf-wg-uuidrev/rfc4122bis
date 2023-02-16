@@ -11,16 +11,16 @@ This is the working area for the IETF [UUIDREV Working Group](https://datatracke
 # Latest
 ```
 Name:		draft-ietf-uuidrev-rfc4122bis
-Revision:	01
+Revision:	02
 Title:		A Universally Unique IDentifier (UUID) URN Namespace
-Document date:	2023-01-23
+Document date:	2023-02-16
 Group:		uuidrev
-Pages:		62
-URL:            https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-01.txt
+Pages:		47
+URL:            https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-02.txt
 Status:         https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/
-Html:           https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-01.html
+Html:           https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-02.html
 Htmlized:       https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis
-Diff:           https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-01
+Diff:           https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-02
 ```
 
 ## Contributing
