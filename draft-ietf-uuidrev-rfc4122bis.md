@@ -69,6 +69,7 @@ normative:
   RFC1321: RFC1321
   RFC6151: RFC6151
   RFC4086: RFC4086
+  RFC4122: RFC4122
   RFC8141: RFC8141
   RFC5234: RFC5234
   RFC6194: RFC6194
@@ -266,8 +267,8 @@ to implement services using UUIDs as URNs {{RFC8141}}.  Nothing in this document
 should be construed to override the DCE standards that defined UUIDs.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
-derived from earlier versions of this document.  Both sets of
-specifications have been aligned, and are fully technically
+derived from {{RFC4122}}.  Both sets of
+specifications have been aligned and are fully technically
 compatible.  In addition, a global registration function is being
 provided by the Telecommunications Standardization Bureau of ITU-T;
 for details see [](https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx).
@@ -310,7 +311,7 @@ in distributed systems without requiring coordination makes them a good
 alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 
-1. Non-time-ordered UUID versions such as UUIDv4 {{uuidv4}} have poor database index
+1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}) have poor database index
   locality.
   This means that new values created in succession are not close to each other in
   the index and thus require inserts to be performed at random
@@ -318,7 +319,7 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
   The negative performance effects of which on common structures used for
   this (B-tree and its variants) can be dramatic.
 
-1. The 100-nanosecond Gregorian epoch used in UUIDv1 {{uuidv1}} timestamps is uncommon
+1. The 100-nanosecond Gregorian epoch used in UUIDv1 (described in {{uuidv1}}) timestamps is uncommon
   and difficult to represent accurately using a standard number format such
   as {{IEEE754}}.
 
@@ -346,7 +347,7 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 
 1.  RFC4122 did not distinguish between the requirements for generation
-  of a UUID versus an application which simply stores one, which are often
+  of a UUID versus an application that simply stores one, which are often
   different.
 
 
@@ -358,10 +359,10 @@ time-based, sortable unique identifier for use as a database key. This has
 lead to numerous implementations
 over the past 10+ years solving the same problem in slightly different ways.
 
-While preparing this specification the following 16 different implementations
-were analyzed for trends in total ID length, bit Layout, lexical formatting/encoding,
+While preparing this specification, the following 16 different implementations
+were analyzed for trends in total ID length, bit layout, lexical formatting/encoding,
 timestamp type, timestamp format, timestamp accuracy, node format/components,
-collision handling and multi-timestamp tick generation sequencing.
+collision handling and multi-timestamp tick generation sequencing:
 
 
 {: spacing="compact"}
@@ -448,7 +449,7 @@ draft-02
 - Remove duplicate ABNF from IANA considerations #56
 - Monotonic Error Checking missing newline #57
 - More Security Considerations Randomness #26
-- SHA265 UUID Generation #50
+- SHA256 UUID Generation #50
 - Expand multiplexed fields within v1 and v6 bit definitions # 43
 - Clean up text in UUIDs that Do Not Identify the Host #61
 - Revise UUID Generator States section #47
@@ -515,7 +516,7 @@ draft-00
 # UUID Format {#format}
 
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
-bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octets definitions start at 0 and end at 15.
+bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
 
 UUIDs MAY be represented as binary data or integers.
 When in use with URNs or applications, any given UUID SHOULD
@@ -536,7 +537,7 @@ The formal definition of the UUID string representation is provided by the follo
    HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
-An example UUID using this textual representation from the previous table observed in {{sampleStringUUID}}.
+An example UUID using this textual representation from the above ABNF is shown in {{sampleStringUUID}}.
 Note that in this example the alphabetic characters may be all uppercase, all lowercase or mixed case as per {{RFC5234, Section 2.3}}
 
 ~~~~
@@ -582,7 +583,7 @@ the letter "x" indicates a "don't-care" value.
 {: #table1 title='UUID Variants'}
 
 Interoperability, in any form, with variants other than the one
-defined here is not guaranteed, and is not likely to be an issue in
+defined here is not guaranteed but is not likely to be an issue in
 practice.
 
 Specifically for UUIDs in this document bits 64 and 65 of the UUID (bits 0 and 1 of octet 8) MUST be set to 1 and 0 as specified in row 2 of {{table1}}.
@@ -650,7 +651,7 @@ or if the node ID changes.
 
 The node field consists of an IEEE 802 MAC
 address, usually the host address.  For systems with multiple IEEE
-802 addresses, any available one can be used.  The lowest addressed
+802 addresses, any available one MAY be used.  The lowest addressed
 octet (octet number 10) contains the global/local bit and the
 unicast/multicast bit, and is the first octet of the address
 transmitted on an 802.3 LAN.
@@ -709,9 +710,9 @@ offset.
 If the clock is set backwards, or might have been set backwards
 (e.g., while the system was powered off), and the UUID generator can
 not be sure that no UUIDs were generated with timestamps larger than
-the value to which the clock was set, then the clock sequence has to
+the value to which the clock was set, then the clock sequence MUST
 be changed.  If the previous value of the clock sequence is known, it
-can just be incremented; otherwise it should be set to a random or
+MAY be incremented; otherwise it SHOULD be set to a random or
 high-quality pseudo-random value.
 
 Similarly, if the node ID changes (e.g., because a network card has
@@ -719,7 +720,7 @@ been moved between machines), setting the clock sequence to a random
 number minimizes the probability of a duplicate due to slight
 differences in the clock settings of the machines.  If the value of
 clock sequence associated with the changed node ID were known, then
-the clock sequence could just be incremented, but that is unlikely.
+the clock sequence MAY be incremented, but that is unlikely.
 
 The clock sequence MUST be originally (i.e., once in the lifetime of
 a system) initialized to a random number to minimize the correlation
@@ -1153,7 +1154,7 @@ Length:
   be valid.
   That is, how many timestamp ticks can be contained in a UUID before the maximum
   value for the timestamp field is reached.
-  Care should be given to ensure that the proper length is selected for a given
+  Care SHOULD be given to ensure that the proper length is selected for a given
   timestamp.
   UUID version 1 and 6 utilize a 60 bit timestamp valid until 5623 AD and UUIDv7 features a 48
   bit timestamp valid until the year 10889 AD.
