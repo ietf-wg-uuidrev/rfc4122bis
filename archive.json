@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-16T01:39:25.259897+00:00",
+  "timestamp": "2023-03-19T01:47:58.952927+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1357,6 +1357,126 @@
       "updatedAt": "2023-02-16T22:14:27Z",
       "closedAt": "2023-02-16T22:14:27Z",
       "comments": []
+    },
+    {
+      "number": 64,
+      "id": "I_kwDOH6Ln3M5hCKuX",
+      "title": "Draft 03: Fix idnits errors and warnings",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/64",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- 5 Errors\r\n- 10 Warnings\r\n\r\nhttps://author-tools.ietf.org/",
+      "createdAt": "2023-03-16T17:28:40Z",
+      "updatedAt": "2023-03-16T17:28:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 65,
+      "id": "I_kwDOH6Ln3M5hCMeS",
+      "title": "Draft 03: Add other Hash Abbreviations",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/65",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Jim:\r\n\r\n> Section 3.2 defines MD5 and SHA1, but not any of the other hashes referenced in the document.",
+      "createdAt": "2023-03-16T17:32:45Z",
+      "updatedAt": "2023-03-16T18:06:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 66,
+      "id": "I_kwDOH6Ln3M5hCOVF",
+      "title": "Draft 03: Change text to SHA1 or SHA-1",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/66",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-16T17:36:24Z",
+      "updatedAt": "2023-03-16T17:36:24Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOH6Ln3M5hCQEN",
+      "title": "Draft 03: Fix \"integral numbers of octets\" verbiage",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/67",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Before: \r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is defined only in terms of fields that are integral numbers of octets. \r\n\r\nAfter:\r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provides as a a grouping of fields within bit layout consisting four octets octets to a row.",
+      "createdAt": "2023-03-16T17:41:34Z",
+      "updatedAt": "2023-03-18T16:01:01Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "cbandy",
+          "authorAssociation": "NONE",
+          "body": "\"is provides as a a grouping\" \u2192 \"is provided as a grouping\", perhaps?\r\n\r\n\"consisting four octets octets\" \u2192 \"consisting of four octets\", perhaps?",
+          "createdAt": "2023-03-18T16:01:00Z",
+          "updatedAt": "2023-03-18T16:01:00Z"
+        }
+      ]
+    },
+    {
+      "number": 68,
+      "id": "I_kwDOH6Ln3M5hCSZR",
+      "title": "Draft 03: Move Community Considerations to Introduction",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/68",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fits nicely in between first and second paragraph to remove this non-standard section.",
+      "createdAt": "2023-03-16T17:48:25Z",
+      "updatedAt": "2023-03-16T17:48:25Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 69,
+      "id": "I_kwDOH6Ln3M5hCTZQ",
+      "title": "Draft 03: Reference all Hash Algorithms.",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/69",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-16T17:51:02Z",
+      "updatedAt": "2023-03-16T17:51:02Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 70,
+      "id": "I_kwDOH6Ln3M5hCT36",
+      "title": "Draft 03: Transpose UUID Namespaces to match UUID Hashspaces",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/70",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Remove the C structs and make them text.",
+      "createdAt": "2023-03-16T17:52:14Z",
+      "updatedAt": "2023-03-16T17:52:14Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -1889,26 +2009,42 @@
       "id": "PR_kwDOH6Ln3M5MJwk5",
       "title": "Minor edits that should be uncontroversial",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/63",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jimfenton",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-03-15T22:55:07Z",
-      "updatedAt": "2023-03-15T22:55:07Z",
+      "updatedAt": "2023-03-16T14:06:30Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "8cb1068f241ec26350aff4ad4a27b0847e42e9c6",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "jf-edits",
       "headRefOid": "c6d443146b711104f4a046256b5b040f37c22f88",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-03-16T14:05:02Z",
+      "mergedAt": "2023-03-16T14:05:02Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "040c625ba2b177f2dd5947cff33b1fc2abf40e04"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5QGXZ1",
+          "commit": {
+            "abbreviatedOid": "c6d4431"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me. I appreciate the review.",
+          "createdAt": "2023-03-16T14:04:52Z",
+          "updatedAt": "2023-03-16T14:04:52Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
