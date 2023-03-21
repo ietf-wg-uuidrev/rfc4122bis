@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-19T01:47:58.952927+00:00",
+  "timestamp": "2023-03-21T01:26:34.557943+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1416,9 +1416,9 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "Before: \r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is defined only in terms of fields that are integral numbers of octets. \r\n\r\nAfter:\r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provides as a a grouping of fields within bit layout consisting four octets octets to a row.",
+      "body": "Before: \r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is defined only in terms of fields that are integral numbers of octets. \r\n\r\nAfter:\r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a a grouping of fields within bit layout consisting four octets to a row.\r\n\r\nEdit: Updated grammar as per @cbandy comment.",
       "createdAt": "2023-03-16T17:41:34Z",
-      "updatedAt": "2023-03-18T16:01:01Z",
+      "updatedAt": "2023-03-20T13:09:13Z",
       "closedAt": null,
       "comments": [
         {
