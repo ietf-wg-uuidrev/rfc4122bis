@@ -1336,18 +1336,18 @@ The UUID generator state only needs to be read from stable storage once at boot
 time, if it is read into a system-wide shared volatile store (and
 updated whenever the stable store is updated).
 
-This stable storage MAY be used to record various portions of the UUID generation 
+This stable storage MAY be used to record various portions of the UUID generation
 which prove useful for batch UUID generation purposes and monotonic error checking with UUIDv6 and UUIDv7.
-These stored values include but are not limited to last known timestamp, clock sequence, counters and random data.  
+These stored values include but are not limited to last known timestamp, clock sequence, counters and random data.
 
 If an implementation does not have any stable store available, then
-it SHOULD proceed with UUID generation as if this was the first UUID created within a batch. 
+it SHOULD proceed with UUID generation as if this was the first UUID created within a batch.
 This is the least desirable implementation because it will increase the frequency
 of creation of values such as clock sequence, counters or random data which increases the
 probability of duplicates.
 
 An implementation MAY also return an application error in the event that collision resistance is of the utmost concern.
-The semantics of this error are up to the application and implementation. 
+The semantics of this error are up to the application and implementation.
 See {{collision_resistance}} for more information on weighting collision tolerance in applications.
 
 For UUIDv1 and UUIDv6, if the node ID can never change (e.g., the network interface card
@@ -1383,7 +1383,7 @@ of a collision.
 This section will detail the two additional collision resistance approaches that have been observed by by multi-node
 UUID implementations in distributed environments.
 
-It should be noted that although this section details two methods for the sake of completeness; 
+It should be noted that although this section details two methods for the sake of completeness;
 implementations SHOULD utilize the pseudo-random Node ID option if additional collision resistance for distributed UUID generation is a requirement.
 Likewise, utilization of either method is not required for implementing UUID generation in distributed environments.
 
