@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-21T01:26:34.557943+00:00",
+  "timestamp": "2023-03-28T01:36:24.710855+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1477,6 +1477,32 @@
       "updatedAt": "2023-03-16T17:52:14Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 72,
+      "id": "I_kwDOH6Ln3M5h3DZl",
+      "title": "provide definition for uuid_t, or do not use it",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/72",
+      "state": "OPEN",
+      "author": "mcr",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "duplicate"
+      ],
+      "body": "We either need to put the typedef back in for uuid_t, or we need to make just write the uuid like we do in appendix B.\r\n",
+      "createdAt": "2023-03-27T10:14:31Z",
+      "updatedAt": "2023-03-27T20:00:14Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yep, recorded under #70 where I will make it all text and remove the C code.",
+          "createdAt": "2023-03-27T19:49:53Z",
+          "updatedAt": "2023-03-27T19:49:53Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2043,6 +2069,61 @@
           "createdAt": "2023-03-16T14:04:52Z",
           "updatedAt": "2023-03-16T14:04:52Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 71,
+      "id": "PR_kwDOH6Ln3M5M9MdM",
+      "title": "collapse UUID registration in URN name space",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/71",
+      "state": "OPEN",
+      "author": "mcr",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-27T10:03:35Z",
+      "updatedAt": "2023-03-27T19:53:52Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "2321d5c492ba2f1bb568bcbbeff5dc0dfa25e017",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "iana-suggestions",
+      "headRefOid": "9c0514d44a8cd688d7d8a5376855e112a81ba976",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Also meant to comment as per my note on the mailer:\r\nI received confirmation from Gonzalo Salgueiro that the IANA template can be dropped assuming we have nothing new to add or update so that part looks good.",
+          "createdAt": "2023-03-27T19:53:51Z",
+          "updatedAt": "2023-03-27T19:53:51Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5RDIK6",
+          "commit": {
+            "abbreviatedOid": "9c0514d"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-03-27T19:51:10Z",
+          "updatedAt": "2023-03-27T19:51:16Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "Replied on the mailer, we decided we DO NOT want them to have registrations for these items and there are no current registrations so there is nothing to update.",
+              "createdAt": "2023-03-27T19:51:11Z",
+              "updatedAt": "2023-03-27T19:51:16Z"
+            }
+          ]
         }
       ]
     }
