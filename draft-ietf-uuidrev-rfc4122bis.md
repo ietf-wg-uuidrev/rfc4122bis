@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-latest
+docname: draft-ietf-uuidrev-rfc4122bis-03
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -236,7 +236,7 @@ in Microsoft Windows platforms.
 This specification is derived from the DCE specification with the
 kind permission of the OSF (now known as The Open Group).
 Information from earlier versions of the DCE specification have been
-incorporated into this document.
+incorporated into this document. This document obsoletes RFC4122.
 
 --- middle
 
@@ -461,6 +461,7 @@ draft-03
 - Remove URN from title #73
 - Move Community Considerations to Introduction #68
 - Move some Normative Reference to Informative #74
+- Misc formatting changes to address IDNITS feedback
 
 draft-02
 
@@ -1632,7 +1633,7 @@ Further, at this time the authors and working group have concluded that IANA is 
 # Security Considerations {#Security}
 
 Implementations MUST NOT assume that UUIDs are hard to guess.
-Foe example, they MUST not be used
+Foe example, they MUST NOT be used
 as security capabilities (identifiers whose mere possession grants
 access).  Discovery of predictablity in a random number source will
 result in a vulnerability.
@@ -1642,7 +1643,7 @@ slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
-MAC addresses pose inherent security risks and SHOULD not be used within
+MAC addresses pose inherent security risks and SHOULD NOT be used within
 a UUID.
 Instead CSPRNG data SHOULD be selected from a source with sufficient entropy
 to ensure guaranteed
@@ -1731,49 +1732,48 @@ Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit timestamp: 0x1EC9414
 Both UUIDv1 and UUIDv6 utilize the same values in clock_seq,
 and node. All of which have been generated with random data.
 
+The psuedocode used for converting from a 64 bit Unix timestamp to a 100ns Gregorian timestamp value
+has been left in the document for reference purposes.
 
-~~~~
-# Unix Nanosecond precision to Gregorian 100-nanosecond intervals
-gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
-
+~~~
 # Gregorian to Unix Offset:
 # The number of 100-ns intervals between the
-# UUID epoch 1582-10-15 00:00:00 and the Unix epoch 1970-01-01 00:00:00.
+# UUID epoch 1582-10-15 00:00:00 and the Unix epoch 1970-01-01 00:00:00
 # gregorian_Unix_offset = 0x01b21dd213814000 or 122192928000000000
 
 # Unix 64 bit Nanosecond Timestamp:
 # Unix NS: Tuesday, February 22, 2022 2:22:22 PM GMT-05:00
 # Unix_64_bit_nanoseconds = 0x16D6320C3D4DCC00 or 1645557742000000000
 
+# Unix Nanosecond precision to Gregorian 100-nanosecond intervals
+gregorian_100_ns = (Unix_64_bit_nanoseconds/100)+gregorian_Unix_offset
+
 # Work:
-# gregorian_100_ns = (1645557742000000000 / 100) + 122192928000000000
-# (138648505420000000 - 122192928000000000) * 100 = Unix_64_bit_nanoseconds
+# gregorian_100_ns = (1645557742000000000/100)+122192928000000000
+# Unix_64_bit_nanoseconds = (138648505420000000-122192928000000000)*100
 
 # Final:
 # gregorian_100_ns = 0x1EC9414C232AB00 or 138648505420000000
-
-# Original: 000111101100100101000001010011000010001100101010101100000000
-# UUIDv1:   11000010001100101010101100000000|1001010000010100|0001|000111101100
-# UUIDv6:   00011110110010010100000101001100|0010001100101010|0110|101100000000
-~~~~
+~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
 ## Example of a UUIDv1 Value {#uuidv1_example}
+
 ~~~~
-----------------------------------------------
-field                 bits    value
-----------------------------------------------
-time_low              32      0xC232AB00
-time_mid              16      0x9414
-ver                    4      0x1
-time_high             12      0x1EC
-var                    2      b10
-clock_seq             14      b11, 0x3C8
-node                  48      0x9E6BDECED846
-----------------------------------------------
-total                128
-----------------------------------------------
-final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
+-------------------------------------------
+field      bits value
+-------------------------------------------
+time_low   32   0xC232AB00
+time_mid   16   0x9414
+ver         4   0x1
+time_high  12   0x1EC
+var         2   b10
+clock_seq  14   b11, 0x3C8
+node       48   0x9E6BDECED846
+-------------------------------------------
+total      128
+-------------------------------------------
+final: C232AB00-9414-11EC-B3C8-9E6BDECED846
 ~~~~
 {: title='UUIDv1 Example Test Vector'}
 
@@ -1783,33 +1783,33 @@ while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swaping for version and variant see {{v3vervar}}.
 
 ~~~~
-Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
-Name:                   www.example.com
------------------------------------------------
-MD5:                    5df418813aed051548a72f4a814cf09e
+Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:             www.example.com
+------------------------------------------------------
+MD5:              5df418813aed051548a72f4a814cf09e
 ~~~~
 {: id='v3md5' title='UUIDv3 Example MD5'}
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-md5_high   48      0x5df418813aed
-ver         4      0x3
-md5_mid    12      0x515
-var         2      b10
-md5_low    62      b00, 0x8a72f4a814cf09e
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+md5_high  48   0x5df418813aed
+ver        4   0x3
+md5_mid   12   0x515
+var        2   b10
+md5_low   62   b00, 0x8a72f4a814cf09e
+-------------------------------------------
 total     128
--------------------------------
+-------------------------------------------
 final: 5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~~
 {: id='v3fields' title='UUIDv3 Example Test Vector'}
 
 ~~~~
-MD5 hex and dash:       5df41881-3aed-0515-48a7-2f4a814cf09e
-Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                  5df41881-3aed-3515-88a7-2f4a814cf09e
+MD5 hex and dash:      5df41881-3aed-0515-48a7-2f4a814cf09e
+Ver and Var Overwrite: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                 5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~~
 {: id='v3vervar' title='UUIDv3 Example Ver Var bit swaps'}
 
@@ -1822,26 +1822,26 @@ fill out the feilds as shown in {{v4fields}}.
 Finally to further illustrate the bit swapping for version and variant see {{v4vervar}}.
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-random_a   48      0x919108f752d1
-ver         4      0x4
-random_b   12      0x320
-var         2      b10
-random_c   62      b01, 0xbacf847db4148a8
--------------------------------
-total      128
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+random_a  48   0x919108f752d1
+ver        4   0x4
+random_b  12   0x320
+var        2   b10
+random_c  62   b01, 0xbacf847db4148a8
+-------------------------------------------
+total     128
+-------------------------------------------
 final: 919108f7-52d1-4320-9bac-f847db4148a8
 ~~~~
 {: id='v4fields' title='UUIDv4 Example Test Vector'}
 
 ~~~~
-Random hex:             919108f752d133205bacf847db4148a8
-Random hex and dash:    919108f7-52d1-3320-5bac-f847db4148a8
-Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                  919108f7-52d1-4320-9bac-f847db4148a8
+Random hex:            919108f752d133205bacf847db4148a8
+Random hex and dash:   919108f7-52d1-3320-5bac-f847db4148a8
+Ver and Var Overwrite: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                 919108f7-52d1-4320-9bac-f847db4148a8
 ~~~~
 {: id='v4vervar' title='UUIDv4 Example Ver/Var bit swaps '}
 
@@ -1852,54 +1852,54 @@ while the field mapping and all values are illustrated in {{v5fields}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-1 value see {{v5vervar}}.
 
 ~~~~
-Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
-Name:                   www.example.com
------------------------------------------------
-SHA-1:                  2ed6657de927468b55e12665a8aea6a22dee3e35
+Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:             www.example.com
+----------------------------------------------------------
+SHA-1:            2ed6657de927468b55e12665a8aea6a22dee3e35
 ~~~~
 {: id='v5sha1' title='UUIDv5 Example SHA-1'}
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-sha1_high  48      0x2ed6657de927
-ver         4      0x5
-sha1_mid   12      0x68b
-var         2      b10
-sha1_low   62      b01, 0x5e12665a8aea6a2
--------------------------------
-total     128
--------------------------------
+-------------------------------------------
+field      bits value
+-------------------------------------------
+sha1_high  48   0x2ed6657de927
+ver         4   0x5
+sha1_mid   12   0x68b
+var         2   b10
+sha1_low   62   b01, 0x5e12665a8aea6a2
+-------------------------------------------
+total      128
+-------------------------------------------
 final: 2ed6657d-e927-568b-95e1-2665a8aea6a2
 ~~~~
 {: id='v5fields' title='UUIDv5 Example Test Vector'}
 
 ~~~~
-SHA1 hex and dash:      2ed6657d-e927-468b-55e1-2665a8aea6a2-2dee3e35
-Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                  2ed6657d-e927-568b-95e1-2665a8aea6a2
-Discarded:                                                  -2dee3e35
+SHA-1 hex and dash:    2ed6657d-e927-468b-55e1-2665a8aea6a2-2dee3e35
+Ver and Var Overwrite: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                 2ed6657d-e927-568b-95e1-2665a8aea6a2
+Discarded:                                                 -2dee3e35
 ~~~~
 {: id='v5vervar' title='UUIDv5 Example Ver/Var bit swaps and discarded SHA-1 segment'}
 
 ## Example of a UUIDv6 Value {#uuidv6_example}
 
 ~~~~
------------------------------------------------
-field                 bits    value
------------------------------------------------
-time_high              32     0x1EC9414C
-time_mid               16     0x232A
-ver                     4     0x6
-time_high              12     0xB00
-var                     2     b10
-clock_seq              14     b11, 0x3C8
-node                   48     0x9E6BDECED846
------------------------------------------------
-total                 128
------------------------------------------------
-final_hex: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
+-------------------------------------------
+field       bits value
+-------------------------------------------
+time_high   32   0x1EC9414C
+time_mid    16   0x232A
+ver          4   0x6
+time_high   12   0xB00
+var          2   b10
+clock_seq   14   b11, 0x3C8
+node        48   0x9E6BDECED846
+-------------------------------------------
+total       128
+-------------------------------------------
+final: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
 ~~~~
 {: title='UUIDv6 Example Test Vector'}
 
@@ -1916,17 +1916,17 @@ as 0x17F22E279B0 or 1645557742000
 
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-unix_ts_ms   48    0x17F22E279B0
-ver           4    0x7
-rand_a       12    0xCC3
-var           2    b10
-rand_b       62    b01, 0x8C4DC0C0C07398F
--------------------------------
+-------------------------------------------
+field       bits value
+-------------------------------------------
+unix_ts_ms  48   0x17F22E279B0
+ver          4   0x7
+rand_a      12   0xCC3
+var          2   b10
+rand_b      62   b01, 0x8C4DC0C0C07398F
+-------------------------------------------
 total       128
--------------------------------
+-------------------------------------------
 final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 ~~~~
 {: title='UUIDv7 Example Test Vector'}
@@ -1950,17 +1950,17 @@ from this simple example.
 
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-custom_a     48    0x320C3D4DCC00
-ver           4    0x8
-custom_b     12    0x75B
-var           2    b10
-custom_c     62    b00, 0xEC932D5F69181C0
--------------------------------
-total       128
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+custom_a  48   0x320C3D4DCC00
+ver        4   0x8
+custom_b  12   0x75B
+var        2   b10
+custom_c  62   b00, 0xEC932D5F69181C0
+-------------------------------------------
+total     128
+-------------------------------------------
 final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 ~~~~
 {: title='UUIDv8 Example Time-based Test Vector'}
@@ -1971,34 +1971,44 @@ The field mapping and all values are illustrated in {{v8fieldssha256}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
 ~~~~
-Hash Space (SHA2_256):  3fb32780-953c-4464-9cfd-e85dbbe9843d
-Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
-Name:                   www.example.com
------------------------------------------------
-SHA-256:                401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
+Hash Space (SHA2_256): 3fb32780-953c-4464-9cfd-e85dbbe9843d
+Name Space (DNS):      6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:                  www.example.com
+----------------------------------------------------------------
+SHA-256:
+401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
 ~~~~
 {: id='v8sha256' title='UUIDv8 Example SHA256'}
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-custom_a     48    0x401835fda627
-ver           4    0x8
-custom_b     12    0x627
-var           2    b10
-custom_c     62    b0, 0x73fed73f2bc5b2c
--------------------------------
-total       128
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+custom_a  48   0x401835fda627
+ver        4   0x8
+custom_b  12   0x627
+var        2   b10
+custom_c  62   b0, 0x73fed73f2bc5b2c
+-------------------------------------------
+total     128
+-------------------------------------------
 final: 401835fd-a627-870a-873f-ed73f2bc5b2c
 ~~~~
 {: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA-256 Test Vector'}
 
 ~~~~
-SHA-256 hex and dash:     401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
-Ver and Var Overwrite:    xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                    401835fd-a627-870a-873f-ed73f2bc5b2c
-Discarded:                                                    -2a8936385a38a9c133de0ca4af0dfaed
+A: 401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
+B: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+C: 401835fd-a627-870a-873f-ed73f2bc5b2c
+D:                                     -2a8936385a38a9c133de0ca4af0dfaed
 ~~~~
 {: id='v8vervar' title='UUIDv8 Example Ver/Var bit swaps and discarded SHA-256 segment'}
+
+Examining {{v8vervar}}:
+
+{: spacing="compact"}
+
+- Line A details the full SHA-256 as a hex value with the dashes inserted.
+- Line B details the version and variant hex positions which must be overritten.
+- Line C details the final value after the ver/var have been overritten.
+- Line D details the discarded, leftover values from the original SHA-256 computation.
