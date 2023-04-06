@@ -438,6 +438,13 @@ UTC
 ## changelog {#changelog}
 {:removeinrfc}
 
+draft-03
+
+{: spacing="compact"}
+
+- Revised IANA Considerations
+
+
 draft-02
 
 {: spacing="compact"}
@@ -1604,53 +1611,8 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
-
-Per {{RFC8141}} here is the Namespace Registration Template filled out for this namespace and hereby a request to reference this document (when the final version is published) at {{URNNamespaces}}.  Note that namespace is already listed and this is a request to update that entry to reference this document.
-
-Namespace Identifier: UUID (formal)
-
-Version: 1
-
-Date: 2003-10-01
-
-Registrant: JTC 1/SC6 (ASN.1 Rapporteur Group)
-
-Purpose: A UUID is an identifier that is unique across both space and time,
-  with respect to the space of all UUIDs.  Since a UUID is a fixed
-  size and contains a time field, it is possible for values to
-  rollover (around A.D. 3400, depending on the specific algorithm
-  used).  A UUID can be used for multiple purposes, from tagging
-  objects with an extremely short lifetime, to reliably identifying
-  very persistent objects across a network.
-
-Syntax: The internal representation of a UUID is a specific sequence of
-  bits in memory, as described in {{format}} and {{layout}}.  To accurately
-  represent a UUID as a URN, it is necessary to convert the bit
-  sequence to a string representation.
-
-  The formal definition of the UUID string representation is
-  provided by the following ABNF and definitions within {{format}} and more specifically {{sampleURNUUID}}.
-
-Assignment: Individual UUID values are generated based on the uniqueness properties otherwise covered in this document with version-specific considerations for each.  Mechanisms include pseudorandom number generation, cryptographic hashing and the option to use IEEE 802 MAC addresses.
-
-Security and Privacy: The recommended generation algorithms for UUIDs per this document involve pseudorandom number generation and as such do not present additional privacy or data exposure risks beyond any such random value generated.  The use of IEEE 802 MAC addresses which may present security problems has explicitly been made optional and not recommended.
-
-Interoperability: UUIDs, and UUID values in the form of URNs in particular,
-  are opaque values the syntax as covered above has no proposed changes
-  and thus no known interoperability issues.
-
-Resolution: Since UUIDs are not globally resolvable, this is not applicable.
-
-Documentation: This document and RFC4122. Relevant ancillary documentation: {{NCA}}{{C309}}
-
-Additional Information: The intention here is simply to include this document
-  in any applicable references at {{URNNamespaces}}. There is no intention
-  to change the existing UUID URN registration.  The scope of this document
-  pertains solely to the internal structure and versions of UUIDs, the
-  textual format and URN registration are specifically out of scope and
-  not changing as part of this update.
-
-Further, the authors and working group have decided that IANA is not required to track UUIDs used for identifying items such as namespaces or hashspaces from {{namespaces}} and {{hashspaces}}.
+There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
+Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces or hashspaces.
 
 # Community Considerations {#community}
 
