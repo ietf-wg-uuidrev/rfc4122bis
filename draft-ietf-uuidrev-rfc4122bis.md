@@ -438,6 +438,13 @@ UTC
 ## changelog {#changelog}
 {:removeinrfc}
 
+draft-03
+
+{: spacing="compact"}
+
+- Revised IANA Considerations
+
+
 draft-02
 
 {: spacing="compact"}
@@ -1604,9 +1611,8 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
-
-## Updates to URN Name Space
-Please update the UUID Namespace Identifier in the URN Namespace {{URNNamespaces}} from RFC4122 to this document.
+There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
+Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces or hashspaces.
 
 # Community Considerations {#community}
 
