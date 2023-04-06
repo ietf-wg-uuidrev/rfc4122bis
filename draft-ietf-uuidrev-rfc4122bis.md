@@ -34,21 +34,6 @@ author:
   org: Cisco Systems
 
 normative:
-  NCA:
-    title: Network Computing Architecture
-    author:
-    - ins: L. Zahn
-      name: L. Zahn
-      org: ''
-    - ins: T. Dineen
-      name: T. Dineen
-      org: ''
-    - ins: P. Leach
-      name: P. Leach
-      org: ''
-    date: 1990-01
-    seriesinfo:
-      ISBN: 0-13-611674-4
   C309:
     target: https://pubs.opengroup.org/onlinepubs/9696999099/toc.pdf
     title: "DCE: Remote Procedure Call"
@@ -69,9 +54,7 @@ normative:
   RFC1321: RFC1321
   RFC6151: RFC6151
   RFC4086: RFC4086
-  RFC4122: RFC4122
   RFC8141: RFC8141
-  RFC5234: RFC5234
   RFC6194: RFC6194
   FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
@@ -101,6 +84,8 @@ normative:
     - name: Peter Occil
     date: 2023
 informative:
+  RFC4122: RFC4122
+  RFC5234: RFC5234
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
     title: A Scala client for Cassandra
@@ -475,6 +460,7 @@ draft-03
 - Add other Hash Abbreviations #65
 - Remove URN from title #73
 - Move Community Considerations to Introduction #68
+- Move some Normative Reference to Informative #74
 
 draft-02
 
