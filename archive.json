@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-03-28T01:36:24.710855+00:00",
+  "timestamp": "2023-04-06T01:23:41.218584+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1483,7 +1483,7 @@
       "id": "I_kwDOH6Ln3M5h3DZl",
       "title": "provide definition for uuid_t, or do not use it",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/72",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mcr",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -1492,8 +1492,8 @@
       ],
       "body": "We either need to put the typedef back in for uuid_t, or we need to make just write the uuid like we do in appendix B.\r\n",
       "createdAt": "2023-03-27T10:14:31Z",
-      "updatedAt": "2023-03-27T20:00:14Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-05T13:26:16Z",
+      "closedAt": "2023-04-05T13:26:15Z",
       "comments": [
         {
           "author": "kyzer-davis",
