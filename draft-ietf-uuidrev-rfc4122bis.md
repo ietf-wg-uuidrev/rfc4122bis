@@ -73,7 +73,7 @@ normative:
   RFC8141: RFC8141
   RFC5234: RFC5234
   RFC6194: RFC6194
-  SHA1:
+  FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
     author:
@@ -81,7 +81,7 @@ normative:
     date: August 2015
     seriesinfo:
       FIPS: PUB 180-4
-  SHA3:
+  FIPS202:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
     title: "SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions"
     author:
@@ -427,8 +427,26 @@ ITU
 MD5
 : Message Digest 5
 
-SHA1
-: Secure Hash Algorithm 1
+SHA
+: Secure Hash Algorithm
+
+SHA-1
+: Secure Hash Algorithm 1 with message digest of 160 bits
+
+SHA-224
+: Secure Hash Algorithm with message digest size of 224 bits
+
+SHA-256
+: Secure Hash Algorithm with message digest size of 256 bits
+
+SHA-512
+: Secure Hash Algorithm with message digest size of 512 bits
+
+SHA-3
+: Secure Hash Algorithm 3
+
+SHAKE
+: Secure Hash Algorithm 3 based on KECCAK algorithm
 
 UTC
 : Coordinated Universal Time
@@ -445,20 +463,22 @@ draft-03
 - Revised IANA Considerations #71
 - Fix "integral numbers of octets" verbiage #67
 - Transpose UUID Namespaces to match UUID Hashspaces #70
-
+- Reference all Hash Algorithms. #69
+- Normalize SHA abbreviation formats #66
+- Add other Hash Abbreviations #65
 
 draft-02
 
 {: spacing="compact"}
 
-- Change md5_high in SHA1 section to sha1_mid #59
+- Change md5_high in SHA-1 section to sha1_mid #59
 - Describe Nil/Max UUID in variant table #16
 - Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
 - Appendix B, consistent naming #55
 - Remove duplicate ABNF from IANA considerations #56
 - Monotonic Error Checking missing newline #57
 - More Security Considerations Randomness #26
-- SHA256 UUID Generation #50
+- SHA-256 UUID Generation #50
 - Expand multiplexed fields within v1 and v6 bit definitions # 43
 - Clean up text in UUIDs that Do Not Identify the Host #61
 - Revise UUID Generator States section #47
@@ -497,7 +517,7 @@ draft-00
 - Change: Reference RFC1321 to RFC6151
 - Change: Reference RFC2141 to RFC8141
 - Change: Reference RFC2234 to RFC5234
-- Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
+- Change: Reference FIPS 180-1 to FIPS 180-4 for SHA-1
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
 - Change: http websites to https equivalent
@@ -520,7 +540,7 @@ draft-00
 - New: Block diagram, bit layout, test vectors for UUIDv3
 - New: Block diagram, bit layout, test vectors for UUIDv5
 - New: Add MD5 Security Considerations reference, RFC6151
-- New: Add SHA1 Security Considerations reference, RFC6194
+- New: Add SHA-1 Security Considerations reference, RFC6194
 
 # UUID Format {#format}
 
@@ -846,19 +866,19 @@ random_c:
 UUID Version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
-UUIDv5 values are created by computing an SHA1 {{SHA1}}
+UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
-This SHA1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
+This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
 
 Some common name space values have been defined via {{namespaces}}.
 
-There may be scenarios, usually depending on organizational security policies, where SHA1 libraries may not be available or deemed unsafe for use.
-As such it may be desirable to generate name-based UUIDs derived from SHA256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
+There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
+As such it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
 For implementation guidance around utilizing UUIDv8 for name-based UUIDs refer to the sub-section of {{name_based_uuid_generation}}.
 
-For more information on SHA1 security considerations see {{RFC6194}}.
+For more information on SHA-1 security considerations see {{RFC6194}}.
 
 ~~~~
  0                   1                   2                   3
@@ -880,7 +900,7 @@ For more information on SHA1 security considerations see {{RFC6194}}.
 sha1_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
-  from the computed SHA1 value.
+  from the computed SHA-1 value.
 
 ver:
 : The 4 bit version field as defined by {{version_field}}
@@ -888,16 +908,16 @@ ver:
 sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following sha1_high
-  from the computed SHA1 value.
+  from the computed SHA-1 value.
 
 var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
 sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
-  filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
+  filled by skipping the 2 most significant, left-most bits of the remaining SHA-1 hash
   and then using the next 62 most significant, left-most bits.
-  Any leftover SHA1 bits are discarded and unused.
+  Any leftover SHA-1 bits are discarded and unused.
 
 ## UUID Version 6 {#uuidv6}
 
@@ -1454,19 +1474,19 @@ A note on namespaces:
 
 Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
- These MAY leverage newer hashing protocols such as SHA256, SHA512, {{SHA3}} or even protocols that have not been defined yet.
+ These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
  To ensure UUIDv8 Name-Based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
  Creation of name-based version 8 UUIDs follow the same logic defined in {{uuidv5}} but the hashspace should be used to as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout and finally trim any excess bits beyond 128.
  An important note for secure hashing algorithms that produce variable rate outputs, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
- See {{uuidv8_example_name}} for a SHA256 UUIDv8 example test vector.
+ See {{uuidv8_example_name}} for a SHA-256 UUIDv8 example test vector.
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
   As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying a the algorithm.
-  That is, to detail SHA2-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA2-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  That is, to detail SHA-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels and actual method of sharing this data between systems it outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
@@ -1546,7 +1566,7 @@ The exact algorithm to generate a node ID using these data is system
 specific, because both the data available and the functions to obtain
 them are often very system specific.  A generic approach, however, is
 to accumulate as many sources as possible into a buffer, use a
-message digest such as MD5 {{RFC1321}} or SHA-1 {{SHA1}}, take an arbitrary 6
+message digest such as MD5 {{RFC1321}} or SHA-1 {{FIPS180-4}}, take an arbitrary 6
 bytes from the hash value, and set the multicast bit as described
 above.
 
@@ -1652,7 +1672,7 @@ If UUIDs are required for
 use with any security operation within an application context in any shape
 or form then UUIDv4, {{uuidv4}} SHOULD be utilized.
 
-See {{RFC6151}} for MD5 Security Considerations and {{RFC6194}} for SHA1 security considerations.
+See {{RFC6151}} for MD5 Security Considerations and {{RFC6194}} for SHA-1 security considerations.
 
 # Acknowledgements {#Acknowledgements}
 
@@ -1842,17 +1862,17 @@ Final:                  919108f7-52d1-4320-9bac-f847db4148a8
 
 
 ## Example of a UUIDv5 Value {#uuidv5_example}
-The SHA1 computation from is detailed in {{v5sha1}} using the DNS NameSpace and the Name "www.example.com".
+The SHA-1 computation from is detailed in {{v5sha1}} using the DNS NameSpace and the Name "www.example.com".
 while the field mapping and all values are illustrated in {{v5fields}}.
-Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA1 value see {{v5vervar}}.
+Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-1 value see {{v5vervar}}.
 
 ~~~~
 Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:                   www.example.com
 -----------------------------------------------
-SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
+SHA-1:                  2ed6657de927468b55e12665a8aea6a22dee3e35
 ~~~~
-{: id='v5sha1' title='UUIDv5 Example SHA1'}
+{: id='v5sha1' title='UUIDv5 Example SHA-1'}
 
 ~~~~
 -------------------------------
@@ -1876,7 +1896,7 @@ Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 Final:                  2ed6657d-e927-568b-95e1-2665a8aea6a2
 Discarded:                                                  -2dee3e35
 ~~~~
-{: id='v5vervar' title='UUIDv5 Example Ver/Var bit swaps and discarded SHA1 segment'}
+{: id='v5vervar' title='UUIDv5 Example Ver/Var bit swaps and discarded SHA-1 segment'}
 
 ## Example of a UUIDv6 Value {#uuidv6_example}
 
@@ -1961,16 +1981,16 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces alongside namespace and names.
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces alongside namespace and names.
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
-Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA256 value see {{v8vervar}}.
+Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
 ~~~~
 Hash Space (SHA2_256):  3fb32780-953c-4464-9cfd-e85dbbe9843d
 Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:                   www.example.com
 -----------------------------------------------
-SHA256:                 401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
+SHA-256:                401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
 ~~~~
 {: id='v8sha256' title='UUIDv8 Example SHA256'}
 
@@ -1988,12 +2008,12 @@ total       128
 -------------------------------
 final: 401835fd-a627-870a-873f-ed73f2bc5b2c
 ~~~~
-{: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA256 Test Vector'}
+{: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA-256 Test Vector'}
 
 ~~~~
-SHA256 hex and dash:      401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
+SHA-256 hex and dash:     401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
 Ver and Var Overwrite:    xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 Final:                    401835fd-a627-870a-873f-ed73f2bc5b2c
 Discarded:                                                    -2a8936385a38a9c133de0ca4af0dfaed
 ~~~~
-{: id='v8vervar' title='UUIDv8 Example Ver/Var bit swaps and discarded SHA256 segment'}
+{: id='v8vervar' title='UUIDv8 Example Ver/Var bit swaps and discarded SHA-256 segment'}
