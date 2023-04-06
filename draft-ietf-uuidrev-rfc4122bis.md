@@ -442,7 +442,8 @@ draft-03
 
 {: spacing="compact"}
 
-- Revised IANA Considerations
+- Revised IANA Considerations #71
+- Fix "integral numbers of octets" verbiage #67
 
 
 draft-02
@@ -637,10 +638,8 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 
 # UUID Layouts {#layout}
 
-To minimize confusion about bit assignments within octets and among differing versions,
-the UUID record definition is defined only in terms of fields that are
-integral numbers of octets.  The fields are presented with the most
-significant one first.
+To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a a grouping of fields within bit layout consisting four octets to a row.
+The fields are presented with the most significant one first.
 
 In the absence of explicit application or presentation protocol
 specification to the contrary, each field is encoded with the Most
