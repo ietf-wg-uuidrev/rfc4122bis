@@ -462,6 +462,7 @@ draft-03
 - Move Community Considerations to Introduction #68
 - Move some Normative Reference to Informative #74
 - Misc formatting changes to address IDNITS feedback
+- Downgrade MUST NOT to SHOULD NOT for guessability of UUIDs #75
 
 draft-02
 
@@ -552,14 +553,14 @@ When used with databases please refer to {{database_considerations}}.
 The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
-   UUID     = 4hexOctet "-"
-              2hexOctet "-"
-              2hexOctet "-"
-              2hexOctet "-"
-              6hexOctet
-   hexOctet = HEXDIG HEXDIG
-   DIGIT    = %x30-39
-   HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+UUID     = 4hexOctet "-"
+           2hexOctet "-"
+           2hexOctet "-"
+           2hexOctet "-"
+           6hexOctet
+hexOctet = HEXDIG HEXDIG
+DIGIT    = %x30-39
+HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
 An example UUID using this textual representation from the above ABNF is shown in {{sampleStringUUID}}.
@@ -1632,7 +1633,7 @@ Further, at this time the authors and working group have concluded that IANA is 
 
 # Security Considerations {#Security}
 
-Implementations MUST NOT assume that UUIDs are hard to guess.
+Implementations SHOULD NOT assume that UUIDs are hard to guess.
 Foe example, they MUST NOT be used
 as security capabilities (identifiers whose mere possession grants
 access).  Discovery of predictablity in a random number source will
@@ -2009,6 +2010,6 @@ Examining {{v8vervar}}:
 {: spacing="compact"}
 
 - Line A details the full SHA-256 as a hex value with the dashes inserted.
-- Line B details the version and variant hex positions which must be overritten.
-- Line C details the final value after the ver/var have been overritten.
+- Line B details the version and variant hex positions which must be overwritten.
+- Line C details the final value after the ver/var have been overwritten.
 - Line D details the discarded, leftover values from the original SHA-256 computation.
