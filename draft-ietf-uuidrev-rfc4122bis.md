@@ -11,8 +11,8 @@ pi:
   tocdepth: '3'
   symrefs: 'yes'
   sortrefs: 'yes' # accidentally correcting accident :-)
-title: A Universally Unique IDentifier (UUID) URN Namespace
-abbrev: A UUID URN Namespace
+title: Universally Unique IDentifiers (UUID)
+abbrev: UUID
 area: ART
 wg: uuidrev
 kw: uuid
@@ -262,9 +262,15 @@ UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
 Unique IDentifiers).  A UUID is 128 bits long, and requires no central
 registration process.
 
+The use of UUIDs is extremely pervasive in computing.  They comprise
+the core identifier infrastructure for many operating systems
+such as Microsoft Windows and applications such as the Mozilla Web browser and in
+many cases, become exposed in many non-standard ways.
+
+This specification attempts to standardize that practice as openly as
+possible and in a way that attempts to benefit the entire Internet.
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs as URNs {{RFC8141}}.  Nothing in this document
-should be construed to override the DCE standards that defined UUIDs.
+to implement services using UUIDs.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -272,6 +278,7 @@ specifications have been aligned and are fully technically
 compatible.  In addition, a global registration function is being
 provided by the Telecommunications Standardization Bureau of ITU-T;
 for details see [](https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx).
+Nothing in this document should be construed to override the DCE standards that defined UUIDs.
 
 # Motivation {#motivation}
 
@@ -466,6 +473,8 @@ draft-03
 - Reference all Hash Algorithms. #69
 - Normalize SHA abbreviation formats #66
 - Add other Hash Abbreviations #65
+- Remove URN from title #73
+- Move Community Considerations to Introduction #68
 
 draft-02
 
@@ -479,7 +488,7 @@ draft-02
 - Monotonic Error Checking missing newline #57
 - More Security Considerations Randomness #26
 - SHA-256 UUID Generation #50
-- Expand multiplexed fields within v1 and v6 bit definitions # 43
+- Expand multiplexed fields within v1 and v6 bit definitions #43
 - Clean up text in UUIDs that Do Not Identify the Host #61
 - Revise UUID Generator States section #47
 - Expand upon why unix epoch rollover is not a problem #44
@@ -1633,16 +1642,6 @@ and feedback.
 # IANA Considerations {#IANA}
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
 Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces or hashspaces.
-
-# Community Considerations {#community}
-
-The use of UUIDs is extremely pervasive in computing.  They comprise
-the core identifier infrastructure for many operating systems
-such as Microsoft Windows and applications such as the Mozilla Web browser and in
-many cases, become exposed in many non-standard ways.
-
-This specification attempts to standardize that practice as openly as
-possible and in a way that attempts to benefit the entire Internet.
 
 # Security Considerations {#Security}
 
