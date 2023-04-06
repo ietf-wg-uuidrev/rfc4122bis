@@ -51,11 +51,8 @@ normative:
       registration of Universally Unique Identifiers (UUIDs) and their
       use as ASN.1 Object Identifier components"
     date: 2004
-  RFC1321: RFC1321
-  RFC6151: RFC6151
   RFC4086: RFC4086
   RFC8141: RFC8141
-  RFC6194: RFC6194
   FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
@@ -84,8 +81,11 @@ normative:
     - name: Peter Occil
     date: 2023
 informative:
+  RFC1321: RFC1321
   RFC4122: RFC4122
   RFC5234: RFC5234
+  RFC6151: RFC6151
+  RFC6194: RFC6194
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
     title: A Scala client for Cassandra
