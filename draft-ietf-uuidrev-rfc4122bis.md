@@ -1850,20 +1850,17 @@ MD5:                    5df418813aed051548a72f4a814cf09e
 ~~~~
 {: id='v3md5' title='UUIDv3 Example MD5'}
 
-~~~~
--------------------------------
-field      bits    value
--------------------------------
-md5_high   48      0x5df418813aed
-ver         4      0x3
-md5_mid    12      0x515
-var         2      b10
-md5_low    62      b00, 0x8a72f4a814cf09e
--------------------------------
-total     128
--------------------------------
-final: 5df41881-3aed-3515-88a7-2f4a814cf09e
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+md5_high   | 48  |    0x5df418813aed |
+ver        | 4   |   0x3 |
+md5_mid    | 12  |    0x515 |
+var        | 2   |  b10  |
+md5_low    | 62  |   b00, 0x8a72f4a814cf09e |
+|--
+total       |128 | |
+|--
+final_hex: || 5df41881-3aed-3515-88a7-2f4a814cf09e |
 {: id='v3fields' title='UUIDv3 Example Test Vector'}
 
 ~~~~
@@ -1881,20 +1878,17 @@ fill out the feilds as shown in {{v4fields}}.
 
 Finally to further illustrate the bit swapping for version and variant see {{v4vervar}}.
 
-~~~~
--------------------------------
-field      bits    value
--------------------------------
-random_a   48      0x919108f752d1
-ver         4      0x4
-random_b   12      0x320
-var         2      b10
-random_c   62      b01, 0xbacf847db4148a8
--------------------------------
-total      128
--------------------------------
-final: 919108f7-52d1-4320-9bac-f847db4148a8
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+random_a   \ 48  |    0x919108f752d1 |
+ver        | 4   |   0x4 |
+random_b   | 12  |    0x320 |
+var        | 2   |  b10 |
+random_c   | 62  |   b01, 0xbacf847db4148a8 |
+|--
+total       |128 | |
+|--
+final_hex: || 919108f7-52d1-4320-9bac-f847db4148a8 |
 {: id='v4fields' title='UUIDv4 Example Test Vector'}
 
 ~~~~
@@ -1919,20 +1913,17 @@ SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
 ~~~~
 {: id='v5sha1' title='UUIDv5 Example SHA1'}
 
-~~~~
--------------------------------
-field      bits    value
--------------------------------
-sha1_high  48      0x2ed6657de927
-ver         4      0x5
-sha1_mid   12      0x68b
-var         2      b10
-sha1_low   62      b01, 0x5e12665a8aea6a2
--------------------------------
-total     128
--------------------------------
-final: 2ed6657d-e927-568b-95e1-2665a8aea6a2
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+sha1_high  |48 |    0x2ed6657de927 |
+ver        | 4 |    0x5 |
+sha1_mid   |12 |    0x68b |
+var        | 2 |     b10 |
+sha1_low   |62 |     b01, 0x5e12665a8aea6a2 |
+|--
+total       |128 | |
+|--
+final_hex: || 2ed6657d-e927-568b-95e1-2665a8aea6a2
 {: id='v5fields' title='UUIDv5 Example Test Vector'}
 
 ~~~~
@@ -1945,22 +1936,19 @@ Discarded:                                                  -2dee3e35
 
 ## Example of a UUIDv6 Value {#uuidv6_example}
 
-~~~~
------------------------------------------------
-field                 bits    value
------------------------------------------------
-time_high              32     0x1EC9414C
-time_mid               16     0x232A
-ver                     4     0x6
-time_high              12     0xB00
-var                     2     b10
-clock_seq              14     b11, 0x3C8
-node                   48     0x9E6BDECED846
------------------------------------------------
-total                 128
------------------------------------------------
-final_hex: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+time_high     |         32  |   0x1EC9414C |
+time_mid      |        16   | 0x232A |
+ver           |         4   | 0x6 |
+time_high     |        12   | 0xB00 |
+var           |         2   | b10 |
+clock_seq     |        14   | b11, 0x3C8 |
+node          |        48   | 0x9E6BDECED846 |
+|--
+total       |128 | |
+|--
+final_hex: || 1EC9414C-232A-6B00-B3C8-9E6BDECED846
 {: title='UUIDv6 Example Test Vector'}
 
 
@@ -1975,20 +1963,17 @@ The timestamp is Tuesday, February 22, 2022 2:22:22.00 PM GMT-05:00 represented
 as 0x17F22E279B0 or 1645557742000
 
 
-~~~~
--------------------------------
-field      bits    value
--------------------------------
-unix_ts_ms   48    0x17F22E279B0
-ver           4    0x7
-rand_a       12    0xCC3
-var           2    b10
-rand_b       62    b01, 0x8C4DC0C0C07398F
--------------------------------
-total       128
--------------------------------
-final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+unix_ts_ms | 48  |  0x17F22E279B0  |
+ver        |  4  | 0x7             |
+rand_a     | 12  | 0xCC3 |
+var        |  2  | b10   |
+rand_b     |  62 |  b01, 0x8C4DC0C0C07398F |
+|--
+total       |128 | |
+|--
+final_hex: || 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 {: title='UUIDv7 Example Test Vector'}
 
 
@@ -2009,20 +1994,17 @@ UUIDv8. Test vectors will likely be implementation specific and vary greatly
 from this simple example.
 
 
-~~~~
--------------------------------
-field      bits    value
--------------------------------
-custom_a     48    0x320C3D4DCC00
-ver           4    0x8
-custom_b     12    0x75B
-var           2    b10
-custom_c     62    b00, 0xEC932D5F69181C0
--------------------------------
-total       128
--------------------------------
-final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+custom_a  |  48   \ 0x320C3D4DCC00  |
+ver       |   4   | 0x8   |
+custom_b  |  12   | 0x75B |
+var       |   2   | b10  |
+custom_c   | 62   | b00, 0xEC932D5F69181C0 |
+|--
+total       |128 | |
+|--
+final_hex: || 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
@@ -2039,20 +2021,17 @@ SHA256:                 401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4
 ~~~~
 {: id='v8sha256' title='UUIDv8 Example SHA256'}
 
-~~~~
--------------------------------
-field      bits    value
--------------------------------
-custom_a     48    0x401835fda627
-ver           4    0x8
-custom_b     12    0x627
-var           2    b10
-custom_c     62    b0, 0x73fed73f2bc5b2c
--------------------------------
-total       128
--------------------------------
-final: 401835fd-a627-870a-873f-ed73f2bc5b2c
-~~~~
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+custom_a   | 48  |  0x401835fda627  |
+ver        |  4  | 0x8   |
+custom_b   | 12  | 0x627 |
+var        |  2  | b10 |
+custom_c   | 62  | b0, 0x73fed73f2bc5b2c |
+|--
+total       |128 | |
+|--
+final_hex: || 401835fd-a627-870a-873f-ed73f2bc5b2c
 {: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA256 Test Vector'}
 
 ~~~~
