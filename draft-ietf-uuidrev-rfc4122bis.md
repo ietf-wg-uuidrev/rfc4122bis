@@ -1731,7 +1731,7 @@ was also invaluable in achieving coordination with ISO/IEC.
    interesting name spaces, as initialized C structures and in the
    string representation defined above.
 
-~~~
+~~~ code
    /* Name string is a fully-qualified domain name */
    uuid_t NameSpace_DNS = { /* 6ba7b810-9dad-11d1-80b4-00c04fd430c8 */
        0x6ba7b810,
@@ -1768,7 +1768,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 # Some Hash Space IDs {#hashspaces}
 This appendix lists the hash space IDs for use with UUIDv8 name-based UUIDs.
 
-~~~~
+~~~~ code
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
 SHA2_256     = "3fb32780-953c-4464-9cfd-e85dbbe9843d"
 SHA2_384     = "e6800581-f333-484b-8778-601ff2b58da8"
@@ -1793,7 +1793,7 @@ Both UUIDv1 and UUIDv6 utilize the same values in clock_seq,
 and node. All of which have been generated with random data.
 
 
-~~~~
+~~~~ code
 # Unix Nanosecond precision to Gregorian 100-nanosecond intervals
 gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 
@@ -1820,23 +1820,22 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
 {: title='Test Vector Timestamp Pseudo-code'}
 
 ## Example of a UUIDv1 Value {#uuidv1_example}
-~~~~
-----------------------------------------------
-field                 bits    value
-----------------------------------------------
-time_low              32      0xC232AB00
-time_mid              16      0x9414
-ver                    4      0x1
-time_high             12      0x1EC
-var                    2      b10
-clock_seq             14      b11, 0x3C8
-node                  48      0x9E6BDECED846
-----------------------------------------------
-total                128
-----------------------------------------------
-final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
-~~~~
-{: title='UUIDv1 Example Test Vector'}
+
+
+|field       |bits  | value        |
+:--------------------|-----:|-------------:|
+time_low   | 32 | 0xC232AB00 |
+time_mid   | 16 | 0x9414     |
+ver         |  4 |   0x1     |
+time_high  | 12 |    0x1EC   |
+var         |  2 |   b10     |
+clock_seq  | 14 |   b11, 0x3C8 |
+node        | 48 |   0x9E6BDECED846 |
+|--
+total       |128 | |
+|--
+final_hex: || C232AB00-9414-11EC-B3C8-9E6BDECED846  |
+|==
 
 ## Example of a UUIDv3 Value {#uuidv3_example}
 The MD5 computation from is detailed in {{v3md5}} using the DNS NameSpace and the Name "www.example.com".
