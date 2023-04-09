@@ -1287,7 +1287,6 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
   of the other methods, where this additional time precision would immediatley
   follow the timestamp and then if any bits are to be used as clock sequence
   they would follow next.
-  
 
 The following sub-topics cover topics related solely with creating reliable
 fixed-length dedicated counters:
