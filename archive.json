@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-04-06T01:23:41.218584+00:00",
+  "timestamp": "2023-04-09T01:28:28.854004+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -716,15 +716,15 @@
       "id": "I_kwDOH6Ln3M5V3-KU",
       "title": "Draft 02: SHOULD vs MUST BCP 14 review everywhere",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/31",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "As per IETF 115, Murray K.(?):\r\nLikely slated for Draft 02 but need to have somebody, non author/editor, review every SHOULD and answer if a defined alternative exists within the text and ultimately if that SHOULD:\r\n- Stays as is since there are clearly defined edge cases\r\n- Increases to a MUST since there is no reason not too / no alternative\r\n- Decreases further to a MAY ",
       "createdAt": "2022-11-08T18:56:38Z",
-      "updatedAt": "2023-01-20T16:40:50Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-06T16:01:18Z",
+      "closedAt": "2023-04-06T16:01:18Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -1367,10 +1367,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
       "body": "- 5 Errors\r\n- 10 Warnings\r\n\r\nhttps://author-tools.ietf.org/",
       "createdAt": "2023-03-16T17:28:40Z",
-      "updatedAt": "2023-03-16T17:28:40Z",
+      "updatedAt": "2023-04-06T16:00:59Z",
       "closedAt": null,
       "comments": []
     },
@@ -1383,26 +1385,30 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
       "body": "Jim:\r\n\r\n> Section 3.2 defines MD5 and SHA1, but not any of the other hashes referenced in the document.",
       "createdAt": "2023-03-16T17:32:45Z",
-      "updatedAt": "2023-03-16T18:06:53Z",
+      "updatedAt": "2023-04-06T14:30:13Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 66,
       "id": "I_kwDOH6Ln3M5hCOVF",
-      "title": "Draft 03: Change text to SHA1 or SHA-1",
+      "title": "Draft 03: Normalize SHA abbreviation formats",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/66",
       "state": "OPEN",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
-      "body": "",
+      "labels": [
+        "Consensus Acheived"
+      ],
+      "body": "With or without dash:\r\n- SHA1\r\n- SHA-1\r\n\r\nFIPS documents use dash, will normalize our document to the same.",
       "createdAt": "2023-03-16T17:36:24Z",
-      "updatedAt": "2023-03-16T17:36:24Z",
+      "updatedAt": "2023-04-06T14:30:18Z",
       "closedAt": null,
       "comments": []
     },
@@ -1415,10 +1421,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
       "body": "Before: \r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is defined only in terms of fields that are integral numbers of octets. \r\n\r\nAfter:\r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a a grouping of fields within bit layout consisting four octets to a row.\r\n\r\nEdit: Updated grammar as per @cbandy comment.",
       "createdAt": "2023-03-16T17:41:34Z",
-      "updatedAt": "2023-03-20T13:09:13Z",
+      "updatedAt": "2023-04-06T13:42:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -1439,10 +1447,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
       "body": "Fits nicely in between first and second paragraph to remove this non-standard section.",
       "createdAt": "2023-03-16T17:48:25Z",
-      "updatedAt": "2023-03-16T17:48:25Z",
+      "updatedAt": "2023-04-06T14:45:04Z",
       "closedAt": null,
       "comments": []
     },
@@ -1455,10 +1465,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
       "body": "",
       "createdAt": "2023-03-16T17:51:02Z",
-      "updatedAt": "2023-03-16T17:51:02Z",
+      "updatedAt": "2023-04-06T14:30:11Z",
       "closedAt": null,
       "comments": []
     },
@@ -1471,10 +1483,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
       "body": "Remove the C structs and make them text.",
       "createdAt": "2023-03-16T17:52:14Z",
-      "updatedAt": "2023-03-16T17:52:14Z",
+      "updatedAt": "2023-04-06T13:48:25Z",
       "closedAt": null,
       "comments": []
     },
@@ -1501,6 +1515,76 @@
           "body": "Yep, recorded under #70 where I will make it all text and remove the C code.",
           "createdAt": "2023-03-27T19:49:53Z",
           "updatedAt": "2023-03-27T19:49:53Z"
+        }
+      ]
+    },
+    {
+      "number": 73,
+      "id": "I_kwDOH6Ln3M5izEQN",
+      "title": "Draft 03: Remove URN from title",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/73",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
+      "body": "The URN in the title is out of place as the entire document defines UUIDs and their many usages. URN is one such (small) part of the greater document.\r\n",
+      "createdAt": "2023-04-06T14:40:05Z",
+      "updatedAt": "2023-04-06T14:45:05Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 74,
+      "id": "I_kwDOH6Ln3M5izH9j",
+      "title": "Draft 03: Move some Normative Reference to Informative",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/74",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
+      "body": "",
+      "createdAt": "2023-04-06T14:48:09Z",
+      "updatedAt": "2023-04-06T15:57:38Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Unsure how to handle these in IDNITS checks:\r\n```\r\n  -- Possible downref: Non-RFC (?) normative reference: ref. 'C309'\r\n  -- Possible downref: Non-RFC (?) normative reference: ref. 'C311'\r\n  -- Possible downref: Non-RFC (?) normative reference: ref. 'FIPS180-4'\r\n  -- Possible downref: Non-RFC (?) normative reference: ref. 'FIPS202'\r\n  -- Possible downref: Non-RFC (?) normative reference: ref. 'RANDOM'\r\n  -- Possible downref: Non-RFC (?) normative reference: ref. 'X667'\r\n```",
+          "createdAt": "2023-04-06T15:57:38Z",
+          "updatedAt": "2023-04-06T15:57:38Z"
+        }
+      ]
+    },
+    {
+      "number": 75,
+      "id": "I_kwDOH6Ln3M5izmYM",
+      "title": "Draft 03: Downgrade MUST NOT to SHOULD NOT for guessability of UUIDs",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/75",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "Consensus Acheived"
+      ],
+      "body": "> Section 9, \u201cImplementations MUST NOT assume that UUIDs are hard to guess.\u201d \r\n> This would mean that it\u2019s not permissible to use a randomly generated UUID for something like a session cookie. \r\n> On the other hand, NIST currently considers a random value generated \r\n> from a CSPRNG with a security  strength of at least 112 bits to be \r\n> effectively unguessable (see SP 800-131A), and a version 4 UUID meets that requirement. This prohibition seems a little strong.\r\n\r\nThis is the RFC4122 verbiage but we could downgrade to a SHOULD NOT. \r\n",
+      "createdAt": "2023-04-06T16:05:33Z",
+      "updatedAt": "2023-04-06T19:21:10Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think that if someone needs something that is hard to guess, they need to be responsible for making sure.\r\nI think that the point of this disclaimer is that not all UUIDs are hard to guess, and we don't want people confused.",
+          "createdAt": "2023-04-06T19:21:10Z",
+          "updatedAt": "2023-04-06T19:21:10Z"
         }
       ]
     }
@@ -2077,24 +2161,26 @@
       "id": "PR_kwDOH6Ln3M5M9MdM",
       "title": "collapse UUID registration in URN name space",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/71",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "mcr",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-03-27T10:03:35Z",
-      "updatedAt": "2023-03-27T19:53:52Z",
+      "updatedAt": "2023-04-06T13:36:33Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "2321d5c492ba2f1bb568bcbbeff5dc0dfa25e017",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "iana-suggestions",
-      "headRefOid": "9c0514d44a8cd688d7d8a5376855e112a81ba976",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "0f0078bf5f492e32ce73bbf29d49eed068646b5a",
+      "closedAt": "2023-04-06T13:36:21Z",
+      "mergedAt": "2023-04-06T13:36:21Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb"
+      },
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2122,6 +2208,451 @@
               "body": "Replied on the mailer, we decided we DO NOT want them to have registrations for these items and there are no current registrations so there is nothing to update.",
               "createdAt": "2023-03-27T19:51:11Z",
               "updatedAt": "2023-03-27T19:51:16Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 76,
+      "id": "PR_kwDOH6Ln3M5NyIwA",
+      "title": "Draft 03",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/76",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- #67\r\n- #70\r\n- #69\r\n- #66\r\n- #65\r\n- #73\r\n- #68\r\n- #74\r\n- Misc formatting changes to address IDNITS feedback\r\n- #75",
+      "createdAt": "2023-04-06T16:14:09Z",
+      "updatedAt": "2023-04-06T16:14:46Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-03",
+      "headRefOid": "15a3f8e2f3289a0679ae87a8025e7494e34fe0d3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 77,
+      "id": "PR_kwDOH6Ln3M5N2OBi",
+      "title": "Formatting suggestions",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/77",
+      "state": "OPEN",
+      "author": "mcr",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This deals with the code nit, and turns the examples into tables.\r\n",
+      "createdAt": "2023-04-07T16:34:48Z",
+      "updatedAt": "2023-04-07T16:34:48Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "formatting-suggestions",
+      "headRefOid": "a4b4db9172f3b6794d669a0779d6e6cd82124d1a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 78,
+      "id": "PR_kwDOH6Ln3M5N4UV4",
+      "title": "typographical fixes",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/78",
+      "state": "OPEN",
+      "author": "bradleypeabody",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Some typo fixes, hopefully zero controversy.",
+      "createdAt": "2023-04-09T00:13:08Z",
+      "updatedAt": "2023-04-09T01:03:37Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "headRepository": "bradleypeabody/rfc4122bis",
+      "headRefName": "20230407-typographical",
+      "headRefOid": "87d8a0bbf8c0819b63c473adc4098f61f4b1fc51",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 79,
+      "id": "PR_kwDOH6Ln3M5N4WTP",
+      "title": "clarifications",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/79",
+      "state": "OPEN",
+      "author": "bradleypeabody",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Here are some clarifications I'd like to make on various pieces of text.  These shouldn't have a significant semantic change in terms of what we are specifying, but hopefully provide more clarity on specific topics that I though should have a bit more detail.  I'll also add some review notes to give more on the motivation for each change in cases where it may not be obvious.",
+      "createdAt": "2023-04-09T01:07:31Z",
+      "updatedAt": "2023-04-09T01:23:22Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "headRepository": "bradleypeabody/rfc4122bis",
+      "headRefName": "20230408-clarifications",
+      "headRefOid": "cdf2f49cc18a098fbc6ab381f3c5e53c9b583822",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKB4",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:09:00Z",
+          "updatedAt": "2023-04-09T01:09:01Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "I think it's important to not over-promise here - we can't actually guarantee uniqueness, but we can get delivery a high probability. I think the wording should reflect that.",
+              "createdAt": "2023-04-09T01:09:01Z",
+              "updatedAt": "2023-04-09T01:09:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKDW",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:10:37Z",
+          "updatedAt": "2023-04-09T01:10:38Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "This language is from the old RFC, and I'm not sure it makes sense to leave in here.  If we're going to say that there is another document that takes precedence over this one then we should link to it and make it part of the formal spec, otherwise I think we should just take this reference to DCE standards out.",
+              "createdAt": "2023-04-09T01:10:37Z",
+              "updatedAt": "2023-04-09T01:10:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKFH",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:12:55Z",
+          "updatedAt": "2023-04-09T01:12:56Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "With the bit space available it is possible to generate much more than 10 million identifiers per second so I think we should indicate that so people don't think it's somehow hard-limited to this.",
+              "createdAt": "2023-04-09T01:12:55Z",
+              "updatedAt": "2023-04-09T01:12:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKFm",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:13:29Z",
+          "updatedAt": "2023-04-09T01:13:29Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "As mentioned elsewhere URNs are just one aspect of UUIDs, so I think this helps make it more clear.",
+              "createdAt": "2023-04-09T01:13:29Z",
+              "updatedAt": "2023-04-09T01:13:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKF5",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:13:52Z",
+          "updatedAt": "2023-04-09T01:13:53Z",
+          "comments": [
+            {
+              "originalPosition": 59,
+              "body": "Just to clarify that it's decimal",
+              "createdAt": "2023-04-09T01:13:53Z",
+              "updatedAt": "2023-04-09T01:13:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKGV",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:14:18Z",
+          "updatedAt": "2023-04-09T01:14:18Z",
+          "comments": [
+            {
+              "originalPosition": 68,
+              "body": "We might as well include the exact number of bits here - 122 - since we mention it.",
+              "createdAt": "2023-04-09T01:14:18Z",
+              "updatedAt": "2023-04-09T01:14:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKGq",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:14:40Z",
+          "updatedAt": "2023-04-09T01:14:40Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "I think it's helpful to provide some context as to why this is here.",
+              "createdAt": "2023-04-09T01:14:40Z",
+              "updatedAt": "2023-04-09T01:14:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKG9",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:15:00Z",
+          "updatedAt": "2023-04-09T01:15:00Z",
+          "comments": [
+            {
+              "originalPosition": 91,
+              "body": "Same thing, just so there's no question about the rationale for this.",
+              "createdAt": "2023-04-09T01:15:00Z",
+              "updatedAt": "2023-04-09T01:15:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKHQ",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:15:14Z",
+          "updatedAt": "2023-04-09T01:15:14Z",
+          "comments": [
+            {
+              "originalPosition": 100,
+              "body": "It doesn't necessarily format as a \"bullet\"",
+              "createdAt": "2023-04-09T01:15:14Z",
+              "updatedAt": "2023-04-09T01:15:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKIh",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:16:19Z",
+          "updatedAt": "2023-04-09T01:16:19Z",
+          "comments": [
+            {
+              "originalPosition": 109,
+              "body": "I think this communicate the point - an implementation, wherever possible, should prevent a duplicate value from being returned as part of being a correct implementation.  Or to state it another way: if you could have easily prevented returning a value but did not, that's a bug that should be fixed.",
+              "createdAt": "2023-04-09T01:16:19Z",
+              "updatedAt": "2023-04-09T01:16:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKJa",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:17:35Z",
+          "updatedAt": "2023-04-09T01:17:36Z",
+          "comments": [
+            {
+              "originalPosition": 118,
+              "body": "I think providing the inline definition of \"monotonicity\" here is helpful, since strictly speaking from the mathematical definition this could also describe values that count down, or that count in a constant direction based on specific input.  We might as well spell out exactly what we mean here.",
+              "createdAt": "2023-04-09T01:17:35Z",
+              "updatedAt": "2023-04-09T01:17:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKJs",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:18:17Z",
+          "updatedAt": "2023-04-09T01:18:17Z",
+          "comments": [
+            {
+              "originalPosition": 128,
+              "body": "Batch creation is an important use case but really this section applies to any code that is concerned about creating a whole bunch of UUIDs on a single node, so I think the additional wording helps with that.",
+              "createdAt": "2023-04-09T01:18:17Z",
+              "updatedAt": "2023-04-09T01:18:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKKo",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:19:32Z",
+          "updatedAt": "2023-04-09T01:19:32Z",
+          "comments": [
+            {
+              "originalPosition": 137,
+              "body": "I think it's helpful to indicate that if the implementation gets into some sort of pickle where it cannot return a unique ID, that returning an error instead is perhaps the right behavior.",
+              "createdAt": "2023-04-09T01:19:32Z",
+              "updatedAt": "2023-04-09T01:19:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKLG",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:20:06Z",
+          "updatedAt": "2023-04-09T01:20:06Z",
+          "comments": [
+            {
+              "originalPosition": 145,
+              "body": "I know we say MAY in the next paragraph but when I read this again it seemed to communicate that this was an expected part of the implementation, so I think adding this helps.",
+              "createdAt": "2023-04-09T01:20:06Z",
+              "updatedAt": "2023-04-09T01:20:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKL2",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:21:13Z",
+          "updatedAt": "2023-04-09T01:21:13Z",
+          "comments": [
+            {
+              "originalPosition": 155,
+              "body": "Do we really want to suggest to people that they use the namespace variant?  If a system has let's say a known insecure random number generator, then sure that is going to affect the quality of the output, but I'm not sure that's a strong enough concern to suggest the namespace variant.",
+              "createdAt": "2023-04-09T01:21:13Z",
+              "updatedAt": "2023-04-09T01:21:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKME",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:21:53Z",
+          "updatedAt": "2023-04-09T01:21:53Z",
+          "comments": [
+            {
+              "originalPosition": 164,
+              "body": "Same logic as earlier - we can't guarantee uniqueness in all cases, we're basically saying it's good enough for practical purposes.",
+              "createdAt": "2023-04-09T01:21:53Z",
+              "updatedAt": "2023-04-09T01:21:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKNl",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:23:21Z",
+          "updatedAt": "2023-04-09T01:23:22Z",
+          "comments": [
+            {
+              "originalPosition": 178,
+              "body": "I think this helps give more guidance on the opacity concern.  My rationale here is that people writing UUID libraries and such will have to make a decision about how much parsing capability to include, and I don't want people to feel compelled to provide a bunch of detailed parsing, when one of the whole drives of these new UUIDs is that they are more useful as opaque values.  So with this wording I think it's more clear and will ease the implementation burden.",
+              "createdAt": "2023-04-09T01:23:21Z",
+              "updatedAt": "2023-04-09T01:23:22Z"
             }
           ]
         }
