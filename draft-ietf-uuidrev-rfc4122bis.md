@@ -1136,7 +1136,7 @@ Reliability:
 Source:
 : UUID version 1 and 6 both utilize a Gregorian epoch timestamp while UUIDv7
   utilizes a Unix Epoch timestamp. If other timestamp sources or a custom timestamp
-  epoch are required UUIDv8 SHOULD be used.
+  epoch are required UUIDv8 MUST be used.
 
 Sub-second Precision and Accuracy:
 : Many levels of precision exist for timestamps: milliseconds, microseconds,
@@ -1189,7 +1189,7 @@ Truncating:
 
 Error Handling:
 : If a system overruns the generator by requesting too many UUIDs
-  within a single system time interval, the UUID service MUST either
+  within a single system time interval, the UUID service SHOULD either
   return an error, or stall the UUID generator until the system clock
   catches up.
   Note that if the processors overrun the UUID generation frequently,
@@ -1239,7 +1239,7 @@ Fixed-Length Dedicated Counter Bits (Method 1):
 Monotonic Random (Method 2):
 : With this method, the random data is extended to also function as a counter.
   This monotonic value can be thought of as a "randomly seeded counter" which
-  MUST be incremented in the least significant position for each UUID created
+  SHOULD be incremented in the least significant position for each UUID created
   on a given timestamp tick.
   UUIDv7's rand_b section SHOULD be utilized with this method to handle batch
   UUID generation during a single timestamp tick.
@@ -1274,7 +1274,7 @@ Fixed-Length Dedicated Counter Seeding:
   counter rollovers.
 
 Fixed-Length Dedicated Counter Length:
-: Care MUST be taken to select a counter bit-length that can properly handle
+: Take care to select a counter bit-length that can properly handle
   the level of timestamp precision in use.
   For example, millisecond precision generally requires a larger counter than a
   timestamp with nanosecond precision.
