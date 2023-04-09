@@ -1219,7 +1219,8 @@ before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
 
 Implementations SHOULD choose one method for single-node UUID implementations
-that require batch UUID creation.
+that require batch UUID creation, or are otherwise concerned about monotonicity
+with high frequency UUID generation.
 
 {: vspace='0'}
 
@@ -1250,6 +1251,38 @@ Monotonic Random (Method 2):
   period of time is important and guessability is not an issue. However, it
   SHOULD NOT be used by implementations that favor unguessiblity, as the resulting
   values are easily guessable.
+
+Re-randomize Until Monotonic (Method 3):
+: If the performance impact is acceptable (depending on the UUID version,
+  granularity of the system clock, and expected throughput of values
+  generated per clock value), an implementation can, in the case
+  of multiple UUID values using the same clock tick, simply regenerate
+  a new random value as many times as needed in order to produce a UUID that is
+  ordered after the last one.  The primary benefit of this approach is simplicity
+  of implementation. The down sides to this approach include the fact that
+  generation will become increasing slow for a given timestamp value as
+  more attempts are required to product monotonic output, and the fact that
+  subsequent values will have less entropy and be more easily guessable.
+
+Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
+: For UUIDv7, which has millisecond timestamp precision, it may be possible
+  to use additional clock precision available on the system to substitute
+  for random bits immediately following the timestamp.  This can provide
+  values that are time-ordered with sub-millisecond precision, using
+  however many bits are appropriate in the implementation environment.
+  For example, let's assume a system timestamp of 1 Jan 2023 12:34:56.1234567.
+  Taking the precision greater than 1ms gives us a value of 0.4567, as a
+  fraction of a millisecond.  If we wish to encode this as 12 bits, we can
+  take the maximum value that fits in those bits (4095, or 2 to the 12th power minus 1)
+  and multiply it by our millisecond fraction value of 0.4567 and round the result to
+  an integer, which gives an integer value of 1870. Expressed as hex it is
+  0x74E, or the binary bits 011101001110.  One can then use those 12 bits
+  as the most significant (left-most) portion of the random section of the UUID.
+  This works for any desired bit length that fits into a UUID and applications
+  can decide the appropriate length based on available clock precision and desired
+  random bits.  This technique can also be used in conjunction with one of
+  the other methods, where this additional time precision would immediatley
+  follow the timestamp and then any bits used as clock sequence would follow next.  
 
 The following sub-topics cover topics related solely with creating reliable
 fixed-length dedicated counters:
