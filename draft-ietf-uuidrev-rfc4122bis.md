@@ -1627,7 +1627,7 @@ possible and in a way that attempts to benefit the entire Internet.
 # Security Considerations {#Security}
 
 Implementations MUST NOT assume that UUIDs are hard to guess.
-Foe example, they MUST not be used
+For example, they MUST not be used
 as security capabilities (identifiers whose mere possession grants
 access).  Discovery of predictability in a random number source will
 result in a vulnerability.
