@@ -483,7 +483,7 @@ draft-01
 - Break Binary form of UUID into two lines. #40
 - Move octet text from section 4 to section 5 #41
 - Add forward reference to UUIDv1 and UUIDv4 in Section 2 #42
-- Erronous reference to v1 in monotonicity #45
+- Erroneous reference to v1 in monotonicity #45
 - Add Label for "Monotonic Error Checking" paragraph to frame the topic #46
 - Remove IEEE paragraph from "uuids that do not identify the host" #48
 - Grammar Review #52
@@ -511,7 +511,7 @@ draft-00
 - Errata: Fix clock_seq_hi_and_reserved most-significant bit verbiage \| 4976 #10
 - Errata: Better Clarify network byte order when referencing most significant bits \| 3546 #12
 - Draft 05: B.2. Example of a UUIDv7 Value two "var" in table #120
-- Draft 05: MUST veribage in Reliability of 6.1 #121
+- Draft 05: MUST verbiage in Reliability of 6.1 #121
 - Draft 05: Further discourage centralized registry for distributed UUID Generation.
 - New: Further Clarity of exact octet and bit of var/ver in this spec
 - New: Block diagram, bit layout, test vectors for UUIDv4
@@ -805,7 +805,7 @@ and variant then replace the respective bits as defined by {{version_field}}
 and {{variant_field}},
 
 Alternatively, an implementation MAY choose to randomly generate the exact required number of bits for
-for random_a, random_b, and random_c then concatenate the version and variant in the required position.
+random_a, random_b, and random_c then concatenate the version and variant in the required position.
 
 For guidelines on random data generation see {{unguessability}}.
 
@@ -981,7 +981,7 @@ UUIDv1 implementation.
 UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
 seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
-UUID verion 7 also has improved entropy characteristics over versions 1 or 6.
+UUID version 7 also has improved entropy characteristics over versions 1 or 6.
 
 Implementations SHOULD utilize UUID version 7 instead of UUID version 1 and 6 if
 possible.
@@ -1248,7 +1248,7 @@ Monotonic Random (Method 2):
   level of unguessability provided by the underlying entropy.
   The increment value MAY be one when the number of UUIDs generated in a particular
   period of time is important and guessability is not an issue. However, it
-  SHOULD NOT be used by implementations that favor unguessiblity, as the resulting
+  SHOULD NOT be used by implementations that favor unguessablity, as the resulting
   values are easily guessable.
 
 The following sub-topics cover topics related solely with creating reliable
@@ -1328,7 +1328,7 @@ counters are monotonic in nature:
 {: vspace='0'}
 
 Monotonic Error Checking:
-: Implementations SHOULD check if the the currently generated UUID is greater
+: Implementations SHOULD check if the currently generated UUID is greater
 than the previously generated UUID. If this is not the case then any number
 of things could have occurred, such as clock rollbacks,
 leap second handling, and counter rollovers. Applications SHOULD embed sufficient
@@ -1629,7 +1629,7 @@ possible and in a way that attempts to benefit the entire Internet.
 Implementations MUST NOT assume that UUIDs are hard to guess.
 Foe example, they MUST not be used
 as security capabilities (identifiers whose mere possession grants
-access).  Discovery of predictablity in a random number source will
+access).  Discovery of predictability in a random number source will
 result in a vulnerability.
 
 Implementations MUST NOT assume that it is easy to determine if a UUID has been
@@ -1803,7 +1803,7 @@ final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
 ## Example of a UUIDv3 Value {#uuidv3_example}
 The MD5 computation from is detailed in {{v3md5}} using the DNS NameSpace and the Name "www.example.com".
 while the field mapping and all values are illustrated in {{v3fields}}.
-Finally to further illustrate the bit swaping for version and variant see {{v3vervar}}.
+Finally to further illustrate the bit swapping for version and variant see {{v3vervar}}.
 
 ~~~~
 Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
@@ -1840,7 +1840,7 @@ Final:                  5df41881-3aed-3515-88a7-2f4a814cf09e
 This UUIDv4 example was created by generating 16 bytes
 of random data resulting in the hex value of
 919108F752D133205BACF847DB4148A8. This is then used to
-fill out the feilds as shown in {{v4fields}}.
+fill out the fields as shown in {{v4fields}}.
 
 Finally to further illustrate the bit swapping for version and variant see {{v4vervar}}.
 
