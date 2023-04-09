@@ -1280,9 +1280,14 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
   as the most significant (left-most) portion of the random section of the UUID.
   This works for any desired bit length that fits into a UUID and applications
   can decide the appropriate length based on available clock precision and desired
-  random bits.  This technique can also be used in conjunction with one of
-  the other methods, where this additional time precision would immediatley
-  follow the timestamp and then any bits used as clock sequence would follow next.  
+  random bits. The main benefit to encoding additional timestamp precision
+  is that it utilizes additional time precision already available in the system clock
+  to provide values that are more likely to be unique, and thus may simplify
+  certain implementations. This technique can also be used in conjunction with one
+  of the other methods, where this additional time precision would immediatley
+  follow the timestamp and then if any bits are to be used as clock sequence
+  they would follow next.
+  
 
 The following sub-topics cover topics related solely with creating reliable
 fixed-length dedicated counters:
