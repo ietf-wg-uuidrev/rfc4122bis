@@ -29,6 +29,7 @@ author:
   org: VeriSign, Inc.
 - name: Brad G. Peabody
   email: brad@peabody.io
+  org: Uncloud
 - name: Kyzer R. Davis
   email: kydavis@cisco.com
   org: Cisco Systems
@@ -242,7 +243,7 @@ informative:
 
 This specification defines a Uniform Resource Name namespace for
 UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
-Unique IDentifiers).  A UUID is 128 bits long, and can guarantee
+Unique IDentifiers).  A UUID is 128 bits long, and is intended to guarantee
 uniqueness across space and time.  UUIDs were originally used in the
 Apollo Network Computing System and later in the Open Software
 Foundation's (OSF) Distributed Computing Environment (DCE), and then
@@ -263,8 +264,7 @@ Unique IDentifiers).  A UUID is 128 bits long, and requires no central
 registration process.
 
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs as URNs {{RFC8141}}.  Nothing in this document
-should be construed to override the DCE standards that defined UUIDs.
+to implement services using UUIDs, as URNs {{RFC8141}} or otherwise.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -280,7 +280,7 @@ authority is required to administer them (although one format uses
 IEEE 802 node identifiers, others do not).  As a result, generation
 on demand can be completely automated, and used for a variety of
 purposes.  The UUID generation algorithm described here supports very
-high allocation rates of up to 10 million per second per machine if
+high allocation rates of up to 10 million per second per machine or more if
 necessary, so that they could even be used as transaction IDs.
 
 UUIDs are of a fixed size (128 bits), which is reasonably small
@@ -384,7 +384,7 @@ collision handling and multi-timestamp tick generation sequencing:
 1. {{CUID}} by E. Elliott
 
 An inspection of these implementations and the issues described above has
-led to this document which attempts to adapt UUIDs to address these issues.
+led to this document which intends to adapt UUIDs to address these issues.
 
 # Terminology {#terminology}
 
@@ -526,7 +526,7 @@ The UUID format is 16 octets (128 bits); the variant bits in conjunction with th
 bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
 
 UUIDs MAY be represented as binary data or integers.
-When in use with URNs or applications, any given UUID SHOULD
+When in use with URNs or as text in applications, any given UUID SHOULD
 be represented by the "hex-and-dash" string format consisting of multiple
 groups of upper or lowercase alphanumeric hex characters separated by single dashes/hyphens.
 When used with databases please refer to {{database_considerations}}.
@@ -563,7 +563,7 @@ The same UUID from {{sampleStringUUID}} is represented in Binary {{sampleBinaryU
 ~~~~
 329800735698586629295641978511506172918
 ~~~~
-{: #sampleIntegerUUID title='Example Integer UUID'}
+{: #sampleIntegerUUID title='Example Integer UUID (shown as a decimal number)'}
 
 ~~~~
 urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -805,7 +805,7 @@ and variant then replace the respective bits as defined by {{version_field}}
 and {{variant_field}},
 
 Alternatively, an implementation MAY choose to randomly generate the exact required number of bits for
-for random_a, random_b, and random_c then concatenate the version and variant in the required position.
+random_a, random_b, and random_c (122 bits total) then concatenate the version and variant in the required position.
 
 For guidelines on random data generation see {{unguessability}}.
 
@@ -1089,19 +1089,20 @@ The nil UUID is special form of UUID that is specified to have all
 ~~~~
 {: title='Nil UUID Format'}
 
+A Nil UUID value can be useful to communicate the absence of any other UUID value in situations that otherwise require or use a 128-bit UUID.  A Nil UUID can express the concept "no such value here". Thus it is reserved for such use as needed for implementation-specific situations.
+
 ## Max UUID {#maxuuid}
 
 The Max UUID is special form of UUID that is specified to have all 128 bits
 set to 1. This UUID can be thought of as the inverse of Nil UUID defined
 in {{niluuid}}.
 
-
 ~~~~
 FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF
 ~~~~
 {: title='Max UUID Format'}
 
-
+A Max UUID value can be used as a sentinal value in situations where a 128-bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
 
 # UUID Best Practices {#uuid_best_practices}
 
@@ -1131,7 +1132,7 @@ Reliability:
   For example, if it is possible for the system clock to move backward due
   to either manual adjustment or corrections from a time synchronization protocol,
   implementations need to determine how to handle such cases. (See Altering, Fuzzing,
-  or Smearing bullet below.)
+  or Smearing below.)
 
 Source:
 : UUID version 1 and 6 both utilize a Gregorian epoch timestamp while UUIDv7
@@ -1191,7 +1192,7 @@ Error Handling:
 : If a system overruns the generator by requesting too many UUIDs
   within a single system time interval, the UUID service MUST either
   return an error, or stall the UUID generator until the system clock
-  catches up.
+  catches up, and MUST NOT return knowingly duplicate values.
   Note that if the processors overrun the UUID generation frequently,
   additional node identifiers can be allocated to the system, which
   will permit higher speed allocation by making multiple UUIDs
@@ -1200,7 +1201,7 @@ Error Handling:
 
 ## Monotonicity and Counters {#monotonicity_counters}
 
-Monotonicity is the backbone of time-based sortable UUIDs. Normally, time-based
+Monotonicity (each subsequent value being greater than the last) is the backbone of time-based sortable UUIDs. Normally, time-based
 UUIDs from this document will be monotonic due to an embedded timestamp; however,
 implementations can guarantee additional monotonicity via the concepts covered
 in this section.
@@ -1219,7 +1220,8 @@ before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
 
 Implementations SHOULD choose one method for single-node UUID implementations
-that require batch UUID creation.
+that require batch UUID creation, or are otherwise concerned about monotonicity
+with high frequency UUID generation.
 
 {: vspace='0'}
 
@@ -1333,13 +1335,14 @@ than the previously generated UUID. If this is not the case then any number
 of things could have occurred, such as clock rollbacks,
 leap second handling, and counter rollovers. Applications SHOULD embed sufficient
 logic to catch these scenarios and correct the problem to ensure that the next
-UUID generated is greater than the previous. To handle this scenario, the
+UUID generated is greater than the previous, or at least report an appropriate error.
+To handle this scenario, the
 general guidance is that application MAY reuse the previous timestamp and
 increment the previous counter method.
 
 ## UUID Generator States {#generator_states}
 
-The UUID generator state only needs to be read from stable storage once at boot
+The (optional) UUID generator state only needs to be read from stable storage once at boot
 time, if it is read into a system-wide shared volatile store (and
 updated whenever the stable store is updated).
 
@@ -1418,8 +1421,7 @@ Centralized Registry:
   registries are outside the scope of this specification and is NOT RECOMMENDED.
 
 Distributed applications generating UUIDs at a variety of hosts MUST
-be willing to rely on the random number source at all hosts.  If this
-is not feasible, the namespace variant should be used.
+be willing to rely on the random number source at all hosts.
 
 ## Name-Based UUID Generation {#name_based_uuid_generation}
 The concept of name and name space should be broadly construed, and not
@@ -1507,7 +1509,7 @@ or around the world is not required.
 
 Although true global uniqueness is impossible to guarantee without a shared
 knowledge scheme, a shared knowledge scheme is not required by UUID to provide
-uniqueness guarantees.
+uniqueness for practical implementation purposes.
 Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed this specification.
 
 
@@ -1576,6 +1578,13 @@ UUIDs SHOULD be treated as opaque values and implementations SHOULD NOT examine
 the bits in a UUID. However,
 inspectors MAY refer to {{variant_field}} and {{version_field}} when required to determine UUID version and variant.
 
+As general guidance, we recommend not parsing UUID values unnecessarily,
+and instead treating them as opaquely as possible.  Although application-specific
+concerns could of course require some degree of introspection
+(e.g. to examine the variant, version or perhaps the timestamp of a UUID),
+the advice here is to avoid this or other parsing unless absolutely necessary.
+Applications typically tend to be simpler, more interoperable, and perform better,
+when this advice is followed.
 
 ## DBMS and Database Considerations {#database_considerations}
 
