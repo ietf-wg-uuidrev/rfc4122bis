@@ -264,7 +264,7 @@ Unique IDentifiers).  A UUID is 128 bits long, and requires no central
 registration process.
 
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs, as URNs {{RFC8141}} or otherwise.
+to implement services using UUIDs, as URNs {{RFC8141}}, or otherwise.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -280,7 +280,7 @@ authority is required to administer them (although one format uses
 IEEE 802 node identifiers, others do not).  As a result, generation
 on demand can be completely automated, and used for a variety of
 purposes.  The UUID generation algorithm described here supports very
-high allocation rates of up to 10 million per second per machine or more if
+high allocation rates of 10 million per second per machine or more if
 necessary, so that they could even be used as transaction IDs.
 
 UUIDs are of a fixed size (128 bits), which is reasonably small
@@ -1102,7 +1102,7 @@ FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF
 ~~~~
 {: title='Max UUID Format'}
 
-A Max UUID value can be used as a sentinal value in situations where a 128-bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
+A Max UUID value can be used as a sentinel value in situations where a 128-bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
 
 # UUID Best Practices {#uuid_best_practices}
 
