@@ -1239,7 +1239,7 @@ Fixed-Length Dedicated Counter Bits (Method 1):
 Monotonic Random (Method 2):
 : With this method, the random data is extended to also function as a counter.
   This monotonic value can be thought of as a "randomly seeded counter" which
-  SHOULD be incremented in the least significant position for each UUID created
+  MUST be incremented in the least significant position for each UUID created
   on a given timestamp tick.
   UUIDv7's rand_b section SHOULD be utilized with this method to handle batch
   UUID generation during a single timestamp tick.
@@ -1274,7 +1274,7 @@ Fixed-Length Dedicated Counter Seeding:
   counter rollovers.
 
 Fixed-Length Dedicated Counter Length:
-: Take care to select a counter bit-length that can properly handle
+: Select a counter bit-length that can properly handle
   the level of timestamp precision in use.
   For example, millisecond precision generally requires a larger counter than a
   timestamp with nanosecond precision.
