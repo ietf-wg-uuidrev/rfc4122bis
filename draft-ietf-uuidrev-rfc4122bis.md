@@ -1283,7 +1283,7 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
   which is sorts monotonically based on time. Each increasing fractional
   value will result in an increasing bit field value, to the
   precision available with these bits.
-  
+
   For example, let's assume a system timestamp of 1 Jan 2023 12:34:56.1234567.
   Taking the precision greater than 1ms gives us a value of 0.4567, as a
   fraction of a millisecond.  If we wish to encode this as 12 bits, we can
