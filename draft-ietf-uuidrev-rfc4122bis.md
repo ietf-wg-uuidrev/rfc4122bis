@@ -1699,17 +1699,17 @@ was also invaluable in achieving coordination with ISO/IEC.
 This appendix lists the name space IDs for some potentially interesting name spaces such those for 
 fully-qualified domain names (DNS), uniform resource locators (URLs), ISO OIDs, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
 
-~~~
+~~~~ code
 NameSpace_DNS  = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_URL  = "6ba7b811-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_OID  = "6ba7b812-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
-~~~
+~~~~
 
 # Some Hash Space IDs {#hashspaces}
 This appendix lists the hash space IDs for use with UUIDv8 name-based UUIDs.
 
-~~~~
+~~~~ code
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
 SHA2_256     = "3fb32780-953c-4464-9cfd-e85dbbe9843d"
 SHA2_384     = "e6800581-f333-484b-8778-601ff2b58da8"
@@ -1733,10 +1733,10 @@ Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit timestamp: 0x1EC9414
 Both UUIDv1 and UUIDv6 utilize the same values in clock_seq,
 and node. All of which have been generated with random data.
 
-The psuedocode used for converting from a 64 bit Unix timestamp to a 100ns Gregorian timestamp value
+The pseudocode used for converting from a 64 bit Unix timestamp to a 100ns Gregorian timestamp value
 has been left in the document for reference purposes.
 
-~~~
+~~~~ code
 # Gregorian to Unix Offset:
 # The number of 100-ns intervals between the
 # UUID epoch 1582-10-15 00:00:00 and the Unix epoch 1970-01-01 00:00:00
@@ -1755,7 +1755,7 @@ gregorian_100_ns = (Unix_64_bit_nanoseconds/100)+gregorian_Unix_offset
 
 # Final:
 # gregorian_100_ns = 0x1EC9414C232AB00 or 138648505420000000
-~~~
+~~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
 ## Example of a UUIDv1 Value {#uuidv1_example}
