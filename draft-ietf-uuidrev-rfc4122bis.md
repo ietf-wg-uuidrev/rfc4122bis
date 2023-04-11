@@ -1259,17 +1259,31 @@ Re-randomize Until Monotonic (Method 3):
   of multiple UUID values using the same clock tick, simply regenerate
   a new random value as many times as needed in order to produce a UUID that is
   ordered after the last one.  The primary benefit of this approach is simplicity
-  of implementation. The down sides to this approach include the fact that
-  generation will become increasing slow for a given timestamp value as
-  more attempts are required to product monotonic output, and the fact that
+  of implementation. One downside to this approach is the fact that
+  generation will become increasingly slower for a given timestamp value as
+  more attempts are required to produce monotonic output, and the fact that
   subsequent values will have less entropy and be more easily guessable.
 
 Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
-: For UUIDv7, which has millisecond timestamp precision, it may be possible
-  to use additional clock precision available on the system to substitute
+: For UUIDv7, which has millisecond timestamp precision, it is possible
+  to use any additional clock precision available on the system to substitute
   for random bits immediately following the timestamp.  This can provide
   values that are time-ordered with sub-millisecond precision, using
   however many bits are appropriate in the implementation environment.
+  With this method, the additional time precision bits MUST follow the
+  timestamp as the next available bit, in the rand_a field for UUIDv7.
+
+  To calculate this value, start with the portion of the timestamp
+  expressed as a fraction of clock's tick value (fraction of a millisecond
+  for UUIDv7).  Compute the maximum value that can be represented in
+  the available bit space, 4095 for the UUIDv7 rand_a field.
+  Using floating point math, multiply this fraction of a millisecond
+  value by 4095 and round to an integer result to arrive at a number
+  between 0 and the maximum allowed for the indicated bits
+  which is sorts monotonically based on time. Each increasing fractional
+  value will result in an increasing bit field value, to the
+  precision available with these bits.
+  
   For example, let's assume a system timestamp of 1 Jan 2023 12:34:56.1234567.
   Taking the precision greater than 1ms gives us a value of 0.4567, as a
   fraction of a millisecond.  If we wish to encode this as 12 bits, we can
@@ -1277,14 +1291,17 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
   and multiply it by our millisecond fraction value of 0.4567 and round the result to
   an integer, which gives an integer value of 1870. Expressed as hex it is
   0x74E, or the binary bits 011101001110.  One can then use those 12 bits
-  as the most significant (left-most) portion of the random section of the UUID.
+  as the most significant (left-most) portion of the random section of the UUID
+  (e.g. the rand_a field in UUIDv7).
   This works for any desired bit length that fits into a UUID and applications
   can decide the appropriate length based on available clock precision and desired
-  random bits. The main benefit to encoding additional timestamp precision
+  random bits.
+
+  The main benefit to encoding additional timestamp precision
   is that it utilizes additional time precision already available in the system clock
   to provide values that are more likely to be unique, and thus may simplify
   certain implementations. This technique can also be used in conjunction with one
-  of the other methods, where this additional time precision would immediatley
+  of the other methods, where this additional time precision would immediately
   follow the timestamp and then if any bits are to be used as clock sequence
   they would follow next.
 
