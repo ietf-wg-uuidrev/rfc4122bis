@@ -4,8 +4,8 @@ This is the working area for the IETF [UUIDREV Working Group](https://datatracke
 
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis)
-* [Editor's HTML Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-01/draft-ietf-uuidrev-rfc4122bis.html)
-* [Editor's TXT Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-01/draft-ietf-uuidrev-rfc4122bis.txt)
+* [Editor's HTML Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-03/draft-ietf-uuidrev-rfc4122bis.html)
+* [Editor's TXT Copy](https://ietf-wg-uuidrev.github.io/rfc4122bis/draft-03/draft-ietf-uuidrev-rfc4122bis.txt)
 * [Compare Editor's Copy to Working Group Draft](https://ietf-wg-uuidrev.github.io/rfc4122bis/#go.draft-ietf-uuidrev-rfc4122bis.diff)
 
 # Latest

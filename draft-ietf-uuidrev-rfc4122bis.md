@@ -464,6 +464,10 @@ draft-03
 - Move some Normative Reference to Informative #74
 - Misc formatting changes to address IDNITS feedback
 - Downgrade MUST NOT to SHOULD NOT for guessability of UUIDs #75
+- Misc. text formatting, typo fixes #78
+- Misc. text clarifications #79
+- Misc. SHOULD/MUST adjustments #80
+- Method 3 and 4 added to monotonic section #81
 
 draft-02
 
