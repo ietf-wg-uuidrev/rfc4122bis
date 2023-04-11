@@ -1763,7 +1763,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 # Some Name Space IDs {#namespaces}
 
-This appendix lists the name space IDs for some potentially interesting name spaces such those for 
+This appendix lists the name space IDs for some potentially interesting name spaces such those for
 fully-qualified domain names (DNS), uniform resource locators (URLs), ISO OIDs, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
 
 ~~~~ code
@@ -1806,22 +1806,23 @@ has been left in the document for reference purposes.
 ~~~~ code
 # Gregorian to Unix Offset:
 # The number of 100-ns intervals between the
-# UUID epoch 1582-10-15 00:00:00 and the Unix epoch 1970-01-01 00:00:00
-# gregorian_Unix_offset = 0x01b21dd213814000 or 122192928000000000
+# UUID epoch 1582-10-15 00:00:00
+# and the Unix epoch 1970-01-01 00:00:00
+# Greg_Unix_offset = 0x01b21dd213814000 or 122192928000000000
 
 # Unix 64 bit Nanosecond Timestamp:
 # Unix NS: Tuesday, February 22, 2022 2:22:22 PM GMT-05:00
-# Unix_64_bit_nanoseconds = 0x16D6320C3D4DCC00 or 1645557742000000000
+# Unix_64_bit_ns = 0x16D6320C3D4DCC00 or 1645557742000000000
 
 # Unix Nanosecond precision to Gregorian 100-nanosecond intervals
-gregorian_100_ns = (Unix_64_bit_nanoseconds/100)+gregorian_Unix_offset
+# Greg_100_ns = (Unix_64_bit_ns/100)+Greg_Unix_offset
 
 # Work:
-# gregorian_100_ns = (1645557742000000000/100)+122192928000000000
-# Unix_64_bit_nanoseconds = (138648505420000000-122192928000000000)*100
+# Greg_100_ns = (1645557742000000000/100)+122192928000000000
+# Unix_64_bit_ns = (138648505420000000-122192928000000000)*100
 
 # Final:
-# gregorian_100_ns = 0x1EC9414C232AB00 or 138648505420000000
+# Greg_100_ns = 0x1EC9414C232AB00 or 138648505420000000
 ~~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
