@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-latest
+docname: draft-ietf-uuidrev-rfc4122bis-03
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -11,8 +11,8 @@ pi:
   tocdepth: '3'
   symrefs: 'yes'
   sortrefs: 'yes' # accidentally correcting accident :-)
-title: A Universally Unique IDentifier (UUID) URN Namespace
-abbrev: A UUID URN Namespace
+title: Universally Unique IDentifiers (UUID)
+abbrev: UUID
 area: ART
 wg: uuidrev
 kw: uuid
@@ -34,21 +34,6 @@ author:
   org: Cisco Systems
 
 normative:
-  NCA:
-    title: Network Computing Architecture
-    author:
-    - ins: L. Zahn
-      name: L. Zahn
-      org: ''
-    - ins: T. Dineen
-      name: T. Dineen
-      org: ''
-    - ins: P. Leach
-      name: P. Leach
-      org: ''
-    date: 1990-01
-    seriesinfo:
-      ISBN: 0-13-611674-4
   C309:
     target: https://pubs.opengroup.org/onlinepubs/9696999099/toc.pdf
     title: "DCE: Remote Procedure Call"
@@ -66,14 +51,9 @@ normative:
       registration of Universally Unique Identifiers (UUIDs) and their
       use as ASN.1 Object Identifier components"
     date: 2004
-  RFC1321: RFC1321
-  RFC6151: RFC6151
   RFC4086: RFC4086
-  RFC4122: RFC4122
   RFC8141: RFC8141
-  RFC5234: RFC5234
-  RFC6194: RFC6194
-  SHA1:
+  FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
     author:
@@ -81,7 +61,7 @@ normative:
     date: August 2015
     seriesinfo:
       FIPS: PUB 180-4
-  SHA3:
+  FIPS202:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
     title: "SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions"
     author:
@@ -101,6 +81,11 @@ normative:
     - name: Peter Occil
     date: 2023
 informative:
+  RFC1321: RFC1321
+  RFC4122: RFC4122
+  RFC5234: RFC5234
+  RFC6151: RFC6151
+  RFC6194: RFC6194
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
     title: A Scala client for Cassandra
@@ -251,7 +236,7 @@ in Microsoft Windows platforms.
 This specification is derived from the DCE specification with the
 kind permission of the OSF (now known as The Open Group).
 Information from earlier versions of the DCE specification have been
-incorporated into this document.
+incorporated into this document. This document obsoletes RFC4122.
 
 --- middle
 
@@ -262,9 +247,15 @@ UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
 Unique IDentifiers).  A UUID is 128 bits long, and requires no central
 registration process.
 
+The use of UUIDs is extremely pervasive in computing.  They comprise
+the core identifier infrastructure for many operating systems
+such as Microsoft Windows and applications such as the Mozilla Web browser and in
+many cases, become exposed in many non-standard ways.
+
+This specification attempts to standardize that practice as openly as
+possible and in a way that attempts to benefit the entire Internet.
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs as URNs {{RFC8141}}.  Nothing in this document
-should be construed to override the DCE standards that defined UUIDs.
+to implement services using UUIDs.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -272,6 +263,7 @@ specifications have been aligned and are fully technically
 compatible.  In addition, a global registration function is being
 provided by the Telecommunications Standardization Bureau of ITU-T;
 for details see [](https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx).
+Nothing in this document should be construed to override the DCE standards that defined UUIDs.
 
 # Motivation {#motivation}
 
@@ -427,8 +419,26 @@ ITU
 MD5
 : Message Digest 5
 
-SHA1
-: Secure Hash Algorithm 1
+SHA
+: Secure Hash Algorithm
+
+SHA-1
+: Secure Hash Algorithm 1 with message digest of 160 bits
+
+SHA-224
+: Secure Hash Algorithm with message digest size of 224 bits
+
+SHA-256
+: Secure Hash Algorithm with message digest size of 256 bits
+
+SHA-512
+: Secure Hash Algorithm with message digest size of 512 bits
+
+SHA-3
+: Secure Hash Algorithm 3
+
+SHAKE
+: Secure Hash Algorithm 3 based on KECCAK algorithm
 
 UTC
 : Coordinated Universal Time
@@ -442,22 +452,31 @@ draft-03
 
 {: spacing="compact"}
 
-- Revised IANA Considerations
-
+- Revised IANA Considerations #71
+- Fix "integral numbers of octets" verbiage #67
+- Transpose UUID Namespaces to match UUID Hashspaces #70
+- Reference all Hash Algorithms. #69
+- Normalize SHA abbreviation formats #66
+- Add other Hash Abbreviations #65
+- Remove URN from title #73
+- Move Community Considerations to Introduction #68
+- Move some Normative Reference to Informative #74
+- Misc formatting changes to address IDNITS feedback
+- Downgrade MUST NOT to SHOULD NOT for guessability of UUIDs #75
 
 draft-02
 
 {: spacing="compact"}
 
-- Change md5_high in SHA1 section to sha1_mid #59
+- Change md5_high in SHA-1 section to sha1_mid #59
 - Describe Nil/Max UUID in variant table #16
 - Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
 - Appendix B, consistent naming #55
 - Remove duplicate ABNF from IANA considerations #56
 - Monotonic Error Checking missing newline #57
 - More Security Considerations Randomness #26
-- SHA256 UUID Generation #50
-- Expand multiplexed fields within v1 and v6 bit definitions # 43
+- SHA-256 UUID Generation #50
+- Expand multiplexed fields within v1 and v6 bit definitions #43
 - Clean up text in UUIDs that Do Not Identify the Host #61
 - Revise UUID Generator States section #47
 - Expand upon why unix epoch rollover is not a problem #44
@@ -495,7 +514,7 @@ draft-00
 - Change: Reference RFC1321 to RFC6151
 - Change: Reference RFC2141 to RFC8141
 - Change: Reference RFC2234 to RFC5234
-- Change: Reference FIPS 180-1 to FIPS 180-4 for SHA1
+- Change: Reference FIPS 180-1 to FIPS 180-4 for SHA-1
 - Change: Converted UUIDv1 to match UUIDv6 section from Draft 04
 - Change: Trimmed down the ABNF representation
 - Change: http websites to https equivalent
@@ -518,7 +537,7 @@ draft-00
 - New: Block diagram, bit layout, test vectors for UUIDv3
 - New: Block diagram, bit layout, test vectors for UUIDv5
 - New: Add MD5 Security Considerations reference, RFC6151
-- New: Add SHA1 Security Considerations reference, RFC6194
+- New: Add SHA-1 Security Considerations reference, RFC6194
 
 # UUID Format {#format}
 
@@ -534,14 +553,14 @@ When used with databases please refer to {{database_considerations}}.
 The formal definition of the UUID string representation is provided by the following (ABNF) {{RFC5234}}.
 
 ~~~~ abnf
-   UUID     = 4hexOctet "-"
-              2hexOctet "-"
-              2hexOctet "-"
-              2hexOctet "-"
-              6hexOctet
-   hexOctet = HEXDIG HEXDIG
-   DIGIT    = %x30-39
-   HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+UUID     = 4hexOctet "-"
+           2hexOctet "-"
+           2hexOctet "-"
+           2hexOctet "-"
+           6hexOctet
+hexOctet = HEXDIG HEXDIG
+DIGIT    = %x30-39
+HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
 An example UUID using this textual representation from the above ABNF is shown in {{sampleStringUUID}}.
@@ -637,10 +656,8 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 
 # UUID Layouts {#layout}
 
-To minimize confusion about bit assignments within octets and among differing versions,
-the UUID record definition is defined only in terms of fields that are
-integral numbers of octets.  The fields are presented with the most
-significant one first.
+To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a a grouping of fields within bit layout consisting four octets to a row.
+The fields are presented with the most significant one first.
 
 In the absence of explicit application or presentation protocol
 specification to the contrary, each field is encoded with the Most
@@ -846,19 +863,19 @@ random_c:
 UUID Version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
-UUIDv5 values are created by computing an SHA1 {{SHA1}}
+UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
-This SHA1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
+This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
 
 Some common name space values have been defined via {{namespaces}}.
 
-There may be scenarios, usually depending on organizational security policies, where SHA1 libraries may not be available or deemed unsafe for use.
-As such it may be desirable to generate name-based UUIDs derived from SHA256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
+There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
+As such it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
 For implementation guidance around utilizing UUIDv8 for name-based UUIDs refer to the sub-section of {{name_based_uuid_generation}}.
 
-For more information on SHA1 security considerations see {{RFC6194}}.
+For more information on SHA-1 security considerations see {{RFC6194}}.
 
 ~~~~
  0                   1                   2                   3
@@ -880,7 +897,7 @@ For more information on SHA1 security considerations see {{RFC6194}}.
 sha1_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
-  from the computed SHA1 value.
+  from the computed SHA-1 value.
 
 ver:
 : The 4 bit version field as defined by {{version_field}}
@@ -888,16 +905,16 @@ ver:
 sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following sha1_high
-  from the computed SHA1 value.
+  from the computed SHA-1 value.
 
 var:
 : The 2 bit variant field as defined by {{variant_field}}.
 
 sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
-  filled by skipping the 2 most significant, left-most bits of the remaining SHA1 hash
+  filled by skipping the 2 most significant, left-most bits of the remaining SHA-1 hash
   and then using the next 62 most significant, left-most bits.
-  Any leftover SHA1 bits are discarded and unused.
+  Any leftover SHA-1 bits are discarded and unused.
 
 ## UUID Version 6 {#uuidv6}
 
@@ -1454,19 +1471,19 @@ A note on namespaces:
 
 Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
- These MAY leverage newer hashing protocols such as SHA256, SHA512, {{SHA3}} or even protocols that have not been defined yet.
+ These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
  To ensure UUIDv8 Name-Based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
  Creation of name-based version 8 UUIDs follow the same logic defined in {{uuidv5}} but the hashspace should be used to as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout and finally trim any excess bits beyond 128.
  An important note for secure hashing algorithms that produce variable rate outputs, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
- See {{uuidv8_example_name}} for a SHA256 UUIDv8 example test vector.
+ See {{uuidv8_example_name}} for a SHA-256 UUIDv8 example test vector.
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
   As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying a the algorithm.
-  That is, to detail SHA2-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA2-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  That is, to detail SHA-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels and actual method of sharing this data between systems it outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
@@ -1546,7 +1563,7 @@ The exact algorithm to generate a node ID using these data is system
 specific, because both the data available and the functions to obtain
 them are often very system specific.  A generic approach, however, is
 to accumulate as many sources as possible into a buffer, use a
-message digest such as MD5 {{RFC1321}} or SHA-1 {{SHA1}}, take an arbitrary 6
+message digest such as MD5 {{RFC1321}} or SHA-1 {{FIPS180-4}}, take an arbitrary 6
 bytes from the hash value, and set the multicast bit as described
 above.
 
@@ -1614,20 +1631,10 @@ and feedback.
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
 Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces or hashspaces.
 
-# Community Considerations {#community}
-
-The use of UUIDs is extremely pervasive in computing.  They comprise
-the core identifier infrastructure for many operating systems
-such as Microsoft Windows and applications such as the Mozilla Web browser and in
-many cases, become exposed in many non-standard ways.
-
-This specification attempts to standardize that practice as openly as
-possible and in a way that attempts to benefit the entire Internet.
-
 # Security Considerations {#Security}
 
-Implementations MUST NOT assume that UUIDs are hard to guess.
-For example, they MUST not be used
+Implementations SHOULD NOT assume that UUIDs are hard to guess.
+Foe example, they MUST NOT be used
 as security capabilities (identifiers whose mere possession grants
 access).  Discovery of predictability in a random number source will
 result in a vulnerability.
@@ -1637,7 +1644,7 @@ slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
-MAC addresses pose inherent security risks and SHOULD not be used within
+MAC addresses pose inherent security risks and SHOULD NOT be used within
 a UUID.
 Instead CSPRNG data SHOULD be selected from a source with sufficient entropy
 to ensure guaranteed
@@ -1652,7 +1659,7 @@ If UUIDs are required for
 use with any security operation within an application context in any shape
 or form then UUIDv4, {{uuidv4}} SHOULD be utilized.
 
-See {{RFC6151}} for MD5 Security Considerations and {{RFC6194}} for SHA1 security considerations.
+See {{RFC6151}} for MD5 Security Considerations and {{RFC6194}} for SHA-1 security considerations.
 
 # Acknowledgements {#Acknowledgements}
 
@@ -1689,48 +1696,20 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 # Some Name Space IDs {#namespaces}
 
-   This appendix lists the name space IDs for some potentially
-   interesting name spaces, as initialized C structures and in the
-   string representation defined above.
+This appendix lists the name space IDs for some potentially interesting name spaces such those for 
+fully-qualified domain names (DNS), uniform resource locators (URLs), ISO OIDs, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
 
-~~~
-   /* Name string is a fully-qualified domain name */
-   uuid_t NameSpace_DNS = { /* 6ba7b810-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b810,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-
-   /* Name string is a URL */
-   uuid_t NameSpace_URL = { /* 6ba7b811-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b811,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-
-   /* Name string is an ISO OID */
-   uuid_t NameSpace_OID = { /* 6ba7b812-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b812,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-
-   /* Name string is an X.500 DN (in DER or a text output format) */
-   uuid_t NameSpace_X500 = { /* 6ba7b814-9dad-11d1-80b4-00c04fd430c8 */
-       0x6ba7b814,
-       0x9dad,
-       0x11d1,
-       0x80, 0xb4, 0x00, 0xc0, 0x4f, 0xd4, 0x30, 0xc8
-   };
-~~~
+~~~~ code
+NameSpace_DNS  = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+NameSpace_URL  = "6ba7b811-9dad-11d1-80b4-00c04fd430c8"
+NameSpace_OID  = "6ba7b812-9dad-11d1-80b4-00c04fd430c8"
+NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
+~~~~
 
 # Some Hash Space IDs {#hashspaces}
 This appendix lists the hash space IDs for use with UUIDv8 name-based UUIDs.
 
-~~~~
+~~~~ code
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
 SHA2_256     = "3fb32780-953c-4464-9cfd-e85dbbe9843d"
 SHA2_384     = "e6800581-f333-484b-8778-601ff2b58da8"
@@ -1754,49 +1733,48 @@ Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit timestamp: 0x1EC9414
 Both UUIDv1 and UUIDv6 utilize the same values in clock_seq,
 and node. All of which have been generated with random data.
 
+The pseudocode used for converting from a 64 bit Unix timestamp to a 100ns Gregorian timestamp value
+has been left in the document for reference purposes.
 
-~~~~
-# Unix Nanosecond precision to Gregorian 100-nanosecond intervals
-gregorian_100_ns = (Unix_64_bit_nanoseconds / 100) + gregorian_Unix_offset
-
+~~~~ code
 # Gregorian to Unix Offset:
 # The number of 100-ns intervals between the
-# UUID epoch 1582-10-15 00:00:00 and the Unix epoch 1970-01-01 00:00:00.
+# UUID epoch 1582-10-15 00:00:00 and the Unix epoch 1970-01-01 00:00:00
 # gregorian_Unix_offset = 0x01b21dd213814000 or 122192928000000000
 
 # Unix 64 bit Nanosecond Timestamp:
 # Unix NS: Tuesday, February 22, 2022 2:22:22 PM GMT-05:00
 # Unix_64_bit_nanoseconds = 0x16D6320C3D4DCC00 or 1645557742000000000
 
+# Unix Nanosecond precision to Gregorian 100-nanosecond intervals
+gregorian_100_ns = (Unix_64_bit_nanoseconds/100)+gregorian_Unix_offset
+
 # Work:
-# gregorian_100_ns = (1645557742000000000 / 100) + 122192928000000000
-# (138648505420000000 - 122192928000000000) * 100 = Unix_64_bit_nanoseconds
+# gregorian_100_ns = (1645557742000000000/100)+122192928000000000
+# Unix_64_bit_nanoseconds = (138648505420000000-122192928000000000)*100
 
 # Final:
 # gregorian_100_ns = 0x1EC9414C232AB00 or 138648505420000000
-
-# Original: 000111101100100101000001010011000010001100101010101100000000
-# UUIDv1:   11000010001100101010101100000000|1001010000010100|0001|000111101100
-# UUIDv6:   00011110110010010100000101001100|0010001100101010|0110|101100000000
 ~~~~
 {: title='Test Vector Timestamp Pseudo-code'}
 
 ## Example of a UUIDv1 Value {#uuidv1_example}
+
 ~~~~
-----------------------------------------------
-field                 bits    value
-----------------------------------------------
-time_low              32      0xC232AB00
-time_mid              16      0x9414
-ver                    4      0x1
-time_high             12      0x1EC
-var                    2      b10
-clock_seq             14      b11, 0x3C8
-node                  48      0x9E6BDECED846
-----------------------------------------------
-total                128
-----------------------------------------------
-final_hex: C232AB00-9414-11EC-B3C8-9E6BDECED846
+-------------------------------------------
+field      bits value
+-------------------------------------------
+time_low   32   0xC232AB00
+time_mid   16   0x9414
+ver         4   0x1
+time_high  12   0x1EC
+var         2   b10
+clock_seq  14   b11, 0x3C8
+node       48   0x9E6BDECED846
+-------------------------------------------
+total      128
+-------------------------------------------
+final: C232AB00-9414-11EC-B3C8-9E6BDECED846
 ~~~~
 {: title='UUIDv1 Example Test Vector'}
 
@@ -1806,33 +1784,33 @@ while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swapping for version and variant see {{v3vervar}}.
 
 ~~~~
-Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
-Name:                   www.example.com
------------------------------------------------
-MD5:                    5df418813aed051548a72f4a814cf09e
+Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:             www.example.com
+------------------------------------------------------
+MD5:              5df418813aed051548a72f4a814cf09e
 ~~~~
 {: id='v3md5' title='UUIDv3 Example MD5'}
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-md5_high   48      0x5df418813aed
-ver         4      0x3
-md5_mid    12      0x515
-var         2      b10
-md5_low    62      b00, 0x8a72f4a814cf09e
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+md5_high  48   0x5df418813aed
+ver        4   0x3
+md5_mid   12   0x515
+var        2   b10
+md5_low   62   b00, 0x8a72f4a814cf09e
+-------------------------------------------
 total     128
--------------------------------
+-------------------------------------------
 final: 5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~~
 {: id='v3fields' title='UUIDv3 Example Test Vector'}
 
 ~~~~
-MD5 hex and dash:       5df41881-3aed-0515-48a7-2f4a814cf09e
-Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                  5df41881-3aed-3515-88a7-2f4a814cf09e
+MD5 hex and dash:      5df41881-3aed-0515-48a7-2f4a814cf09e
+Ver and Var Overwrite: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                 5df41881-3aed-3515-88a7-2f4a814cf09e
 ~~~~
 {: id='v3vervar' title='UUIDv3 Example Ver Var bit swaps'}
 
@@ -1845,84 +1823,84 @@ fill out the fields as shown in {{v4fields}}.
 Finally to further illustrate the bit swapping for version and variant see {{v4vervar}}.
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-random_a   48      0x919108f752d1
-ver         4      0x4
-random_b   12      0x320
-var         2      b10
-random_c   62      b01, 0xbacf847db4148a8
--------------------------------
-total      128
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+random_a  48   0x919108f752d1
+ver        4   0x4
+random_b  12   0x320
+var        2   b10
+random_c  62   b01, 0xbacf847db4148a8
+-------------------------------------------
+total     128
+-------------------------------------------
 final: 919108f7-52d1-4320-9bac-f847db4148a8
 ~~~~
 {: id='v4fields' title='UUIDv4 Example Test Vector'}
 
 ~~~~
-Random hex:             919108f752d133205bacf847db4148a8
-Random hex and dash:    919108f7-52d1-3320-5bac-f847db4148a8
-Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                  919108f7-52d1-4320-9bac-f847db4148a8
+Random hex:            919108f752d133205bacf847db4148a8
+Random hex and dash:   919108f7-52d1-3320-5bac-f847db4148a8
+Ver and Var Overwrite: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                 919108f7-52d1-4320-9bac-f847db4148a8
 ~~~~
 {: id='v4vervar' title='UUIDv4 Example Ver/Var bit swaps '}
 
 
 ## Example of a UUIDv5 Value {#uuidv5_example}
-The SHA1 computation from is detailed in {{v5sha1}} using the DNS NameSpace and the Name "www.example.com".
+The SHA-1 computation from is detailed in {{v5sha1}} using the DNS NameSpace and the Name "www.example.com".
 while the field mapping and all values are illustrated in {{v5fields}}.
-Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA1 value see {{v5vervar}}.
+Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-1 value see {{v5vervar}}.
 
 ~~~~
-Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
-Name:                   www.example.com
------------------------------------------------
-SHA1:                   2ed6657de927468b55e12665a8aea6a22dee3e35
+Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:             www.example.com
+----------------------------------------------------------
+SHA-1:            2ed6657de927468b55e12665a8aea6a22dee3e35
 ~~~~
-{: id='v5sha1' title='UUIDv5 Example SHA1'}
+{: id='v5sha1' title='UUIDv5 Example SHA-1'}
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-sha1_high  48      0x2ed6657de927
-ver         4      0x5
-sha1_mid   12      0x68b
-var         2      b10
-sha1_low   62      b01, 0x5e12665a8aea6a2
--------------------------------
-total     128
--------------------------------
+-------------------------------------------
+field      bits value
+-------------------------------------------
+sha1_high  48   0x2ed6657de927
+ver         4   0x5
+sha1_mid   12   0x68b
+var         2   b10
+sha1_low   62   b01, 0x5e12665a8aea6a2
+-------------------------------------------
+total      128
+-------------------------------------------
 final: 2ed6657d-e927-568b-95e1-2665a8aea6a2
 ~~~~
 {: id='v5fields' title='UUIDv5 Example Test Vector'}
 
 ~~~~
-SHA1 hex and dash:      2ed6657d-e927-468b-55e1-2665a8aea6a2-2dee3e35
-Ver and Var Overwrite:  xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                  2ed6657d-e927-568b-95e1-2665a8aea6a2
-Discarded:                                                  -2dee3e35
+SHA-1 hex and dash:    2ed6657d-e927-468b-55e1-2665a8aea6a2-2dee3e35
+Ver and Var Overwrite: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+Final:                 2ed6657d-e927-568b-95e1-2665a8aea6a2
+Discarded:                                                 -2dee3e35
 ~~~~
-{: id='v5vervar' title='UUIDv5 Example Ver/Var bit swaps and discarded SHA1 segment'}
+{: id='v5vervar' title='UUIDv5 Example Ver/Var bit swaps and discarded SHA-1 segment'}
 
 ## Example of a UUIDv6 Value {#uuidv6_example}
 
 ~~~~
------------------------------------------------
-field                 bits    value
------------------------------------------------
-time_high              32     0x1EC9414C
-time_mid               16     0x232A
-ver                     4     0x6
-time_high              12     0xB00
-var                     2     b10
-clock_seq              14     b11, 0x3C8
-node                   48     0x9E6BDECED846
------------------------------------------------
-total                 128
------------------------------------------------
-final_hex: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
+-------------------------------------------
+field       bits value
+-------------------------------------------
+time_high   32   0x1EC9414C
+time_mid    16   0x232A
+ver          4   0x6
+time_high   12   0xB00
+var          2   b10
+clock_seq   14   b11, 0x3C8
+node        48   0x9E6BDECED846
+-------------------------------------------
+total       128
+-------------------------------------------
+final: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
 ~~~~
 {: title='UUIDv6 Example Test Vector'}
 
@@ -1939,17 +1917,17 @@ as 0x17F22E279B0 or 1645557742000
 
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-unix_ts_ms   48    0x17F22E279B0
-ver           4    0x7
-rand_a       12    0xCC3
-var           2    b10
-rand_b       62    b01, 0x8C4DC0C0C07398F
--------------------------------
+-------------------------------------------
+field       bits value
+-------------------------------------------
+unix_ts_ms  48   0x17F22E279B0
+ver          4   0x7
+rand_a      12   0xCC3
+var          2   b10
+rand_b      62   b01, 0x8C4DC0C0C07398F
+-------------------------------------------
 total       128
--------------------------------
+-------------------------------------------
 final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 ~~~~
 {: title='UUIDv7 Example Test Vector'}
@@ -1973,55 +1951,65 @@ from this simple example.
 
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-custom_a     48    0x320C3D4DCC00
-ver           4    0x8
-custom_b     12    0x75B
-var           2    b10
-custom_c     62    b00, 0xEC932D5F69181C0
--------------------------------
-total       128
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+custom_a  48   0x320C3D4DCC00
+ver        4   0x8
+custom_b  12   0x75B
+var        2   b10
+custom_c  62   b00, 0xEC932D5F69181C0
+-------------------------------------------
+total     128
+-------------------------------------------
 final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 ~~~~
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces alongside namespace and names.
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces alongside namespace and names.
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
-Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA256 value see {{v8vervar}}.
+Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
 ~~~~
-Hash Space (SHA2_256):  3fb32780-953c-4464-9cfd-e85dbbe9843d
-Name Space (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
-Name:                   www.example.com
------------------------------------------------
-SHA256:                 401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
+Hash Space (SHA2_256): 3fb32780-953c-4464-9cfd-e85dbbe9843d
+Name Space (DNS):      6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Name:                  www.example.com
+----------------------------------------------------------------
+SHA-256:
+401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
 ~~~~
 {: id='v8sha256' title='UUIDv8 Example SHA256'}
 
 ~~~~
--------------------------------
-field      bits    value
--------------------------------
-custom_a     48    0x401835fda627
-ver           4    0x8
-custom_b     12    0x627
-var           2    b10
-custom_c     62    b0, 0x73fed73f2bc5b2c
--------------------------------
-total       128
--------------------------------
+-------------------------------------------
+field     bits value
+-------------------------------------------
+custom_a  48   0x401835fda627
+ver        4   0x8
+custom_b  12   0x627
+var        2   b10
+custom_c  62   b0, 0x73fed73f2bc5b2c
+-------------------------------------------
+total     128
+-------------------------------------------
 final: 401835fd-a627-870a-873f-ed73f2bc5b2c
 ~~~~
-{: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA256 Test Vector'}
+{: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA-256 Test Vector'}
 
 ~~~~
-SHA256 hex and dash:      401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
-Ver and Var Overwrite:    xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-Final:                    401835fd-a627-870a-873f-ed73f2bc5b2c
-Discarded:                                                    -2a8936385a38a9c133de0ca4af0dfaed
+A: 401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
+B: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+C: 401835fd-a627-870a-873f-ed73f2bc5b2c
+D:                                     -2a8936385a38a9c133de0ca4af0dfaed
 ~~~~
-{: id='v8vervar' title='UUIDv8 Example Ver/Var bit swaps and discarded SHA256 segment'}
+{: id='v8vervar' title='UUIDv8 Example Ver/Var bit swaps and discarded SHA-256 segment'}
+
+Examining {{v8vervar}}:
+
+{: spacing="compact"}
+
+- Line A details the full SHA-256 as a hex value with the dashes inserted.
+- Line B details the version and variant hex positions which must be overwritten.
+- Line C details the final value after the ver/var have been overwritten.
+- Line D details the discarded, leftover values from the original SHA-256 computation.
