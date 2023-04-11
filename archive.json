@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-04-09T01:28:28.854004+00:00",
+  "timestamp": "2023-04-11T01:24:50.745682+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2251,7 +2251,7 @@
       "labels": [],
       "body": "This deals with the code nit, and turns the examples into tables.\r\n",
       "createdAt": "2023-04-07T16:34:48Z",
-      "updatedAt": "2023-04-07T16:34:48Z",
+      "updatedAt": "2023-04-10T21:47:49Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
@@ -2263,7 +2263,34 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5SJTwU",
+          "commit": {
+            "abbreviatedOid": "a4b4db9"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Couple of small typos. Haven't rendered it to see how the tables look but assume someone has.",
+          "createdAt": "2023-04-10T21:44:17Z",
+          "updatedAt": "2023-04-10T21:47:48Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "```suggestion\r\nrandom_a   | 48  |    0x919108f752d1 |\r\n```",
+              "createdAt": "2023-04-10T21:44:17Z",
+              "updatedAt": "2023-04-10T21:47:48Z"
+            },
+            {
+              "originalPosition": 251,
+              "body": "```suggestion\r\ncustom_a  |  48   | 0x320C3D4DCC00  |\r\n```",
+              "createdAt": "2023-04-10T21:45:39Z",
+              "updatedAt": "2023-04-10T21:47:48Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 78,
@@ -2277,7 +2304,7 @@
       "labels": [],
       "body": "Some typo fixes, hopefully zero controversy.",
       "createdAt": "2023-04-09T00:13:08Z",
-      "updatedAt": "2023-04-09T01:03:37Z",
+      "updatedAt": "2023-04-10T21:52:17Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
@@ -2289,7 +2316,34 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5SJVFQ",
+          "commit": {
+            "abbreviatedOid": "87d8a0b"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Looks good. As editors, you can assume consensus on editorial things like this; don't let approvals hold you up.",
+          "createdAt": "2023-04-10T21:50:49Z",
+          "updatedAt": "2023-04-10T21:50:49Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJVW-",
+          "commit": {
+            "abbreviatedOid": "87d8a0b"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Oops, meant to approve",
+          "createdAt": "2023-04-10T21:52:17Z",
+          "updatedAt": "2023-04-10T21:52:17Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 79,
@@ -2303,18 +2357,26 @@
       "labels": [],
       "body": "Here are some clarifications I'd like to make on various pieces of text.  These shouldn't have a significant semantic change in terms of what we are specifying, but hopefully provide more clarity on specific topics that I though should have a bit more detail.  I'll also add some review notes to give more on the motivation for each change in cases where it may not be obvious.",
       "createdAt": "2023-04-09T01:07:31Z",
-      "updatedAt": "2023-04-09T01:23:22Z",
+      "updatedAt": "2023-04-10T23:56:50Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
       "headRepository": "bradleypeabody/rfc4122bis",
       "headRefName": "20230408-clarifications",
-      "headRefOid": "cdf2f49cc18a098fbc6ab381f3c5e53c9b583822",
+      "headRefOid": "3609d1ced90d0621d55134482807a913220a8e72",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@jimfenton I agree with all of your edits, those have been updated.",
+          "createdAt": "2023-04-10T23:55:47Z",
+          "updatedAt": "2023-04-10T23:55:47Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH6Ln3M5SEKB4",
@@ -2330,9 +2392,9 @@
           "comments": [
             {
               "originalPosition": 13,
-              "body": "I think it's important to not over-promise here - we can't actually guarantee uniqueness, but we can get delivery a high probability. I think the wording should reflect that.",
+              "body": "I think it's important to not over-promise here - we can't actually guarantee uniqueness, but we can deliver a high probability. I think the wording should reflect that.",
               "createdAt": "2023-04-09T01:09:01Z",
-              "updatedAt": "2023-04-09T01:09:01Z"
+              "updatedAt": "2023-04-09T03:49:44Z"
             }
           ]
         },
@@ -2390,9 +2452,9 @@
           "comments": [
             {
               "originalPosition": 50,
-              "body": "As mentioned elsewhere URNs are just one aspect of UUIDs, so I think this helps make it more clear.",
+              "body": "Since the recommendation is that applications use an internal binary representation, I think it makes mores sense to indicate that if an application has to use text, it should use this format.",
               "createdAt": "2023-04-09T01:13:29Z",
-              "updatedAt": "2023-04-09T01:13:29Z"
+              "updatedAt": "2023-04-09T16:47:35Z"
             }
           ]
         },
@@ -2510,9 +2572,9 @@
           "comments": [
             {
               "originalPosition": 109,
-              "body": "I think this communicate the point - an implementation, wherever possible, should prevent a duplicate value from being returned as part of being a correct implementation.  Or to state it another way: if you could have easily prevented returning a value but did not, that's a bug that should be fixed.",
+              "body": "I think this communicates the point - an implementation, wherever possible, should prevent a duplicate value from being returned as part of being a correct implementation.  Or to state it another way: if you could have easily prevented returning a value but did not, that's a bug that should be fixed.",
               "createdAt": "2023-04-09T01:16:19Z",
-              "updatedAt": "2023-04-09T01:16:19Z"
+              "updatedAt": "2023-04-09T16:49:32Z"
             }
           ]
         },
@@ -2653,6 +2715,346 @@
               "body": "I think this helps give more guidance on the opacity concern.  My rationale here is that people writing UUID libraries and such will have to make a decision about how much parsing capability to include, and I don't want people to feel compelled to provide a bunch of detailed parsing, when one of the whole drives of these new UUIDs is that they are more useful as opaque values.  So with this wording I think it's more clear and will ease the implementation burden.",
               "createdAt": "2023-04-09T01:23:21Z",
               "updatedAt": "2023-04-09T01:23:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJWAt",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-10T21:55:42Z",
+          "updatedAt": "2023-04-10T21:55:42Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "I've been wondering why they call this a \"nil UUID\" rather than a \"null UUID\" (which makes more sense to me), but I think that ship has already sailed.",
+              "createdAt": "2023-04-10T21:55:42Z",
+              "updatedAt": "2023-04-10T21:55:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJW_j",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Minor suggestions, otherwise ready to go.",
+          "createdAt": "2023-04-10T21:59:51Z",
+          "updatedAt": "2023-04-10T22:02:04Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Serial comma:\r\n```suggestion\r\nto implement services using UUIDs, as URNs {{RFC8141}}, or otherwise.\r\n```",
+              "createdAt": "2023-04-10T21:59:52Z",
+              "updatedAt": "2023-04-10T22:02:04Z"
+            },
+            {
+              "originalPosition": 32,
+              "body": "\"up to...or more\" doesn't really make sense:\r\n```suggestion\r\nhigh allocation rates of 10 million per second per machine or more if\r\n```",
+              "createdAt": "2023-04-10T22:00:46Z",
+              "updatedAt": "2023-04-10T22:02:04Z"
+            },
+            {
+              "originalPosition": 91,
+              "body": "```suggestion\r\nA Max UUID value can be used as a sentinel value in situations where a 128-bit UUID is required but a concept such as \"end of UUID list\" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.\r\n```",
+              "createdAt": "2023-04-10T22:01:34Z",
+              "updatedAt": "2023-04-10T22:02:04Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 80,
+      "id": "PR_kwDOH6Ln3M5N4XAS",
+      "title": "some SHOULD/MUST adjustments",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/80",
+      "state": "OPEN",
+      "author": "bradleypeabody",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "These are a few SHOULD/MUST adjustments that I think help improve the accuracy.  I won't die over these but would be good to merge if others agree.",
+      "createdAt": "2023-04-09T01:31:23Z",
+      "updatedAt": "2023-04-10T23:48:22Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "headRepository": "bradleypeabody/rfc4122bis",
+      "headRefName": "20230408-should-must-ify",
+      "headRefOid": "b0170a733c86c6b1a8f56b89d13739fa5fbc7e27",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@jimfenton Thanks for the feedback, I've fixed the issues you brought up.",
+          "createdAt": "2023-04-10T23:45:04Z",
+          "updatedAt": "2023-04-10T23:45:04Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKUD",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:32:25Z",
+          "updatedAt": "2023-04-09T01:32:25Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Since all of the time UUIDs only use either Gregorian or Unix timestamp, and v8 is the only option where you can do something else, it should be fine to convert this to a MUST.",
+              "createdAt": "2023-04-09T01:32:25Z",
+              "updatedAt": "2023-04-09T01:32:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKV6",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:34:59Z",
+          "updatedAt": "2023-04-09T01:35:00Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "My concern on this one is that stalling the clock or erroring are not necessarily the only viable solutions to this problem.  But I'm on the fence on this one.  I think I also added separately in another PR a \"MUST NOT\" sentence that says the thing that it really cannot do is return a knowingly duplicated value, which I think is the key point to stress here.",
+              "createdAt": "2023-04-09T01:34:59Z",
+              "updatedAt": "2023-04-09T01:35:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKWe",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:35:57Z",
+          "updatedAt": "2023-04-09T01:35:58Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "This entire thing is a suggestion, so I'm not sure it makes sense to use MUST here, it's sort of like saying \"this is just advice and only way to solve the problem, but if you're listing, you MUST do it this way...\" - I think a SHOULD makes more sense.",
+              "createdAt": "2023-04-09T01:35:57Z",
+              "updatedAt": "2023-04-09T01:35:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SEKXS",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T01:37:04Z",
+          "updatedAt": "2023-04-09T01:37:04Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "While I like the notion that careless implementations are incorrect \ud83d\ude04, I'm not sure that saying people MUST take here works here.  Probably better to just take it out.",
+              "createdAt": "2023-04-09T01:37:04Z",
+              "updatedAt": "2023-04-09T01:37:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJYA3",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "A couple of suggestions here. Please avoid language like \"Care SHOULD/MUST be taken\" (e.g., line 1208) because it's not possible to verify whether care was taken or not, only whether the thing was done. Use the more straightforward imperative; it's also something that can be verified.",
+          "createdAt": "2023-04-10T22:05:17Z",
+          "updatedAt": "2023-04-10T22:14:14Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n: Select a counter bit-length that can properly handle\r\n```",
+              "createdAt": "2023-04-10T22:05:17Z",
+              "updatedAt": "2023-04-10T22:14:14Z"
+            },
+            {
+              "originalPosition": 23,
+              "body": "The text is saying here that there are two ways to solve the problem. If the second choice is used and the counter isn't incremented, the problem isn't necessarily solved. I prefer the MUST.",
+              "createdAt": "2023-04-10T22:10:36Z",
+              "updatedAt": "2023-04-10T22:14:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJbHj",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-10T22:20:49Z",
+          "updatedAt": "2023-04-10T22:20:49Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Okay cool, I'm all good with striking this change then and leaving it how it was (MUST).",
+              "createdAt": "2023-04-10T22:20:49Z",
+              "updatedAt": "2023-04-10T22:20:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJncC",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "greatestape",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-10T23:35:26Z",
+          "updatedAt": "2023-04-10T23:35:26Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "Should this be in passive voice like the text above it? Like \"Implementations using a fixed-length counter method SHOULD use a counter bit-length that can properly handle the level of timestamp precision in use.\"\r\n\r\n(Sorry, I'm just lurking and cheering you all on! I'm excited for uuidv7!)",
+              "createdAt": "2023-04-10T23:35:26Z",
+              "updatedAt": "2023-04-10T23:48:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJoYn",
+          "commit": {
+            "abbreviatedOid": "0c249db"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-10T23:42:45Z",
+          "updatedAt": "2023-04-10T23:42:46Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "@greatestape thanks for the suggestion, I think Jim's suggested edit handles it though, I'll proceed with that.",
+              "createdAt": "2023-04-10T23:42:45Z",
+              "updatedAt": "2023-04-10T23:42:46Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 81,
+      "id": "PR_kwDOH6Ln3M5N5FJW",
+      "title": "add two more methods to the monotonic section",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/81",
+      "state": "OPEN",
+      "author": "bradleypeabody",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "After reading through everything again, while the monotonic/counter section works as it stands now, I think it would greatly benefit from two other specific suggested methods for achieving monotonicity.\r\n\r\nThe first I think is beneficial because it is trivial to implement (just keep generating random values until you get one that is greater than the last), and implementors prioritizing simplicity would benefit from it.\r\n\r\nAnd the second brings back a concept that I originally proposed in the initial draft for UUID v7 (using bits in the UUID that immediately follow the timestamp to encode more timestamp precision in a way that is time ordered), but later removed because it was often misunderstood.  However, I think the key benefit to this approach (just using the additional precision available in the system clock for what it is meant for) still exists and makes sense, and having it here as an optional feature so implementations are not required to understand and use it if they don't need to - I believe that tradeoff makes a lot of sense.  I tried to keep it super simple by just giving an example of how to use it, and people can infer the underlying math/theory or not as needed.",
+      "createdAt": "2023-04-09T17:55:16Z",
+      "updatedAt": "2023-04-11T01:15:40Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "headRepository": "bradleypeabody/rfc4122bis",
+      "headRefName": "20230408-timestamp-stuff",
+      "headRefOid": "2711ac4300090ca52218c23ffc70987bfc3406c9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@jimfenton Thanks for the feedback, I did the edits you suggested and split up Method 4 into a few paragraphs and added a normative description as you suggest.  Let me know if there's anything else you think I should adjust immediately and otherwise I agree it would be good to get more feedback from others and go from there.",
+          "createdAt": "2023-04-11T01:14:30Z",
+          "updatedAt": "2023-04-11T01:14:30Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5SEnj0",
+          "commit": {
+            "abbreviatedOid": "e347984"
+          },
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-09T18:16:42Z",
+          "updatedAt": "2023-04-09T18:16:43Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "This is the same edit from here https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/79#discussion_r1161177270",
+              "createdAt": "2023-04-09T18:16:42Z",
+              "updatedAt": "2023-04-09T18:16:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SJa4R",
+          "commit": {
+            "abbreviatedOid": "e347984"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Mostly editorial fixes suggested; I think we need more input on this. They both need to be expressed in normative language\r\n\r\nMethod 4 mixes the normative requirements with an example. Suggest pulling the example into one or more separate paragraphs so the reader can distinguish between what they are required to do and the example of how to do it.",
+          "createdAt": "2023-04-10T22:19:32Z",
+          "updatedAt": "2023-04-10T22:25:01Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\n  of implementation. One downside to this approach is the fact that\r\n```",
+              "createdAt": "2023-04-10T22:19:32Z",
+              "updatedAt": "2023-04-10T22:25:01Z"
+            },
+            {
+              "originalPosition": 22,
+              "body": "```suggestion\r\n  generation will become increasingly slow for a given timestamp value as\r\n```",
+              "createdAt": "2023-04-10T22:20:02Z",
+              "updatedAt": "2023-04-10T22:25:01Z"
+            },
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\n  more attempts are required to produce monotonic output, and the fact that\r\n```",
+              "createdAt": "2023-04-10T22:20:32Z",
+              "updatedAt": "2023-04-10T22:25:01Z"
             }
           ]
         }
