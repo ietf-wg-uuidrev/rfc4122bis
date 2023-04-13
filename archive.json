@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-04-11T01:24:50.745682+00:00",
+  "timestamp": "2023-04-13T01:23:24.994899+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1363,7 +1363,7 @@
       "id": "I_kwDOH6Ln3M5hCKuX",
       "title": "Draft 03: Fix idnits errors and warnings",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/64",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1372,8 +1372,8 @@
       ],
       "body": "- 5 Errors\r\n- 10 Warnings\r\n\r\nhttps://author-tools.ietf.org/",
       "createdAt": "2023-03-16T17:28:40Z",
-      "updatedAt": "2023-04-06T16:00:59Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:53:57Z",
+      "closedAt": "2023-04-11T13:53:57Z",
       "comments": []
     },
     {
@@ -1381,7 +1381,7 @@
       "id": "I_kwDOH6Ln3M5hCMeS",
       "title": "Draft 03: Add other Hash Abbreviations",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/65",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1390,8 +1390,8 @@
       ],
       "body": "Jim:\r\n\r\n> Section 3.2 defines MD5 and SHA1, but not any of the other hashes referenced in the document.",
       "createdAt": "2023-03-16T17:32:45Z",
-      "updatedAt": "2023-04-06T14:30:13Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:53:57Z",
+      "closedAt": "2023-04-11T13:53:57Z",
       "comments": []
     },
     {
@@ -1399,7 +1399,7 @@
       "id": "I_kwDOH6Ln3M5hCOVF",
       "title": "Draft 03: Normalize SHA abbreviation formats",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/66",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1408,8 +1408,8 @@
       ],
       "body": "With or without dash:\r\n- SHA1\r\n- SHA-1\r\n\r\nFIPS documents use dash, will normalize our document to the same.",
       "createdAt": "2023-03-16T17:36:24Z",
-      "updatedAt": "2023-04-06T14:30:18Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:53:58Z",
+      "closedAt": "2023-04-11T13:53:58Z",
       "comments": []
     },
     {
@@ -1417,7 +1417,7 @@
       "id": "I_kwDOH6Ln3M5hCQEN",
       "title": "Draft 03: Fix \"integral numbers of octets\" verbiage",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/67",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1426,8 +1426,8 @@
       ],
       "body": "Before: \r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is defined only in terms of fields that are integral numbers of octets. \r\n\r\nAfter:\r\n> To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a a grouping of fields within bit layout consisting four octets to a row.\r\n\r\nEdit: Updated grammar as per @cbandy comment.",
       "createdAt": "2023-03-16T17:41:34Z",
-      "updatedAt": "2023-04-06T13:42:31Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:53:58Z",
+      "closedAt": "2023-04-11T13:53:58Z",
       "comments": [
         {
           "author": "cbandy",
@@ -1443,7 +1443,7 @@
       "id": "I_kwDOH6Ln3M5hCSZR",
       "title": "Draft 03: Move Community Considerations to Introduction",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/68",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1452,8 +1452,8 @@
       ],
       "body": "Fits nicely in between first and second paragraph to remove this non-standard section.",
       "createdAt": "2023-03-16T17:48:25Z",
-      "updatedAt": "2023-04-06T14:45:04Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:53:59Z",
+      "closedAt": "2023-04-11T13:53:59Z",
       "comments": []
     },
     {
@@ -1461,7 +1461,7 @@
       "id": "I_kwDOH6Ln3M5hCTZQ",
       "title": "Draft 03: Reference all Hash Algorithms.",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/69",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1470,8 +1470,8 @@
       ],
       "body": "",
       "createdAt": "2023-03-16T17:51:02Z",
-      "updatedAt": "2023-04-06T14:30:11Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:53:59Z",
+      "closedAt": "2023-04-11T13:53:59Z",
       "comments": []
     },
     {
@@ -1479,7 +1479,7 @@
       "id": "I_kwDOH6Ln3M5hCT36",
       "title": "Draft 03: Transpose UUID Namespaces to match UUID Hashspaces",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/70",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1488,8 +1488,8 @@
       ],
       "body": "Remove the C structs and make them text.",
       "createdAt": "2023-03-16T17:52:14Z",
-      "updatedAt": "2023-04-06T13:48:25Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:54:00Z",
+      "closedAt": "2023-04-11T13:54:00Z",
       "comments": []
     },
     {
@@ -1523,7 +1523,7 @@
       "id": "I_kwDOH6Ln3M5izEQN",
       "title": "Draft 03: Remove URN from title",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/73",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1532,8 +1532,8 @@
       ],
       "body": "The URN in the title is out of place as the entire document defines UUIDs and their many usages. URN is one such (small) part of the greater document.\r\n",
       "createdAt": "2023-04-06T14:40:05Z",
-      "updatedAt": "2023-04-06T14:45:05Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:54:01Z",
+      "closedAt": "2023-04-11T13:54:01Z",
       "comments": []
     },
     {
@@ -1541,7 +1541,7 @@
       "id": "I_kwDOH6Ln3M5izH9j",
       "title": "Draft 03: Move some Normative Reference to Informative",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/74",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1550,8 +1550,8 @@
       ],
       "body": "",
       "createdAt": "2023-04-06T14:48:09Z",
-      "updatedAt": "2023-04-06T15:57:38Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:54:01Z",
+      "closedAt": "2023-04-11T13:54:01Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -1567,7 +1567,7 @@
       "id": "I_kwDOH6Ln3M5izmYM",
       "title": "Draft 03: Downgrade MUST NOT to SHOULD NOT for guessability of UUIDs",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/75",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1576,8 +1576,8 @@
       ],
       "body": "> Section 9, \u201cImplementations MUST NOT assume that UUIDs are hard to guess.\u201d \r\n> This would mean that it\u2019s not permissible to use a randomly generated UUID for something like a session cookie. \r\n> On the other hand, NIST currently considers a random value generated \r\n> from a CSPRNG with a security  strength of at least 112 bits to be \r\n> effectively unguessable (see SP 800-131A), and a version 4 UUID meets that requirement. This prohibition seems a little strong.\r\n\r\nThis is the RFC4122 verbiage but we could downgrade to a SHOULD NOT. \r\n",
       "createdAt": "2023-04-06T16:05:33Z",
-      "updatedAt": "2023-04-06T19:21:10Z",
-      "closedAt": null,
+      "updatedAt": "2023-04-11T13:54:02Z",
+      "closedAt": "2023-04-11T13:54:02Z",
       "comments": [
         {
           "author": "mcr",
@@ -2218,24 +2218,26 @@
       "id": "PR_kwDOH6Ln3M5NyIwA",
       "title": "Draft 03",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/76",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- #67\r\n- #70\r\n- #69\r\n- #66\r\n- #65\r\n- #73\r\n- #68\r\n- #74\r\n- Misc formatting changes to address IDNITS feedback\r\n- #75",
       "createdAt": "2023-04-06T16:14:09Z",
-      "updatedAt": "2023-04-06T16:14:46Z",
+      "updatedAt": "2023-04-11T13:53:55Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "draft-03",
-      "headRefOid": "15a3f8e2f3289a0679ae87a8025e7494e34fe0d3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "64c64838c5fcf32f78328131ad433fc1211a5b44",
+      "closedAt": "2023-04-11T13:53:55Z",
+      "mergedAt": "2023-04-11T13:53:55Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "d123ba9fa37c401721b71b12ce95d99e30016ae9"
+      },
       "comments": [],
       "reviews": []
     },
@@ -2244,25 +2246,33 @@
       "id": "PR_kwDOH6Ln3M5N2OBi",
       "title": "Formatting suggestions",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/77",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mcr",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This deals with the code nit, and turns the examples into tables.\r\n",
       "createdAt": "2023-04-07T16:34:48Z",
-      "updatedAt": "2023-04-10T21:47:49Z",
+      "updatedAt": "2023-04-11T13:53:27Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "formatting-suggestions",
       "headRefOid": "a4b4db9172f3b6794d669a0779d6e6cd82124d1a",
-      "closedAt": null,
+      "closedAt": "2023-04-11T13:53:26Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed on mailer, the HTML tables are pretty ugly and break up the formatting flow for these appendix sections.\r\n\r\nMain driver to get these to tables was to fix the idnits errors; however, I was able to fix that in #76 so these can stay as ascii and thematically all the examples are the same format. Which is a bit easier on the eyes IMO.\r\n\r\nAs such, I have committed the `~~~~ code` changes under https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/76/commits/64c64838c5fcf32f78328131ad433fc1211a5b44 so I will close this PR and merge that to main.",
+          "createdAt": "2023-04-11T13:53:26Z",
+          "updatedAt": "2023-04-11T13:53:26Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH6Ln3M5SJTwU",
@@ -2297,25 +2307,35 @@
       "id": "PR_kwDOH6Ln3M5N4UV4",
       "title": "typographical fixes",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/78",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bradleypeabody",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Some typo fixes, hopefully zero controversy.",
       "createdAt": "2023-04-09T00:13:08Z",
-      "updatedAt": "2023-04-10T21:52:17Z",
+      "updatedAt": "2023-04-11T13:58:55Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
-      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "baseRefOid": "d123ba9fa37c401721b71b12ce95d99e30016ae9",
       "headRepository": "bradleypeabody/rfc4122bis",
       "headRefName": "20230407-typographical",
-      "headRefOid": "87d8a0bbf8c0819b63c473adc4098f61f4b1fc51",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "74f669629ab0fb1672e8f87a17c6cab3aac46346",
+      "closedAt": "2023-04-11T13:58:54Z",
+      "mergedAt": "2023-04-11T13:58:54Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "4b49bbe28476d66fea49bb4544eaba7c38dda090"
+      },
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merging #76 to main caused some merge conflicts. Will fix and merge this as well.",
+          "createdAt": "2023-04-11T13:56:10Z",
+          "updatedAt": "2023-04-11T13:56:10Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH6Ln3M5SJVFQ",
@@ -2350,24 +2370,26 @@
       "id": "PR_kwDOH6Ln3M5N4WTP",
       "title": "clarifications",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/79",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bradleypeabody",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Here are some clarifications I'd like to make on various pieces of text.  These shouldn't have a significant semantic change in terms of what we are specifying, but hopefully provide more clarity on specific topics that I though should have a bit more detail.  I'll also add some review notes to give more on the motivation for each change in cases where it may not be obvious.",
       "createdAt": "2023-04-09T01:07:31Z",
-      "updatedAt": "2023-04-10T23:56:50Z",
+      "updatedAt": "2023-04-11T14:09:38Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
-      "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
+      "baseRefOid": "4b49bbe28476d66fea49bb4544eaba7c38dda090",
       "headRepository": "bradleypeabody/rfc4122bis",
       "headRefName": "20230408-clarifications",
-      "headRefOid": "3609d1ced90d0621d55134482807a913220a8e72",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "8ec22e8e6a1457036662af7bd0268e3c980b7e13",
+      "closedAt": "2023-04-11T14:09:38Z",
+      "mergedAt": "2023-04-11T14:09:38Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "ab9e03fe1e0e1a7f10d973712f50b9af9f78fcca"
+      },
       "comments": [
         {
           "author": "bradleypeabody",
@@ -2375,6 +2397,13 @@
           "body": "@jimfenton I agree with all of your edits, those have been updated.",
           "createdAt": "2023-04-10T23:55:47Z",
           "updatedAt": "2023-04-10T23:55:47Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fixed merge conflicts, good to go, merging down.",
+          "createdAt": "2023-04-11T14:09:31Z",
+          "updatedAt": "2023-04-11T14:09:31Z"
         }
       ],
       "reviews": [
@@ -2769,6 +2798,26 @@
               "updatedAt": "2023-04-10T22:02:04Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5SNykj",
+          "commit": {
+            "abbreviatedOid": "cdf2f49"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-04-11T14:05:44Z",
+          "updatedAt": "2023-04-11T14:05:45Z",
+          "comments": [
+            {
+              "originalPosition": 155,
+              "body": "This was text from 4122: https://www.rfc-editor.org/rfc/rfc4122#section-6\r\n\r\nIf we want to have a larger discussion about this text I am fine with opening an issue and shooting something to the mailer. ",
+              "createdAt": "2023-04-11T14:05:44Z",
+              "updatedAt": "2023-04-11T14:05:45Z"
+            }
+          ]
         }
       ]
     },
@@ -2777,24 +2826,26 @@
       "id": "PR_kwDOH6Ln3M5N4XAS",
       "title": "some SHOULD/MUST adjustments",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/80",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bradleypeabody",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "These are a few SHOULD/MUST adjustments that I think help improve the accuracy.  I won't die over these but would be good to merge if others agree.",
       "createdAt": "2023-04-09T01:31:23Z",
-      "updatedAt": "2023-04-10T23:48:22Z",
+      "updatedAt": "2023-04-11T14:11:23Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
       "headRepository": "bradleypeabody/rfc4122bis",
       "headRefName": "20230408-should-must-ify",
       "headRefOid": "b0170a733c86c6b1a8f56b89d13739fa5fbc7e27",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-04-11T14:11:23Z",
+      "mergedAt": "2023-04-11T14:11:23Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "1a742f443fde44309790fa95b7d93e3c752db5a7"
+      },
       "comments": [
         {
           "author": "bradleypeabody",
@@ -2978,24 +3029,26 @@
       "id": "PR_kwDOH6Ln3M5N5FJW",
       "title": "add two more methods to the monotonic section",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/81",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bradleypeabody",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "After reading through everything again, while the monotonic/counter section works as it stands now, I think it would greatly benefit from two other specific suggested methods for achieving monotonicity.\r\n\r\nThe first I think is beneficial because it is trivial to implement (just keep generating random values until you get one that is greater than the last), and implementors prioritizing simplicity would benefit from it.\r\n\r\nAnd the second brings back a concept that I originally proposed in the initial draft for UUID v7 (using bits in the UUID that immediately follow the timestamp to encode more timestamp precision in a way that is time ordered), but later removed because it was often misunderstood.  However, I think the key benefit to this approach (just using the additional precision available in the system clock for what it is meant for) still exists and makes sense, and having it here as an optional feature so implementations are not required to understand and use it if they don't need to - I believe that tradeoff makes a lot of sense.  I tried to keep it super simple by just giving an example of how to use it, and people can infer the underlying math/theory or not as needed.",
       "createdAt": "2023-04-09T17:55:16Z",
-      "updatedAt": "2023-04-11T01:15:40Z",
+      "updatedAt": "2023-04-11T14:17:45Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "b7b43690b138760c7a3d47e2e72f4da7fdaef8eb",
       "headRepository": "bradleypeabody/rfc4122bis",
       "headRefName": "20230408-timestamp-stuff",
       "headRefOid": "2711ac4300090ca52218c23ffc70987bfc3406c9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-04-11T14:17:45Z",
+      "mergedAt": "2023-04-11T14:17:45Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "9927b324d497741f9ff16446da46e8b4ce3184c7"
+      },
       "comments": [
         {
           "author": "bradleypeabody",
@@ -3003,6 +3056,13 @@
           "body": "@jimfenton Thanks for the feedback, I did the edits you suggested and split up Method 4 into a few paragraphs and added a normative description as you suggest.  Let me know if there's anything else you think I should adjust immediately and otherwise I agree it would be good to get more feedback from others and go from there.",
           "createdAt": "2023-04-11T01:14:30Z",
           "updatedAt": "2023-04-11T01:14:30Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Verified Method 3 and 4 render properly with author-tools in HTML/TXT formats. Merging down.",
+          "createdAt": "2023-04-11T14:17:40Z",
+          "updatedAt": "2023-04-11T14:17:40Z"
         }
       ],
       "reviews": [
