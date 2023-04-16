@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-04-13T01:23:24.994899+00:00",
+  "timestamp": "2023-04-16T01:37:33.590539+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -3119,6 +3119,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 82,
+      "id": "PR_kwDOH6Ln3M5OYskQ",
+      "title": "Removed extra \"seconds\" word",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/82",
+      "state": "OPEN",
+      "author": "oittaa",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-04-15T13:05:53Z",
+      "updatedAt": "2023-04-15T13:05:53Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "e54464db613a65b7f30d53035ecb3ccb48dbd492",
+      "headRepository": "oittaa/rfc4122bis",
+      "headRefName": "patch-1",
+      "headRefOid": "ddc3f1d0c0a66706e98997be41a1ce1063c791b6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
