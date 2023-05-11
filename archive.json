@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-04-16T01:37:33.590539+00:00",
+  "timestamp": "2023-05-11T01:25:47.354652+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -3125,24 +3125,26 @@
       "id": "PR_kwDOH6Ln3M5OYskQ",
       "title": "Removed extra \"seconds\" word",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/82",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "oittaa",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-04-15T13:05:53Z",
-      "updatedAt": "2023-04-15T13:05:53Z",
+      "updatedAt": "2023-05-10T18:06:45Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "e54464db613a65b7f30d53035ecb3ccb48dbd492",
       "headRepository": "oittaa/rfc4122bis",
       "headRefName": "patch-1",
       "headRefOid": "ddc3f1d0c0a66706e98997be41a1ce1063c791b6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-05-10T18:06:44Z",
+      "mergedAt": "2023-05-10T18:06:44Z",
+      "mergedBy": "mcr",
+      "mergeCommit": {
+        "oid": "ab9e948e6f73c494fc099d0aad38ff09bacda867"
+      },
       "comments": [],
       "reviews": []
     }
