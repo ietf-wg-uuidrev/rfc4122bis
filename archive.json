@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-11T01:25:47.354652+00:00",
+  "timestamp": "2023-05-14T01:37:37.465231+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1587,6 +1587,22 @@
           "updatedAt": "2023-04-06T19:21:10Z"
         }
       ]
+    },
+    {
+      "number": 83,
+      "id": "I_kwDOH6Ln3M5lt0-8",
+      "title": "List of remarks of the current draft",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/83",
+      "state": "OPEN",
+      "author": "ben221199",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I have read the whole specification from top to bottom and this are my remarks with the current version of the draft:\r\n\r\n---\r\n\r\n1.\t> P. Leach\r\n\t> Microsoft\r\n\r\n\tI tried to contact P. Leach to talk about UUID, but his mail paulle@microsoft.com doesn't work anymore, as it seems. Is he involved in the project? Else, should he be removed from the header?\r\n\r\n---\r\n\r\n2.\t> This specification defines a Uniform Resource Name namespace for UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally Unique IDentifiers).\r\n\r\n\tI would write this in another way, because the RFC is in the first place a RFC about UUIDs, not about URNs, like RFC 4122. I would write something like this:\r\n\t> This specification defines the UUIDs (Universally Unique IDentifiers) and it's a Uniform Resource Name namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).\r\n\r\n\tAlso:\r\n\t> The information here is meant to be a concise guide for those wishing to implement services using UUIDs, as URNs [RFC8141], or otherwise.\r\n\r\n\tTo:\r\n\t> The information here is meant to be a concise guide for those wishing to implement services using UUIDs, eventually in combination with URNs [RFC8141] or other.\r\n\r\n---\r\n\r\n3.\t> 3 .   [Snowflake] by Twitter\r\n\r\n\tMaybe worth noting that Discord uses the same technique, but with a changed start date. Not 1970, but 2015.\r\n\r\n---\r\n\r\n4.\tMake a clear difference between wire formats and representation formats, like in Section 4. In wire format we have the families/variants and versions. In the representation format we have the old Apollo Computer format, but also the hex-and-dash format, the format without dashes and the hex-and dash format with `{` and `}`. Maybe, in the near future more representation formats will be designed, but those will not conflict with the wire format and vice versa. In case of URN, only hex-and-dash is allowed. I think it is important to list all representation formats I just called and which one (the hex-and-dash one), is a recommended. Don't talk about variants, families and versions in the section about representation formats.\r\n\r\n---\r\n\r\n5.\tAs mentioned in (4), I would rename Section 4 to `Representation Format` and create a new Section 5 with `Wire format`. Sections like 4.1 will now be Section 5.1, etc.\r\n\r\n---\r\n\r\n6.\tI talked about the variant field in #16, because at the moment it is a mess of 3 bits. In case of versions we have a clear view of what we are talking about: just 4 bits with a range from 0 to 15, of which in RFC 4122 the versions 1 to 5 were used. However, for variants this is not the case. In my issue I stated to use 8 bits, while some others proposed 4 bits. Why 8 bits? Because the legacy UUID also used 8 bits. So, in that case implementing libraries for UUIDs will become more easy to build and to understand.\r\n\r\n---\r\n\r\n7.\tMake it loud and clear that versions are ONLY a invention for the `10x` variant (see how ugly I have to name my variant at the moment). I have seen implementations of UUID libraries that messed up variants and versions, because they didn't understand RFC 4122.\r\n\r\n---\r\n\r\n8.\t> As such the definition of these UUIDs are outside the scope of this specification.\r\n\r\n\tI would suggest trying to define as much as possible, including UUID version 2.\r\n\r\n---\r\n\r\n9.\t> 5.10.  Max UUID\r\n\r\n\tI still prefer Omni UUID. \ud83d\ude05\r\n\r\n---\r\n\r\n10.\t> For compatibility with earlier specifications, note that this document uses the unicast/multicast bit, instead of the arguably more correct local/global bit.\r\n\r\n\tBecause MAC addresses with the local/global bit set or not are both possible in a network. This is not the case with the unicast/multicast bit. One node cannot have a MAC address that multicasts to multiple nodes.\r\n\r\n---\r\n\r\n11.\t> 7 .  IANA Considerations\r\n\r\n\tWhat does this mean? I understand that listing UUIDs themselves is not useful, but listing variants/families and versions would be useful for preventing conflicting implementations. In my case, I would reconsider the decision.\r\n\r\n---\r\n\r\n12.\t> Implementations SHOULD NOT assume that UUIDs are hard to guess. Foe example, they MUST NOT be used as security capabilities (identifiers whose mere possession grants access). Discovery of predictability in a random number source will result in a vulnerability.\r\n\r\n\tTypo.\r\n\r\n---\r\n\r\n13.\tTell about the Apollo variant, found here: https://opensource.apple.com/source/CF/CF-299.35/Base.subproj/uuid.c.auto.html.\r\n\r\n---\r\n\r\n14.\tTell about the Microsoft variant, if Paul Leach is still involved.\r\n\r\n---\r\n\r\nThanks for reading. I'm curious about your findings.",
+      "createdAt": "2023-05-11T20:35:29Z",
+      "updatedAt": "2023-05-11T20:35:29Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
