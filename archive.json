@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-14T01:37:37.465231+00:00",
+  "timestamp": "2023-05-16T01:35:00.994266+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1600,7 +1600,38 @@
       "labels": [],
       "body": "I have read the whole specification from top to bottom and this are my remarks with the current version of the draft:\r\n\r\n---\r\n\r\n1.\t> P. Leach\r\n\t> Microsoft\r\n\r\n\tI tried to contact P. Leach to talk about UUID, but his mail paulle@microsoft.com doesn't work anymore, as it seems. Is he involved in the project? Else, should he be removed from the header?\r\n\r\n---\r\n\r\n2.\t> This specification defines a Uniform Resource Name namespace for UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally Unique IDentifiers).\r\n\r\n\tI would write this in another way, because the RFC is in the first place a RFC about UUIDs, not about URNs, like RFC 4122. I would write something like this:\r\n\t> This specification defines the UUIDs (Universally Unique IDentifiers) and it's a Uniform Resource Name namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).\r\n\r\n\tAlso:\r\n\t> The information here is meant to be a concise guide for those wishing to implement services using UUIDs, as URNs [RFC8141], or otherwise.\r\n\r\n\tTo:\r\n\t> The information here is meant to be a concise guide for those wishing to implement services using UUIDs, eventually in combination with URNs [RFC8141] or other.\r\n\r\n---\r\n\r\n3.\t> 3 .   [Snowflake] by Twitter\r\n\r\n\tMaybe worth noting that Discord uses the same technique, but with a changed start date. Not 1970, but 2015.\r\n\r\n---\r\n\r\n4.\tMake a clear difference between wire formats and representation formats, like in Section 4. In wire format we have the families/variants and versions. In the representation format we have the old Apollo Computer format, but also the hex-and-dash format, the format without dashes and the hex-and dash format with `{` and `}`. Maybe, in the near future more representation formats will be designed, but those will not conflict with the wire format and vice versa. In case of URN, only hex-and-dash is allowed. I think it is important to list all representation formats I just called and which one (the hex-and-dash one), is a recommended. Don't talk about variants, families and versions in the section about representation formats.\r\n\r\n---\r\n\r\n5.\tAs mentioned in (4), I would rename Section 4 to `Representation Format` and create a new Section 5 with `Wire format`. Sections like 4.1 will now be Section 5.1, etc.\r\n\r\n---\r\n\r\n6.\tI talked about the variant field in #16, because at the moment it is a mess of 3 bits. In case of versions we have a clear view of what we are talking about: just 4 bits with a range from 0 to 15, of which in RFC 4122 the versions 1 to 5 were used. However, for variants this is not the case. In my issue I stated to use 8 bits, while some others proposed 4 bits. Why 8 bits? Because the legacy UUID also used 8 bits. So, in that case implementing libraries for UUIDs will become more easy to build and to understand.\r\n\r\n---\r\n\r\n7.\tMake it loud and clear that versions are ONLY a invention for the `10x` variant (see how ugly I have to name my variant at the moment). I have seen implementations of UUID libraries that messed up variants and versions, because they didn't understand RFC 4122.\r\n\r\n---\r\n\r\n8.\t> As such the definition of these UUIDs are outside the scope of this specification.\r\n\r\n\tI would suggest trying to define as much as possible, including UUID version 2.\r\n\r\n---\r\n\r\n9.\t> 5.10.  Max UUID\r\n\r\n\tI still prefer Omni UUID. \ud83d\ude05\r\n\r\n---\r\n\r\n10.\t> For compatibility with earlier specifications, note that this document uses the unicast/multicast bit, instead of the arguably more correct local/global bit.\r\n\r\n\tBecause MAC addresses with the local/global bit set or not are both possible in a network. This is not the case with the unicast/multicast bit. One node cannot have a MAC address that multicasts to multiple nodes.\r\n\r\n---\r\n\r\n11.\t> 7 .  IANA Considerations\r\n\r\n\tWhat does this mean? I understand that listing UUIDs themselves is not useful, but listing variants/families and versions would be useful for preventing conflicting implementations. In my case, I would reconsider the decision.\r\n\r\n---\r\n\r\n12.\t> Implementations SHOULD NOT assume that UUIDs are hard to guess. Foe example, they MUST NOT be used as security capabilities (identifiers whose mere possession grants access). Discovery of predictability in a random number source will result in a vulnerability.\r\n\r\n\tTypo.\r\n\r\n---\r\n\r\n13.\tTell about the Apollo variant, found here: https://opensource.apple.com/source/CF/CF-299.35/Base.subproj/uuid.c.auto.html.\r\n\r\n---\r\n\r\n14.\tTell about the Microsoft variant, if Paul Leach is still involved.\r\n\r\n---\r\n\r\nThanks for reading. I'm curious about your findings.",
       "createdAt": "2023-05-11T20:35:29Z",
-      "updatedAt": "2023-05-11T20:35:29Z",
+      "updatedAt": "2023-05-15T16:53:06Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "1. We decided to keep the original authors as we are re-using some of their text.\r\n2. Yeah, that is a good suggestion.\r\n3. I wasn't aware of Discord when I did my research a few years ago. Not sure it is worth adding extra references to that since we currently have enough to drive the point home\r\n4. Makes sense to add the UUID layout enclosed by curly brackets if that is in use out there in modern implementations. Do you have anything to cite other than the legacy UUID usage?\r\n5. Not sure I agree.\r\n6. _See Below._\r\n7. Can I change the table to \"The variant mapped to the versions specified in this document.\"?\r\n8. _See Below._\r\n9. :)\r\n10. I am not sure I follow what should be changed?\r\n11. I believe the main point is we don't need an IANA listing where this document can serve as the purpose. When there are many IETF documents on a given topic; I see more value in a centralized IANA registry summarizing the disperse documents.\r\n12. \"Foe example\" thanks, many have missed that one!\r\n13. Yeah, easy enough to cite it in some way perhaps in the variant table row 1.\r\n14. _See Below_\r\n\r\n---\r\n\r\n6, 8, 14.\r\nI do not believe the IETF wanted this document detail every UUID in every variant space outside of variant 10x. \r\nIf there are resources we can cite them like we do for Version 2, and the new NCS one posted above.\r\nI will defer to the WG chairs @mcr and @jimfenton since this would add significant segments of text, push back the deadlines by a significant ammount and introduce fragmented sources of information on those UUID implementations outside of IETFs span of control. Further we risk something getting out of sync assuming one of those decide to update since the RFC isn't the authoritative source of those UUID variant implementations.\r\n\r\nEdit: Just to re-iterate my opinion: I believe that the other legacy UUIDs outside of the `10x` variant should be in a historical/informational type RFC separate from this update to 4122. That is, assuming IETF has interest in compiling and detailing reference specs for those.",
+          "createdAt": "2023-05-15T14:22:32Z",
+          "updatedAt": "2023-05-15T16:34:52Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Hello Kyzer,\r\n\r\nThanks for your response. My response:\r\n\r\n1.\tOk\r\n2.\tOk\r\n3.\tNo problem if Discord isn't added/mentioned in text, but it is always considerable if it has any added value\r\n4.\tI am aware of the following representation types:\r\n\t- `550e8400-e29b-41d4-a716-446655440000`\r\n\t- `{550e8400-e29b-41d4-a716-446655440000}`\r\n\t- `550e8400e29b41d4a716446655440000`\r\n\t- `34dc23469000.0d.00.00.7c.5f.00.00.00` (Legacy format: https://www.ibm.com/docs/en/aix/7.1?topic=u-uuid-gen-command-ncs)\r\n\t- 128-bit integer (both signed and unsigned)\r\n\t- Binary (just 0 and 1)\r\n5.\tIt doesn't need to be exactly as I proposed, but I think it should be very clear to people that do read the RFC can quickly see that there is a wire format and a representation format and that they aren't necessary dependent on each other. The best way I can imagine is having two top-sections called `Wire format` and `Representation format` (or it could be a first level sub-section).\r\n6.\t*See below.*\r\n7.\tAre you talking about table 2? The name has enough information, but maybe you can change it to: `UUID versions (as subtype for UUID variant 10x) defined by this specification`\r\n8.\t*See below.*\r\n9.\tI'm serious \ud83d\ude02\r\n10.\tThere is a sentence in the specification that tells that the `local/global` would be more logical. However, I explain why they chose the other bit: because multicast addresses cannot exist in a network.\r\n11.\tI think I don't agree on that one. For example, in DNS we have record types. Every RFC that defines a new record type will also be listed by IANA, RFC mentioned in the 4th column: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4. So, after all, you have a list of all types and the RFC they are defined in. Because of this, you will have no conflicts of using the same number. I think the same is happening with UUIDs. We have RFC 4122 that defines version 1 to version 5. The new specification will redefine those too, but will also define 3 additional versions: version 6, version 7 and version 8. This will look like the following table: ![image](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/12856904/a1b36012-1045-4d7e-a911-58d4b0555c5b)\r\n12.\tNo problem.\r\n13.\tIf it is somehow mentioned, I think that is at least something. I think it is better to tell about the format, instead of referring to some vague `.c` file.\r\n14.\t*See below.*\r\n\r\n---\r\n\r\n6.\t`v`\r\n8.\t`v`\r\n14.\tIn my opinion there should at least be some RFC that describes all the UUID variants, families, versions and representation formats. If that will be this specification or some other, I don't actually care. I only care about it happening one day. However, I have the feeling that, if make a new document and don't merge the history in the current draft, the historical draft should be released first, because that one tells the basis of UUID, where this draft then is based on. Defering things to IETF is good, so we will know their view on the issue. Keep in mind that if we do publish the historical RFC afterwards, we maybe have to release another RFC in the future that merges current specification and the historical one into one, eventually adding some more variants and versions. I am okay with that too, but maybe is also more work in the end.",
+          "createdAt": "2023-05-15T16:53:05Z",
+          "updatedAt": "2023-05-15T16:53:05Z"
+        }
+      ]
+    },
+    {
+      "number": 85,
+      "id": "I_kwDOH6Ln3M5l7jXK",
+      "title": "Draft 04: Move endianness statement from layout to format section",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/85",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 2) Another remark, about byte order, perhaps the information of byte ordering should be moved from 5.  UUID Layouts to 4. UUID Format\r\nReading the section 4, you wonder about endianness and the info is quite far imho\r\n\r\nFrom: Aur\u00e9lien LAJOIE <orel@melix.net> via mailer.",
+      "createdAt": "2023-05-15T13:29:29Z",
+      "updatedAt": "2023-05-15T13:29:29Z",
       "closedAt": null,
       "comments": []
     }
@@ -3162,6 +3193,42 @@
         "oid": "ab9e948e6f73c494fc099d0aad38ff09bacda867"
       },
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 84,
+      "id": "PR_kwDOH6Ln3M5QgtwF",
+      "title": "Punctuation and minor style fixes",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/84",
+      "state": "MERGED",
+      "author": "petere",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Mostly add and remove some commas, some titlecase fixes, and random odd bits.",
+      "createdAt": "2023-05-15T12:56:30Z",
+      "updatedAt": "2023-05-15T13:31:57Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "ab9e948e6f73c494fc099d0aad38ff09bacda867",
+      "headRepository": "petere/rfc4122bis",
+      "headRefName": "style-fixes",
+      "headRefOid": "ac65eb8bc43871656fcaf86983f0b754651a8a87",
+      "closedAt": "2023-05-15T13:31:57Z",
+      "mergedAt": "2023-05-15T13:31:56Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d"
+      },
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @petere! ",
+          "createdAt": "2023-05-15T13:31:45Z",
+          "updatedAt": "2023-05-15T13:31:45Z"
+        }
+      ],
       "reviews": []
     }
   ]
