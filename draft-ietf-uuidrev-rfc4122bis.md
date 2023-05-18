@@ -1002,7 +1002,7 @@ UUIDv1 implementation.
 
 UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
-seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
+since midnight 1 Jan 1970 UTC, leap seconds excluded.
 UUID version 7 also has improved entropy characteristics over versions 1 or 6.
 
 Implementations SHOULD utilize UUID version 7 instead of UUID version 1 and 6 if
