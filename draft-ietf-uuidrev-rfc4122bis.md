@@ -821,7 +821,7 @@ md5_low:
 The version 4 UUID is meant for generating UUIDs from truly-random or
 pseudo-random numbers.
 
-An implementation may generate 128 bits of random random data which is
+An implementation may generate 128 bits of random data which is
 used to fill out the UUID fields in {{uuidv4fields}}. The UUID version
 and variant then replace the respective bits as defined by {{version_field}}
 and {{variant_field}},
