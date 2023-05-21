@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-18T01:26:23.291423+00:00",
+  "timestamp": "2023-05-21T01:39:58.934791+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1647,7 +1647,7 @@
       "labels": [],
       "body": "(Copied from my email to uuidrev@ietf.org to add a relevant but different topic)\r\n\r\nI would propose to limit the size of Increased Clock Precision (6.2. Monotonicity and Counters: Method 4) to a certain number of bits, say 12 bits, for the UUIDv7 purpose. I really like the idea of the additional clock precision encoded using the fractional representation, but I'd like to point out a potential concern about universal uniqueness and usability.\r\n\r\nThe v7 scheme currently relies on randomness for universal uniqueness. On the other hand, a timestamp is not a source of randomness but is a shared piece of information across multiple generators. The timestamp field provides the universal uniqueness property by relying on the timing of generation, not randomness, so two timestamps collide if two generators generate IDs exactly at the same time, even if they employ picosecond timestamps. In other words, the timestamp and randomness both offer universal uniqueness but through different mechanisms.\r\n\r\nIn my opinion, UUIDv7 is more useful for users if the RFC sticks to the randomness mechanism to guarantee universal uniqueness. If the spec mixes the two mechanisms, then users have to take care of the timing of generations or the configuration of PRNGs depending on the implementation of a UUIDv7 generator, which introduces additional complexity to just get a time-ordered UUID. So, I believe the standard should limit the maximum size of extra clock precision to guarantee that a sufficient bit space is reserved for the randomness field.\r\n\r\nIt would be hard to set an appropriate limitation, but 12 bits might be a good starting point. By limiting the size of method 4 clock precision to 12 bits, we can guarantee the same level of randomness (62 bits) as UUIDv6 while accepting microsecond-precision timestamps. Applications that need finer timestamps are likely to be specialized use cases and should generally resort to UUIDv8.",
       "createdAt": "2023-05-16T03:52:23Z",
-      "updatedAt": "2023-05-16T13:11:12Z",
+      "updatedAt": "2023-05-19T16:43:07Z",
       "closedAt": null,
       "comments": [
         {
@@ -1656,6 +1656,34 @@
           "body": "Is it possible to replace the following text in Replace Left-Most Random Bits with Increased Clock Precision (Method 4):\r\n\r\n> Using floating point math, multiply this fraction of a millisecond value by <del>4095</del> and round to an integer result to arrive at a number between 0 and the maximum allowed for the indicated bits which is sorts monotonically based on time.\r\n\r\nWith:\r\n\r\n> Using floating point math, multiply this fraction of a millisecond value by <ins>4096</ins> and round <ins>down (toward zero)</ins> to an integer result to arrive at a number between 0 and the maximum allowed for the indicated bits which is sorts monotonically based on time.\r\n\r\nThe latter logic is expressed in Python as follows:\r\n\r\n```python\r\nsubmsec_float = 0.4567\r\nsubmsec_frac_bin_from_float = int(submsec_float * 0b1_0000_0000_0000)\r\n\r\nassert submsec_frac_bin_from_float == 1870\r\n```\r\n\r\nAnd, it allows the faster integer math computation:\r\n\r\n```python\r\nsubmsec_nsec = 456700  # 0.4567 milliseconds expressed as nanosecond-precision ticks\r\nsubmsec_frac_bin_from_nsec = (submsec_nsec << 12) // 1_000_000\r\n\r\nassert submsec_frac_bin_from_nsec == 1870\r\n```\r\n\r\nThe latter logic is more friendly with the `clock_gettime` C function than the original approach. Plus, the original is less useful in that it requires the floating-point math for rounding.\r\n\r\nPlease also find a quick Rust code that demonstrates a couple of techniques to arrive at the binary fractional representation of a submillisecond timestamp:\r\n\r\n```rust\r\nconst SUBMSEC_SIZE: u64 = 12;\r\nconst SUBMSEC_MASK: u64 = (1 << SUBMSEC_SIZE) - 1;\r\n\r\n// iterate subsecond timestamp ticks of nanosecond resolution over one second, emulating all\r\n// the possible `tv_nsec` values returned by `clock_gettime(3)`\r\nfor tv_nsec in 0u64..1_000_000_000 {\r\n    let _msec = tv_nsec / 1_000_000;\r\n    let submsec = tv_nsec % 1_000_000;\r\n\r\n    // get fractional submsec representation using floating-point math\r\n    let submsec_fraction = submsec as f64 / 1_000_000f64;\r\n    let result_fp = (submsec_fraction * (1 << SUBMSEC_SIZE) as f64).trunc() as u64;\r\n\r\n    // get fractional submsec representation using integer math\r\n    let result_int = (submsec << SUBMSEC_SIZE) / 1_000_000;\r\n    assert_eq!(result_fp, result_int);\r\n\r\n    // get fractional submsec representation directly from `tv_nsec`\r\n    let result_from_nsec = ((tv_nsec << SUBMSEC_SIZE) / 1_000_000) & SUBMSEC_MASK;\r\n    assert_eq!(result_fp, result_from_nsec);\r\n}\r\n```\r\n\r\n**Update**: After further investigation, I now believe the original text is somewhat flawed and must be fixed:\r\n\r\n- The phrase \"round to an integer\" is ambiguous because there are multiple ways to round a floating-point number to an integer (e.g., half to even, half to odd, banker's rounding, and more). The v7 spec must be specific here because two different implementations must produce exactly the same integer from the same submillisecond timestamp to guarantee sortability.\r\n- A ties-to-nearest rounding mode makes the probabilities of producing zero and 4095 (the maximum) be half of other integers in between.",
           "createdAt": "2023-05-16T03:56:13Z",
           "updatedAt": "2023-05-16T13:11:12Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "The introduction of Method 4 seems to require some updates to [5.7. UUID Version 7](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-03.html#name-uuid-version-7):\r\n\r\n---\r\n\r\n> UUID version 7 also has improved entropy characteristics over versions 1 or 6.\r\n\r\nThis statement in the first paragraph no longer holds unless the size of Method 4 timestamp is limited to 11 bits or less.\r\n\r\n---\r\n\r\n> rand_a:\r\n> 12 bits pseudo-random data to provide uniqueness as per Section 6.8 and/or an optional counter to guarantee additional monotonicity as per Section 6.2.\r\n>\r\n> var:\r\n> (snip)\r\n>\r\n> rand_b:\r\n> The final 62 bits of pseudo-random data to provide uniqueness as per Section 6.8 and/or an optional counter to guarantee additional monotonicity as per Section 6.2.\r\n\r\nThe explanation of rand_a and rand_b has to be updated to accept the Method 4 timestamp. Perhaps, we should add some clarifying text like:\r\n\r\n> The rand_a and rand_b fields, jointly, MUST be filled with a combination of the following subfields, in this order from the most significant bits to the least:\r\n>\r\n> 1.  An OPTIONAL submillisecond timestamp fraction (12 bits at maximum) to utilize extra clock resolution as per Section 6.2 (Method 4).\r\n> 2.  An OPTIONAL counter to guarantee additional monotonicity as per Section 6.2 (Method 1 or 2).\r\n> 3.  Random data to provide uniqueness as per Section 6.8.\r\n",
+          "createdAt": "2023-05-19T00:28:50Z",
+          "updatedAt": "2023-05-19T00:55:24Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@LiosK \r\nRegarding this proposed text:\r\n\r\n> Using floating point math, multiply this fraction of a millisecond value by 4096 and round down (toward zero) to an integer result to arrive at a number between 0 and the maximum allowed for the indicated bits which is sorts monotonically based on time.\r\n\r\nI totally agree, rounding down is better here - more explicit and easier to understand.  I'm 100% good with that change.\r\n\r\nOn the other text changes, my concerns are:\r\n* Language like \"The rand_a and rand_b fields, jointly, MUST be filled with a combination of the following subfields\" I think is too strict.  E.g. if some vendor wants to put some server node ID in here somewhere, we shouldn't explicitly prohibit that if it doesn't interfere with the basic parsing properties (in other words the random part is just random, if the generator wants to do something a bit different lose some entropy in the process - that's up to them - see the Global and Local Uniquess section).\r\n* I don't entirely agree that CSPRNG data is fundamentally going to result in less random data.  Let's say we have 12 bits that are generated with a CSPRNG and 12 bits which are a fraction of a millisecond - is there some mathematical property which says that it is less likely that the CSPRNG values will collide than two IDs will be generated in the exact same instant?  I realize some clocks may have less granularity available, but that's exactly why we want to make the length implementation dependent.  In general, I would be okay with suggesting 12 bits as a recommended length, but I think putting an absolute limit on there is too restrictive. If people want to put more precise clock data in there to express a more specific timestamp, and let's say due to clock granularity problems this reduces entropy, I think this is a tradeoff an implementation should be allowed to make.\r\n\r\nIn terms of workflow on some of these, for specific text changes it might be easier to just do a pull request and you can also link to it here - but that way the exact changes can be discussed and if there is consensus just merged in.\r\n",
+          "createdAt": "2023-05-19T04:50:17Z",
+          "updatedAt": "2023-05-19T04:50:17Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "> I totally agree, rounding down is better here\r\n\r\nWill craft a PR for this!\r\n\r\n> Language like \"The rand_a and rand_b fields, jointly, MUST be filled with a combination of the following subfields\" I think is too strict.\r\n\r\nWould propose an alternative wording: \"The rand_a and rand_b fields, jointly, <del>MUST be</del><ins>are</ins> filled with a combination of the following subfields\". It doesn't change a lot, but yeah the overall 5. UUID Layouts section doesn't really employ the MUST verbiage, so v7 should definitely follow that tone.\r\n\r\nHowever, it is questionable whether compliant implementations may embed a node ID in UUIDv7; my understanding is no, they can't. It is not 100% clear because the UUID Layouts section doesn't use the BCP 14 verbiage, but it reads like none of the UUID versions other than v8 accepts a node ID inside the 128-bit space. In the literal sense, 5.4. UUID Version 4 section doesn't preclude to include a timestamp and node ID in it, but I don't think a generator that constructs a UUIDv4 from a 60-bit timestamp and 60-bit node ID is an RFC-compliant generator. Similarly, I don't believe a UUIDv7 MAY contain a node ID. Technically, [6.4. Distributed UUID Generation](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-03.html#section-6.4) referred to by [6.7. Global and Local Uniqueness](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-03.html#section-6.7) reads \"Implementations that choose to leverage an embedded node id SHOULD utilize UUIDv8.\", but SHOULD here is in effect MUST, I think.\r\n\r\n> I think this is a tradeoff an implementation should be allowed to make.\r\n\r\nI totally agree that the randomness vs. granular timestamp is a trade-off issue. Perhaps, there is no theoretical advantage of one option over the other, but still I believe putting an absolute limit to the timestamp would increase the overall utility of UUIDv7 for general users.\r\n\r\nOnce finalized, v7 will become popular, many implementations will emerge, and many users will use it. As a common ground, it would be helpful if the standard is clear that the uniqueness of UUIDv7 is solely dependent on CSPRNGs and reserves sufficient space for CSPRNG inputs. Then, users just need to pick a compliant library and make sure their CSPRNG is working properly. Otherwise, users have to examine the library before use to understand the source of uniqueness and satisfy all the prerequisites for that specific implementation. This could sound like an extreme, but a standard exists to coordinate implementers and users, so clarifying the responsibility boundary should be helpful. Those who want to utilize a granular timestamp should resort to UUIDv8.\r\n\r\nThis is my personal opinion, and consensus is definitely needed.\r\n\r\nI admit my opinion is somewhat biased by the [recent government scandal in my country](https://www.asahi.com/ajw/articles/14904344), where timestamp collisions caused private information leakage. Microsecond timestamps reportedly collide multiple times in the incident. It is seemingly very difficult to ensure the timestamp granularity across a system. For example:\r\n\r\n- client or server hardware or operating systems might not support granular timestamp\r\n- mice and keyboards operate on a certain timing clock and might transmit users' input at a certain cycle\r\n- routers and network switches store packets in their buffer and might send multiple requests to the server at once\r\n\r\nLearning these cases recently, I feel kind of fearful to rely deeply on timestamps to guarantee uniqueness and randomness.",
+          "createdAt": "2023-05-19T14:13:51Z",
+          "updatedAt": "2023-05-19T14:13:51Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Once finalized, v7 will become popular, many implementations will emerge, and many users will use it. As a common ground, it would be helpful if the standard is clear that the uniqueness of UUIDv7 is solely dependent on CSPRNGs and reserves sufficient space for CSPRNG inputs. Then, users just need to pick a compliant library and make sure their CSPRNG is working properly. Otherwise, users have to examine the library before use to understand the source of uniqueness and satisfy all the prerequisites for that specific implementation. This could sound like an extreme, but a standard exists to coordinate implementers and users, so clarifying the responsibility boundary should be helpful. Those who want to utilize a granular timestamp should resort to UUIDv8.\r\n> \r\n\r\nI completely agree with you here.\r\n",
+          "createdAt": "2023-05-19T16:43:07Z",
+          "updatedAt": "2023-05-19T16:43:07Z"
         }
       ]
     },
@@ -1671,7 +1699,7 @@
       "labels": [],
       "body": "Reference: [6.2. Monotonicity and Counters](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-03.html#name-monotonicity-and-counters)\r\n\r\nI believe we don't need to (or simply, should not) give prominence to the Re-randomize Until Monotonic approach as Method 3, because it does not have a distinctive benefit over the other methods. To me, Method 3 doesn't seem to make sense.\r\n\r\nFirstly, the Method 3 approach is perfectly legal without this section along with Method 1 as per Fixed-Length Dedicated Counter Seeding:\r\n\r\n> When utilizing a randomly seeded counter alongside Method 1, the random value MAY be regenerated with each counter increment without impacting sortability.\r\n\r\nThe Fixed-Length Dedicated Counter Length section suggests limiting the counter length to 42 bits but does not forbid utilizing the entire random field as a counter. Method 3 is allowed under Method 1 should an implementer wish to employ it.\r\n\r\nSimplicity is not the strength of Method 3 at all. This method requires a generator to memorize the immediately preceding value and accordingly suffers from all the challenges relating to that, such as persistent storage and synchronization mechanisms. Plus, if a generator is able to memorize the previous value, just incrementing the counter field is obviously much simpler.\r\n\r\nMethod 3 could sound simple because it naturally embodies the counter overflow handling, but that is not the case. If naively implemented, a Method 3 generator enters a busy loop when it has fully consumed the counter space until the next timestamp tick. It is actually not a big deal at all either with Method 1 & 2 if it's okay to just busy-loop upon counter overflows. Challenges of overflow handling are mostly around the graceful handling of timestamp rollbacks and malfunctioning system clocks. For example, it would be a nightmare if your generator claimed 100% CPU power for busy loops when you adjusted your server's system clock back to the correct position, and thus library writers make a lot of effort with many other techniques than a busy loop to avoid such an incident. A naive Method 3 generator will never be a practical implementation.\r\n\r\nThe performance drawback is tremendous. On average, a Method 3 generator can generate only 74 UUIDs (given the 74-bit counter space) per millisecond, which is incredibly slow, even though the generator consumes a significant amount of CPU time just to throw away unnecessary random numbers.\r\n\r\nIn conclusion, I would propose to remove the Method 3 section because:\r\n\r\n- this approach is permitted without this section\r\n- this method is no simpler than the other methods\r\n- the performance drawback is significant\r\n- this method does not have a distinctive benefit or a specific use case\r\n",
       "createdAt": "2023-05-17T01:02:05Z",
-      "updatedAt": "2023-05-17T23:54:05Z",
+      "updatedAt": "2023-05-19T04:54:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -1708,8 +1736,31 @@
           "body": "> Do we have requirements to generate more than 74 UUID/ms\r\n\r\nI don't think so, but the methods 1-4 are introduced as methods used in \"batch UUID creation\" and \"high frequency UUID generation\" as clearly stated in the leading paragraph. In this sense, Method 3 is never recommended for these purposes because it generates only 74 UUIDs per millisecond despite the 100% consumption of CPU power. With the other methods, JavaScript implementations easily reach 1k+ and Rust 15k+ per millisecond without deep optimization.\r\n\r\n> 74 UUID/ms [is that a typo for 64?]\r\n\r\nIt is not a typo. UUIDv7's `rand_a` + `rand_b` fields give 74-bit space available for counters. With Method 3, the first UUID in a millisecond picks a random number from the 74-bit space, leaving on average 73-bit space available for the second trial. And, the second UUID on average picks one from the 73-bit space, leaving 72-bit space on average for the third UUID, and ....\r\n",
           "createdAt": "2023-05-17T23:54:04Z",
           "updatedAt": "2023-05-17T23:54:04Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@LiosK After looking at this newly I totally agree on this one and I think it is fine to just remove method 3.   If implementations do not need to generate more than one value per clock tick then they don't need to use any of the methods, and if they do then I agree the efficiency issues with method 3 are too great to use this.  If I have a better idea I'll propose it but yeah, method 3 should just come out.",
+          "createdAt": "2023-05-19T04:54:30Z",
+          "updatedAt": "2023-05-19T04:54:30Z"
         }
       ]
+    },
+    {
+      "number": 89,
+      "id": "I_kwDOH6Ln3M5mToL_",
+      "title": "Fix ambiguous text around UUIDv6 clock sequence",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/89",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "[5.6. UUID Version 6](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-03.html#name-uuid-version-6)\r\n\r\n### Current text\r\n\r\n> The clock sequence bits remain unchanged from their <del>usage and </del>position in Section 5.1.\r\n>\r\n> The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from Section 5.1. For more information on MAC address usage within UUIDs see the Section 8.\r\n\r\n### Proposed text\r\n\r\n> The clock sequence <ins>and node </ins>bits remain unchanged from their position in Section 5.1.\r\n>\r\n> The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old <ins>clock sequence and </ins>MAC address behavior from Section 5.1. For more information on MAC address usage within UUIDs see the Section 8.\r\n\r\n### Rationale\r\n\r\nThe usage of the clock sequence field is technically changed because it is filled with random bits by default, though the old behavior is still permitted.",
+      "createdAt": "2023-05-19T00:02:49Z",
+      "updatedAt": "2023-05-19T00:02:49Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -3305,6 +3356,118 @@
           "updatedAt": "2023-05-15T13:31:45Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 88,
+      "id": "PR_kwDOH6Ln3M5Qzn8I",
+      "title": "Remove extra words",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/88",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-18T13:20:46Z",
+      "updatedAt": "2023-05-18T13:22:24Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "main",
+      "headRefOid": "6624c2c7b1e177ad1df92f26e93a99e3fe7a42cc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/ddc3f1d0c0a66706e98997be41a1ce1063c791b6 edited a different file, didn't it?",
+          "createdAt": "2023-05-18T13:22:24Z",
+          "updatedAt": "2023-05-18T13:22:24Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 90,
+      "id": "PR_kwDOH6Ln3M5Q7jLv",
+      "title": "Change rounding mode of Method 4 Section 6.2",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/90",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Changes the rounding mode demonstrated in Replace Left-Most Random Bits with Increased Clock Precision (Method 4) from ties-to-nearest to round-down-toward-zero.\r\n\r\nhttps://github.com/ietf-wg-uuidrev/rfc4122bis/issues/86#issuecomment-1548940686",
+      "createdAt": "2023-05-20T00:41:38Z",
+      "updatedAt": "2023-05-20T00:41:38Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "rounding",
+      "headRefOid": "1f411ba21fd84c31498f0ce30a13d303a97cb99d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 91,
+      "id": "PR_kwDOH6Ln3M5Q7qE0",
+      "title": "Add verbal description of v7 generation to 5.7. UUID Version 7",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/91",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Whether to limit the size of Method 4 clock precision is still under discussion in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/86, but aside from that point, I believe we should update the 5.7. UUID Version 7 section to make it consistent with Method 4.\r\n\r\nThe UUIDv7 structure is currently hard to understand because in my opinion it lacks a verbal description of the generation algorithm other than the field definitions below the layout figure, while other versions include some textual descriptions in their respective sections.\r\n\r\nAs a starting point, I have summarized my understanding as follows and created this PR.\r\n\r\n> UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with a combination of the following subfields, in this order from the most significant bits to the least:\r\n>\r\n> 1. An OPTIONAL submillisecond timestamp fraction to utilize extra clock precision as per Section 6.2 (Method 4).\r\n> 2. An OPTIONAL carefully seeded counter to guarantee additional monotonicity as per Section 6.2 (Method 1 or 2).\r\n> 3. Random data for each new UUIDv7 generated to provide uniqueness as per Section 6.8 for any remaining space.\r\n\r\nAs @bradleypeabody pointed out in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/86#issuecomment-1553990440, there are some disagreements around here, so discussion and consensus are definitely needed.\r\n",
+      "createdAt": "2023-05-20T02:50:27Z",
+      "updatedAt": "2023-05-20T02:50:27Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "describe_v7",
+      "headRefOid": "c0d445d569493d3ec99fa650948bc935de7b9e9b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 92,
+      "id": "PR_kwDOH6Ln3M5Q8sAc",
+      "title": "Remove Re-randomize Until Monotonic (Method 3) from Monotonicity and Counters",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/92",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/87",
+      "createdAt": "2023-05-21T01:21:31Z",
+      "updatedAt": "2023-05-21T01:21:31Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "rem_method_3",
+      "headRefOid": "34d47354712c12ee8a018cb34eded00338119937",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
