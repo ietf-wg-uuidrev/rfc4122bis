@@ -1275,19 +1275,7 @@ Monotonic Random (Method 2):
   SHOULD NOT be used by implementations that favor unguessablity, as the resulting
   values are easily guessable.
 
-Re-randomize Until Monotonic (Method 3):
-: If the performance impact is acceptable (depending on the UUID version,
-  granularity of the system clock, and expected throughput of values
-  generated per clock value), an implementation can, in the case
-  of multiple UUID values using the same clock tick, simply regenerate
-  a new random value as many times as needed in order to produce a UUID that is
-  ordered after the last one.  The primary benefit of this approach is simplicity
-  of implementation. One downside to this approach is the fact that
-  generation will become increasingly slower for a given timestamp value as
-  more attempts are required to produce monotonic output, and the fact that
-  subsequent values will have less entropy and be more easily guessable.
-
-Replace Left-Most Random Bits with Increased Clock Precision (Method 4):
+Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
 : For UUIDv7, which has millisecond timestamp precision, it is possible
   to use any additional clock precision available on the system to substitute
   for random bits immediately following the timestamp.  This can provide
