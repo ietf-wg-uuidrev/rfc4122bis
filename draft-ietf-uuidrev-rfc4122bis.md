@@ -661,7 +661,7 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 
 # UUID Layouts {#layout}
 
-To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a a grouping of fields within bit layout consisting four octets to a row.
+To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a grouping of fields within bit layout consisting four octets to a row.
 The fields are presented with the most significant one first.
 
 In the absence of explicit application or presentation protocol
