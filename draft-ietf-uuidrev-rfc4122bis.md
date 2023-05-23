@@ -223,12 +223,29 @@ informative:
     author:
     - org: IANA
     date: 2022-11-18
+  Python:
+    target: https://docs.python.org/3/library/uuid.html
+    title: UUID objects according to RFC
+    author:
+    - org: Python
+    date: 2023-05-23
+  Microsoft:
+    target: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/a66edeb1-52a0-4d64-a93b-2f5c833d7d92
+    title: curly braced GUID string
+    author:
+    - org: Microsoft
+    date: 2023-04-03
+  IBM_NCS:
+    target: https://www.ibm.com/docs/en/aix/7.1?topic=u-uuid-gen-command-ncs
+    title: uuid_gen Command (NCS)
+    author:
+    - org: IBM
+    date: 2023-03-23
 
 --- abstract
 
-This specification defines a Uniform Resource Name namespace for
-UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
-Unique IDentifiers).  A UUID is 128 bits long and is intended to guarantee
+This specification defines the UUIDs (Universally Unique IDentifiers) and it's a Uniform Resource Name namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).
+A UUID is 128 bits long and is intended to guarantee
 uniqueness across space and time.  UUIDs were originally used in the
 Apollo Network Computing System and later in the Open Software
 Foundation's (OSF) Distributed Computing Environment (DCE), and then
@@ -256,7 +273,7 @@ many cases, become exposed in many non-standard ways.
 This specification attempts to standardize that practice as openly as
 possible and in a way that attempts to benefit the entire Internet.
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs, as URNs {{RFC8141}}, or otherwise.
+to implement services using UUIDs, UUIDs in combination with URNs {{RFC8141}}, or otherwise.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -444,10 +461,27 @@ SHAKE
 UTC
 : Coordinated Universal Time
 
-
+OID
+: Object Identifier
 
 ## Changelog {#changelog}
 {:removeinrfc}
+
+draft-04
+
+{: spacing="compact"}
+
+- Remove extra words #82, #88, and #93
+- Punctuation and minor style fixes #84
+- Change rounding mode of Method 4 Section 6.2 #90 (from #86)
+- Add verbal description of v7 generation to 5.7. UUID Version 7 #91
+- Remove Re-randomize Until Monotonic (Method 3) from Monotonicity and Counters #92
+- Fix ambiguous text around UUIDv6 clock sequence #89
+- Move endianness statement from layout to format section #85
+- Further modified abstract to separate URN topic from UUID definition #83
+- Provided three more UUID format examples #83
+- Added text further clarifying version construct is for the variant in this doc #83
+- Provided further clarification for local/global bit vs multicast bit #83
 
 draft-03
 
@@ -549,6 +583,10 @@ draft-00
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
 bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
 
+In the absence of explicit application or presentation protocol
+specification to the contrary, each field is encoded with the Most
+Significant Byte first (known as network byte order).
+
 UUIDs MAY be represented as binary data or integers.
 When in use with URNs or as text in applications, any given UUID SHOULD
 be represented by the "hex-and-dash" string format consisting of multiple
@@ -594,6 +632,15 @@ urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleURNUUID title='Example URN UUID'}
 
+There many other ways to define a UUID format some select methods are detailed below.
+Please note that this is not an exhaustive list and is only provided for informational purposes.
+
+{: spacing="compact"}
+
+- Some UUID implementations, such as those found in {{Python}} and {{Microsoft}}, will output UUID with the string format, including dashes, enclosed in curly braces.
+- {{X667}} provides UUID format definitions for use of UUID with an OID.
+- The legacy {{IBM_NCS}} implementation produces a unique UUID format compatible with Variant 0xx of {{table1}}
+
 ## Variant Field {#variant_field}
 
 The variant field determines the layout of the UUID.  That is, the
@@ -624,7 +671,7 @@ Accordingly, all bit and field layouts avoid the use of these bits.
 The version number is in the most significant 4 bits of octet 6
 (bits 48 through 51 of the UUID).
 
-{{table2}} lists all of the versions for this UUID variant specified in this document.
+{{table2}} lists all of the versions for this UUID variant 10x specified in this document.
 
 | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
 |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
@@ -659,14 +706,13 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 ~~~~
 {: title='UUIDv4 Variant Examples'}
 
+It should be noted that the other remaining UUID variants found in {{table1}} leverage different sub-typing/versioning mechanisms.
+The recording and definition of the remaining UUID variant and sub-typing combinations are outside of the scope of this document.
+
 # UUID Layouts {#layout}
 
 To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a grouping of fields within bit layout consisting four octets to a row.
 The fields are presented with the most significant one first.
-
-In the absence of explicit application or presentation protocol
-specification to the contrary, each field is encoded with the Most
-Significant Byte first (known as network byte order).
 
 ## UUID Version 1 {#uuidv1}
 UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
@@ -937,9 +983,9 @@ for UUIDv6, the first 48 most significant bits are stored
 first, followed by the 4 bit version (same position), followed by the remaining
 12 bits of the original 60 bit timestamp.
 
-The clock sequence bits remain unchanged from their usage and position in {{uuidv1}}.
+The clock sequence  and node bits remain unchanged from their position in {{uuidv1}}.
 
-The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
+The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old clock sequence and MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
 
 The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
@@ -1007,7 +1053,7 @@ UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.
 
 UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with a combination of the following subfields, in this order from the most significant bits to the least:
 
-1.  An OPTIONAL submillisecond timestamp fraction to utilize extra clock precision as per {{monotonicity_counters}} (Method 4).
+1.  An OPTIONAL sub-millisecond timestamp fraction (12 bits at maximum) to utilize extra clock precision as per {{monotonicity_counters}} (Method 3).
 2.  An OPTIONAL carefully seeded counter to guarantee additional monotonicity as per {{monotonicity_counters}} (Method 1 or 2).
 3.  Random data for each new UUIDv7 generated to provide uniqueness as per {{unguessability}} for any remaining space.
 
@@ -1045,7 +1091,7 @@ var:
 : The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or optional constructs to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 ## UUID Version 8 {#v8}
 
@@ -1606,7 +1652,9 @@ cards.
 
 For compatibility with earlier specifications, note that this
 document uses the unicast/multicast bit, instead of the arguably more
-correct local/global bit.
+correct local/global bit because MAC addresses with the local/global bit set or not are both possible in a network.
+This is not the case with the unicast/multicast bit.
+One node cannot have a MAC address that multicasts to multiple nodes.
 
 In addition, items such as the computer's name and the name of the
 operating system, while not strictly speaking random, will help
@@ -1694,7 +1742,7 @@ Further, at this time the authors and working group have concluded that IANA is 
 # Security Considerations {#Security}
 
 Implementations SHOULD NOT assume that UUIDs are hard to guess.
-Foe example, they MUST NOT be used
+For example, they MUST NOT be used
 as security capabilities (identifiers whose mere possession grants
 access).  Discovery of predictability in a random number source will
 result in a vulnerability.
