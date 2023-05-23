@@ -821,7 +821,7 @@ md5_low:
 The version 4 UUID is meant for generating UUIDs from truly-random or
 pseudo-random numbers.
 
-An implementation may generate 128 bits of random random data which is
+An implementation may generate 128 bits of random data which is
 used to fill out the UUID fields in {{uuidv4fields}}. The UUID version
 and variant then replace the respective bits as defined by {{version_field}}
 and {{variant_field}},
@@ -1002,7 +1002,7 @@ UUIDv1 implementation.
 
 UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
-seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
+since midnight 1 Jan 1970 UTC, leap seconds excluded.
 UUID version 7 also has improved entropy characteristics over versions 1 or 6.
 
 Implementations SHOULD utilize UUID version 7 instead of UUID version 1 and 6 if
