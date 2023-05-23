@@ -459,6 +459,7 @@ draft-04
 - Add verbal description of v7 generation to 5.7. UUID Version 7 #91
 - Remove Re-randomize Until Monotonic (Method 3) from Monotonicity and Counters #92
 - Fix ambiguous text around UUIDv6 clock sequence #89
+- Move endianness statement from layout to format section #85
 
 draft-03
 
@@ -559,6 +560,10 @@ draft-00
 
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
 bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
+
+In the absence of explicit application or presentation protocol
+specification to the contrary, each field is encoded with the Most
+Significant Byte first (known as network byte order).
 
 UUIDs MAY be represented as binary data or integers.
 When in use with URNs or as text in applications, any given UUID SHOULD
@@ -674,10 +679,6 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 
 To minimize confusion about bit assignments within octets and among differing versions, the UUID record definition is provided as a grouping of fields within bit layout consisting four octets to a row.
 The fields are presented with the most significant one first.
-
-In the absence of explicit application or presentation protocol
-specification to the contrary, each field is encoded with the Most
-Significant Byte first (known as network byte order).
 
 ## UUID Version 1 {#uuidv1}
 UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
