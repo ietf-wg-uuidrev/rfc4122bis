@@ -244,7 +244,7 @@ informative:
 
 --- abstract
 
-This specification defines the UUIDs (Universally Unique IDentifiers) and it's a Uniform Resource Name namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).
+This specification defines the UUIDs (Universally Unique IDentifiers) and it's Uniform Resource Name namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).
 A UUID is 128 bits long and is intended to guarantee
 uniqueness across space and time.  UUIDs were originally used in the
 Apollo Network Computing System and later in the Open Software
