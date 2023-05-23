@@ -449,6 +449,16 @@ UTC
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-04
+
+{: spacing="compact"}
+
+- Remove extra words #82, #88, and #93
+- Punctuation and minor style fixes #84
+- Change rounding mode of Method 4 Section 6.2 #90 (from #86)
+- Add verbal description of v7 generation to 5.7. UUID Version 7 #91
+- Remove Re-randomize Until Monotonic (Method 3) from Monotonicity and Counters #92
+
 draft-03
 
 {: spacing="compact"}
@@ -1007,7 +1017,7 @@ UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.
 
 UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with a combination of the following subfields, in this order from the most significant bits to the least:
 
-1.  An OPTIONAL submillisecond timestamp fraction to utilize extra clock precision as per {{monotonicity_counters}} (Method 4).
+1.  An OPTIONAL sub-millisecond timestamp fraction (12 bits at maximum) to utilize extra clock precision as per {{monotonicity_counters}} (Method 3).
 2.  An OPTIONAL carefully seeded counter to guarantee additional monotonicity as per {{monotonicity_counters}} (Method 1 or 2).
 3.  Random data for each new UUIDv7 generated to provide uniqueness as per {{unguessability}} for any remaining space.
 
@@ -1045,7 +1055,7 @@ var:
 : The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or optional constructs to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 ## UUID Version 8 {#v8}
 
