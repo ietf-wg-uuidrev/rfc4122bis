@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-21T01:39:58.934791+00:00",
+  "timestamp": "2023-05-23T01:37:38.010320+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -3430,7 +3430,7 @@
       "labels": [],
       "body": "Whether to limit the size of Method 4 clock precision is still under discussion in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/86, but aside from that point, I believe we should update the 5.7. UUID Version 7 section to make it consistent with Method 4.\r\n\r\nThe UUIDv7 structure is currently hard to understand because in my opinion it lacks a verbal description of the generation algorithm other than the field definitions below the layout figure, while other versions include some textual descriptions in their respective sections.\r\n\r\nAs a starting point, I have summarized my understanding as follows and created this PR.\r\n\r\n> UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with a combination of the following subfields, in this order from the most significant bits to the least:\r\n>\r\n> 1. An OPTIONAL submillisecond timestamp fraction to utilize extra clock precision as per Section 6.2 (Method 4).\r\n> 2. An OPTIONAL carefully seeded counter to guarantee additional monotonicity as per Section 6.2 (Method 1 or 2).\r\n> 3. Random data for each new UUIDv7 generated to provide uniqueness as per Section 6.8 for any remaining space.\r\n\r\nAs @bradleypeabody pointed out in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/86#issuecomment-1553990440, there are some disagreements around here, so discussion and consensus are definitely needed.\r\n",
       "createdAt": "2023-05-20T02:50:27Z",
-      "updatedAt": "2023-05-20T02:50:27Z",
+      "updatedAt": "2023-05-21T01:48:03Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
@@ -3441,7 +3441,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "LiosK",
+          "authorAssociation": "NONE",
+          "body": "Note: Once the size of Method 4 extra timestamp is limited to 12 bits as per https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/86:\r\n\r\n- Insert the threshold like: \"1. An OPTIONAL submillisecond timestamp fraction <ins>(12 bits at maximum) </ins>to utilize extra clock precision as per Section 6.2 (Method 4).\"\r\n- Revert the `rand_b` field description because it won't accommodate extra clock precision: \"The final 62 bits of pseudo-random data to provide uniqueness as per Section 6.8 and/or an optional counter to guarantee additional monotonicity as per Section 6.2.\"\r\n\r\nNote: Method 4 must be renamed to Method 3 once https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/92 is accepted.",
+          "createdAt": "2023-05-21T01:48:03Z",
+          "updatedAt": "2023-05-21T01:48:03Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3454,9 +3462,9 @@
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/87",
+      "body": "Closes https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/87",
       "createdAt": "2023-05-21T01:21:31Z",
-      "updatedAt": "2023-05-21T01:21:31Z",
+      "updatedAt": "2023-05-21T01:41:05Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
@@ -3469,6 +3477,46 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 93,
+      "id": "PR_kwDOH6Ln3M5Q96yr",
+      "title": "Remove extra \"a\"",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/93",
+      "state": "OPEN",
+      "author": "DianaNites",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-05-22T01:51:26Z",
+      "updatedAt": "2023-05-22T02:44:00Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f74f4a13bb1b860e3fe9bb4c708b50e40f922c1d",
+      "headRepository": "DianaNites/rfc4122bis",
+      "headRefName": "patch-1",
+      "headRefOid": "83b5eadcba76fd75396bd09ddf07b4f4c09170e2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5VkuUU",
+          "commit": {
+            "abbreviatedOid": "83b5ead"
+          },
+          "author": "cbandy",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-05-22T02:44:00Z",
+          "updatedAt": "2023-05-22T02:44:00Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
