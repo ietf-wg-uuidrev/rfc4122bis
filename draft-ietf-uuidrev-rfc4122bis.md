@@ -1000,12 +1000,18 @@ UUIDv1 implementation.
 
 ## UUID Version 7 {#v7}
 
-UUID version 7 features a time-ordered value field derived from the widely
+UUID Version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
 since midnight 1 Jan 1970 UTC, leap seconds excluded.
-UUID version 7 also has improved entropy characteristics over versions 1 or 6.
+UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.
 
-Implementations SHOULD utilize UUID version 7 instead of UUID version 1 and 6 if
+UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with a combination of the following subfields, in this order from the most significant bits to the least:
+
+1.  An OPTIONAL submillisecond timestamp fraction to utilize extra clock precision as per {{monotonicity_counters}} (Method 4).
+2.  An OPTIONAL carefully seeded counter to guarantee additional monotonicity as per {{monotonicity_counters}} (Method 1 or 2).
+3.  Random data for each new UUIDv7 generated to provide uniqueness as per {{unguessability}} for any remaining space.
+
+Implementations SHOULD utilize UUIDv7 instead of UUIDv1 and UUIDv6 if
 possible.
 
 
@@ -1033,14 +1039,13 @@ ver:
 : 4 bit UUIDv7 version set as per {{version_field}}
 
 rand_a:
-: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or optional constructs to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 var:
 : The 2 bit variant defined by {{variant_field}}.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
-
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or optional constructs to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 ## UUID Version 8 {#v8}
 
