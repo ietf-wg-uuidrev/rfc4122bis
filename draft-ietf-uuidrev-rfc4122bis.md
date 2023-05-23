@@ -244,7 +244,7 @@ informative:
 
 --- abstract
 
-This specification defines the UUIDs (Universally Unique IDentifiers) and it's Uniform Resource Name namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).
+This specification defines the UUIDs (Universally Unique IDentifiers) and the UUID Uniform Resource Name (URN) namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).
 A UUID is 128 bits long and is intended to guarantee
 uniqueness across space and time.  UUIDs were originally used in the
 Apollo Network Computing System and later in the Open Software
@@ -260,9 +260,8 @@ incorporated into this document. This document obsoletes RFC4122.
 
 # Introduction {#Background}
 
-This specification defines a Uniform Resource Name namespace for
-UUIDs (Universally Unique IDentifiers), also known as GUIDs (Globally
-Unique IDentifiers).  A UUID is 128 bits long and requires no central
+This specification defines the UUIDs (Universally Unique IDentifiers) and the UUID Uniform Resource Name (URN) namespace. UUIDs are also known as GUIDs (Globally Unique IDentifiers).
+A UUID is 128 bits long and requires no central
 registration process.
 
 The use of UUIDs is extremely pervasive in computing.  They comprise
