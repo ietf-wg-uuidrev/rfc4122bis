@@ -458,6 +458,7 @@ draft-04
 - Change rounding mode of Method 4 Section 6.2 #90 (from #86)
 - Add verbal description of v7 generation to 5.7. UUID Version 7 #91
 - Remove Re-randomize Until Monotonic (Method 3) from Monotonicity and Counters #92
+- Fix ambiguous text around UUIDv6 clock sequence #89
 
 draft-03
 
@@ -947,9 +948,9 @@ for UUIDv6, the first 48 most significant bits are stored
 first, followed by the 4 bit version (same position), followed by the remaining
 12 bits of the original 60 bit timestamp.
 
-The clock sequence bits remain unchanged from their usage and position in {{uuidv1}}.
+The clock sequence  and node bits remain unchanged from their position in {{uuidv1}}.
 
-The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
+The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old clock sequence and MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
 
 The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
 
