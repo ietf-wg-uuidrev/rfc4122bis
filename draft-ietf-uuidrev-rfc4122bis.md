@@ -714,12 +714,12 @@ To minimize confusion about bit assignments within octets and among differing ve
 The fields are presented with the most significant one first.
 
 ## UUID Version 1 {#uuidv1}
-UUID Version 1 is a time-based UUID featuring a 60-bit timestamp
+UUID version 1 is a time-based UUID featuring a 60-bit timestamp
 represented by Coordinated Universal Time (UTC) as a count of 100-
 nanosecond intervals since 00:00:00.00, 15 October 1582 (the date of
 Gregorian reform to the Christian calendar).
 
-UUID Version 1 also features a clock sequence field which is used to help avoid
+UUIDv1 also features a clock sequence field which is used to help avoid
 duplicates that could arise when the clock is set backwards in time
 or if the node ID changes.
 
@@ -806,11 +806,11 @@ For systems with no IEEE address, a randomly or pseudo-randomly
 generated value may be used; see {{unguessability}} and {{unidentifiable}}.
 
 ## UUID Version 2 {#uuidv2}
-UUID Version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
+UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
 As such the definition of these UUIDs are outside the scope of this specification.
 
 ## UUID Version 3 {#uuidv3}
-UUID Version 3 is meant for generating UUIDs from "names"
+UUID version 3 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
@@ -863,7 +863,7 @@ md5_low:
   from the computed MD5 value.
 
 ## UUID Version 4 {#uuidv4}
-The version 4 UUID is meant for generating UUIDs from truly-random or
+UUID version 4 is meant for generating UUIDs from truly-random or
 pseudo-random numbers.
 
 An implementation may generate 128 bits of random data which is
@@ -910,7 +910,7 @@ random_c:
   filled with random data as per {{unguessability}}
 
 ## UUID Version 5 {#uuidv5}
-UUID Version 5 is meant for generating UUIDs from "names"
+UUID version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
 
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
@@ -1045,7 +1045,7 @@ UUIDv1 implementation.
 
 ## UUID Version 7 {#v7}
 
-UUID Version 7 features a time-ordered value field derived from the widely
+UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
 since midnight 1 Jan 1970 UTC, leap seconds excluded.
 UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.
