@@ -1327,8 +1327,8 @@ Monotonic Random (Method 2):
 
 Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
 : For UUIDv7, which has millisecond timestamp precision, it is possible
-  to use any additional clock precision available on the system to substitute
-  for random bits immediately following the timestamp.  This can provide
+  to use additional clock precision available on the system to substitute
+  for up to 12 random bits immediately following the timestamp.  This can provide
   values that are time-ordered with sub-millisecond precision, using
   however many bits are appropriate in the implementation environment.
   With this method, the additional time precision bits MUST follow the
@@ -1355,7 +1355,8 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   as the most significant (left-most) portion of the random section of the UUID
   (e.g. the rand_a field in UUIDv7).
   This works for any desired bit length that fits into a UUID, and applications
-  can decide the appropriate length based on available clock precision and desired
+  can decide the appropriate length based on available clock precision, but for
+  UUIDv7, it is limited to 12 bits at maximum to reserve sufficient space for
   random bits.
 
   The main benefit to encoding additional timestamp precision
