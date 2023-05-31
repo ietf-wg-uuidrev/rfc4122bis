@@ -466,6 +466,14 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-05
+
+{: spacing="compact"}
+
+- Changed Max UUID to Omni UUID to better complement Latin Nil UUID verbiage. #95
+- Align Method 3 text with the 12 bits limitation #96
+- Make Version/version casing consistent across 5. UUID Layouts #97
+
 draft-04
 
 {: spacing="compact"}
@@ -507,7 +515,7 @@ draft-02
 {: spacing="compact"}
 
 - Change md5_high in SHA-1 section to sha1_mid #59
-- Describe Nil/Max UUID in variant table #16
+- Describe Nil/Omni UUID in variant table #16
 - Further Clarify that non-descript node IDs are the preferred method in distributed UUID Generation #49
 - Appendix B, consistent naming #55
 - Remove duplicate ABNF from IANA considerations #56
@@ -656,7 +664,7 @@ the letter "x" indicates a "don't-care" value.
 |    0 |    x | x    | Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |
 |    1 |    0 | x    | The variant specified in this document.                                        |
 |    1 |    1 | 0    | Reserved, Microsoft Corporation backward compatibility.                        |
-|    1 |    1 | 1    | Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |
+|    1 |    1 | 1    | Reserved for future definition and includes Omni UUID as per {{omniuuid}}.       |
 {: #table1 title='UUID Variants'}
 
 Interoperability, in any form, with variants other than the one
@@ -1163,18 +1171,18 @@ The nil UUID is special form of UUID that is specified to have all
 
 A Nil UUID value can be useful to communicate the absence of any other UUID value in situations that otherwise require or use a 128-bit UUID.  A Nil UUID can express the concept "no such value here". Thus it is reserved for such use as needed for implementation-specific situations.
 
-## Max UUID {#maxuuid}
+## Omni UUID {#omniuuid}
 
-The Max UUID is special form of UUID that is specified to have all 128 bits
+The Omni UUID is special form of UUID that is specified to have all 128 bits
 set to 1. This UUID can be thought of as the inverse of Nil UUID defined
 in {{niluuid}}.
 
 ~~~~
 FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF
 ~~~~
-{: title='Max UUID Format'}
+{: title='Omni UUID Format'}
 
-A Max UUID value can be used as a sentinel value in situations where a 128-bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
+A Omni UUID value can be used as a sentinel value in situations where a 128-bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
 
 # UUID Best Practices {#uuid_best_practices}
 
