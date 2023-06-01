@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-25T01:28:05.794642+00:00",
+  "timestamp": "2023-06-01T02:08:16.674795+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1795,7 +1795,7 @@
       "labels": [],
       "body": "As seen in #83, I made some remarks on draft 03. In this issue I will list things that are not fully handled by the current draft (04) and some additional things I have in mind:\r\n\r\n1.\tAs mentioned in #83 (point 3), I talked about the Discord variant of Twitter snowflake. Today, I was thinking about UUIDv7. I think it is better to allow other time offsets next to 1970-01-01. Why? If Twitter decides to convert their IDs to UUID, they choose the current form of UUIDv7. However, because Discord has another offset (2015-01-01), if they want to use the current form of UUIDv7, they also have to convert all there timestamps with an additional 45 years offset. I don't think this is desirable. I propose some changes on this:\r\n\t```diff\r\n\t-UUID Version 7 features a time-ordered value field derived from the\r\n\t+UUID Version 7 features a time-ordered value field containing the number\r\n\t-widely implemented and well known Unix Epoch timestamp source, the\r\n\t+of miliseconds, leap seconds excluded, since a defined offset, in most\r\n\t-number of milliseconds since midnight 1 Jan 1970 UTC, leap seconds\r\n\t+cases the RECOMMENDED offset of midnight 1 Jan 1970 UTC. If a system\r\n\t-excluded.  UUIDv7 generally has improved entropy characteristics over\r\n\t+requires a different offset to be used, another offset MAY be used.\r\n\t-UUIDv1 or UUIDv6.\r\n\t+UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.\r\n\r\n\t-UUIDv7 values are created by allocating a Unix timestamp in\r\n\t+UUIDv7 values are created by allocating a timestamp in\r\n\tmilliseconds in the most significant 48 bits and filling the\r\n\tremaining 74 bits, jointly, excluding the required version and\r\n\tvariant bits, with a combination of the following subfields, in this\r\n\torder from the most significant bits to the least:\r\n\t```\r\n---\r\n\r\n2.\tThere is a difference between UUID and GUID. Not in the wire format, but in the representation format. If a UUID/GUID has the hexadecimal value `00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF`, the UUID will be written like `00112233-4455-6677-8899-AABBCCDDEEFF`, where the GUID will be written like `{33221100-5544-7766-8899-AABBCCDDEEFF}`. Except the `{` and `}`, it is also vissible that some parts are flipped. This is seen in HxD (a well-known Hex-Editor), for example: ![image](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/12856904/f970ff75-4ff7-45aa-8e63-402de91b8184)\r\n\tI think it is worth noting that GUIDs have this effect.\r\n\r\n---\r\n\r\n3.\tI think we still have to talk about the name of `Max UUID`. I understand the people that say \"It is the maximum value\". However, the makers of RFC 4122 went with \"Nil UUID\" when talking about the \"minimum value\". I think we should stay in the same jargon when naming things. So, we rename \"Nil UUID\" to \"Min UUID\" or something, or we change \"Max UUID\" to \"Omni UUID\". I think we should go for the Nil/Omni pair rather than the Min/Max pair. For example, Min/Max doesn't make sense when looking at UUID as a 128 bit SIGNED integer. All bits set is not the maximum and all bits not is not the minimum, see https://en.wikipedia.org/wiki/Two%27s_complement. I would rather go for the Nil/Omni pair:\r\n\r\n\t**Nil** (https://en.wiktionary.org/wiki/nil#Latin) is an alternative form of \"nihil\" and means \"nothing\" in Latin. This is true, because of all bits, NOTHING is set.\r\n\t**Omni** (https://en.wiktionary.org/wiki/omni#Latin) is an declension of \"omnis\" and means \"all\" in Latin. This is true, because ALL bits are set.",
       "createdAt": "2023-05-23T21:35:58Z",
-      "updatedAt": "2023-05-23T22:40:53Z",
+      "updatedAt": "2023-05-31T22:54:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -1804,6 +1804,34 @@
           "body": "1. Those who needs another timestamp epoch than 1970 or 1582 must use UUIDv8. It doesn't make sense to allow different epochs within the scope of UUIDv7 because the standard has to coordinate all the implementations to produce sortable values.",
           "createdAt": "2023-05-23T22:40:53Z",
           "updatedAt": "2023-05-23T22:40:53Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "1. Agree with @LiosK here.\r\n2. I am not sure it is worth noting the that level of detail. \r\n3. See:\r\n3a ~@bradleypeabody you had said to me you wanted to touch add some fluff text to the Nil/Max, can you hit a PR on this topic before the close of WGLC (June 4st for review by June 9th)?~ Edit: saw we did add this at the end of both sections already in draft-02.\r\n3b. As for Omni vs Max; I don't care I just want to get the document finished. I just don't want to change Nil since it is referenced everywhere all over the net, in docs, and misc. code.",
+          "createdAt": "2023-05-31T17:40:51Z",
+          "updatedAt": "2023-05-31T17:43:17Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "1.\t~I don't know if my point is fully understood. Of course I want all implementations to be coordinated to produce sortable values, but I can imagine that companies, like Discord, will say \"Yeah, we will use UUIDv7 with another offset\", like they did with Twitter's snowflake.~\r\n\t\r\n\tI see that both Twitter and Discord have another offset than 1970. For Twitter is Thursday 4 November 2010 01:42:54.657 (`1288834974657`) and for Discord it is Thursday 1 January 2015 00:00:00 (`1420070400000`). In my mind Twitter used 1970, so that was why I came up with the idea. Because it isn't the case, it is indeed better to use UUIDv8 for it for now and I will agree with @LiosK.\r\n\t\r\n\t_(Companies always can choose to patch the UUIDv7 with their own offset, but they have to clearly define this offset in their documentation, like Discord did for Snowflake. However, doing this will make it not fully follow the spec, so it will be likely that not all implementations will support custom offsets. This is not a problem for the people making the spec, (althrough it could be shortly mentioned), but it is more a issue for the company that defined this new offset.)_\r\n\r\n---\r\n\r\n2.\tI think one or two sentences mentioning it should be enough. It is just a representation format, but can be important during serializing and deserializing.\r\n\r\n---\r\n\r\n3.\tChanges of #98 seem fine.",
+          "createdAt": "2023-05-31T20:00:35Z",
+          "updatedAt": "2023-05-31T20:00:35Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For item 2, do you have an application example (or two) that does that? \r\nPersonally I feel like they shouldn't be doing that... but at least looking at the app and docs myself will help me think of any text I may be able to put in there on the topic.",
+          "createdAt": "2023-05-31T20:30:26Z",
+          "updatedAt": "2023-05-31T20:30:26Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Well, Raymond Chen made an blog post on it: https://devblogs.microsoft.com/oldnewthing/20220928-00/.\r\n\r\nThe editor HxD (download here: https://mh-nexus.de/en/hxd/), has a Data Inspector that supports GUIDs (and no UUIDs).\r\nAlso mentioning this post: https://stackoverflow.com/questions/10190817/guid-byte-order-in-net\r\nAnd the Wikipedia: https://en.wikipedia.org/wiki/Universally_unique_identifier#Encoding\r\n\r\nImagine having the following binary data:\r\n![image](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/12856904/237fee02-3ab8-4df1-8ff1-97bdd299c6e4)\r\n\r\nNormally, when reading this data, we use a big-endian representation format, so the UUID will have the following representation: `00112233-4455-6677-8899-AABBCCDDEEFF`\r\n\r\nHowever, Microsoft has a GUID struct:\r\n```c\r\nstruct GUID\r\n{\r\n    uint32_t Data1;\r\n    uint16_t Data2;\r\n    uint16_t Data3;\r\n    uint8_t  Data4[8];\r\n}\r\n```\r\n\r\nThe 128 bit data is still read the same. However, the representation format is different. A GUID will print all little-endian using the struct above, so:\r\n\r\nAn `uint32_t`, so `00 11 22 33`. In case of little-endian it becomes `33 22 11 00` when printed.\r\nAn `uint16_t`, so `44 55`. In case of little-endian it becomes `55 44` when printed.\r\nAn `uint16_t`, so `66 77`. In case of little-endian it becomes `77 66` when printed.\r\nThen an array of `uint8_t`, 8 times. An octet isn't possible to write in some endianness, so the last 8 octets are printed in the same order as viewed the hex editor.\r\n\r\nThe representation becomes: `{33221100-5544-7766-8899-AABBCCDDEEFF}`\r\n\r\nMaybe that is also why there is a diffence between UUID en GUID, to distinguish the difference in encoding? I don't know, but it sounds reasonable to me.\r\n\r\n(I think I will do a big rewrite of the Wikipedia soon.)",
+          "createdAt": "2023-05-31T22:54:09Z",
+          "updatedAt": "2023-05-31T22:54:09Z"
         }
       ]
     }
@@ -3606,24 +3634,26 @@
       "id": "PR_kwDOH6Ln3M5RPA1o",
       "title": "Align Method 3 text with the 12 bits limitation",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/96",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LiosK",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Would propose small changes to Method 3 (the old Method 4) to align with the 12 bits limitation.\r\n\r\n#86",
       "createdAt": "2023-05-24T11:09:37Z",
-      "updatedAt": "2023-05-24T11:09:37Z",
+      "updatedAt": "2023-05-31T17:30:14Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "aaa7ac9a90c9a541ed06747ed1ec075ce036e1bd",
       "headRepository": "LiosK/rfc4122bis",
       "headRefName": "cleanup_method3",
       "headRefOid": "e40267ba59d0f86ef599ac67ce5aa4a9b73a54d0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-05-31T17:30:13Z",
+      "mergedAt": "2023-05-31T17:30:13Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "4da59acdb289ba82281ad7c93cec96ce4ba274ca"
+      },
       "comments": [],
       "reviews": []
     },
@@ -3632,24 +3662,54 @@
       "id": "PR_kwDOH6Ln3M5RPEZ7",
       "title": "Make Version/version casing consistent across 5. UUID Layouts",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/97",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LiosK",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fix inconsistent casing of \"UUID Version X\" and \"UUID version X\" in Section 5. UUID Layouts. Though I am not sure if \"version\" is better than \"Version\" or not, at least the lowercase \"version\" improves consistency across the document.",
       "createdAt": "2023-05-24T11:19:36Z",
-      "updatedAt": "2023-05-24T11:19:36Z",
+      "updatedAt": "2023-05-31T17:30:41Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "aaa7ac9a90c9a541ed06747ed1ec075ce036e1bd",
       "headRepository": "LiosK/rfc4122bis",
       "headRefName": "consistent_casing",
       "headRefOid": "ffa95bcf498cf70be901ec2720bf977de95c55b0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-05-31T17:30:41Z",
+      "mergedAt": "2023-05-31T17:30:41Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "2622a764820d0e5b98b7519b4e168b8f44be2ef6"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 98,
+      "id": "PR_kwDOH6Ln3M5R0P0y",
+      "title": "changelog + max/omni changes",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/98",
+      "state": "MERGED",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "For #95 item 3",
+      "createdAt": "2023-05-31T17:51:31Z",
+      "updatedAt": "2023-05-31T17:52:24Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "2622a764820d0e5b98b7519b4e168b8f44be2ef6",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "max-omni",
+      "headRefOid": "497365b39da48361cae843afa5c76c02cb758119",
+      "closedAt": "2023-05-31T17:52:21Z",
+      "mergedAt": "2023-05-31T17:52:21Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "00adb7bdfcf674d824ceaadc00dcc04a917469e5"
+      },
       "comments": [],
       "reviews": []
     }
