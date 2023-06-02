@@ -239,7 +239,7 @@ informative:
     target: https://devblogs.microsoft.com/oldnewthing/20220928-00/?p=107221
     title: Why does COM express GUIDs in a mix of big-endian and little-endian? Why can’t it just pick a side and stick with it?
     author:
-    - org: Raymond Chen
+    - name: Raymond Chen
     date: 2022-09-28
   IBM_NCS:
     target: https://www.ibm.com/docs/en/aix/7.1?topic=u-uuid-gen-command-ncs
