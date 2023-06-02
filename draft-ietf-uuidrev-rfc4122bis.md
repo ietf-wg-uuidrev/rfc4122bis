@@ -235,6 +235,12 @@ informative:
     author:
     - org: Microsoft
     date: 2023-04-03
+  MS_COM_GUID:
+    target: https://devblogs.microsoft.com/oldnewthing/20220928-00/?p=107221
+    title: Why does COM express GUIDs in a mix of big-endian and little-endian? Why can’t it just pick a side and stick with it?
+    author:
+    - name: Raymond Chen
+    date: 2022-09-28
   IBM_NCS:
     target: https://www.ibm.com/docs/en/aix/7.1?topic=u-uuid-gen-command-ncs
     title: uuid_gen Command (NCS)
@@ -473,6 +479,7 @@ draft-05
 - Changed Max UUID to Omni UUID to better complement Latin Nil UUID verbiage. #95
 - Align Method 3 text with the 12 bits limitation #96
 - Make Version/version casing consistent across 5. UUID Layouts #97
+- Cite MS COM GUID as little-endian #95
 
 draft-04
 
@@ -593,6 +600,10 @@ bits described in the next sections in determine finer structure. While discussi
 In the absence of explicit application or presentation protocol
 specification to the contrary, each field is encoded with the Most
 Significant Byte first (known as network byte order).
+
+Saving UUIDs to binary format is done by sequencing all fields in big-endian format.
+However there is a known caveat that Microsoft's Component Object Model (COM) GUIDs leverage little-endian when saving GUIDs.
+The discussion of this {{MS_COM_GUID}} outside the scope of this specification.
 
 UUIDs MAY be represented as binary data or integers.
 When in use with URNs or as text in applications, any given UUID SHOULD
