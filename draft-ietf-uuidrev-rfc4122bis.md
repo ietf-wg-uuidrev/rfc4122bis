@@ -1069,7 +1069,7 @@ implemented and well known Unix Epoch timestamp source, the number of millisecon
 since midnight 1 Jan 1970 UTC, leap seconds excluded.
 UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.
 
-UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with random bits for each new UUIDv7 generated to provide uniqueness as per {{unguessability}}. Alternatively, implementations MAY fill the 74 bits with a combination of the following subfields, in this order from the most significant bits to the least, to guarantee additional monotonicity within a millisecond:
+UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, excluding the required version and variant bits, with random bits for each new UUIDv7 generated to provide uniqueness as per {{unguessability}}. Alternatively, implementations MAY fill the 74 bits, jointly, with a combination of the following subfields, in this order from the most significant bits to the least, to guarantee additional monotonicity within a millisecond:
 
 1.  An OPTIONAL sub-millisecond timestamp fraction (12 bits at maximum) as per {{monotonicity_counters}} (Method 3).
 2.  An OPTIONAL carefully seeded counter as per {{monotonicity_counters}} (Method 1 or 2).
