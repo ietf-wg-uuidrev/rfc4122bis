@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-01T02:08:16.674795+00:00",
+  "timestamp": "2023-06-04T02:05:22.243022+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1788,15 +1788,15 @@
       "id": "I_kwDOH6Ln3M5msCci",
       "title": "List of remarks of current draft 04",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/95",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ben221199",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "As seen in #83, I made some remarks on draft 03. In this issue I will list things that are not fully handled by the current draft (04) and some additional things I have in mind:\r\n\r\n1.\tAs mentioned in #83 (point 3), I talked about the Discord variant of Twitter snowflake. Today, I was thinking about UUIDv7. I think it is better to allow other time offsets next to 1970-01-01. Why? If Twitter decides to convert their IDs to UUID, they choose the current form of UUIDv7. However, because Discord has another offset (2015-01-01), if they want to use the current form of UUIDv7, they also have to convert all there timestamps with an additional 45 years offset. I don't think this is desirable. I propose some changes on this:\r\n\t```diff\r\n\t-UUID Version 7 features a time-ordered value field derived from the\r\n\t+UUID Version 7 features a time-ordered value field containing the number\r\n\t-widely implemented and well known Unix Epoch timestamp source, the\r\n\t+of miliseconds, leap seconds excluded, since a defined offset, in most\r\n\t-number of milliseconds since midnight 1 Jan 1970 UTC, leap seconds\r\n\t+cases the RECOMMENDED offset of midnight 1 Jan 1970 UTC. If a system\r\n\t-excluded.  UUIDv7 generally has improved entropy characteristics over\r\n\t+requires a different offset to be used, another offset MAY be used.\r\n\t-UUIDv1 or UUIDv6.\r\n\t+UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.\r\n\r\n\t-UUIDv7 values are created by allocating a Unix timestamp in\r\n\t+UUIDv7 values are created by allocating a timestamp in\r\n\tmilliseconds in the most significant 48 bits and filling the\r\n\tremaining 74 bits, jointly, excluding the required version and\r\n\tvariant bits, with a combination of the following subfields, in this\r\n\torder from the most significant bits to the least:\r\n\t```\r\n---\r\n\r\n2.\tThere is a difference between UUID and GUID. Not in the wire format, but in the representation format. If a UUID/GUID has the hexadecimal value `00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF`, the UUID will be written like `00112233-4455-6677-8899-AABBCCDDEEFF`, where the GUID will be written like `{33221100-5544-7766-8899-AABBCCDDEEFF}`. Except the `{` and `}`, it is also vissible that some parts are flipped. This is seen in HxD (a well-known Hex-Editor), for example: ![image](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/12856904/f970ff75-4ff7-45aa-8e63-402de91b8184)\r\n\tI think it is worth noting that GUIDs have this effect.\r\n\r\n---\r\n\r\n3.\tI think we still have to talk about the name of `Max UUID`. I understand the people that say \"It is the maximum value\". However, the makers of RFC 4122 went with \"Nil UUID\" when talking about the \"minimum value\". I think we should stay in the same jargon when naming things. So, we rename \"Nil UUID\" to \"Min UUID\" or something, or we change \"Max UUID\" to \"Omni UUID\". I think we should go for the Nil/Omni pair rather than the Min/Max pair. For example, Min/Max doesn't make sense when looking at UUID as a 128 bit SIGNED integer. All bits set is not the maximum and all bits not is not the minimum, see https://en.wikipedia.org/wiki/Two%27s_complement. I would rather go for the Nil/Omni pair:\r\n\r\n\t**Nil** (https://en.wiktionary.org/wiki/nil#Latin) is an alternative form of \"nihil\" and means \"nothing\" in Latin. This is true, because of all bits, NOTHING is set.\r\n\t**Omni** (https://en.wiktionary.org/wiki/omni#Latin) is an declension of \"omnis\" and means \"all\" in Latin. This is true, because ALL bits are set.",
       "createdAt": "2023-05-23T21:35:58Z",
-      "updatedAt": "2023-05-31T22:54:09Z",
-      "closedAt": null,
+      "updatedAt": "2023-06-02T20:27:34Z",
+      "closedAt": "2023-06-02T20:27:34Z",
       "comments": [
         {
           "author": "LiosK",
@@ -1832,6 +1832,116 @@
           "body": "Well, Raymond Chen made an blog post on it: https://devblogs.microsoft.com/oldnewthing/20220928-00/.\r\n\r\nThe editor HxD (download here: https://mh-nexus.de/en/hxd/), has a Data Inspector that supports GUIDs (and no UUIDs).\r\nAlso mentioning this post: https://stackoverflow.com/questions/10190817/guid-byte-order-in-net\r\nAnd the Wikipedia: https://en.wikipedia.org/wiki/Universally_unique_identifier#Encoding\r\n\r\nImagine having the following binary data:\r\n![image](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/12856904/237fee02-3ab8-4df1-8ff1-97bdd299c6e4)\r\n\r\nNormally, when reading this data, we use a big-endian representation format, so the UUID will have the following representation: `00112233-4455-6677-8899-AABBCCDDEEFF`\r\n\r\nHowever, Microsoft has a GUID struct:\r\n```c\r\nstruct GUID\r\n{\r\n    uint32_t Data1;\r\n    uint16_t Data2;\r\n    uint16_t Data3;\r\n    uint8_t  Data4[8];\r\n}\r\n```\r\n\r\nThe 128 bit data is still read the same. However, the representation format is different. A GUID will print all little-endian using the struct above, so:\r\n\r\nAn `uint32_t`, so `00 11 22 33`. In case of little-endian it becomes `33 22 11 00` when printed.\r\nAn `uint16_t`, so `44 55`. In case of little-endian it becomes `55 44` when printed.\r\nAn `uint16_t`, so `66 77`. In case of little-endian it becomes `77 66` when printed.\r\nThen an array of `uint8_t`, 8 times. An octet isn't possible to write in some endianness, so the last 8 octets are printed in the same order as viewed the hex editor.\r\n\r\nThe representation becomes: `{33221100-5544-7766-8899-AABBCCDDEEFF}`\r\n\r\nMaybe that is also why there is a diffence between UUID en GUID, to distinguish the difference in encoding? I don't know, but it sounds reasonable to me.\r\n\r\n(I think I will do a big rewrite of the Wikipedia soon.)",
           "createdAt": "2023-05-31T22:54:09Z",
           "updatedAt": "2023-05-31T22:54:09Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks, I think I can add a bullet to the ones I added last update and state that MS implementation of GUIDs leverage little-endian and cite that MS post but also generally discourage that practice while we are at it.",
+          "createdAt": "2023-06-01T14:39:04Z",
+          "updatedAt": "2023-06-01T14:39:04Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I think it isn't that simple to discourage an UUID format that is used by one of the biggest tech companies in the world. I will try to investigate the problem a little bit more, so we can describe the situation in the best way possible.",
+          "createdAt": "2023-06-01T18:39:13Z",
+          "updatedAt": "2023-06-01T18:39:13Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I did some testing on GUID in C++:\r\n\r\n```cpp\r\nCLSID StringToGUID(){\r\n\tCLSID clsid;\r\n\twchar_t* clsid_str = L\"{5C98B8E4-2B3D-12B1-ADE2-0000F86456B2}\";\r\n\tCLSIDFromString(clsid_str, &clsid);\r\n\treturn clsid;\r\n}\r\n\r\nCLSID cls = StringToGUID();\r\n\r\nchar data[16];\r\nmemcpy(&data,&cls,16);\r\n\r\nstd::ofstream myfile;\r\nmyfile.open(\"example.dat\");\r\nfor(int i=0;i<16;++i){\r\n\tchar c[2];\r\n\tsprintf(c,\"%02X\", data[i] & 0xFF);\r\n\tmyfile << c;\r\n}\r\nmyfile.close();\r\n```\r\n\r\nWhen viewing the content of `example.dat`, the following is visible:\r\n![image](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/12856904/9b4a8189-403a-421d-9875-dc86066e8aba)\r\nThe value `E4B8985C3D2BB112ADE20000F86456B2`.\r\n\r\nComparing it with the input string, it is definitely little-endian. Note that `CLSIDFromString` is a Windows function: https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-clsidfromstring. Discouraging this representtion format seems a bad thing to me in this case.\r\n\r\n---\r\n\r\nImagine having an UUID with the bytes `00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF` saved in memory, e.g. a file. In big-endian there is no trouble. The UUID is always represented in the same (network) byte order, regardless of the fields of the wire format.\r\n\r\nHowever, when going to GUID, the same sequence of bytes in the memory will behave differently. The representation format is a little different, because little-endian is used.\r\n\r\nActually, if you look very specificly to the whole thing, it is not the representation format that behaves like it is little-endian, but it is the binary format. In case of `5C98B8E4-2B3D-12B1-ADE2-0000F86456B2`, the `Data1` value of the GUID struct is `1553512676`. In hexadecimal format that is `0x5C98B8E4`. That is the same order as the representation format!!!\r\n\r\nSo, it is like the following:\r\n\r\nUUID: `Representation format <--(no conversion)--> Field values <--(no conversion)--> Wire format`\r\nGUID: `Representation format <--(no conversion)--> Field values <--(conversion of endianness*)--> Wire format`\r\n\r\nNote that GUID uses a `Data1`, `Data2`, `Data3`, `Data4` struct that is linked to the Microsoft variant, but that also non-Microsoft variant are used in this little-endian world. I have to investigate more about the handling of `version` fields in that case, because the `version` field is located at the part that is visibly influenced by little-endian.\r\n\r\nI will also make a table explaining it in some way.\r\n\r\n| Name | Endianness | Description |\r\n| - | - | - | \r\n| UUID (initially) | Big-endian | Originally the Apollo UUID that was binary saved as big-endian. |\r\n| UUID (currently) | Both | Name for all 128 bit values that follow the specs, like RFC 4122, including the Microsoft variant. |\r\n| GUID (initially) | Little-endian | Name for the specific Microsoft variant. | \r\n| GUID (currently) | Both | Same as UUID currently. GUID and UUID are used interchangeably at the moment. |\r\n\r\nSo if you have a struct like this:\r\n```cpp\r\nstruct GUID\r\n{\r\n    uint32_t Data1;\r\n    uint16_t Data2;\r\n    uint16_t Data3;\r\n    uint8_t  Data4[8];\r\n}\r\n```\r\n\r\nIn case of big-endian, you DON'T HAVE TO flip bytes when encoding to and decoding from the representation format and wire-format.\r\nIn case of little-endian, you only HAVE TO flip bytes when encoding to and decoding from the wire-format. Between fields and representation format, things should stay the same.",
+          "createdAt": "2023-06-01T21:18:51Z",
+          "updatedAt": "2023-06-01T21:18:51Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Let's take `IID_IActivation` as example. It has the following value: `4d9f4ab8-7d1c-11cf-861e-0020af6e7c57`.\r\n\r\n---\r\n\r\n### UUID\r\n\r\nUsing https://www.uuidtools.com/decode, it tells us it is DCE variant and version 1.\r\n\r\nThe UUID is saved in the same byte order.\r\n\r\n---\r\n\r\n### GUID\r\n\r\nUsing the `GUID` struct, the value is parsed. The fields have the following value:\r\n - Data1: `0x4d9f4ab8`\r\n - Data2: `0x7d1c`\r\n - Data3: `0x11cf`\r\n - Data4: `[0x86, 0x1e, 0x00, 0x20, 0xaf, 0x6e, 0x7c, 0x57]` (array of 8 items)\r\n\r\nNote that we still have the same order as the representation format.\r\n\r\nThe GUID is saved in little-endian, so every byte should be flipped per field as seen above:\r\n - `0x4d9f4ab8` => `0xb84a9f4d`\r\n - `0x7d1c` => `0x1c7d`\r\n - `0x11cf` => `0x11cf`\r\n - The array just as is, because it are seperate octets and octets don't have endianness.\r\n\r\nIn the end, concatenate: `0xb84a9f4d` + `0x1c7d` + `0x11cf` + array => `b84a9f4d1c7d11cf861e0020af6e7c57` (as only seen in the hex editor.\r\n\r\n---\r\n\r\n## Conclusion\r\n\r\nMaybe I have used too many words for it, but we are NOT talking about a new representation format, as I found out by now. We are talking about Microsoft having a different way of writing UUIDs to disk. It is not big-endian, like the normal UUID, but also not a fully 16-byte flipped thing. It is something between it, because they use their own GUID struct for chunking.\r\n\r\nI propose to not add it as new representation format. It simply isn't and I was wrong in the beginning of this issue about it.\r\n\r\nI propose we add some little sentences about Microsoft using a slightly different way of writing the UUID to disk/memory and further say it is out of scope of this specification to define how, because it has actually to do with Microsoft's variant, which is out of scope too.\r\n\r\nSomething like this:\r\n\r\n> When saving the UUIDs to its binary form, normally this is done by sequencing all fields in big-endian. Microsoft uses a slightly different method when saving GUIDs, but this is out of scope for this specification. This different method doesn't have any effect on the representation format, so parsing human readable UUIDs should not give a problem.",
+          "createdAt": "2023-06-01T21:56:26Z",
+          "updatedAt": "2023-06-01T21:56:26Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Defining this different method will be done in the historical RFC that @kyzer-davis and I will try to make after the successor of RFC 4122 is published.",
+          "createdAt": "2023-06-01T21:59:39Z",
+          "updatedAt": "2023-06-01T21:59:39Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> When saving the UUIDs to its binary form, normally this is done by sequencing all fields in big-endian. Microsoft uses a slightly different method when saving GUIDs, but this is out of scope for this specification. This different method doesn't have any effect on the representation format, so parsing human readable UUIDs should not give a problem.\r\n\r\n> Defining this different method will be done in the historical RFC that @kyzer-davis and I will try to make after the successor of RFC 4122 is published.\r\n\r\nJust reviewed: \r\nSo do we want the MS GUID text or are we good with covering that topic in the historical doc?\r\nLet me know so I can get the latest Draft 05 up to IETF for the last week of WLGC review. \r\n\r\nIf I add the text I will add an asterisk next to [Microsoft] in the first section 4 bullet and then call cite that text at the end of section 4.",
+          "createdAt": "2023-06-02T15:43:59Z",
+          "updatedAt": "2023-06-02T15:43:59Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I think we should maybe only mention the fact that Microsoft's GUID has a slightly different binary output then the original UUID to take into account, but nothing more than that. The details will be in the historical RFC. The text I made previously (`When saving ... a problem.`) seems good enough for me, but you can make some modifications to it. I would suggest to add the text after paragraph 2 in section 4.\r\n\r\nWhat do you mean by adding a asterisk next to [Microsoft] in the first section 4 bullet? (I assume you mean `Some UUID ... curly braces.`.) The binary form of Microsoft's GUID doesn't have anything to do with the curly braces.",
+          "createdAt": "2023-06-02T18:51:37Z",
+          "updatedAt": "2023-06-02T18:51:37Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> What do you mean by adding a asterisk next to [Microsoft] in the first section 4 bullet? (I assume you mean Some UUID ... curly braces..) The binary form of Microsoft's GUID doesn't have anything to do with the curly braces.\r\n\r\nYeah, I was trying to tie to MS so it flows nicely but since we are talking about big-endian encoding in paragraph 2 it can work there. Let me whip up a PR real fast.",
+          "createdAt": "2023-06-02T19:58:21Z",
+          "updatedAt": "2023-06-02T19:58:21Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Sure. I already started to improve the Wikipedia.",
+          "createdAt": "2023-06-02T20:11:31Z",
+          "updatedAt": "2023-06-02T20:11:31Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@ben221199, take a peek at https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/408c5a72a6779391fc879e71bb050e3922b5aaca\r\n\r\nIf that looks good I will merge down and get this back to IETF under draft 05 closing this thread.",
+          "createdAt": "2023-06-02T20:18:54Z",
+          "updatedAt": "2023-06-02T20:18:54Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Seems good to me. I think that DCOM (Distributed Component Object Model) is better than COM (https://nl.wikipedia.org/wiki/Distributed_component_object_model), but I also see COM appearing in some docs. I see that Raymond uses `COM`, so let's stick with that. Perfect.",
+          "createdAt": "2023-06-02T20:26:40Z",
+          "updatedAt": "2023-06-02T20:26:40Z"
+        }
+      ]
+    },
+    {
+      "number": 99,
+      "id": "I_kwDOH6Ln3M5nfv36",
+      "title": "Limitations of 32 bit unix epoch in UUID V7",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/99",
+      "state": "CLOSED",
+      "author": "crc-sstubbs",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "question"
+      ],
+      "body": "Hi,\r\n\r\nNot sure if this is the correct place to add this but I'm truly excited to see these being used in the future. Reading through the draft would UUID V7 which I am intending to use in the future experience the 2038 problem?",
+      "createdAt": "2023-06-01T13:50:45Z",
+      "updatedAt": "2023-06-01T15:33:23Z",
+      "closedAt": "2023-06-01T15:31:56Z",
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hello! \r\nTake a look at the \"length\" sub-section of Section 6.1 Timestamp Considerations:\r\nhttps://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-04.html#name-timestamp-considerations-3",
+          "createdAt": "2023-06-01T14:34:47Z",
+          "updatedAt": "2023-06-01T14:34:47Z"
+        },
+        {
+          "author": "crc-sstubbs",
+          "authorAssociation": "NONE",
+          "body": "Thank you! I missed that while looking through. 48 bit is perfect. I'm really excited for this to get approved.",
+          "createdAt": "2023-06-01T15:31:56Z",
+          "updatedAt": "2023-06-01T15:33:23Z"
         }
       ]
     }
@@ -3709,6 +3819,34 @@
       "mergedBy": "kyzer-davis",
       "mergeCommit": {
         "oid": "00adb7bdfcf674d824ceaadc00dcc04a917469e5"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 100,
+      "id": "PR_kwDOH6Ln3M5SCMSO",
+      "title": "Cite MS COM GUID as Little-Endian",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/100",
+      "state": "MERGED",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-02T20:27:16Z",
+      "updatedAt": "2023-06-02T20:27:22Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "00adb7bdfcf674d824ceaadc00dcc04a917469e5",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "wglc-endian",
+      "headRefOid": "b968306ba430fc62f9d4d820422305f19c828762",
+      "closedAt": "2023-06-02T20:27:22Z",
+      "mergedAt": "2023-06-02T20:27:22Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "6899be343f3c56ed5b7d5dcf24c19f3c836fd53f"
       },
       "comments": [],
       "reviews": []
