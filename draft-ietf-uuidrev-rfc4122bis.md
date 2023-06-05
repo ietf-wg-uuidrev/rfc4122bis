@@ -603,7 +603,7 @@ Significant Byte first (known as network byte order).
 
 Saving UUIDs to binary format is done by sequencing all fields in big-endian format.
 However there is a known caveat that Microsoft's Component Object Model (COM) GUIDs leverage little-endian when saving GUIDs.
-The discussion of this {{MS_COM_GUID}} outside the scope of this specification.
+The discussion of this {{MS_COM_GUID}} is outside the scope of this specification.
 
 UUIDs MAY be represented as binary data or integers.
 When in use with URNs or as text in applications, any given UUID SHOULD
@@ -650,7 +650,7 @@ urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleURNUUID title='Example URN UUID'}
 
-There many other ways to define a UUID format some select methods are detailed below.
+There being many other ways to define a UUID format, some select methods are detailed below.
 Please note that this is not an exhaustive list and is only provided for informational purposes.
 
 {: spacing="compact"}
@@ -1602,7 +1602,7 @@ Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
   As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying a the algorithm.
   That is, to detail SHA-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
-  The protocol of choice, communication channels, and actual method of sharing this data between systems it outside the scope of this specification.
+  The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
 
