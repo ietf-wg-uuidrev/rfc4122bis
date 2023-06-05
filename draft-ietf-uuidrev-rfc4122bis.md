@@ -21,8 +21,8 @@ date: 2023
 author:
 - ins: P. Leach
   name: P. Leach
-  email: paulle@microsoft.com
-  org: Microsoft
+  email: pjl7@uw.edu
+  org: University of Washington
 - ins: M. Mealling
   name: M. Mealling
   email: michael@refactored-networks.com
@@ -472,6 +472,15 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-06
+
+{: spacing="compact"}
+
+- More Grammar edits! #102
+- Tweak v7 description to de-emphasize optional components #103
+- Better Clarify Case in ABNF #104
+- Verbiage change in 6.2 #105
+
 draft-05
 
 {: spacing="compact"}
@@ -624,8 +633,8 @@ DIGIT    = %x30-39
 HEXDIG   = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~~
 
+Note that the alphabetic characters may be all uppercase, all lowercase, or mixed case, as per {{RFC5234, Section 2.3}}.
 An example UUID using this textual representation from the above ABNF is shown in {{sampleStringUUID}}.
-Note that in this example the alphabetic characters may be all uppercase, all lowercase, or mixed case, as per {{RFC5234, Section 2.3}}
 
 ~~~~
 f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -650,7 +659,7 @@ urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleURNUUID title='Example URN UUID'}
 
-There being many other ways to define a UUID format, some select methods are detailed below.
+There are many other ways to define a UUID format, some select methods are detailed below.
 Please note that this is not an exhaustive list and is only provided for informational purposes.
 
 {: spacing="compact"}
@@ -1310,7 +1319,7 @@ sufficient monotonicity guarantees by simply ensuring that timestamp increments
 before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
 
-Implementations SHOULD choose one method for single-node UUID implementations
+Implementations SHOULD employ the following methods for single-node UUID implementations
 that require batch UUID creation, or are otherwise concerned about monotonicity
 with high frequency UUID generation.
 
