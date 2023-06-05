@@ -19,6 +19,12 @@ kw: uuid
 date: 2023
 
 author:
+- name: Kyzer R. Davis
+  email: kydavis@cisco.com
+  org: Cisco Systems
+- name: Brad G. Peabody
+  email: brad@peabody.io
+  org: Uncloud
 - ins: P. Leach
   name: P. Leach
   email: pjl7@uw.edu
@@ -27,12 +33,6 @@ author:
   name: M. Mealling
   email: michael@refactored-networks.com
   org: VeriSign, Inc.
-- name: Brad G. Peabody
-  email: brad@peabody.io
-  org: Uncloud
-- name: Kyzer R. Davis
-  email: kydavis@cisco.com
-  org: Cisco Systems
 
 normative:
   C309:
@@ -1319,7 +1319,7 @@ sufficient monotonicity guarantees by simply ensuring that timestamp increments
 before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
 
-Implementations SHOULD employ the following methods for single-node UUID implementations
+Implementations SHOULD employ one the following methods for single-node UUID implementations
 that require batch UUID creation, or are otherwise concerned about monotonicity
 with high frequency UUID generation.
 
