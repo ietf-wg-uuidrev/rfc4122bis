@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-04T02:05:22.243022+00:00",
+  "timestamp": "2023-06-06T01:55:04.665177+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1944,6 +1944,91 @@
           "updatedAt": "2023-06-01T15:33:23Z"
         }
       ]
+    },
+    {
+      "number": 101,
+      "id": "I_kwDOH6Ln3M5nuA8r",
+      "title": "Emphasis of optional subfields for v7",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/101",
+      "state": "CLOSED",
+      "author": "fboulnois",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I have an implementation of v7 UUIDs for [Postgres](https://github.com/fboulnois/pg_uuidv7) based on the [original draft](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-00.html#name-uuid-version-7). I stumbled upon the [updated draft](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-05) today and I think the latest draft places too strong an emphasis on the optional subfields in v7 UUIDs (changed in #91).\r\n\r\nIn the original draft, the implementation was straightforward: 48 bits for a Unix timestamp in milliseconds and 74 bits of randomness.\r\n\r\nThe updated draft include a more detailed description of the 74 bits of randomness, but in doing so I think it places too much emphasis on the use of timestamps or counters in the optional subfields. This raises the barrier to implementation (I was initially confused and concerned I needed to reimplement or add code to remain conformant) and in my opinion we should steer implementations away from relying on anything other than a CSPRNG in the random bits unless there is a specific need for all the reasons described in #86. Additionally, I think encouraging the use of timestamps or counters in those subfields can lead to incompatible implementations of v7 UUIDs even if they are optional.\r\n\r\nTherefore, my suggestion would be either to:\r\n\r\n1. Remove the numeric bullet points and rephrase the section as:\r\n\r\n> UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with pseudo-random data in the subfields.\r\n\r\n(the subfields are described right after and include pointers to how they should be filled, so I think it is ok to omit the bullet points)\r\n\r\n2. Emphasize \"Random data to provide uniqueness as per {{unguessability}} OR \" in front of bullet points 1 and 2.\r\n\r\nI am not a standards person, so perhaps there is a more elegant and/or IETF-y way to rephrase the section to deemphasize the use of the optional subfields.\r\n",
+      "createdAt": "2023-06-04T04:11:56Z",
+      "updatedAt": "2023-06-05T19:13:04Z",
+      "closedAt": "2023-06-05T19:13:04Z",
+      "comments": [
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "How about the text like this?\r\n\r\n> UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with random bits to provide uniqueness for each new UUIDv7 generated. Alternatively, implementations MAY fill the 74 bits with a combination of the following subfields, in this order from the most significant bits to the least, to guarantee additional monotonicity within a millisecond:\r\n>\r\n> 1.  An OPTIONAL sub-millisecond timestamp fraction (12 bits at maximum) to utilize extra clock precision as per {{monotonicity_counters}} (Method 3).\r\n> 2.  An OPTIONAL carefully seeded counter to guarantee additional monotonicity as per {{monotonicity_counters}} (Method 1 or 2).\r\n> 3.  Random data for each new UUIDv7 generated to provide uniqueness for any remaining space.\r\n\r\nI totally agree that the emphasis should be given to the random data because the extra clock precision and monotonic counter are absolutely optional. I'm concerned about removing the bullets because the Monotonicity and Counters section isn't really intuitive, and thus it looks hard for readers to determine what is actually permitted in implementing a UUIDv7 generator. The subfield description should be helpful to clarify that point.\r\n",
+          "createdAt": "2023-06-04T13:28:25Z",
+          "updatedAt": "2023-06-04T13:28:25Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Tweaked the proposed text to reduce repetition:\r\n\r\n> UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with random bits for each new UUIDv7 generated to provide uniqueness as per {{unguessability}}. Alternatively, implementations MAY fill the 74 bits with a combination of the following subfields, in this order from the most significant bits to the least, to guarantee additional monotonicity within a millisecond:\r\n>\r\n> 1.  An OPTIONAL sub-millisecond timestamp fraction (12 bits at maximum) as per {{monotonicity_counters}} (Method 3).\r\n> 2.  An OPTIONAL carefully seeded counter as per {{monotonicity_counters}} (Method 1 or 2).\r\n> 3.  Random data for each new UUIDv7 generated for any remaining space.",
+          "createdAt": "2023-06-04T14:22:17Z",
+          "updatedAt": "2023-06-04T14:22:17Z"
+        },
+        {
+          "author": "fboulnois",
+          "authorAssociation": "NONE",
+          "body": "> Tweaked the proposed text to reduce repetition:\r\n> \r\n> > UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, jointly, excluding the required version and variant bits, with random bits for each new UUIDv7 generated to provide uniqueness as per {{unguessability}}. Alternatively, implementations MAY fill the 74 bits with a combination of the following subfields, in this order from the most significant bits to the least, to guarantee additional monotonicity within a millisecond:\r\n> > \r\n> > 1. An OPTIONAL sub-millisecond timestamp fraction (12 bits at maximum) as per {{monotonicity_counters}} (Method 3).\r\n> > 2. An OPTIONAL carefully seeded counter as per {{monotonicity_counters}} (Method 1 or 2).\r\n> > 3. Random data for each new UUIDv7 generated for any remaining space.\r\n\r\nThis version sounds great! I agree with your earlier concerns about removing the bullet points completely. Thanks for revising the text so quickly.",
+          "createdAt": "2023-06-04T14:42:19Z",
+          "updatedAt": "2023-06-04T14:42:19Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Crafted a PR. Let's see if everyone is okay with it.\r\n\r\nPerhaps, I tend to construct unintuitive if logically correct paragraphs. Thank you for your great feedback.",
+          "createdAt": "2023-06-04T18:07:34Z",
+          "updatedAt": "2023-06-04T18:07:34Z"
+        }
+      ]
+    },
+    {
+      "number": 104,
+      "id": "I_kwDOH6Ln3M5n0OuH",
+      "title": "Better Clarify Case in ABNF",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/104",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In section 4 after the ABNF for textual representation of UUIDs it says:\r\n> An example UUID using this textual representation from the above ABNF is shown in Figure 1. Note that in this example the alphabetic characters may be all uppercase, all lowercase, or mixed case, as per [RFC5234], Section 2.3 \r\n\r\nI find this confusing. It isn\u2019t just in the example that alphabetic characters may be upper, lower, or mixed case \u2013 it is true for all text representations of UUIDs. I suggest changing it to\r\n> Note that the alphabetic characters may be all uppercase, all lowercase, or mixed case, as per [RFC5234], Section 2.3. \r\n> An example UUID using this textual representation from the above ABNF is shown in Figure 1. \r\n\r\nFrom: Paul Leach <pauljleach@msn.com>\r\n",
+      "createdAt": "2023-06-05T13:05:53Z",
+      "updatedAt": "2023-06-05T13:05:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 105,
+      "id": "I_kwDOH6Ln3M5n0Pns",
+      "title": "Verbiage change in 6.2",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/105",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In section 6.2. it says\r\n> Implementations SHOULD choose one method for single-node UUID implementations that require batch UUID creation\u2026\r\n\r\nand I suggest changing it to\r\n> Implementations SHOULD choose one of the following methods for single-node UUID implementations that require batch UUID creation\u2026\r\n\r\nFrom: Paul Leach <pauljleach@msn.com>",
+      "createdAt": "2023-06-05T13:07:43Z",
+      "updatedAt": "2023-06-05T13:37:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Technically, Method 3 and Method 1/2 can be used together, so something like \"Implementations SHOULD employ the following methods for ...\" is better, maybe?",
+          "createdAt": "2023-06-05T13:37:41Z",
+          "updatedAt": "2023-06-05T13:37:41Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -3751,7 +3836,7 @@
       "labels": [],
       "body": "Would propose small changes to Method 3 (the old Method 4) to align with the 12 bits limitation.\r\n\r\n#86",
       "createdAt": "2023-05-24T11:09:37Z",
-      "updatedAt": "2023-05-31T17:30:14Z",
+      "updatedAt": "2023-06-04T08:18:17Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "aaa7ac9a90c9a541ed06747ed1ec075ce036e1bd",
@@ -3779,7 +3864,7 @@
       "labels": [],
       "body": "Fix inconsistent casing of \"UUID Version X\" and \"UUID version X\" in Section 5. UUID Layouts. Though I am not sure if \"version\" is better than \"Version\" or not, at least the lowercase \"version\" improves consistency across the document.",
       "createdAt": "2023-05-24T11:19:36Z",
-      "updatedAt": "2023-05-31T17:30:41Z",
+      "updatedAt": "2023-06-04T08:18:18Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "aaa7ac9a90c9a541ed06747ed1ec075ce036e1bd",
@@ -3850,6 +3935,109 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 102,
+      "id": "PR_kwDOH6Ln3M5SHaje",
+      "title": "Fix typos and missing verbs",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/102",
+      "state": "MERGED",
+      "author": "LiosK",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Not fully confident though about the correction to \"There many other ways to define a UUID format some select methods are detailed below.\"",
+      "createdAt": "2023-06-04T10:19:17Z",
+      "updatedAt": "2023-06-05T19:11:46Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "71475662721b02eb2ae89e07f8c1826783addffb",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "missing_verbs",
+      "headRefOid": "9d69ece2b0d1727b0d76d85c20a98f39d0961c77",
+      "closedAt": "2023-06-05T19:11:46Z",
+      "mergedAt": "2023-06-05T19:11:46Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "be1f7cff77ec5b6ff67fd7511b960ead083d0b04"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOH6Ln3M5SIHrJ",
+      "title": "Tweak v7 description to de-emphasize optional components",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/103",
+      "state": "MERGED",
+      "author": "LiosK",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #101 ",
+      "createdAt": "2023-06-04T17:38:06Z",
+      "updatedAt": "2023-06-05T19:13:03Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "71475662721b02eb2ae89e07f8c1826783addffb",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "tweak_v7_description",
+      "headRefOid": "b1731a8ffced6e34d86d5898cd172765ab6cc78c",
+      "closedAt": "2023-06-05T19:13:03Z",
+      "mergedAt": "2023-06-05T19:13:03Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "f0fe826502e6722a657385063b34a399310323a2"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 106,
+      "id": "PR_kwDOH6Ln3M5SOz9Y",
+      "title": "WGLC: Paul's Feedback",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/106",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Closes #104 \r\n- Closes #105 \r\n\r\nWill merge once I have confirmation from the Chairs to change Paul's email.",
+      "createdAt": "2023-06-05T19:29:22Z",
+      "updatedAt": "2023-06-05T22:29:47Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f0fe826502e6722a657385063b34a399310323a2",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "wglc-paul",
+      "headRefOid": "c864e7120a8fa70a89108fddd1199812b58f9408",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5XPO8B",
+          "commit": {
+            "abbreviatedOid": "c864e71"
+          },
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Change of Paul Leach's contact information is fine; it was at his request, after all.\r\n\r\nHas there been contact with Michael Mealling, who is listed as an author? I haven't seen him on the mailing list. I think the RFC Editor wants to contact all of the listed authors prior to publication, and we should make sure he's on board with this.\r\n\r\nSince you asked for an approval, I have a small wording suggestion, which you are free to ignore.",
+          "createdAt": "2023-06-05T22:18:31Z",
+          "updatedAt": "2023-06-05T22:29:47Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "```suggestion\r\nThere are many other ways to define a UUID format; some examples are detailed below.\r\n```",
+              "createdAt": "2023-06-05T22:18:31Z",
+              "updatedAt": "2023-06-05T22:29:47Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
