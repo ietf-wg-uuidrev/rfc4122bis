@@ -659,7 +659,7 @@ urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleURNUUID title='Example URN UUID'}
 
-There are many other ways to define a UUID format, some select methods are detailed below.
+There are many other ways to define a UUID format; some examples are detailed below.
 Please note that this is not an exhaustive list and is only provided for informational purposes.
 
 {: spacing="compact"}
