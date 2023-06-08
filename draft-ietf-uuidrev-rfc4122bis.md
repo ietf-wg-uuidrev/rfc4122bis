@@ -1592,15 +1592,15 @@ The requirements for name-based UUIDs are as follows:
 {: vspace='0'}
 
 A note on namespaces:
-: While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability input a custom namespace.
+: While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
   For example, any other UUID MAY be generated and used as the desired namespace input for a given application context to
   ensure all names created are unique within the newly created namespace.
 
 Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
  These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
- To ensure UUIDv8 Name-Based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
- Creation of name-based version 8 UUIDs follow the same logic defined in {{uuidv5}}, but the hashspace should be used to as the starting point with the desired
+ To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
+ Creation of name-based version 8 UUIDs follows the same logic defined in {{uuidv5}}, but the hashspace should be used to as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
@@ -1626,7 +1626,7 @@ of a collision within an application.
 
 {: vspace='0'}
 
-Low Impact
+Low Impact:
 : A UUID collision generated a duplicate log entry which results in incorrect
   statistics derived from the data. Implementations that are not negatively
   affected by collisions may continue with the entropy and uniqueness provided
@@ -1652,7 +1652,7 @@ or around the world is not required.
 Although true global uniqueness is impossible to guarantee without a shared
 knowledge scheme, a shared knowledge scheme is not required by UUID to provide
 uniqueness for practical implementation purposes.
-Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed this specification.
+Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed by this specification.
 
 
 ## Unguessability {#unguessability}
