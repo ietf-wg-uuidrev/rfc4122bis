@@ -1666,7 +1666,7 @@ CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present
 Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}} and in {{RANDOM}}.
 
 ## UUIDs That Do Not Identify the Host {#unidentifiable}
-This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
+This section describes how to generate a UUIDv1 value if an IEEE
 802 address is not available, or its use is not desired.
 
 Implementations SHOULD obtain a 47-bit cryptographic-quality random
