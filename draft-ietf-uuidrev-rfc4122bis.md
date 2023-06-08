@@ -1280,7 +1280,7 @@ Altering, Fuzzing, or Smearing:
 Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
   bits (left-most) bits with zeros. An example is padding the most significant,
-  left-most bits of a 32 bit Unix timestamp with zeros to fill out the 48
+  left-most bits of a Unix timestamp with zeros to fill out the 48
   bit timestamp in UUIDv7.
 
 Truncating:
