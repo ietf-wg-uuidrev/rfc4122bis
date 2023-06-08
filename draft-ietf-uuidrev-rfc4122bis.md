@@ -835,7 +835,7 @@ generated value may be used; see {{unguessability}} and {{unidentifiable}}.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
-As such the definition of these UUIDs are outside the scope of this specification.
+As such the definition of these UUIDs is outside the scope of this specification.
 
 ## UUID Version 3 {#uuidv3}
 UUID version 3 is meant for generating UUIDs from "names"
@@ -1319,7 +1319,7 @@ sufficient monotonicity guarantees by simply ensuring that timestamp increments
 before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
 
-Implementations SHOULD employ one the following methods for single-node UUID implementations
+Implementations SHOULD employ the following methods for single-node UUID implementations
 that require batch UUID creation, or are otherwise concerned about monotonicity
 with high frequency UUID generation.
 
@@ -1381,7 +1381,7 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   an integer, which gives an integer value of 1870. Expressed as hexadecimal it is
   0x74E, or the binary bits 011101001110.  One can then use those 12 bits
   as the most significant (left-most) portion of the random section of the UUID
-  (e.g. the rand_a field in UUIDv7).
+  (e.g., the rand_a field in UUIDv7).
   This works for any desired bit length that fits into a UUID, and applications
   can decide the appropriate length based on available clock precision, but for
   UUIDv7, it is limited to 12 bits at maximum to reserve sufficient space for
@@ -1699,7 +1699,7 @@ above.
 ## Sorting {#sorting}
 
 UUIDv6 and UUIDv7 are designed so that implementations that require sorting
-(e.g. database indexes) SHOULD sort as opaque raw bytes, without need for
+(e.g., database indexes) SHOULD sort as opaque raw bytes, without need for
 parsing or introspection.
 
 Time ordered monotonic UUIDs benefit from greater database index locality
@@ -1725,7 +1725,7 @@ inspectors MAY refer to {{variant_field}} and {{version_field}} when required to
 As general guidance, we recommend not parsing UUID values unnecessarily,
 and instead treating them as opaquely as possible.  Although application-specific
 concerns could of course require some degree of introspection
-(e.g. to examine the variant, version or perhaps the timestamp of a UUID),
+(e.g., to examine the variant, version or perhaps the timestamp of a UUID),
 the advice here is to avoid this or other parsing unless absolutely necessary.
 Applications typically tend to be simpler, more interoperable, and perform better,
 when this advice is followed.
