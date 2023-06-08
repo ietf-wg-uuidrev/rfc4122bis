@@ -2044,7 +2044,7 @@ final: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
 
 ## Example of a UUIDv7 Value {#uuidv7_example}
 
-This example UUIDv7 test vector utilizes a well-known 32 bit Unix epoch with
+This example UUIDv7 test vector utilizes a well-known Unix epoch timestamp with
 additional millisecond precision to fill the first 48 bits
 
 rand_a and rand_b are filled with random data.
