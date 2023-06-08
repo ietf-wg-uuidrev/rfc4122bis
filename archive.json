@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-06-06T01:55:04.665177+00:00",
+  "timestamp": "2023-06-08T01:51:12.562223+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1995,15 +1995,15 @@
       "id": "I_kwDOH6Ln3M5n0OuH",
       "title": "Better Clarify Case in ABNF",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/104",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "In section 4 after the ABNF for textual representation of UUIDs it says:\r\n> An example UUID using this textual representation from the above ABNF is shown in Figure 1. Note that in this example the alphabetic characters may be all uppercase, all lowercase, or mixed case, as per [RFC5234], Section 2.3 \r\n\r\nI find this confusing. It isn\u2019t just in the example that alphabetic characters may be upper, lower, or mixed case \u2013 it is true for all text representations of UUIDs. I suggest changing it to\r\n> Note that the alphabetic characters may be all uppercase, all lowercase, or mixed case, as per [RFC5234], Section 2.3. \r\n> An example UUID using this textual representation from the above ABNF is shown in Figure 1. \r\n\r\nFrom: Paul Leach <pauljleach@msn.com>\r\n",
       "createdAt": "2023-06-05T13:05:53Z",
-      "updatedAt": "2023-06-05T13:05:53Z",
-      "closedAt": null,
+      "updatedAt": "2023-06-06T14:37:27Z",
+      "closedAt": "2023-06-06T14:37:27Z",
       "comments": []
     },
     {
@@ -2011,15 +2011,15 @@
       "id": "I_kwDOH6Ln3M5n0Pns",
       "title": "Verbiage change in 6.2",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/105",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "In section 6.2. it says\r\n> Implementations SHOULD choose one method for single-node UUID implementations that require batch UUID creation\u2026\r\n\r\nand I suggest changing it to\r\n> Implementations SHOULD choose one of the following methods for single-node UUID implementations that require batch UUID creation\u2026\r\n\r\nFrom: Paul Leach <pauljleach@msn.com>",
       "createdAt": "2023-06-05T13:07:43Z",
-      "updatedAt": "2023-06-05T13:37:41Z",
-      "closedAt": null,
+      "updatedAt": "2023-06-06T14:37:28Z",
+      "closedAt": "2023-06-06T14:37:28Z",
       "comments": [
         {
           "author": "LiosK",
@@ -2027,6 +2027,51 @@
           "body": "Technically, Method 3 and Method 1/2 can be used together, so something like \"Implementations SHOULD employ the following methods for ...\" is better, maybe?",
           "createdAt": "2023-06-05T13:37:41Z",
           "updatedAt": "2023-06-05T13:37:41Z"
+        }
+      ]
+    },
+    {
+      "number": 107,
+      "id": "I_kwDOH6Ln3M5n_nSS",
+      "title": "Max/Omni naming",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/107",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I'd raise this issue to hear more voices because I'm not sure if the Omni naming has achieved consensus. As far as I'm aware, nobody but @ben221199 seems to have a strong opinion about the naming of ffffffff-ffff-ffff-ffff-ffffffffffff. In the previous discussion https://github.com/uuid6/uuid6-ietf-draft/issues/62, although nobody expressed a strong opinion, nobody expressed support for Omni either, while people there showed favorable reactions to Max.\r\n\r\nI'm more or less concerned about Omni partly because I have no idea about Latin and it sounds like omni-UUID (all of UUIDs) based on the prefix usage in English, but mostly because I am not able to find this usage of Omni in the programming and mathematics worlds. In this sense, we are almost creating a new word, though the word itself exists for thousands of years. I'm skeptical if that's worth it, especially when Max is the default term in programming languages to describe the greatest unsigned integer values.",
+      "createdAt": "2023-06-06T22:48:46Z",
+      "updatedAt": "2023-06-07T15:08:23Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "I don't agree that just because a word is derived from Latin we should use another Latin word to stay in the same jargon. \r\n\r\nI am also of the opinion that the document should be finalized, although the <del>word</del> prefix \"omni\" is far from consensus.\r\n\r\n",
+          "createdAt": "2023-06-07T02:21:53Z",
+          "updatedAt": "2023-06-07T02:40:34Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I understand your concern, @LiosK, but as I told in #95, the min/max isn't correct. Definitely when looking to signed numbers. For example, in Java this are the min and max constants of `Integer` and important here is the first bit of the whole thing:\r\n```java\r\n    /**\r\n     * A constant holding the minimum value an {@code int} can\r\n     * have, -2<sup>31</sup>.\r\n     */\r\n    @Native public static final int   MIN_VALUE = 0x80000000;\r\n\r\n    /**\r\n     * A constant holding the maximum value an {@code int} can\r\n     * have, 2<sup>31</sup>-1.\r\n     */\r\n    @Native public static final int   MAX_VALUE = 0x7fffffff;\r\n```\r\n\r\nWhy RFC 4122 (and maybe some other documents) choose the Nil bit is because it has the meaning \"no bits\" in some way. Why I choose the \"omni\" is because it has the meaning \"all bits\" in some way.\r\n\r\nIf you think \"omni\" doesn't fit, we should come up with a better name with the same meaning, if there is any. But \"max\" is just not right.\r\n\r\nI also agree with @fabiolimace that we maybe should slowly try to finalize the document.",
+          "createdAt": "2023-06-07T08:12:28Z",
+          "updatedAt": "2023-06-07T08:12:28Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> the min/max isn't correct\r\n\r\nActually, I don't really understand this logic. Nobody would pick <stdint.h> and blame `UINT64_MAX` for setting the most significant bit, because that's for `uint64_t`. Similarly, nobody would blame Max UUID for ignoring the interpretation as a signed integer, because that's for UUID. Generally, UUIDs are not interpreted as signed integers, which is clear to some extent from the description in Section 6.10. Sorting. I don't really see the necessity to take such uncommon use cases into account in the spec.\r\n\r\n> because it has the meaning \"no bits\"\r\n\r\nI don't understand this either. In the programming world, nil/null/none are almost interchangeably used to simply express the concept of _nothing_, regardless of their physical representations. Nil doesn't necessarily imply, or have people imagine, a byte buffer with all bits unset. Furthermore, nil can just mean _zero_, and in this sense, it's not unnatural at all in an unsigned space to have a Nil (zero) value on one end and a Max (from Latin _maximum_) value on the other. It's a subjective matter.\r\n\r\nAnyway, I know Max doesn't look super perfect but still find no reason to believe that's wrong or incorrect.\r\n",
+          "createdAt": "2023-06-07T14:12:21Z",
+          "updatedAt": "2023-06-07T14:22:28Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Maybe somebody throw something up on ~Twitter/Reddit poll~ or some other place so we get a side-by-side vote from a larger community of programmers?\r\n\r\nI will shout at all the prototype implementers over on the other repo and get a small poll going there.\r\nEdit: Send folks here to cast a vote: https://github.com/uuid6/prototypes/discussions/46",
+          "createdAt": "2023-06-07T14:54:50Z",
+          "updatedAt": "2023-06-07T15:08:23Z"
         }
       ]
     }
@@ -3948,7 +3993,7 @@
       "labels": [],
       "body": "Not fully confident though about the correction to \"There many other ways to define a UUID format some select methods are detailed below.\"",
       "createdAt": "2023-06-04T10:19:17Z",
-      "updatedAt": "2023-06-05T19:11:46Z",
+      "updatedAt": "2023-06-07T23:39:10Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "71475662721b02eb2ae89e07f8c1826783addffb",
@@ -3976,7 +4021,7 @@
       "labels": [],
       "body": "Closes #101 ",
       "createdAt": "2023-06-04T17:38:06Z",
-      "updatedAt": "2023-06-05T19:13:03Z",
+      "updatedAt": "2023-06-07T23:39:08Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "71475662721b02eb2ae89e07f8c1826783addffb",
@@ -3997,25 +4042,35 @@
       "id": "PR_kwDOH6Ln3M5SOz9Y",
       "title": "WGLC: Paul's Feedback",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/106",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Closes #104 \r\n- Closes #105 \r\n\r\nWill merge once I have confirmation from the Chairs to change Paul's email.",
       "createdAt": "2023-06-05T19:29:22Z",
-      "updatedAt": "2023-06-05T22:29:47Z",
+      "updatedAt": "2023-06-06T14:37:54Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f0fe826502e6722a657385063b34a399310323a2",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "wglc-paul",
-      "headRefOid": "c864e7120a8fa70a89108fddd1199812b58f9408",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "9fd81bfa5724a49e0dc105ff79d4da17b6807838",
+      "closedAt": "2023-06-06T14:37:26Z",
+      "mergedAt": "2023-06-06T14:37:26Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "818b2887fc0693ec094f85573830d877d5f6be35"
+      },
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Has there been contact with Michael Mealling, who is listed as an author? I haven't seen him on the mailing list. I think the RFC Editor wants to contact all of the listed authors prior to publication, and we should make sure he's on board with this.\r\n\r\nNothing from Michael that I could find in my inbox.\r\n\r\nEdit: merging to get a draft sent up by EOB. We can take this convo to email if needed.",
+          "createdAt": "2023-06-06T14:27:30Z",
+          "updatedAt": "2023-06-06T14:37:54Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH6Ln3M5XPO8B",
@@ -4038,6 +4093,58 @@
           ]
         }
       ]
+    },
+    {
+      "number": 108,
+      "id": "PR_kwDOH6Ln3M5Sdu9D",
+      "title": "Remove unnecessary \"32 bit\" in UUIDv7 example",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/108",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This was perhaps the cause of confusion #99",
+      "createdAt": "2023-06-08T00:03:11Z",
+      "updatedAt": "2023-06-08T00:40:58Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "324b7d2301d3851d33d63bf9a1c5dea8c51073d8",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "rem_32bit",
+      "headRefOid": "338d42e1a44c1c013fd9c6281105dd3a88d26a10",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 109,
+      "id": "PR_kwDOH6Ln3M5Sd48u",
+      "title": "Fix grammar and punctuations",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/109",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-06-08T00:54:56Z",
+      "updatedAt": "2023-06-08T00:54:56Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "324b7d2301d3851d33d63bf9a1c5dea8c51073d8",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "grammatical",
+      "headRefOid": "0b01a1f8c8f4926cb4bbbb02c2894fb29cd797c3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
