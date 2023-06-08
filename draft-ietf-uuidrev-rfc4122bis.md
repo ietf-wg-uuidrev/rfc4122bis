@@ -897,7 +897,7 @@ pseudo-random numbers.
 An implementation may generate 128 bits of random data which is
 used to fill out the UUID fields in {{uuidv4fields}}. The UUID version
 and variant then replace the respective bits as defined by {{version_field}}
-and {{variant_field}},
+and {{variant_field}}.
 
 Alternatively, an implementation MAY choose to randomly generate the exact required number of bits for
 random_a, random_b, and random_c (122 bits total), and then concatenate the version and variant in the required position.
@@ -945,7 +945,7 @@ UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
 Some common name space values have been defined via {{namespaces}}.
 
@@ -1014,7 +1014,7 @@ The clock sequence  and node bits remain unchanged from their position in {{uuid
 
 The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old clock sequence and MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
 
-The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
+The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}.
 
 
 ~~~~
