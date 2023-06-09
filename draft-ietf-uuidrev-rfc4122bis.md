@@ -1247,7 +1247,7 @@ Sub-second Precision and Accuracy:
   Furthermore, system clocks themselves have an underlying granularity and
   it is frequently less than the precision offered by the operating system.
   With UUID version 1 and 6, 100-nanoseconds of precision are present while
-  UUIDv7 features fixed millisecond level of precision within the Unix epoch
+  UUIDv7 features millisecond level of precision by default within the Unix epoch
   that does not exceed the granularity capable in most modern systems.
   For other levels of precision UUIDv8 SHOULD be utilized.
   Similar to {{monotonicity_counters}}, with UUIDv1 or UUIDv6,
