@@ -835,7 +835,7 @@ generated value may be used; see {{unguessability}} and {{unidentifiable}}.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
-As such the definition of these UUIDs are outside the scope of this specification.
+As such the definition of these UUIDs is outside the scope of this specification.
 
 ## UUID Version 3 {#uuidv3}
 UUID version 3 is meant for generating UUIDs from "names"
@@ -897,7 +897,7 @@ pseudo-random numbers.
 An implementation may generate 128 bits of random data which is
 used to fill out the UUID fields in {{uuidv4fields}}. The UUID version
 and variant then replace the respective bits as defined by {{version_field}}
-and {{variant_field}},
+and {{variant_field}}.
 
 Alternatively, an implementation MAY choose to randomly generate the exact required number of bits for
 random_a, random_b, and random_c (122 bits total), and then concatenate the version and variant in the required position.
@@ -945,7 +945,7 @@ UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given name space value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
 Some common name space values have been defined via {{namespaces}}.
 
@@ -1014,7 +1014,7 @@ The clock sequence  and node bits remain unchanged from their position in {{uuid
 
 The clock sequence and node bits SHOULD be reset to a pseudo-random value for each new UUIDv6 generated; however, implementations MAY choose to retain the old clock sequence and MAC address behavior from {{uuidv1}}. For more information on MAC address usage within UUIDs see the {{Security}}.
 
-The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}
+The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}.
 
 
 ~~~~
@@ -1319,7 +1319,7 @@ sufficient monotonicity guarantees by simply ensuring that timestamp increments
 before creating a new UUID. Distributed nodes are discussed in
 {{distributed_shared_knowledge}}.
 
-Implementations SHOULD employ one the following methods for single-node UUID implementations
+Implementations SHOULD employ the following methods for single-node UUID implementations
 that require batch UUID creation, or are otherwise concerned about monotonicity
 with high frequency UUID generation.
 
@@ -1381,7 +1381,7 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   an integer, which gives an integer value of 1870. Expressed as hexadecimal it is
   0x74E, or the binary bits 011101001110.  One can then use those 12 bits
   as the most significant (left-most) portion of the random section of the UUID
-  (e.g. the rand_a field in UUIDv7).
+  (e.g., the rand_a field in UUIDv7).
   This works for any desired bit length that fits into a UUID, and applications
   can decide the appropriate length based on available clock precision, but for
   UUIDv7, it is limited to 12 bits at maximum to reserve sufficient space for
@@ -1592,15 +1592,15 @@ The requirements for name-based UUIDs are as follows:
 {: vspace='0'}
 
 A note on namespaces:
-: While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability input a custom namespace.
+: While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
   For example, any other UUID MAY be generated and used as the desired namespace input for a given application context to
   ensure all names created are unique within the newly created namespace.
 
 Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
  These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
- To ensure UUIDv8 Name-Based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
- Creation of name-based version 8 UUIDs follow the same logic defined in {{uuidv5}}, but the hashspace should be used to as the starting point with the desired
+ To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
+ Creation of name-based version 8 UUIDs follows the same logic defined in {{uuidv5}}, but the hashspace should be used to as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
@@ -1626,7 +1626,7 @@ of a collision within an application.
 
 {: vspace='0'}
 
-Low Impact
+Low Impact:
 : A UUID collision generated a duplicate log entry which results in incorrect
   statistics derived from the data. Implementations that are not negatively
   affected by collisions may continue with the entropy and uniqueness provided
@@ -1652,7 +1652,7 @@ or around the world is not required.
 Although true global uniqueness is impossible to guarantee without a shared
 knowledge scheme, a shared knowledge scheme is not required by UUID to provide
 uniqueness for practical implementation purposes.
-Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed this specification.
+Implementations MAY implement a shared knowledge scheme introduced in {{distributed_shared_knowledge}} as they see fit to extend the uniqueness guaranteed by this specification.
 
 
 ## Unguessability {#unguessability}
@@ -1699,7 +1699,7 @@ above.
 ## Sorting {#sorting}
 
 UUIDv6 and UUIDv7 are designed so that implementations that require sorting
-(e.g. database indexes) SHOULD sort as opaque raw bytes, without need for
+(e.g., database indexes) SHOULD sort as opaque raw bytes, without need for
 parsing or introspection.
 
 Time ordered monotonic UUIDs benefit from greater database index locality
@@ -1725,7 +1725,7 @@ inspectors MAY refer to {{variant_field}} and {{version_field}} when required to
 As general guidance, we recommend not parsing UUID values unnecessarily,
 and instead treating them as opaquely as possible.  Although application-specific
 concerns could of course require some degree of introspection
-(e.g. to examine the variant, version or perhaps the timestamp of a UUID),
+(e.g., to examine the variant, version or perhaps the timestamp of a UUID),
 the advice here is to avoid this or other parsing unless absolutely necessary.
 Applications typically tend to be simpler, more interoperable, and perform better,
 when this advice is followed.
