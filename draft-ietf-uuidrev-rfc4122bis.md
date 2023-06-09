@@ -1280,7 +1280,7 @@ Altering, Fuzzing, or Smearing:
 Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
   bits (left-most) bits with zeros. An example is padding the most significant,
-  left-most bits of a 32 bit Unix timestamp with zeros to fill out the 48
+  left-most bits of a Unix timestamp with zeros to fill out the 48
   bit timestamp in UUIDv7.
 
 Truncating:
@@ -2044,8 +2044,8 @@ final: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
 
 ## Example of a UUIDv7 Value {#uuidv7_example}
 
-This example UUIDv7 test vector utilizes a well-known 32 bit Unix epoch with
-additional millisecond precision to fill the first 48 bits
+This example UUIDv7 test vector utilizes a well-known Unix epoch timestamp with
+millisecond precision to fill the first 48 bits.
 
 rand_a and rand_b are filled with random data.
 
@@ -2072,7 +2072,7 @@ final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 
 ## Example of a UUIDv8 Value (time-based) {#uuidv8_example}
 
-This example UUIDv8 test vector utilizes a well-known 64 bit Unix epoch with
+This example UUIDv8 test vector utilizes a well-known 64 bit Unix epoch timestamp with
 nanosecond precision, truncated to the least-significant, right-most, bits
 to fill the first 48 bits through version.
 
