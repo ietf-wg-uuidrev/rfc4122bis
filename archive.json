@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-02T02:01:34.042330+00:00",
+  "timestamp": "2023-07-04T01:56:09.294680+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4266,7 +4266,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-06-29T22:00:58Z",
-      "updatedAt": "2023-06-29T22:00:58Z",
+      "updatedAt": "2023-07-03T13:41:32Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "92c4a8631fd7d12b582200f263f71ca1b60e8591",
@@ -4277,7 +4277,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The draft has been submitted to the IESG. I will keep this pending in the event I get it back to make changes. \r\nHopefully the IETF editors will also catch these!",
+          "createdAt": "2023-07-03T13:41:32Z",
+          "updatedAt": "2023-07-03T13:41:32Z"
+        }
+      ],
       "reviews": []
     }
   ]
