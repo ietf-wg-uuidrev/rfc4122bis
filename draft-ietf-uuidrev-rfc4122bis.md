@@ -1840,7 +1840,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 # Some Name Space IDs {#namespaces}
 
 This appendix lists the name space IDs for some potentially interesting name spaces such those for
-fully-qualified domain names (DNS), uniform resource locators (URLs), Object Identifiers (OID) in dot-notation without leading dot, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
+fully-qualified domain names (DNS), uniform resource locators (URLs), Object Identifiers (OIDs) in dot-notation without leading dot, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
 
 ~~~~ code
 NameSpace_DNS  = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
