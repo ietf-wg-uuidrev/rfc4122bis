@@ -1230,9 +1230,9 @@ of the most common points on this topic.
 {: vspace='0'}
 
 Reliability:
-: Implementations SHOULD use the current timestamp from a reliable source to
+: Implementations acquire the current timestamp from a reliable source to
   provide values that are time-ordered and continually increasing.
-  Care SHOULD be taken to ensure that timestamp changes from the environment
+  Take care to ensure that timestamp changes from the environment
   or operating system are handled in a way that is consistent with implementation
   requirements.
   For example, if it is possible for the system clock to move backward due
@@ -1255,7 +1255,7 @@ Sub-second Precision and Accuracy:
   With UUID version 1 and 6, 100-nanoseconds of precision are present while
   UUIDv7 features millisecond level of precision by default within the Unix epoch
   that does not exceed the granularity capable in most modern systems.
-  For other levels of precision UUIDv8 SHOULD be utilized.
+  For other levels of precision UUIDv8 is available.
   Similar to {{monotonicity_counters}}, with UUIDv1 or UUIDv6,
   a high resolution timestamp can be simulated by keeping a count of
   the number of UUIDs that have been generated with the same value of
@@ -1268,7 +1268,7 @@ Length:
   be valid.
   That is, how many timestamp ticks can be contained in a UUID before the maximum
   value for the timestamp field is reached.
-  Care SHOULD be given to ensure that the proper length is selected for a given
+  Take care to ensure that the proper length is selected for a given
   timestamp.
   UUID version 1 and 6 utilize a 60 bit timestamp valid until 5623 AD and UUIDv7 features a 48
   bit timestamp valid until the year 10889 AD.
@@ -1296,9 +1296,10 @@ Truncating:
 
 Error Handling:
 : If a system overruns the generator by requesting too many UUIDs
-  within a single system time interval, the UUID service SHOULD either
+  within a single system time interval, the UUID service can either
   return an error, or stall the UUID generator until the system clock
-  catches up, and MUST NOT return knowingly duplicate values.
+  catches up, and MUST NOT return knowingly duplicate values due to
+  counter rollover.
   Note that if the processors overrun the UUID generation frequently,
   additional node identifiers can be allocated to the system, which
   will permit higher speed allocation by making multiple UUIDs
@@ -1314,10 +1315,10 @@ in this section.
 
 Care SHOULD be taken to ensure UUIDs generated in batches are
 also monotonic. That is, if one thousand UUIDs are generated for the same
-timestamp, there SHOULD be sufficient logic for organizing the creation order of
+timestamp, there should be sufficient logic for organizing the creation order of
 those one thousand UUIDs.
 Batch UUID creation implementations MAY utilize a monotonic counter that
-SHOULD increment for each UUID created during a given timestamp.
+increments for each UUID created during a given timestamp.
 
 For single-node UUID implementations that do not need to create batches of
 UUIDs, the embedded timestamp within UUID version 6 and 7 can provide
@@ -1335,11 +1336,12 @@ Fixed-Length Dedicated Counter Bits (Method 1):
 : Some implementations allocate a specific number of bits in the
   UUID layout to the sole purpose of tallying the total number of UUIDs created
   during a given UUID timestamp tick.
-  A fixed bit-length counter, if present, SHOULD be positioned immediately after the
+  A fixed bit-length counter, if present, MUST be positioned immediately after the
   embedded timestamp. This promotes sortability and allows random data generation
   for each counter increment.
-  With this method, the rand_a section of UUIDv7 SHOULD be used as fixed-length
-  dedicated counter bits that are incremented by one for every UUID generation.
+  With this method, the rand_a section (or a subset of its left-most bits) of UUIDv7
+  is used as fixed-length dedicated counter bits that are incremented for
+  every UUID generation.
   The trailing random bits generated for each new UUID in rand_b can help produce
   unguessable UUIDs. In the event more counter bits are required, the most significant
   (left-most) bits of rand_b MAY be used as additional counter bits.
@@ -1351,7 +1353,7 @@ Monotonic Random (Method 2):
   on a given timestamp tick.
   UUIDv7's rand_b section SHOULD be utilized with this method to handle batch
   UUID generation during a single timestamp tick.
-  The increment value for every UUID generation SHOULD be a random integer
+  The increment value for every UUID generation is a random integer
   of any desired length larger than zero. It ensures the UUIDs retain the required
   level of unguessability provided by the underlying entropy.
   The increment value MAY be one when the number of UUIDs generated in a particular
@@ -1407,9 +1409,9 @@ fixed-length dedicated counters:
 {: vspace='0'}
 
 Fixed-Length Dedicated Counter Seeding:
-: Implementations utilizing the fixed-length counter method SHOULD randomly initialize
+: Implementations utilizing the fixed-length counter method randomly initialize
   the counter with each new timestamp tick.
-  However, when the timestamp has not incremented, the counter SHOULD be frozen
+  However, when the timestamp has not incremented, the counter is frozen
   and incremented via the desired increment logic.
   When utilizing a randomly seeded counter alongside Method 1, the random value MAY
   be regenerated with each counter increment without impacting sortability.
@@ -1428,9 +1430,9 @@ Fixed-Length Dedicated Counter Length:
   the level of timestamp precision in use.
   For example, millisecond precision generally requires a larger counter than a
   timestamp with nanosecond precision.
-  General guidance is that the counter SHOULD be at least 12 bits but no longer
+  General guidance is that the counter should be at least 12 bits but no longer
   than 42 bits.
-  Care SHOULD also be given to ensure that the counter length selected leaves
+  Take care to ensure that the counter length selected leaves
   room for sufficient entropy in the random portion of the UUID after the counter.
   This entropy helps improve the unguessability characteristics of UUIDs created
   within the batch.
@@ -1451,9 +1453,9 @@ Counter Rollover Guards:
   guarding.
 
 Counter Rollover Handling:
-: Counter rollovers SHOULD be handled by the application to avoid sorting issues.
+: Counter rollovers MUST be handled by the application to avoid sorting issues.
   The general guidance is that applications that care about absolute monotonicity
-  and sortability SHOULD freeze the counter and wait for the timestamp to advance
+  and sortability should freeze the counter and wait for the timestamp to advance
   which ensures monotonicity is not broken.
   Alternatively, implementations MAY increment the timestamp ahead of the actual
   time and reinitialize the counter.
@@ -1499,7 +1501,7 @@ which prove useful for batch UUID generation purposes and monotonic error checki
 These stored values include but are not limited to last known timestamp, clock sequence, counters, and random data.
 
 If an implementation does not have any stable store available, then
-it SHOULD proceed with UUID generation as if this was the first UUID created within a batch.
+it MAY proceed with UUID generation as if this was the first UUID created within a batch.
 This is the least desirable implementation because it will increase the frequency
 of creation of values such as clock sequence, counters, or random data, which increases the
 probability of duplicates.
@@ -1542,7 +1544,7 @@ This section will detail the two additional collision resistance approaches that
 UUID implementations in distributed environments.
 
 It should be noted that although this section details two methods for the sake of completeness;
-implementations SHOULD utilize the pseudo-random Node ID option if additional collision resistance for distributed UUID generation is a requirement.
+implementations should utilize the pseudo-random Node ID option if additional collision resistance for distributed UUID generation is a requirement.
 Likewise, utilization of either method is not required for implementing UUID generation in distributed environments.
 
 {: vspace='0'}
@@ -1621,7 +1623,7 @@ Advertising the Hash Algorithm:
 
 ## Collision Resistance {#collision_resistance}
 
-Implementations SHOULD weigh the consequences of UUID collisions within their
+Implementations should weigh the consequences of UUID collisions within their
 application and when deciding between UUID versions that use entropy (randomness)
 versus the other components such as those in {{timestamp_considerations}} and {{monotonicity_counters}}.
 This is especially true for distributed node collision resistance as defined
@@ -1664,8 +1666,9 @@ Implementations MAY implement a shared knowledge scheme introduced in {{distribu
 ## Unguessability {#unguessability}
 Implementations SHOULD utilize a cryptographically secure pseudo-random number
 generator (CSPRNG) to provide values that are both difficult to predict ("unguessable")
-and have a low likelihood of collision ("unique").
-Care SHOULD be taken to ensure the CSPRNG state is properly reseeded upon
+and have a low likelihood of collision ("unique").  The exception is when a
+suitable CSPRNG is unavailable in the execution environment.
+Take care to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
@@ -1675,7 +1678,7 @@ Further advice on generating cryptographic-quality random numbers can be found i
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
 802 address is not available, or its use is not desired.
 
-Implementations SHOULD obtain a 47-bit cryptographic-quality random
+Implementations obtain a 47-bit cryptographic-quality random
 number as per {{unguessability}} and use it as the low 47 bits of the node ID.
 
 Implementations MUST set the least significant bit of the first octet of the node ID set to one to create a 48-bit node id.
@@ -1705,7 +1708,7 @@ above.
 ## Sorting {#sorting}
 
 UUIDv6 and UUIDv7 are designed so that implementations that require sorting
-(e.g., database indexes) SHOULD sort as opaque raw bytes, without need for
+(e.g., database indexes) sort as opaque raw bytes, without need for
 parsing or introspection.
 
 Time ordered monotonic UUIDs benefit from greater database index locality
@@ -1714,12 +1717,12 @@ As a result objects are more easily clustered together for better performance.
 The real-world differences in this approach of index locality vs random data
 inserts can be quite large.
 
-UUIDs formats created by this specification SHOULD be lexicographically sortable
+UUIDs formats created by this specification are intended to be lexicographically sortable
 while in the textual representation.
 
 UUIDs created by this specification are crafted with big-endian byte order
-(network byte order) in mind. If little-endian style is required a custom
-UUID format SHOULD be created using UUIDv8.
+(network byte order) in mind. If little-endian style is required, UUIDv8
+is available for custom UUID formats.
 
 
 ## Opacity {#opacity}
