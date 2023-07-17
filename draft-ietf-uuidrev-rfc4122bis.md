@@ -1538,7 +1538,7 @@ While UUIDs already feature sufficient entropy to ensure that the chances
 of collision are low, as the total number of UUID generating nodes increase; so does the likelihood
 of a collision.
 
-This section will detail the two additional collision resistance approaches that have been observed by by multi-node
+This section will detail the two additional collision resistance approaches that have been observed by multi-node
 UUID implementations in distributed environments.
 
 It should be noted that although this section details two methods for the sake of completeness;
@@ -1615,7 +1615,7 @@ Name-based UUIDs using version 8:
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying a the algorithm.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying the algorithm.
   That is, to detail SHA-256 was used to create a given UUIDv8 name-based UUID an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
@@ -2083,7 +2083,7 @@ This example UUIDv8 test vector utilizes a well-known 64 bit Unix epoch timestam
 nanosecond precision, truncated to the least-significant, right-most, bits
 to fill the first 48 bits through version.
 
-The next two segments of custom_b and custom_c are are filled with random
+The next two segments of custom_b and custom_c are filled with random
 data.
 
 Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00 represented
