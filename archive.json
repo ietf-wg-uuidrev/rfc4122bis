@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-18T02:05:01.264224+00:00",
+  "timestamp": "2023-07-20T01:35:57.640326+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4454,7 +4454,7 @@
       "labels": [],
       "body": "Here are changes to address the \"SHOULD\" concerns based on the review done discussion in #114 ",
       "createdAt": "2023-07-16T20:18:17Z",
-      "updatedAt": "2023-07-17T03:50:44Z",
+      "updatedAt": "2023-07-18T23:33:14Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "92c4a8631fd7d12b582200f263f71ca1b60e8591",
@@ -4524,6 +4524,26 @@
               "body": "Are only two possible actions allowed here, error or stalling? If not, I recommend removing the word \"either\" here.\r\n\r\nParaphrasing: If too many, maybe error or maybe stall; DO NOT duplicate.",
               "createdAt": "2023-07-17T03:50:43Z",
               "updatedAt": "2023-07-17T03:50:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5bjfbe",
+          "commit": {
+            "abbreviatedOid": "03383c9"
+          },
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-18T23:33:14Z",
+          "updatedAt": "2023-07-18T23:33:14Z",
+          "comments": [
+            {
+              "originalPosition": 98,
+              "body": "How about: \"General guidance is that the counter SHOULD be at least 12 bits but no longer than 42 bits for UUIDv7.\"? This guidance isn't really effective without the v7 context, and with that context BCP 14 verbiage makes sense.\r\n",
+              "createdAt": "2023-07-18T23:33:14Z",
+              "updatedAt": "2023-07-18T23:33:14Z"
             }
           ]
         }
