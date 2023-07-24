@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-07
+docname: draft-ietf-uuidrev-rfc4122bis-08
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -468,6 +468,16 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-08
+
+{: spacing="compact"}
+- Fix typos #113
+- Fix errata 6225 (again) #117 #118
+- AD Review: BCP 14 - SHOULD #114
+- AD Review: Add proper references to v1 and v6 #116
+- AD Review: Remove SHOULD in section 4 #120
+- Discuss "front-loaded rollover counter" for 32-bit epoch with Padding method #115
+
 draft-07
 
 {: spacing="compact"}
@@ -621,7 +631,7 @@ However there is a known caveat that Microsoft's Component Object Model (COM) GU
 The discussion of this {{MS_COM_GUID}} is outside the scope of this specification.
 
 UUIDs MAY be represented as binary data or integers.
-When in use with URNs or as text in applications, any given UUID SHOULD
+When in use with URNs or as text in applications, any given UUID should
 be represented by the "hex-and-dash" string format consisting of multiple
 groups of upper or lowercase alphanumeric hexadecimal characters separated by single dashes/hyphens.
 When used with databases please refer to {{database_considerations}}.
@@ -1002,7 +1012,7 @@ sha1_low:
 
 ## UUID Version 6 {#uuidv6}
 
-UUID version 6 is a field-compatible version of UUIDv1, reordered for improved
+UUID version 6 is a field-compatible version of UUIDv1 {{uuidv1}}, reordered for improved
 DB locality.
 It is expected that UUIDv6 will primarily be used in contexts where there
 are existing v1 UUIDs.
@@ -1082,7 +1092,7 @@ UUIDv1 implementation.
 UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
 since midnight 1 Jan 1970 UTC, leap seconds excluded.
-UUIDv7 generally has improved entropy characteristics over UUIDv1 or UUIDv6.
+UUIDv7 generally has improved entropy characteristics over UUIDv1 {{uuidv1}} or UUIDv6 {{uuidv6}}.
 
 UUIDv7 values are created by allocating a Unix timestamp in milliseconds in the most significant 48 bits and filling the remaining 74 bits, excluding the required version and variant bits, with random bits for each new UUIDv7 generated to provide uniqueness as per {{unguessability}}. Alternatively, implementations MAY fill the 74 bits, jointly, with a combination of the following subfields, in this order from the most significant bits to the least, to guarantee additional monotonicity within a millisecond:
 
@@ -1137,7 +1147,7 @@ UUIDv8's uniqueness will be implementation-specific and MUST NOT be assumed.
 The only explicitly defined bits are the version and variant, leaving 122
 bits
 for implementation specific UUIDs. To be clear:
-UUIDv8 is not a replacement for UUIDv4 where all 122 extra bits are
+UUIDv8 is not a replacement for UUIDv4 {{uuidv4}} where all 122 extra bits are
 filled with random data.
 
 Some example situations in which UUIDv8 usage could occur:
@@ -1287,7 +1297,7 @@ Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
   bits (left-most) bits with zeros. An example is padding the most significant,
   left-most bits of a Unix timestamp with zeros to fill out the 48
-  bit timestamp in UUIDv7.
+  bit timestamp in UUIDv7. An alternative is to pad the most significant, left-most bits with the number of 32 bit Unix timestamp roll-overs after 2038-01-19.
 
 Truncating:
 : When timestamps need to be truncated, the lower, least significant
@@ -1296,7 +1306,7 @@ Truncating:
 
 Error Handling:
 : If a system overruns the generator by requesting too many UUIDs
-  within a single system time interval, the UUID service can either
+  within a single system time interval, the UUID service can
   return an error, or stall the UUID generator until the system clock
   catches up, and MUST NOT return knowingly duplicate values due to
   counter rollover.
@@ -1313,7 +1323,7 @@ UUIDs from this document will be monotonic due to an embedded timestamp; however
 implementations can guarantee additional monotonicity via the concepts covered
 in this section.
 
-Care SHOULD be taken to ensure UUIDs generated in batches are
+Take care to ensure UUIDs generated in batches are
 also monotonic. That is, if one thousand UUIDs are generated for the same
 timestamp, there should be sufficient logic for organizing the creation order of
 those one thousand UUIDs.
@@ -1430,7 +1440,7 @@ Fixed-Length Dedicated Counter Length:
   the level of timestamp precision in use.
   For example, millisecond precision generally requires a larger counter than a
   timestamp with nanosecond precision.
-  General guidance is that the counter should be at least 12 bits but no longer
+  General guidance is that the counter SHOULD be at least 12 bits but no longer
   than 42 bits.
   Take care to ensure that the counter length selected leaves
   room for sufficient entropy in the random portion of the UUID after the counter.
