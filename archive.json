@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-20T01:35:57.640326+00:00",
+  "timestamp": "2023-07-25T01:46:51.852353+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2087,15 +2087,15 @@
       "id": "I_kwDOH6Ln3M5rGn9o",
       "title": "AD Review: BCP 14 - SHOULD",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/114",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- AD Review request from Murray on Section 6's SHOULDs. \r\n- Addressing all as numbered by the section.subsection with author commentary.\r\n- Feel free to discuss my suggestions.\r\n\r\nMurray Feedback:\r\n> Several of the \"SHOULD\"s in Section 6.1 seem questionable to me.  For instance, the first one leaves the possibility of an implementation that doesn't use an increasing clock.  Why isn't this a MUST?  The various \"Care SHOULD be taken ...\" ones are also curious; why would we allow for this to be a choice?  Generally below that, the \"SHOULD\" instances left me wondering why we leave all of these as implementation choices.  Then, in \"every UUID generation SHOULD be a random integer of any desired length larger than zero\", this allows a length of zero; is that okay?  And lastly, I don't know what \"Implementations SHOULD weigh the consequences\" or \"Care SHOULD be taken\" mean from an interoperability perspective.\r\n\r\n---\r\n\r\n### [RFC2119](https://www.rfc-editor.org/rfc/rfc2119)\r\n- **SHOULD**:  This word, or the adjective \"RECOMMENDED\", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.\r\n\r\nQuestion to answer for each:\r\n- For the SHOULD, does a valid alternative exist and is it outlined; thus staying a **SHOULD**.\r\n- For the SHOULD, is it fully requires with no alternative; thus upgrading to a **MUST**.\r\n- For the SHOULD, truly optional and can be ignored with no downside; thus downgrading to a **MAY**.\r\n\r\n---\r\n\r\n\r\n### [6.1. Timestamp Considerations](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-timestamp-considerations)\r\n1.\tImplementations **SHOULD** use the current timestamp from a reliable source to provide values that are time-ordered and continually increasing.\r\n    - Could upgrade to a **MUST**, for v1, v6, v7 the starting timestamp is the backbone of the UUID so stating that we always pull from a reliable source makes sense.\r\n3.\tCare **SHOULD** be taken to ensure that timestamp changes from the environment or operating system are handled in a way that is consistent with implementation requirements.\r\n    - I think a **SHOULD** is fine here as later sections discuss how you can handle that, but if you really don\u2019t care about catching something like NTP changing a clock you can ignore those backwards timestamp moves.\r\n4.\tFor other levels of precision UUIDv8 **SHOULD** be utilized.\r\n    - We probably need to put a forward reference to the UUIDv7 (method 3 counter) to drive home the alternative.\r\n5.\tCare **SHOULD** be given to ensure that the proper length is selected for a given timestamp.\r\n    - Can probably be removed entirely if I am being honest. The paragraph section does enough to discuss this point it does not need normative language. \r\n6. \tIf a system overruns the generator by requesting too many UUIDs within a single system time interval, the UUID service **SHOULD** either return an error, or stall the UUID generator until the system clock catches up, and MUST NOT return knowingly duplicate values.\r\n    - Can upgrade to a **MUST**.\r\n\r\n### [6.2. Monotonicity and Counters](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-monotonicity-and-counters)\r\n1.\tCare **SHOULD** be taken to ensure UUIDs generated in batches are also monotonic.\r\n    - Just use non-normative language something like \u201cImplementations might require UUIDs generated in batches adhere to monotonicity requirements.\u201d\r\n2.\tThat is, if one thousand UUIDs are generated for the same timestamp, there **SHOULD** be sufficient logic for organizing the creation order of those one thousand UUIDs.\r\n    - Can upgrade to a **MUST**.\r\n3.\tBatch UUID creation implementations MAY utilize a monotonic counter that **SHOULD** increment for each UUID created during a given timestamp.\r\n    - Can upgrade to a **MUST**.\r\n4.\tImplementations **SHOULD** employ the following methods for single-node UUID implementations that require batch UUID creation, or are otherwise concerned about monotonicity with high frequency UUID generation.\r\n    - Can upgrade to a **MUST**.\r\n5.\tA fixed bit-length counter, if present, **SHOULD** be positioned immediately after the embedded timestamp.\r\n    - Can upgrade to a **MUST**.\r\n7.\tWith this method, the rand_a section of UUIDv7 **SHOULD** be used as fixed-length dedicated counter bits that are incremented by one for every UUID generation.\r\n    - I think a **SHOULD** is fine, if somebody wants to increase by some random number that is fine.\r\n8.\tUUIDv7's rand_b section **SHOULD** be utilized with this method to handle batch UUID generation during a single timestamp tick.\r\n    - Author\u2019s weighing this method vs the others. Alternatives exist and are defined (method 1 and 2). **SHOULD** seems fine.\r\n9.\tThe increment value for every UUID generation **SHOULD** be a random integer of any desired length larger than zero.\r\n    - Similar to the previous but opposite, if an implementation wants to increment by +1 that is fine too. Downsides outlines in next few sentences with a **MAY**.\r\n10.\tImplementations utilizing the fixed-length counter method **SHOULD** randomly initialize the counter with each new timestamp tick.\r\n    - Starting at zeros is fine. Re-using the previous counter for a new timestamp tick in theory would also be okay.\r\n11.\tHowever, when the timestamp has not incremented, the counter **SHOULD** be frozen and incremented via the desired increment logic.\r\n    - Can Upgrade to a **MUST**.\r\n12.\tGeneral guidance is that the counter **SHOULD** be at least 12 bits but no longer than 42 bits.\r\n    - Fine if it is shorter, just providing guidance.\r\n13.\tCare **SHOULD** also be given to ensure that the counter length selected leaves room for sufficient entropy in the random portion of the UUID after the counter.\r\n    - Can remove normative verbiage and change to something like \u201cThese counter length of 12 to 42 are selected to ensure the that the counter length selected leaves room for sufficient entropy in the random portion of the UUID after the counter.\u201d\r\n14.\tCounter rollovers **SHOULD** be handled by the application to avoid sorting issues.\r\n    - Can upgrade to a **MUST**.\r\n15.\tThe general guidance is that applications that care about absolute monotonicity and sortability **SHOULD** freeze the counter and wait for the timestamp to advance which ensures monotonicity is not broken.\r\n    - **SHOULD** seem fine. Alternatives exist defined in next sentence. \r\n16.\tImplementations **SHOULD** check if the currently generated UUID is greater than the previously generated UUID\r\n    - Do it if you want, just a recommendation. Downsides discussed.\r\n17.\tApplications **SHOULD** embed sufficient logic to catch these scenarios and correct the problem to ensure that the next UUID generated is greater than the previous, or at least report an appropriate error\r\n    - Do it if you want, just a recommendation. Downsides discussed.\r\n\r\n### [6.3. UUID Generator States](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-uuid-generator-states)\r\n1.\tIf an implementation does not have any stable store available, then it **SHOULD** proceed with UUID generation as if this was the first UUID created within a batch.\r\n    - Can downgrade to a **MAY**?\r\n\r\n### [6.4. Distributed UUID Generation](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-distributed-uuid-generation)\r\n1.\tIt should be noted that although this section details two methods for the sake of completeness; implementations **SHOULD** utilize the pseudo-random Node ID option if additional collision resistance for distributed UUID generation is a requirement.\r\n    - Authors recommending one method vs the others. Alternatives detailed.\r\n\r\n### [6.5. Name-Based UUID Generation](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-name-based-uuid-generation)\r\n1.\tWhile Appendix A details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.\r\n    - They can already but most don\u2019t because of the old RFC. Just some text trying to nudge implementors of libraries to open it up to more than just what is in the appendix.\r\n\r\n### [6.6. Collision Resistance](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-collision-resistance)\r\n1.\tImplementations **SHOULD** weigh the consequences of UUID collisions within their application and when deciding between UUID versions that use entropy (randomness) versus the other components such as those in Section 6.1 and Section 6.2.\r\n    - Can remove normative verbiage and change it to a lowercase \u201cshould\u201d \r\n\r\n### [6.8. Unguessability](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-unguessability)\r\n1.\tImplementations **SHOULD** utilize a cryptographically secure pseudo-random number generator (CSPRNG) to provide values that are both difficult to predict (\"unguessable\") and have a low likelihood of collision (\"unique\").\r\n    - Some client might not have CSPRNG, regular PRNG can be an alternative. MUST is too harsh.\r\n2.\tCare **SHOULD** be taken to ensure the CSPRNG state is properly reseeded upon state changes, such as process forks, to ensure proper CSPRNG operation.\r\n    - Can upgrade to a **MUST** and change to \u201cThe CSPRNG state **MUST** be properly reseeded upon state changes, such as process forks, to ensure proper CSPRNG operation.\u201d\r\n\r\n### [6.9. UUIDs That Do Not Identify the Host](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-uuids-that-do-not-identify-)\r\n1.\tImplementations **SHOULD** obtain a 47-bit cryptographic-quality random number as per Section 6.8 and use it as the low 47 bits of the node ID.\r\n    - Alternative is detailed in the last paragraph of the section so a **SHOULD** seems fine here.\r\n\r\n### [6.10. Sorting](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#section-6.10)\r\n1.\tUUIDv6 and UUIDv7 are designed so that implementations that require sorting (e.g., database indexes) **SHOULD** sort as opaque raw bytes, without need for parsing or introspection\r\n    - As we have found, some folks like their introspection. I think this was a **MUST** but it was laxed to a **SHOULD** at one point.\r\n2.\tUUIDs formats created by this specification **SHOULD** be lexicographically sortable while in the textual representation.\r\n    - More of a statement than a requirement. Can change to \u201cUUIDs formats created by this specification were created to be lexicographically sortable while in the textual representation.\u201d\r\n3.\tUUIDs created by this specification are crafted with big-endian byte order (network byte order) in mind. If little-endian style is required a custom UUID format **SHOULD** be created using UUIDv8.\r\n    - Can upgrade to a **MUST**\r\n\r\n### [6.11. Opacity](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-opacity)\r\n1.\tUUIDs **SHOULD** be treated as opaque values and implementations **SHOULD NOT** examine the bits in a UUID.\r\n    - Similar to a previous bullet, folks like to examine the bits although usually not required for interoperability. \r\n\r\n### [6.12. DBMS and Database Considerations](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-07#name-dbms-and-database-considera)\r\n1.\tThus, where feasible, UUIDs **SHOULD** be stored within database applications as the underlying 128 bit binary value.\r\n    - Authors nudging towards the better method, alternative in next paragraph.\r\n",
       "createdAt": "2023-07-10T14:25:21Z",
-      "updatedAt": "2023-07-17T19:53:54Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-24T19:40:29Z",
+      "closedAt": "2023-07-24T19:40:29Z",
       "comments": [
         {
           "author": "bradleypeabody",
@@ -2132,15 +2132,15 @@
       "id": "I_kwDOH6Ln3M5rGrDg",
       "title": "Discuss \"front-loaded rollover counter\" for 32-bit epoch with Padding method",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/115",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "From individual mailer:\r\n\r\nProposed new text:\r\n> Padding:\r\n> When timestamp padding is required, implementations MUST pad the most significant bits (left-most) bits. An example is padding the most significant, left-most bits of a Unix timestamp with zeros to fill out the 48 bit timestamp in UUIDv7. **An alternative is to pad the most significant, left-most bits with the number of  32 bit Unix timestamp roll-overs after 2038-01-19.**\r\n",
       "createdAt": "2023-07-10T14:31:53Z",
-      "updatedAt": "2023-07-10T14:33:43Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-24T19:40:30Z",
+      "closedAt": "2023-07-24T19:40:30Z",
       "comments": []
     },
     {
@@ -2148,15 +2148,15 @@
       "id": "I_kwDOH6Ln3M5rGrhB",
       "title": "AD Review: Add proper references to v1 and v6",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/116",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "From Murray,\r\n> GIven the opening text of Section 5.6, should UUID v1 include a forward reference to here?  My thinking is that someone implementing UUID v1 might not read all the way to this section and thus miss the hints that this version is preferred for new applications.\r\n- Makes sense, I can add a reference back to the UUIDv1 section.\r\n\r\n> Same question about 5.7 and UUID versions 1 and 6.\r\n - Agreed, better to be consistent.\r\n",
       "createdAt": "2023-07-10T14:32:57Z",
-      "updatedAt": "2023-07-10T14:32:57Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-24T19:40:30Z",
+      "closedAt": "2023-07-24T19:40:30Z",
       "comments": []
     },
     {
@@ -2195,15 +2195,15 @@
       "id": "I_kwDOH6Ln3M5ry4z6",
       "title": "AD Review: Remove SHOULD in section 4",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/120",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Why the \"SHOULD\" in Section 4?\r\n\u2022\tThere are a number of other ways to encode 128 bits, \u201chex-and-dash\u201d is one such way. Binary is another, URN is a third. \r\n\u2022\tI guess it doesn\u2019t require any SHOULD/MAY/MUST verbiage? Is that the point?\r\n\r\nYes.  SHOULD, when written that way, means you really ought to do this, but there might be reasons you don't, and as long as you really understand what you're doing, you can deviate from this without impacting interoperability.  But in leaving such a choice to an implementer, it's helpful to provide some guidance around when it's OK to deviate, and also to understand the potential impact of deviating.\r\n\r\nSo, for example: Why might I use binary or URN?  What's the impact of not using hex-and-dash?\r\n\r\nIf a producer and consumer fail utterly to interoperate if you don't use hex-and-dash, use MUST.  If it really doesn't matter all that much, use MAY.  If the other syntaxes will work but there are possibly serious implications of using them, that's SHOULD, and it's a good idea to include a sentence or two about the issues.\r\n\r\nOr if all of this is too much to think about, try this on for size: Change \"SHOULD be\" to \"is typically\".\r\n",
       "createdAt": "2023-07-17T19:50:56Z",
-      "updatedAt": "2023-07-17T19:55:29Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-24T19:40:31Z",
+      "closedAt": "2023-07-24T19:40:31Z",
       "comments": []
     }
   ],
@@ -4447,24 +4447,26 @@
       "id": "PR_kwDOH6Ln3M5VnUVZ",
       "title": "\"SHOULD\" fixes based on AD review and other input",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/119",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bradleypeabody",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Here are changes to address the \"SHOULD\" concerns based on the review done discussion in #114 ",
       "createdAt": "2023-07-16T20:18:17Z",
-      "updatedAt": "2023-07-18T23:33:14Z",
+      "updatedAt": "2023-07-24T19:40:15Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "92c4a8631fd7d12b582200f263f71ca1b60e8591",
       "headRepository": "bradleypeabody/rfc4122bis",
       "headRefName": "20230716-should-fixes",
-      "headRefOid": "03383c9ae6cb9ee910f7840d8d12ef5c09a0caef",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "6633fb0cc7122f7a867e4a15a56c2f0b6463e92b",
+      "closedAt": "2023-07-24T19:40:15Z",
+      "mergedAt": "2023-07-24T19:40:15Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "972b2dac28a445af24451935ce980a90bcaea88b"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4483,7 +4485,7 @@
               "originalPosition": 39,
               "body": "@LiosK I saw your comment on #114, I think this works to keep it MUST NOT but specifically say \"due to counter rollover\", so it excludes other edge cases such as the clock rolling back. I think that aligns with the intention of the text anyway, which is all about counters.\r\n",
               "createdAt": "2023-07-16T20:24:13Z",
-              "updatedAt": "2023-07-16T20:24:14Z"
+              "updatedAt": "2023-07-24T19:37:54Z"
             }
           ]
         },
@@ -4503,7 +4505,7 @@
               "originalPosition": 152,
               "body": "I think stating the intended exception here (no CSPRNG available) makes sense and clearly justifies the use of SHOULD.",
               "createdAt": "2023-07-16T20:25:42Z",
-              "updatedAt": "2023-07-16T20:25:42Z"
+              "updatedAt": "2023-07-24T19:38:17Z"
             }
           ]
         },
