@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-25T01:46:51.852353+00:00",
+  "timestamp": "2023-07-30T01:27:12.290386+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2204,6 +2204,83 @@
       "createdAt": "2023-07-17T19:50:56Z",
       "updatedAt": "2023-07-24T19:40:31Z",
       "closedAt": "2023-07-24T19:40:31Z",
+      "comments": []
+    },
+    {
+      "number": 121,
+      "id": "I_kwDOH6Ln3M5sygRC",
+      "title": "DNS WG Review: DNS Considerations Update",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/121",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Email:\r\n```\r\nReviewer: Florian Obser\r\nReview result: Ready with Issues\r\n\r\nI have been selected as the DNS Directorate reviewer for this draft. The DNS Directorate seeks to review all DNS or DNS-related drafts as they pass through IETF last call and IESG review, and sometimes on special request. The purpose of the review is to provide assistance to the ADs.\r\nFor more information about the DNS Directorate, please see https://wiki.ietf.org/en/group/dnsdir\r\n\r\nThis document reference the DNS as one of multiple possible name spaces for Name-Based UUID Generation. It has no considerations that reflect on the DNS.\r\n\r\nIssue:\r\n\r\nThe document does not reference any DNS RFCs.\r\n\r\nSection 5.3, 5.5 and 6.5 refer to \"a canonical sequence of octets in network byte order\". It is not specified what that canonical sequence is nor is there a reference to a document that specifies the canonical sequence for any of the name spaces.\r\n\r\nSection 6.5 also has this:\r\n   *  UUIDs generated at different times from the same name in the same\r\n      namespace MUST be equal.\r\n\r\nIt is unclear to me how to implement that MUST if there is not a single canonical sequence specified for a given name space, as is the case for DNS.\r\n\r\nFor DNS RFC 8499 has this:\r\n      Format of names: Names in the global DNS are domain names.  There\r\n      are three formats: wire format, presentation format, and common\r\n      display.\r\n\r\nThe test vectors in Appendix C use the common display format, i.e. they leave off the root label and the \".\" before it.\r\n\r\nI'm not sure how best to address this issue, options include:\r\n- refer to specifications for all the name spaces and point at the\r\n  canonical sequence (in case of DNS this means RFC 8499 and choosing\r\n  common display)\r\n- mark it out of scope, like is done for \"uniqueness within their name\r\n  spaces\".\r\n- mark it out of scope, but point out that applications must (MUST?)\r\n  agree on what the canonical sequence is.\r\n```\r\n\r\n**Author comment:** \r\n- Option 1: at first seems logical way to solve this. We can also note the same for URL, OID, X500 and add a \"Note on Names\" section to \"6.5. Name-Based UUID Generation\"\r\n- Option 2:  also seems logical, can provide an example citing RFC 8499 and show that there are 3 possible ways to ways to represent DNS (Common: `www.example.com`, Presentation: `www.example.com.`, Wire: `3www7example3com0`) and the one selected for \"name\" input is up to the implementor.\r\n- Option 3: similar to option 2 but much more hand waving \r\n\r\n**Personal Preference:** \r\n- Leaning Option 2, may also need to back out #117/#118 which added OID dot notation guidance e.g \"Object Identifiers (OIDs) in dot-notation without leading dot\" \r\n\r\n**Reasoning:** \r\n- Current Name-space UUID generators allow arbitrary input from my most resent testing. (uuidgen, python, uuidtools.com, etc.)\r\n- I would like to be able to cite [URL](https://datatracker.ietf.org/doc/html/rfc1738), [OID](https://www.itu.int/rec/T-REC-X.660), [X500](https://www.itu.int/rec/T-REC-X.500), [DNS](https://datatracker.ietf.org/doc/html/rfc8499) as informative references.",
+      "createdAt": "2023-07-27T20:37:18Z",
+      "updatedAt": "2023-07-30T00:22:23Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Personally, I would be glad if all four namespaces would receive a notation guidance, for example\r\n* URL => FQDN\r\n* OID => dot-notation without leading dot\r\n* X500 => text representation [but I think this breaks RFC4122 backwards compatibility where it says text or DER notation?]\r\n* DNS => common format\r\n\r\nThis way, we can assume that equal UUID means that the same name was used, and in general I think it is always good to have canonical formats",
+          "createdAt": "2023-07-28T07:52:46Z",
+          "updatedAt": "2023-07-28T07:52:46Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "In case you decide to rollback #117 and #118, please make sure that the term \"ISO OID\" (errata 6225) don't get reintroduced. It should be \"OID\" or \"Object Identifier (OID)\". Thank you.",
+          "createdAt": "2023-07-28T07:56:02Z",
+          "updatedAt": "2023-07-28T07:56:02Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> In case you decide to rollback #117 and #118, please make sure that the term \"ISO OID\" (errata 6225) don't get reintroduced. It should be \"OID\" or \"Object Identifier (OID)\". Thank you.\r\n\r\nYeah, understood on the point.",
+          "createdAt": "2023-07-28T16:17:15Z",
+          "updatedAt": "2023-07-28T16:17:15Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Taking Option 2 to keep them as ambiguous as were in RFC 4122 but also adding another set of namespace identifiers with strict notation guidance to ensure future interoperability?",
+          "createdAt": "2023-07-30T00:22:22Z",
+          "updatedAt": "2023-07-30T00:22:22Z"
+        }
+      ]
+    },
+    {
+      "number": 122,
+      "id": "I_kwDOH6Ln3M5syg0V",
+      "title": "DNS WG Review: Typos!",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/122",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\n4.  UUID Format\r\nold: the version bits described in the next sections in determine\r\nnew: the version bits described in the next sections determine\r\n\r\n6.5.  Name-Based UUID Generation\r\nold: but the hashspace should be used to as the starting point\r\nnew: but the hashspace should be used as the starting point\r\n```",
+      "createdAt": "2023-07-27T20:38:55Z",
+      "updatedAt": "2023-07-28T21:47:25Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 123,
+      "id": "I_kwDOH6Ln3M5syiUU",
+      "title": "Late addition of IETF reference for CSPRNG guidance",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/123",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Can cite [RFC 8937 Randomness Improvements for Security Protocols](https://www.rfc-editor.org/rfc/rfc8937.html)\r\nNote that [RANDOM](https://peteroupc.github.io/random.html) citation also cites this (and RFC4086 which we also cite)\r\n\r\nPersonally feel like it can't hurt to have another direct reference in the event RANDOM reference goes away.",
+      "createdAt": "2023-07-27T20:43:15Z",
+      "updatedAt": "2023-07-27T20:43:15Z",
+      "closedAt": null,
       "comments": []
     }
   ],
