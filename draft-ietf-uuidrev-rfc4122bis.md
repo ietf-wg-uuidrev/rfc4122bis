@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-08
+docname: draft-ietf-uuidrev-rfc4122bis-09
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -75,10 +75,26 @@ normative:
 
 informative:
   RFC1321: RFC1321
+  RFC1738: RFC1738
   RFC4122: RFC4122
   RFC5234: RFC5234
   RFC6151: RFC6151
   RFC6194: RFC6194
+  RFC8499: RFC8499
+  X500:
+    seriesinfo:
+      ISO/IEC: '9594-1'
+      ITU-T Rec.: X.500
+    title: >
+      Information technology – Open Systems Interconnection – The Directory: Overview of concepts, models and services
+    date: 2019
+  X660:
+    seriesinfo:
+      ISO/IEC: '9834-1'
+      ITU-T Rec.: X.660
+    title: >
+      Information technology – Procedures for the operation of object identifier registration authorities: General procedures and top arcs of the international object identifier tree
+    date: 2011
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
     title: A Scala client for Cassandra
@@ -1593,14 +1609,6 @@ Distributed applications generating UUIDs at a variety of hosts MUST
 be willing to rely on the random number source at all hosts.
 
 ## Name-Based UUID Generation {#name_based_uuid_generation}
-The concept of name and name space should be broadly construed and not
-limited to textual names.  For example, some name spaces are the
-domain name system, URLs, Object Identifiers (OIDs), X.500 Distinguished
-Names (DNs), and reserved words in a programming language.  The
-mechanisms or conventions used for allocating names and ensuring
-their uniqueness within their name spaces are beyond the scope of
-this specification.
-
 The requirements for name-based UUIDs are as follows:
 
 * UUIDs generated at different times from the same name in the
@@ -1617,6 +1625,16 @@ The requirements for name-based UUIDs are as follows:
   high probability).
 
 {: vspace='0'}
+
+A note on names:
+: The concept of name (and namespace) should be broadly construed and not limited to textual names.
+  For example, at the time of this specification, {{RFC8499}} domain name system (DNS) has three conveyance formats: common (www.example.com), presentation (www.example.com.) and wire format (3www7example3com0).
+  Looking at {{X500}} distinguished names (DNs), the previous version of this specification allowed either text based or binary distinguished encoding rules (DER) based names as inputs.
+  For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
+  When it comes to {{X660}} object identifiers (OIDs) one could choose dot-notation without the leading dot (1.3.6.1.4.1.9) or choose to include the leading dot (.1.3.6.1.4.1.9).
+  While most users may default to the common format for DNS, FQDN format for a URL, text format for X.500 and dot-notation without a leading dot for OID; name-based UUID implementations generally SHOULD allow arbitrary input which will compute name-based UUIDs for any of the aforementioned example names and others not defined here.
+  Each name format within a name space will output different UUIDs. 
+  As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their name spaces are beyond the scope of this specification.
 
 A note on namespaces:
 : While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
@@ -1862,7 +1880,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 # Some Name Space IDs {#namespaces}
 
 This appendix lists the name space IDs for some potentially interesting name spaces such those for
-fully-qualified domain names (DNS), uniform resource locators (URLs), Object Identifiers (OIDs) in dot-notation without leading dot, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
+{{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 
 ~~~~ code
 NameSpace_DNS  = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
