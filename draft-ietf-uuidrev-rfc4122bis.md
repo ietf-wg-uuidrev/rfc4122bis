@@ -50,6 +50,7 @@ normative:
     date: 2004
   RFC4086: RFC4086
   RFC8141: RFC8141
+  RFC8937: RFC8937
   FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
@@ -71,12 +72,7 @@ normative:
     title: "DCE 1.1: Authentication and Security Services"
     rc: Open Group CAE Specification C311
     date: 1997
-  RANDOM:
-    target: https://peteroupc.github.io/random.html
-    title: "Random Number Generator Recommendations for Applications"
-    author:
-    - name: Peter Occil
-    date: 2023
+
 informative:
   RFC1321: RFC1321
   RFC4122: RFC4122
@@ -243,6 +239,12 @@ informative:
     author:
     - org: IBM
     date: 2023-03-23
+  RANDOM:
+    target: https://peteroupc.github.io/random.html
+    title: "Random Number Generator Recommendations for Applications"
+    author:
+    - name: Peter Occil
+    date: 2023
 
 --- abstract
 
@@ -468,6 +470,13 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-09
+
+{: spacing="compact"}
+- Late addition of IETF reference for CSPRNG guidance #123
+- DNSDIR Review: Typos! #122
+- DNSDIR Review: DNS Considerations Update #121
+
 draft-08
 
 {: spacing="compact"}
@@ -620,7 +629,7 @@ draft-00
 # UUID Format {#format}
 
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
-bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
+bits described in the next sections determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
 
 In the absence of explicit application or presentation protocol
 specification to the contrary, each field is encoded with the Most
@@ -1618,7 +1627,7 @@ Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
  These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
  To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
- Creation of name-based version 8 UUIDs follows the same logic defined in {{uuidv5}}, but the hashspace should be used to as the starting point with the desired
+ Creation of name-based version 8 UUIDs follows the same logic defined in {{uuidv5}}, but the hashspace should be used as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
@@ -1682,7 +1691,7 @@ Take care to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
-Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}} and in {{RANDOM}}.
+Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}}, {{RFC8937}} and in {{RANDOM}}.
 
 ## UUIDs That Do Not Identify the Host {#unidentifiable}
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
