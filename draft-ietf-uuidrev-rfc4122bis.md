@@ -736,9 +736,9 @@ The version number is in the most significant 4 bits of octet 6
 {: #table2 title='UUID variant 10x versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
-where M represents the version placement for the hexadecimal representation of 4 (0100)
+where M represents the version placement for the hexadecimal representation of 0x4 (0b0100)
 and the N represents the variant placement for one of the four possible hexadecimal representation of variant 10x:
-8 (1000), 9 (1001), A (1010), B (1011)
+0x8 (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)
 
 ~~~~
 00000000-0000-4000-8000-000000000000
@@ -1416,7 +1416,7 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   take the count of possible values that fit in those bits (4096, or 2 to the 12th power)
   and multiply it by our millisecond fraction value of 0.4567 and truncate the result to
   an integer, which gives an integer value of 1870. Expressed as hexadecimal it is
-  0x74E, or the binary bits 011101001110.  One can then use those 12 bits
+  0x74E, or the binary bits 0b011101001110.  One can then use those 12 bits
   as the most significant (left-most) portion of the random section of the UUID
   (e.g., the rand_a field in UUIDv7).
   This works for any desired bit length that fits into a UUID, and applications
@@ -1944,8 +1944,8 @@ time_low   32   0xC232AB00
 time_mid   16   0x9414
 ver         4   0x1
 time_high  12   0x1EC
-var         2   b10
-clock_seq  14   b11, 0x3C8
+var         2   0b10
+clock_seq  14   0b11, 0x3C8
 node       48   0x9E6BDECED846
 -------------------------------------------
 total      128
@@ -1974,8 +1974,8 @@ field     bits value
 md5_high  48   0x5df418813aed
 ver        4   0x3
 md5_mid   12   0x515
-var        2   b10
-md5_low   62   b00, 0x8a72f4a814cf09e
+var        2   0b10
+md5_low   62   0b00, 0x8a72f4a814cf09e
 -------------------------------------------
 total     128
 -------------------------------------------
@@ -2005,8 +2005,8 @@ field     bits value
 random_a  48   0x919108f752d1
 ver        4   0x4
 random_b  12   0x320
-var        2   b10
-random_c  62   b01, 0xbacf847db4148a8
+var        2   0b10
+random_c  62   0b01, 0xbacf847db4148a8
 -------------------------------------------
 total     128
 -------------------------------------------
@@ -2043,8 +2043,8 @@ field      bits value
 sha1_high  48   0x2ed6657de927
 ver         4   0x5
 sha1_mid   12   0x68b
-var         2   b10
-sha1_low   62   b01, 0x5e12665a8aea6a2
+var         2   0b10
+sha1_low   62   0b01, 0x5e12665a8aea6a2
 -------------------------------------------
 total      128
 -------------------------------------------
@@ -2070,8 +2070,8 @@ time_high   32   0x1EC9414C
 time_mid    16   0x232A
 ver          4   0x6
 time_high   12   0xB00
-var          2   b10
-clock_seq   14   b11, 0x3C8
+var          2   0b10
+clock_seq   14   0b11, 0x3C8
 node        48   0x9E6BDECED846
 -------------------------------------------
 total       128
@@ -2099,8 +2099,8 @@ field       bits value
 unix_ts_ms  48   0x17F22E279B0
 ver          4   0x7
 rand_a      12   0xCC3
-var          2   b10
-rand_b      62   b01, 0x8C4DC0C0C07398F
+var          2   0b10
+rand_b      62   0b01, 0x8C4DC0C0C07398F
 -------------------------------------------
 total       128
 -------------------------------------------
@@ -2133,8 +2133,8 @@ field     bits value
 custom_a  48   0x320C3D4DCC00
 ver        4   0x8
 custom_b  12   0x75B
-var        2   b10
-custom_c  62   b00, 0xEC932D5F69181C0
+var        2   0b10
+custom_c  62   0b00, 0xEC932D5F69181C0
 -------------------------------------------
 total     128
 -------------------------------------------
@@ -2164,8 +2164,8 @@ field     bits value
 custom_a  48   0x401835fda627
 ver        4   0x8
 custom_b  12   0x627
-var        2   b10
-custom_c  62   b0, 0x73fed73f2bc5b2c
+var        2   0b10
+custom_c  62   0b0, 0x73fed73f2bc5b2c
 -------------------------------------------
 total     128
 -------------------------------------------
