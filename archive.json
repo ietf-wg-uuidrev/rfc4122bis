@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-30T01:27:12.290386+00:00",
+  "timestamp": "2023-08-01T01:40:49.484405+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2209,7 +2209,7 @@
     {
       "number": 121,
       "id": "I_kwDOH6Ln3M5sygRC",
-      "title": "DNS WG Review: DNS Considerations Update",
+      "title": "DNSDIR Review: DNS Considerations Update",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/121",
       "state": "OPEN",
       "author": "kyzer-davis",
@@ -2218,7 +2218,7 @@
       "labels": [],
       "body": "From Email:\r\n```\r\nReviewer: Florian Obser\r\nReview result: Ready with Issues\r\n\r\nI have been selected as the DNS Directorate reviewer for this draft. The DNS Directorate seeks to review all DNS or DNS-related drafts as they pass through IETF last call and IESG review, and sometimes on special request. The purpose of the review is to provide assistance to the ADs.\r\nFor more information about the DNS Directorate, please see https://wiki.ietf.org/en/group/dnsdir\r\n\r\nThis document reference the DNS as one of multiple possible name spaces for Name-Based UUID Generation. It has no considerations that reflect on the DNS.\r\n\r\nIssue:\r\n\r\nThe document does not reference any DNS RFCs.\r\n\r\nSection 5.3, 5.5 and 6.5 refer to \"a canonical sequence of octets in network byte order\". It is not specified what that canonical sequence is nor is there a reference to a document that specifies the canonical sequence for any of the name spaces.\r\n\r\nSection 6.5 also has this:\r\n   *  UUIDs generated at different times from the same name in the same\r\n      namespace MUST be equal.\r\n\r\nIt is unclear to me how to implement that MUST if there is not a single canonical sequence specified for a given name space, as is the case for DNS.\r\n\r\nFor DNS RFC 8499 has this:\r\n      Format of names: Names in the global DNS are domain names.  There\r\n      are three formats: wire format, presentation format, and common\r\n      display.\r\n\r\nThe test vectors in Appendix C use the common display format, i.e. they leave off the root label and the \".\" before it.\r\n\r\nI'm not sure how best to address this issue, options include:\r\n- refer to specifications for all the name spaces and point at the\r\n  canonical sequence (in case of DNS this means RFC 8499 and choosing\r\n  common display)\r\n- mark it out of scope, like is done for \"uniqueness within their name\r\n  spaces\".\r\n- mark it out of scope, but point out that applications must (MUST?)\r\n  agree on what the canonical sequence is.\r\n```\r\n\r\n**Author comment:** \r\n- Option 1: at first seems logical way to solve this. We can also note the same for URL, OID, X500 and add a \"Note on Names\" section to \"6.5. Name-Based UUID Generation\"\r\n- Option 2:  also seems logical, can provide an example citing RFC 8499 and show that there are 3 possible ways to ways to represent DNS (Common: `www.example.com`, Presentation: `www.example.com.`, Wire: `3www7example3com0`) and the one selected for \"name\" input is up to the implementor.\r\n- Option 3: similar to option 2 but much more hand waving \r\n\r\n**Personal Preference:** \r\n- Leaning Option 2, may also need to back out #117/#118 which added OID dot notation guidance e.g \"Object Identifiers (OIDs) in dot-notation without leading dot\" \r\n\r\n**Reasoning:** \r\n- Current Name-space UUID generators allow arbitrary input from my most resent testing. (uuidgen, python, uuidtools.com, etc.)\r\n- I would like to be able to cite [URL](https://datatracker.ietf.org/doc/html/rfc1738), [OID](https://www.itu.int/rec/T-REC-X.660), [X500](https://www.itu.int/rec/T-REC-X.500), [DNS](https://datatracker.ietf.org/doc/html/rfc8499) as informative references.",
       "createdAt": "2023-07-27T20:37:18Z",
-      "updatedAt": "2023-07-30T00:22:23Z",
+      "updatedAt": "2023-07-31T21:31:56Z",
       "closedAt": null,
       "comments": [
         {
@@ -2248,13 +2248,27 @@
           "body": "Taking Option 2 to keep them as ambiguous as were in RFC 4122 but also adding another set of namespace identifiers with strict notation guidance to ensure future interoperability?",
           "createdAt": "2023-07-30T00:22:22Z",
           "updatedAt": "2023-07-30T00:22:22Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@LiosK, @bradleypeabody, @danielmarschall:\r\nI took a stab at this in https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/7c6026b0690d0b8535cbf1e154b95aabd34168bb\r\n\r\nLet me know what you think.",
+          "createdAt": "2023-07-31T19:53:49Z",
+          "updatedAt": "2023-07-31T19:53:49Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good to me, I have no objection.",
+          "createdAt": "2023-07-31T21:31:55Z",
+          "updatedAt": "2023-07-31T21:31:55Z"
         }
       ]
     },
     {
       "number": 122,
       "id": "I_kwDOH6Ln3M5syg0V",
-      "title": "DNS WG Review: Typos!",
+      "title": "DNSDIR Review: Typos!",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/122",
       "state": "OPEN",
       "author": "kyzer-davis",
@@ -2263,7 +2277,7 @@
       "labels": [],
       "body": "```\r\n4.  UUID Format\r\nold: the version bits described in the next sections in determine\r\nnew: the version bits described in the next sections determine\r\n\r\n6.5.  Name-Based UUID Generation\r\nold: but the hashspace should be used to as the starting point\r\nnew: but the hashspace should be used as the starting point\r\n```",
       "createdAt": "2023-07-27T20:38:55Z",
-      "updatedAt": "2023-07-28T21:47:25Z",
+      "updatedAt": "2023-07-31T19:05:52Z",
       "closedAt": null,
       "comments": []
     },
@@ -2280,6 +2294,38 @@
       "body": "Can cite [RFC 8937 Randomness Improvements for Security Protocols](https://www.rfc-editor.org/rfc/rfc8937.html)\r\nNote that [RANDOM](https://peteroupc.github.io/random.html) citation also cites this (and RFC4086 which we also cite)\r\n\r\nPersonally feel like it can't hurt to have another direct reference in the event RANDOM reference goes away.",
       "createdAt": "2023-07-27T20:43:15Z",
       "updatedAt": "2023-07-27T20:43:15Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 125,
+      "id": "I_kwDOH6Ln3M5tFp-n",
+      "title": "Binary prefix usage in prose",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/125",
+      "state": "OPEN",
+      "author": "tgross35",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Is there any precedent for adding a prefix such as `0b` to indicate that a number is presented in binary? There are a handful of places where I could see this making sense, for example in section 5.6\r\n\r\n```\r\n   var:\r\n      The 2 bit variant field as defined by Section 4.1 set to 10.\r\n      Occupies bits 64 and 65 of octet 8.\r\n```\r\n\r\nI would find it more clear to see `set to 0b10`, confirming the value to be a decimal 2 rather than decimal 10.",
+      "createdAt": "2023-07-31T23:15:35Z",
+      "updatedAt": "2023-07-31T23:16:24Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 126,
+      "id": "I_kwDOH6Ln3M5tFtNw",
+      "title": "Stronger v7 > v6 > v1 preference claims",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/126",
+      "state": "OPEN",
+      "author": "tgross35",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Would it make sense to be slightly more unambiguous that users should prefer v7, then v6, then v1 for time-based UUIDs?\r\n\r\nIn this document, v1 is referred to as \"Gregorian time-based  UUID\", v6 as \"Reordered Gregorian time-based UUID\", and v7 as \"Unix Epoch time-based UUID\". I am wondering if there may be value in renaming v1 and v6 to make it more clear that v6 is the preferred version of the two. For example, v1 could be referred to as \"Compatible Gregorian time-based UUID\" or \"Legacy Gregorian...\" and v6 as \"Normalized Gregorian time-based UUID\", or similar.\r\n\r\nOtherwise, it seems that section `5.1. UUID Version 1` should contain language indicating that v7 is preferred where possible. Section `5.6.  UUID Version 6` states in the first paragraph `Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 instead.` - it seems like a similar statement would be suitable in section 5.1 as well.\r\n\r\n(this may have been discussed elsewhere but I have not seen it)",
+      "createdAt": "2023-07-31T23:29:30Z",
+      "updatedAt": "2023-07-31T23:29:30Z",
       "closedAt": null,
       "comments": []
     }
@@ -4627,6 +4673,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 124,
+      "id": "PR_kwDOH6Ln3M5W1rIi",
+      "title": "DNSDIR Feedback",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/124",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Late addition of IETF reference for CSPRNG guidance #123\r\n- DNSDIR Review: Typos! #122\r\n- DNSDIR Review: DNS Considerations Update #121",
+      "createdAt": "2023-07-31T19:54:38Z",
+      "updatedAt": "2023-07-31T19:54:38Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "1735d9f553f487542d0b0b9f441753123f6e7a5d",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "DNSDIR",
+      "headRefOid": "7c6026b0690d0b8535cbf1e154b95aabd34168bb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
