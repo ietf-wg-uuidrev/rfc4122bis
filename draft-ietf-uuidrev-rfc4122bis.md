@@ -888,7 +888,7 @@ For more information on MD5 security considerations see {{RFC6151}}.
 md5_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
-  from the computed MD5 value.
+  from the computed MD5 value. Occupies bits 0 through 47 (octets 0-5).
 
 ver:
 : The 4 bit version field as defined by {{version_field}}, set to 0b0011 (3).
@@ -907,7 +907,7 @@ var:
 md5_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled with the least-significant, right-most bits of the final 64 bits
-  from the computed MD5 value.
+  from the computed MD5 value. Occupies bits 66 through 127 (octets 8-15)
 
 ## UUID Version 4 {#uuidv4}
 UUID version 4 is meant for generating UUIDs from truly-random or
@@ -941,14 +941,14 @@ For guidelines on random data generation see {{unguessability}}.
 {: vspace='0'}
 
 random_a:
-: The first 48 bits of the layout that can be filled with random data as specified in {{unguessability}}
+: The first 48 bits of the layout that can be filled with random data as specified in {{unguessability}}. Occupies bits 0 through 47 (octets 0-5).
 
 ver:
 : The 4 bit version field as defined by {{version_field}}, set to 0b0100 (4).
   Occupies bits 48 through 51 of octet 6.
 
 random_b:
-: 12 more bits of the layout that can be filled random data as per {{unguessability}}
+: 12 more bits of the layout that can be filled random data as per {{unguessability}}. Occupies bits 52 through 63 (octets 6-7).
 
 var:
 : The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
@@ -956,7 +956,7 @@ var:
 
 random_c:
 : The final 62 bits of the layout immediately following the var field to be
-  filled with random data as per {{unguessability}}
+  filled with random data as per {{unguessability}}. Occupies bits 66 through 127 (octets 8-15).
 
 ## UUID Version 5 {#uuidv5}
 UUID version 5 is meant for generating UUIDs from "names"
@@ -997,6 +997,7 @@ sha1_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
   from the computed SHA-1 value.
+  Occupies bits 0 through 47 (octets 0-5).
 
 ver:
 : The 4 bit version field as defined by {{version_field}}, set to 0b0101 (5).
@@ -1016,7 +1017,7 @@ sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled by skipping the 2 most significant, left-most bits of the remaining SHA-1 hash
   and then using the next 62 most significant, left-most bits.
-  Any leftover SHA-1 bits are discarded and unused.
+  Any leftover SHA-1 bits are discarded and unused. Occupies bits 66 through 127 (octets 8-15).
 
 ## UUID Version 6 {#uuidv6}
 
@@ -1151,6 +1152,7 @@ var:
 rand_b:
 : The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}}
   and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
+  Occupies bits 66 through 127 (octets 8-15).
 
 ## UUID Version 8 {#v8}
 
@@ -1197,7 +1199,7 @@ Some example situations in which UUIDv8 usage could occur:
 
 custom_a:
 : The first 48 bits of the layout that can be filled as an implementation sees
-  fit.
+  fit. Occupies bits 0 through 47 (octets 0-5).
 
 ver:
 : The 4 bit version field as defined by {{version_field}}, set to 0b1000 (8).
@@ -1214,6 +1216,7 @@ var:
 custom_c:
 : The final 62 bits of the layout immediately following the var field to be
   filled as an implementation sees fit.
+  Occupies bits 66 through 127 (octets 8-15).
 
 ## Nil UUID {#niluuid}
 The nil UUID is special form of UUID that is specified to have all
