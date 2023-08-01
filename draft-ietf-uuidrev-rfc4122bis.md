@@ -800,7 +800,7 @@ time_mid:
   Occupies bits 32 through 47 (octets 4-5)
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0001.
+: The 4 bit version field as defined by {{version_field}}, set to 0b0001 (1).
   Occupies bits 48 through 51 of octet 6.
 
 time_high:
@@ -808,11 +808,11 @@ time_high:
   Occupies bits 52 through 63 (octets 6-7)
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
   Occupies bits 64 and 65 of octet 8.
 
 clock_seq:
-:  The 14-bits containing the clock sequence.
+: The 14-bits containing the clock sequence.
   Occupies bits 66 through 79 (octets 8-9).
 
 node:
@@ -891,15 +891,18 @@ md5_high:
   from the computed MD5 value.
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0011
+: The 4 bit version field as defined by {{version_field}}, set to 0b0011 (3).
+  Occupies bits 48 through 51 of octet 6.
 
 md5_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following md5_high
   from the computed MD5 value.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 md5_low:
 : The final 62 bits of the layout immediately following the var field to be
@@ -941,13 +944,15 @@ random_a:
 : The first 48 bits of the layout that can be filled with random data as specified in {{unguessability}}
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0100
+: The 4 bit version field as defined by {{version_field}}, set to 0b0100 (4).
+  Occupies bits 48 through 51 of octet 6.
 
 random_b:
 : 12 more bits of the layout that can be filled random data as per {{unguessability}}
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 random_c:
 : The final 62 bits of the layout immediately following the var field to be
@@ -994,15 +999,18 @@ sha1_high:
   from the computed SHA-1 value.
 
 ver:
-: The 4 bit version field as defined by {{version_field}}
+: The 4 bit version field as defined by {{version_field}}, set to 0b0101 (5).
+  Occupies bits 48 through 51 of octet 6.
 
 sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following sha1_high
   from the computed SHA-1 value.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
@@ -1052,22 +1060,22 @@ The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}.
 
 time_high:
 : The most significant 32 bits of the 60 bit starting timestamp.
-  Occupies bits 0 through 31 (octets 0-3)
+  Occupies bits 0 through 31 (octets 0-3).
 
 time_mid:
 : The middle 16 bits of the 60 bit starting timestamp.
-  Occupies bits 32 through 47 (octets 4-5)
+  Occupies bits 32 through 47 (octets 4-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0110.
-  Occupies bits 48 through 51 of Octet 6.
+: The 4 bit version field as defined by {{version_field}}, set to 0b0110 (6).
+  Occupies bits 48 through 51 of octet 6.
 
 time_low:
 : 12 bits that will contain the least significant 12 bits from the 60 bit starting timestamp.
-  Occupies bits 52 through 63 (octets 6-7)
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
   Occupies bits 64 and 65 of octet 8.
 
 clock_seq:
@@ -1076,7 +1084,7 @@ clock_seq:
 
 node:
 : 48 bit spatially unique identifier
-  Occupies bits 80 through 127 (octets 10-15)
+  Occupies bits 80 through 127 (octets 10-15).
 
 With UUIDv6 the steps for splitting the timestamp into time_high and time_mid
 are OPTIONAL
@@ -1122,19 +1130,27 @@ possible.
 {: vspace='0'}
 
 unix_ts_ms:
-: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_considerations}}.
+: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as
+  per {{timestamp_considerations}}.
+  Occupies bits 0 through 47 (octets 0-5)
 
 ver:
-: 4 bit UUIDv7 version set as per {{version_field}}
+: The 4 bit version field as defined by {{version_field}}, set to 0b0111 (7).
+  Occupies bits 48 through 51 of octet 6.
 
 rand_a:
-: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or optional constructs to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}}
+  and/or optional constructs to guarantee additional monotonicity as
+  per {{monotonicity_counters}}.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}}
+  and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
 
 ## UUID Version 8 {#v8}
 
@@ -1184,13 +1200,16 @@ custom_a:
   fit.
 
 ver:
-: The 4 bit version field as defined by {{version_field}}
+: The 4 bit version field as defined by {{version_field}}, set to 0b1000 (8).
+  Occupies bits 48 through 51 of octet 6.
 
 custom_b:
 : 12 more bits of the layout that can be filled as an implementation sees fit.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 custom_c:
 : The final 62 bits of the layout immediately following the var field to be
