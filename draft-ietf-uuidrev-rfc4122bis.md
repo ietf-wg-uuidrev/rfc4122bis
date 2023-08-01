@@ -95,6 +95,13 @@ informative:
     title: >
       Information technology – Procedures for the operation of object identifier registration authorities: General procedures and top arcs of the international object identifier tree
     date: 2011
+  X680:
+    seriesinfo:
+      ISO/IEC: '8824-1:2021'
+      ITU-T Rec.: X.680
+    title: >
+      Information Technology - Abstract Syntax Notation One (ASN.1) & ASN.1 encoding rules
+    date: 2021
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
     title: A Scala client for Cassandra
@@ -1631,7 +1638,7 @@ A note on names:
   For example, at the time of this specification, {{RFC8499}} domain name system (DNS) has three conveyance formats: common (www.example.com), presentation (www.example.com.) and wire format (3www7example3com0).
   Looking at {{X500}} distinguished names (DNs), the previous version of this specification allowed either text based or binary distinguished encoding rules (DER) based names as inputs.
   For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
-  When it comes to {{X660}} object identifiers (OIDs) one could choose dot-notation without the leading dot (1.3.6.1.4.1.9) or choose to include the leading dot (.1.3.6.1.4.1.9).
+  When it comes to {{X660}} object identifiers (OIDs) one could choose dot-notation without the leading dot (2.999), choose to include the leading dot (.2.999) or select of of the many formats from {{X680}} such as OID Internationalized Resource Identifier (OID-IRI) (/Joint-ISO-ITU-T/Example).
   While most users may default to the common format for DNS, FQDN format for a URL, text format for X.500 and dot-notation without a leading dot for OID; name-based UUID implementations generally SHOULD allow arbitrary input which will compute name-based UUIDs for any of the aforementioned example names and others not defined here.
   Each name format within a name space will output different UUIDs. 
   As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their name spaces are beyond the scope of this specification.
