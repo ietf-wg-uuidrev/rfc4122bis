@@ -2158,7 +2158,7 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces alongside namespace and names.
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces {{hashspaces}} alongside namespace {{namespaces}} and names.
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
