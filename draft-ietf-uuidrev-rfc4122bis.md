@@ -793,11 +793,11 @@ transmitted on an 802.3 LAN.
 
 time_low:
 : The least significant 32 bits of the 60 bit starting timestamp.
-  Occupies bits 0 through 31 (octets 0-3)
+  Occupies bits 0 through 31 (octets 0-3).
 
 time_mid:
 : The middle 16 bits of the 60 bit starting timestamp.
-  Occupies bits 32 through 47 (octets 4-5)
+  Occupies bits 32 through 47 (octets 4-5).
 
 ver:
 : The 4 bit version field as defined by {{version_field}}, set to 0b0001 (1).
@@ -805,7 +805,7 @@ ver:
 
 time_high:
 : 12 bits that will contain the most significant 12 bits from the 60 bit starting timestamp.
-  Occupies bits 52 through 63 (octets 6-7)
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
 : The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
@@ -817,7 +817,7 @@ clock_seq:
 
 node:
 : 48 bit spatially unique identifier
-  Occupies bits 80 through 127 (octets 10-15)
+  Occupies bits 80 through 127 (octets 10-15).
 
 For systems that do not have UTC available, but do have the local
 time, they may use that instead of UTC, as long as they do so
@@ -1132,7 +1132,7 @@ possible.
 unix_ts_ms:
 : 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as
   per {{timestamp_considerations}}.
-  Occupies bits 0 through 47 (octets 0-5)
+  Occupies bits 0 through 47 (octets 0-5).
 
 ver:
 : The 4 bit version field as defined by {{version_field}}, set to 0b0111 (7).
