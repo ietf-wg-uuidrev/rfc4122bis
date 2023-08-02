@@ -499,6 +499,7 @@ draft-09
 - Late addition of IETF reference for CSPRNG guidance #123
 - DNSDIR Review: Typos! #122
 - DNSDIR Review: DNS Considerations Update #121
+- Error in UUIDv8 Name-based Test Vector #129
 
 draft-08
 
@@ -2178,7 +2179,7 @@ field     bits value
 -------------------------------------------
 custom_a  48   0x401835fda627
 ver        4   0x8
-custom_b  12   0x627
+custom_b  12   0x70a
 var        2   b10
 custom_c  62   b0, 0x73fed73f2bc5b2c
 -------------------------------------------
