@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-01T01:40:49.484405+00:00",
+  "timestamp": "2023-08-03T01:23:52.370093+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2218,7 +2218,7 @@
       "labels": [],
       "body": "From Email:\r\n```\r\nReviewer: Florian Obser\r\nReview result: Ready with Issues\r\n\r\nI have been selected as the DNS Directorate reviewer for this draft. The DNS Directorate seeks to review all DNS or DNS-related drafts as they pass through IETF last call and IESG review, and sometimes on special request. The purpose of the review is to provide assistance to the ADs.\r\nFor more information about the DNS Directorate, please see https://wiki.ietf.org/en/group/dnsdir\r\n\r\nThis document reference the DNS as one of multiple possible name spaces for Name-Based UUID Generation. It has no considerations that reflect on the DNS.\r\n\r\nIssue:\r\n\r\nThe document does not reference any DNS RFCs.\r\n\r\nSection 5.3, 5.5 and 6.5 refer to \"a canonical sequence of octets in network byte order\". It is not specified what that canonical sequence is nor is there a reference to a document that specifies the canonical sequence for any of the name spaces.\r\n\r\nSection 6.5 also has this:\r\n   *  UUIDs generated at different times from the same name in the same\r\n      namespace MUST be equal.\r\n\r\nIt is unclear to me how to implement that MUST if there is not a single canonical sequence specified for a given name space, as is the case for DNS.\r\n\r\nFor DNS RFC 8499 has this:\r\n      Format of names: Names in the global DNS are domain names.  There\r\n      are three formats: wire format, presentation format, and common\r\n      display.\r\n\r\nThe test vectors in Appendix C use the common display format, i.e. they leave off the root label and the \".\" before it.\r\n\r\nI'm not sure how best to address this issue, options include:\r\n- refer to specifications for all the name spaces and point at the\r\n  canonical sequence (in case of DNS this means RFC 8499 and choosing\r\n  common display)\r\n- mark it out of scope, like is done for \"uniqueness within their name\r\n  spaces\".\r\n- mark it out of scope, but point out that applications must (MUST?)\r\n  agree on what the canonical sequence is.\r\n```\r\n\r\n**Author comment:** \r\n- Option 1: at first seems logical way to solve this. We can also note the same for URL, OID, X500 and add a \"Note on Names\" section to \"6.5. Name-Based UUID Generation\"\r\n- Option 2:  also seems logical, can provide an example citing RFC 8499 and show that there are 3 possible ways to ways to represent DNS (Common: `www.example.com`, Presentation: `www.example.com.`, Wire: `3www7example3com0`) and the one selected for \"name\" input is up to the implementor.\r\n- Option 3: similar to option 2 but much more hand waving \r\n\r\n**Personal Preference:** \r\n- Leaning Option 2, may also need to back out #117/#118 which added OID dot notation guidance e.g \"Object Identifiers (OIDs) in dot-notation without leading dot\" \r\n\r\n**Reasoning:** \r\n- Current Name-space UUID generators allow arbitrary input from my most resent testing. (uuidgen, python, uuidtools.com, etc.)\r\n- I would like to be able to cite [URL](https://datatracker.ietf.org/doc/html/rfc1738), [OID](https://www.itu.int/rec/T-REC-X.660), [X500](https://www.itu.int/rec/T-REC-X.500), [DNS](https://datatracker.ietf.org/doc/html/rfc8499) as informative references.",
       "createdAt": "2023-07-27T20:37:18Z",
-      "updatedAt": "2023-07-31T21:31:56Z",
+      "updatedAt": "2023-08-01T21:02:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -2262,6 +2262,34 @@
           "body": "Looks good to me, I have no objection.",
           "createdAt": "2023-07-31T21:31:55Z",
           "updatedAt": "2023-07-31T21:31:55Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have a few requests for the OIDs in the section \"A note on names\":\r\n\r\n- The Cisco OID (1.3.6.1.4.1.9) should not be used as an example, since there is a special example OID (2.999) for the purpose of documentation.\r\n\r\n- Besides the dot notation (`2.999` or `.2.999`), there are two other important notations:\r\n\r\n    - There is also the Abstract Syntax Notation One (ASN.1) notation in various forms, e.g. (including but not limited to):\r\n`{ 2 999 }`, `{ joint-iso-itu-t(2) example(999) }`, or `{ joint-iso-itu-t example(999) }`.\r\n\r\n    - As well as the Internationalized Resource Identifier (OID-IRI) notation in various forms, e.g. (including but not limited to):\r\n`/2/999`, `/Joint-ISO-ITU-T/Example`, or `/Example`.\r\n\r\n    - The reference for ASN.1 and OID-IRI notation is Rec. ITU-T X.680 | ISO/IEC 8824-1.\r\n\r\n\r\nI am unsure about creating a pull request, because I want to avoid that you have trouble with a change conflict if I change something that already has a pull request.\r\n\r\nCan you please make these two changes for me? Thank you very much.\r\n",
+          "createdAt": "2023-08-01T08:24:11Z",
+          "updatedAt": "2023-08-01T08:29:26Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "LGTM!",
+          "createdAt": "2023-08-01T18:02:26Z",
+          "updatedAt": "2023-08-01T18:02:26Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, yeah I can switch it to `2.999` and `.2.999` I wasn't aware of that Example OID but I know the Cisco one by heart :) \r\n\r\nAs for the second item, I will see what I can do to cite X.680 but I dont' know if we need any further examples since the text is already getting long and the point that \"these things can be represented in many different ways\" is sufficiently detailed.\r\n\r\nEdit: done Check below, added a single X.680 example since we got some space back from removing the Cisco OID.\r\nhttps://github.com/ietf-wg-uuidrev/rfc4122bis/pull/124/commits/972e2e4a05beb5fcf22a115db8c3a2072d09e66c\r\n\r\nEdit2: X.660 > X.680",
+          "createdAt": "2023-08-01T18:54:30Z",
+          "updatedAt": "2023-08-01T21:02:29Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> @danielmarschall, yeah I can switch it to `2.999` and `.2.999` I wasn't aware of that Example OID but I know the Cisco one by heart :)\r\n\r\nI haven't seen 2.999 often, but I am very proud of it, because I was literally its inventor 12 years ago :)\r\n\r\n> As for the second item, I will see what I can do to cite X.680 but I dont' know if we need any further examples since the text is already getting long and the point that \"these things can be represented in many different ways\" is sufficiently detailed.\r\n> \r\n> Edit: done Check below, added a single X.660 example since we got some space back from removing the Cisco OID. [972e2e4](https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/972e2e4a05beb5fcf22a115db8c3a2072d09e66c)\r\n\r\nThank you very much. It is compact and your wording includes all possible notations of X.680, so it's perfect. \ud83d\udc4d",
+          "createdAt": "2023-08-01T20:54:46Z",
+          "updatedAt": "2023-08-01T20:54:46Z"
         }
       ]
     },
@@ -2309,9 +2337,17 @@
       "labels": [],
       "body": "Is there any precedent for adding a prefix such as `0b` to indicate that a number is presented in binary? There are a handful of places where I could see this making sense, for example in section 5.6\r\n\r\n```\r\n   var:\r\n      The 2 bit variant field as defined by Section 4.1 set to 10.\r\n      Occupies bits 64 and 65 of octet 8.\r\n```\r\n\r\nI would find it more clear to see `set to 0b10`, confirming the value to be a decimal 2 rather than decimal 10.",
       "createdAt": "2023-07-31T23:15:35Z",
-      "updatedAt": "2023-07-31T23:16:24Z",
+      "updatedAt": "2023-08-01T18:55:27Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yeah, we have a few places where 0b is defined (mostly in the appendix test vectors) but I can see the value here. I will sneak it in.",
+          "createdAt": "2023-08-01T18:55:27Z",
+          "updatedAt": "2023-08-01T18:55:27Z"
+        }
+      ]
     },
     {
       "number": 126,
@@ -2325,9 +2361,100 @@
       "labels": [],
       "body": "Would it make sense to be slightly more unambiguous that users should prefer v7, then v6, then v1 for time-based UUIDs?\r\n\r\nIn this document, v1 is referred to as \"Gregorian time-based  UUID\", v6 as \"Reordered Gregorian time-based UUID\", and v7 as \"Unix Epoch time-based UUID\". I am wondering if there may be value in renaming v1 and v6 to make it more clear that v6 is the preferred version of the two. For example, v1 could be referred to as \"Compatible Gregorian time-based UUID\" or \"Legacy Gregorian...\" and v6 as \"Normalized Gregorian time-based UUID\", or similar.\r\n\r\nOtherwise, it seems that section `5.1. UUID Version 1` should contain language indicating that v7 is preferred where possible. Section `5.6.  UUID Version 6` states in the first paragraph `Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 instead.` - it seems like a similar statement would be suitable in section 5.1 as well.\r\n\r\n(this may have been discussed elsewhere but I have not seen it)",
       "createdAt": "2023-07-31T23:29:30Z",
-      "updatedAt": "2023-07-31T23:29:30Z",
+      "updatedAt": "2023-08-02T16:10:26Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Nobody has brought up the names as far as I can tell with no strong opposition as to what they are describes as in that version table. I would be hesitant to change those this late in the process. \r\n\r\nAs for discouraging v1 in lieu of v7:\r\nWe could add some text like:\r\n> It should be noted that this section is included for historical purposes. Implementations that require time-based UUIDs SHOULD use UUIDv7 {{UUIDv7_section_link}}.",
+          "createdAt": "2023-08-01T19:11:05Z",
+          "updatedAt": "2023-08-01T19:11:05Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will let this one sit a bit to garner a few more thumbs up/down and/or discussion on the topic of marking \"UUIDv1\" legacy and pointing to v7. Again, somewhat late in the process so \"big\" changes like formally deprecating v1 within v1 section vs what is done in v6 section would need strong group feedback.\r\n\r\nIMO the difference is that the text in v6 is saying \"hey if you are implementing a new UUID type in 2023+ just do v7 vs bit swapping of v1\" but saying \"v1 is terrible use v7\" could be a bridge too far. \r\n\r\n@bradleypeabody @LiosK whatcha think?",
+          "createdAt": "2023-08-01T20:50:57Z",
+          "updatedAt": "2023-08-01T20:50:57Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think that the new versions v6-v8 are great, but \r\nI am not sure if v7 could be described as a 100% successor of v1.\r\n\r\nI think the **_direct_** successor of v1 is v6 because v6 has everything v1 has, just better (because it is ordered).\r\n\r\nv7 has some differences which **_some_** people could argue as being disadvantages, making it not a 100% successor of v1:\r\n1. The time resolution is not as good as in v1. When you create a lot of UUIDv7 and want that they are in the correct order, the code must sleep for 1 millisecond between UUIDv7 generations.\r\n2. The MAC address - which some people or applications might consider useful metadata - is not available.\r\n3. The random data could **_theoretically_** cause a collision, but very very very unlikely\r\n\r\nI personally think that v6 and v7 are both equally good, and people could choose either v6 or v7, depending if they are okay with their MAC address included in the UUID or not.\r\n",
+          "createdAt": "2023-08-02T00:37:56Z",
+          "updatedAt": "2023-08-02T00:37:56Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I echo @danielmarschall's comment and advise to \"leave it as is\" with no text change to v1",
+          "createdAt": "2023-08-02T14:24:58Z",
+          "updatedAt": "2023-08-02T14:24:58Z"
+        },
+        {
+          "author": "tgross35",
+          "authorAssociation": "NONE",
+          "body": "That comment makes sense, I did not consider the resolution / MAC components.\r\n\r\nI do still think it may make sense to add something along the lines of `use cases that do not already employ v1 UUIDs will likely prefer  using v6 or v7 for improved ordering` - just to help answer the question of \"when should I use this\" early on. I think somebody may have brought this up on the list recently? However, I do understand that this may be considered too big a change at this point.",
+          "createdAt": "2023-08-02T16:10:26Z",
+          "updatedAt": "2023-08-02T16:10:26Z"
+        }
+      ]
+    },
+    {
+      "number": 127,
+      "id": "I_kwDOH6Ln3M5tHxzY",
+      "title": "Hash Space IDs",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/127",
+      "state": "OPEN",
+      "author": "danielmarschall",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\r\nThe UUIDv8 contains custom, vendor-specific data and theoretically, the description of the contents would be out-of-scope for the RFC.\r\n\r\nHowever, I agree that the sections \"Example of a UUIDv8 Value (time-based)\" and \"Example of a UUIDv8 Value (name-based)\" are good because they give people some inspiration about how a custom UUID could be designed.\r\n\r\nBut I am confused about the \"Some Hash Space IDs\" section because it is a main section, instead of a sub-section in the \"Example of a UUIDv8\" section. If I understand correctly, these Hash Space IDs are only used in this example, so I think they should be directly listed in the example.\r\n\r\nWhat do you think?\r\n",
+      "createdAt": "2023-08-01T08:39:34Z",
+      "updatedAt": "2023-08-02T23:06:49Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't think it matters one way or the other by having them part of the test vector or as its own section. I just mimic'd what was done with name spaces and copy and pasted the section. I think I created the test vector later so that is probably why the hash space is after the name space section.\r\n\r\nIf anything I should probably just provide a reference in that test vector back to the hash space appendix.\r\n\r\nI am trying to avoid changing too much here late in the state of IETF review and since it does not really help I will just add the missing appendix reference as the most minimal change.",
+          "createdAt": "2023-08-01T19:33:35Z",
+          "updatedAt": "2023-08-01T19:33:35Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I hope you don't consider it as \"spam\", but I wanted to share that I have implemented the UUIDv8 namebased concept in my [open source solution](http://github.com/danielmarschall/uuid_mac_utils) and it can be tested here: https://misc.daniel-marschall.de/tools/uuid_mac_decoder/index.php#gen_uuidv35\r\n... In case someone finds it useful (i.e. to generate or verify test vectors; I could reproduce that the SHA2-256 test vector `401835fd-a627-870a-873f-ed73f2bc5b2c` is correct.)",
+          "createdAt": "2023-08-02T23:06:48Z",
+          "updatedAt": "2023-08-02T23:06:48Z"
+        }
+      ]
+    },
+    {
+      "number": 129,
+      "id": "I_kwDOH6Ln3M5tNOZ9",
+      "title": "Error in UUIDv8 Name-based Test Vector",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/129",
+      "state": "OPEN",
+      "author": "danielmarschall",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Hello,\r\n\r\nAt this example:\r\n\r\n```\r\n-------------------------------------------\r\nfield     bits value\r\n-------------------------------------------\r\ncustom_a  48   0x401835fda627\r\nver        4   0x8\r\ncustom_b  12   0x627\r\nvar        2   b10\r\ncustom_c  62   b0, 0x73fed73f2bc5b2c\r\n-------------------------------------------\r\ntotal     128\r\n-------------------------------------------\r\nfinal: 401835fd-a627-870a-873f-ed73f2bc5b2c\r\n```\r\n\r\nThe field `custom_b` should be `0x70a` , not `0x627`.\r\n\r\n\r\nThat being said, I noticed that the pull requests are marked as failed. I hope it is not too late for the changes",
+      "createdAt": "2023-08-01T23:47:39Z",
+      "updatedAt": "2023-08-02T14:37:43Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yup, bad copy and paste on my part. Thanks for the double-check. Let me get that real fast.\r\n\r\nEdit: I also noticed custom_c nees to have two 0s to be consistent with the other test-vectors. \r\nI did that over on https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/128/commits/1bad8f0decd035938927c06ca92aacea6c3dddf3 as to not create merge conflict between my outstanding Branches/PRs",
+          "createdAt": "2023-08-02T14:27:29Z",
+          "updatedAt": "2023-08-02T14:37:43Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4686,18 +4813,73 @@
       "labels": [],
       "body": "- Late addition of IETF reference for CSPRNG guidance #123\r\n- DNSDIR Review: Typos! #122\r\n- DNSDIR Review: DNS Considerations Update #121",
       "createdAt": "2023-07-31T19:54:38Z",
-      "updatedAt": "2023-07-31T19:54:38Z",
+      "updatedAt": "2023-08-02T14:30:46Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "1735d9f553f487542d0b0b9f441753123f6e7a5d",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "DNSDIR",
-      "headRefOid": "7c6026b0690d0b8535cbf1e154b95aabd34168bb",
+      "headRefOid": "947245b0184bf22fe85afdec6ba1fda448d887b9",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 128,
+      "id": "PR_kwDOH6Ln3M5W8Uos",
+      "title": "Improve consistency of layout sections",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/128",
+      "state": "OPEN",
+      "author": "tgross35",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "- Add '0b' binary prefix where fitting\r\n- Add decimal values in addition to binary where it makes sense\r\n- Add \"occupies bits...\" where needed to make more consistent\r\n- Match capitalization of \"octet\" and terminal punctuation\r\n\r\nFixes #125",
+      "createdAt": "2023-08-01T19:35:03Z",
+      "updatedAt": "2023-08-02T18:27:31Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "1735d9f553f487542d0b0b9f441753123f6e7a5d",
+      "headRepository": "tgross35/rfc4122bis",
+      "headRefName": "patch-1",
+      "headRefOid": "1bad8f0decd035938927c06ca92aacea6c3dddf3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I see a few other places where we can add `0b`, let me get those in another commit.",
+          "createdAt": "2023-08-01T19:49:19Z",
+          "updatedAt": "2023-08-01T19:49:19Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Okay, I should have hit all of the 0b items, a few 0x items I saw along the way.\r\n\r\nI went ahead and added `Occupies bits ... octets ...` text to every bit layout descriptor in v1-v8 since it was bugging me that now only a few of them did not have this text.\r\n\r\nI will leave this open this week so others can double check the edits. \r\nSpecifically I ask: check the bits/octets referenced are correct. They look correct to me but little things like this can lead to erratas filed later.",
+          "createdAt": "2023-08-01T20:25:26Z",
+          "updatedAt": "2023-08-01T20:40:52Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Is the term \"variant 10x\" correct, or should it be \"variant 0b10x\"?",
+          "createdAt": "2023-08-01T23:45:37Z",
+          "updatedAt": "2023-08-01T23:45:37Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Is the term \"variant 10x\" correct, or should it be \"variant 0b10x\"?\r\n\r\nI wrote it that way in one pass but didn't like the way it read since the `x` is in there. I decided to leave it as 10x vs 0b01x which IMO looks a bit uglier.",
+          "createdAt": "2023-08-02T18:27:31Z",
+          "updatedAt": "2023-08-02T18:27:31Z"
+        }
+      ],
       "reviews": []
     }
   ]
