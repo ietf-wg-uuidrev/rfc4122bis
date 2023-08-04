@@ -518,7 +518,7 @@ draft-07
 
 - Even more grammar tweaks! #109
 - Remove unnecessary "32 bit" in UUIDv7 example #108
-- Change "fixed millisecond" -> "millisecond by default" relating to v7… #110
+- Change "fixed millisecond" -> "millisecond by default" relating to v7 #110
 - Revert Max UUID Naming #107
 - Author Changes
 
