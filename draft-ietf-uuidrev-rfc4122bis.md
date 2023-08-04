@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-08
+docname: draft-ietf-uuidrev-rfc4122bis-09
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -50,6 +50,7 @@ normative:
     date: 2004
   RFC4086: RFC4086
   RFC8141: RFC8141
+  RFC8937: RFC8937
   FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
@@ -71,18 +72,36 @@ normative:
     title: "DCE 1.1: Authentication and Security Services"
     rc: Open Group CAE Specification C311
     date: 1997
-  RANDOM:
-    target: https://peteroupc.github.io/random.html
-    title: "Random Number Generator Recommendations for Applications"
-    author:
-    - name: Peter Occil
-    date: 2023
+
 informative:
   RFC1321: RFC1321
+  RFC1738: RFC1738
   RFC4122: RFC4122
   RFC5234: RFC5234
   RFC6151: RFC6151
   RFC6194: RFC6194
+  RFC8499: RFC8499
+  X500:
+    seriesinfo:
+      ISO/IEC: '9594-1'
+      ITU-T Rec.: X.500
+    title: >
+      Information technology – Open Systems Interconnection – The Directory: Overview of concepts, models and services
+    date: 2019
+  X660:
+    seriesinfo:
+      ISO/IEC: '9834-1'
+      ITU-T Rec.: X.660
+    title: >
+      Information technology – Procedures for the operation of object identifier registration authorities: General procedures and top arcs of the international object identifier tree
+    date: 2011
+  X680:
+    seriesinfo:
+      ISO/IEC: '8824-1:2021'
+      ITU-T Rec.: X.680
+    title: >
+      Information Technology - Abstract Syntax Notation One (ASN.1) & ASN.1 encoding rules
+    date: 2021
   LexicalUUID:
     target: https://github.com/twitter-archive/cassie
     title: A Scala client for Cassandra
@@ -243,6 +262,12 @@ informative:
     author:
     - org: IBM
     date: 2023-03-23
+  RANDOM:
+    target: https://peteroupc.github.io/random.html
+    title: "Random Number Generator Recommendations for Applications"
+    author:
+    - name: Peter Occil
+    date: 2023
 
 --- abstract
 
@@ -468,6 +493,14 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-09
+
+{: spacing="compact"}
+- Late addition of IETF reference for CSPRNG guidance #123
+- DNSDIR Review: Typos! #122
+- DNSDIR Review: DNS Considerations Update #121
+- Error in UUIDv8 Name-based Test Vector #129
+
 draft-08
 
 {: spacing="compact"}
@@ -620,7 +653,7 @@ draft-00
 # UUID Format {#format}
 
 The UUID format is 16 octets (128 bits); the variant bits in conjunction with the version
-bits described in the next sections in determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
+bits described in the next sections determine finer structure. While discussing UUID formats and layout, bit definitions start at 0 and end at 127 while octet definitions start at 0 and end at 15.
 
 In the absence of explicit application or presentation protocol
 specification to the contrary, each field is encoded with the Most
@@ -1584,14 +1617,6 @@ Distributed applications generating UUIDs at a variety of hosts MUST
 be willing to rely on the random number source at all hosts.
 
 ## Name-Based UUID Generation {#name_based_uuid_generation}
-The concept of name and name space should be broadly construed and not
-limited to textual names.  For example, some name spaces are the
-domain name system, URLs, Object Identifiers (OIDs), X.500 Distinguished
-Names (DNs), and reserved words in a programming language.  The
-mechanisms or conventions used for allocating names and ensuring
-their uniqueness within their name spaces are beyond the scope of
-this specification.
-
 The requirements for name-based UUIDs are as follows:
 
 * UUIDs generated at different times from the same name in the
@@ -1609,6 +1634,16 @@ The requirements for name-based UUIDs are as follows:
 
 {: vspace='0'}
 
+A note on names:
+: The concept of name (and namespace) should be broadly construed and not limited to textual names.
+  For example, at the time of this specification, {{RFC8499}} domain name system (DNS) has three conveyance formats: common (www.example.com), presentation (www.example.com.) and wire format (3www7example3com0).
+  Looking at {{X500}} distinguished names (DNs), the previous version of this specification allowed either text based or binary distinguished encoding rules (DER) based names as inputs.
+  For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
+  When it comes to {{X660}} object identifiers (OIDs) one could choose dot-notation without the leading dot (2.999), choose to include the leading dot (.2.999) or select of of the many formats from {{X680}} such as OID Internationalized Resource Identifier (OID-IRI) (/Joint-ISO-ITU-T/Example).
+  While most users may default to the common format for DNS, FQDN format for a URL, text format for X.500 and dot-notation without a leading dot for OID; name-based UUID implementations generally SHOULD allow arbitrary input which will compute name-based UUIDs for any of the aforementioned example names and others not defined here.
+  Each name format within a name space will output different UUIDs. 
+  As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their name spaces are beyond the scope of this specification.
+
 A note on namespaces:
 : While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
   For example, any other UUID MAY be generated and used as the desired namespace input for a given application context to
@@ -1618,7 +1653,7 @@ Name-based UUIDs using version 8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
  These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
  To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
- Creation of name-based version 8 UUIDs follows the same logic defined in {{uuidv5}}, but the hashspace should be used to as the starting point with the desired
+ Creation of name-based version 8 UUIDs follows the same logic defined in {{uuidv5}}, but the hashspace should be used as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
  Ensure the version and variant and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
@@ -1682,7 +1717,7 @@ Take care to ensure the CSPRNG state is properly reseeded upon
 state changes, such as process forks, to ensure proper CSPRNG operation.
 CSPRNG ensures the best of {{collision_resistance}} and {{Security}} are present in modern UUIDs.
 
-Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}} and in {{RANDOM}}.
+Further advice on generating cryptographic-quality random numbers can be found in {{RFC4086}}, {{RFC8937}} and in {{RANDOM}}.
 
 ## UUIDs That Do Not Identify the Host {#unidentifiable}
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
@@ -1853,7 +1888,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 # Some Name Space IDs {#namespaces}
 
 This appendix lists the name space IDs for some potentially interesting name spaces such those for
-fully-qualified domain names (DNS), uniform resource locators (URLs), Object Identifiers (OIDs) in dot-notation without leading dot, and X.500 distinguished names (DNs) in distinguished encoding rule (DER) or text format.
+{{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 
 ~~~~ code
 NameSpace_DNS  = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
@@ -2124,7 +2159,7 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces alongside namespace and names.
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces {{hashspaces}} alongside namespace {{namespaces}} and names.
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
@@ -2144,7 +2179,7 @@ field     bits value
 -------------------------------------------
 custom_a  48   0x401835fda627
 ver        4   0x8
-custom_b  12   0x627
+custom_b  12   0x70a
 var        2   b10
 custom_c  62   b0, 0x73fed73f2bc5b2c
 -------------------------------------------
