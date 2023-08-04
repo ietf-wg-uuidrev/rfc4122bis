@@ -500,6 +500,7 @@ draft-09
 - DNSDIR Review: Typos! #122
 - DNSDIR Review: DNS Considerations Update #121
 - Error in UUIDv8 Name-based Test Vector #129
+- Improve consistency of layout field definitions #128
 
 draft-08
 
