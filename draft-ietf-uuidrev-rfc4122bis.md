@@ -769,9 +769,9 @@ The version number is in the most significant 4 bits of octet 6
 {: #table2 title='UUID variant 10x versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
-where M represents the version placement for the hexadecimal representation of 4 (0100)
+where M represents the version placement for the hexadecimal representation of 0x4 (0b0100)
 and the N represents the variant placement for one of the four possible hexadecimal representation of variant 10x:
-8 (1000), 9 (1001), A (1010), B (1011)
+0x8 (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)
 
 ~~~~
 00000000-0000-4000-8000-000000000000
@@ -826,31 +826,31 @@ transmitted on an 802.3 LAN.
 
 time_low:
 : The least significant 32 bits of the 60 bit starting timestamp.
-  Occupies bits 0 through 31 (octets 0-3)
+  Occupies bits 0 through 31 (octets 0-3).
 
 time_mid:
 : The middle 16 bits of the 60 bit starting timestamp.
-  Occupies bits 32 through 47 (octets 4-5)
+  Occupies bits 32 through 47 (octets 4-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0001.
+: The 4 bit version field as defined by {{version_field}}, set to 0b0001 (1).
   Occupies bits 48 through 51 of octet 6.
 
 time_high:
 : 12 bits that will contain the most significant 12 bits from the 60 bit starting timestamp.
-  Occupies bits 52 through 63 (octets 6-7)
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
   Occupies bits 64 and 65 of octet 8.
 
 clock_seq:
-:  The 14-bits containing the clock sequence.
+: The 14-bits containing the clock sequence.
   Occupies bits 66 through 79 (octets 8-9).
 
 node:
 : 48 bit spatially unique identifier
-  Occupies bits 80 through 127 (octets 10-15)
+  Occupies bits 80 through 127 (octets 10-15).
 
 For systems that do not have UTC available, but do have the local
 time, they may use that instead of UTC, as long as they do so
@@ -921,23 +921,26 @@ For more information on MD5 security considerations see {{RFC6151}}.
 md5_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
-  from the computed MD5 value.
+  from the computed MD5 value. Occupies bits 0 through 47 (octets 0-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0011
+: The 4 bit version field as defined by {{version_field}}, set to 0b0011 (3).
+  Occupies bits 48 through 51 of octet 6.
 
 md5_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following md5_high
   from the computed MD5 value.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 md5_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled with the least-significant, right-most bits of the final 64 bits
-  from the computed MD5 value.
+  from the computed MD5 value. Occupies bits 66 through 127 (octets 8-15)
 
 ## UUID Version 4 {#uuidv4}
 UUID version 4 is meant for generating UUIDs from truly-random or
@@ -971,20 +974,22 @@ For guidelines on random data generation see {{unguessability}}.
 {: vspace='0'}
 
 random_a:
-: The first 48 bits of the layout that can be filled with random data as specified in {{unguessability}}
+: The first 48 bits of the layout that can be filled with random data as specified in {{unguessability}}. Occupies bits 0 through 47 (octets 0-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0100
+: The 4 bit version field as defined by {{version_field}}, set to 0b0100 (4).
+  Occupies bits 48 through 51 of octet 6.
 
 random_b:
-: 12 more bits of the layout that can be filled random data as per {{unguessability}}
+: 12 more bits of the layout that can be filled random data as per {{unguessability}}. Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 random_c:
 : The final 62 bits of the layout immediately following the var field to be
-  filled with random data as per {{unguessability}}
+  filled with random data as per {{unguessability}}. Occupies bits 66 through 127 (octets 8-15).
 
 ## UUID Version 5 {#uuidv5}
 UUID version 5 is meant for generating UUIDs from "names"
@@ -1025,23 +1030,27 @@ sha1_high:
 : The first 48 bits of the layout are filled
   with the most significant, left-most 48 bits
   from the computed SHA-1 value.
+  Occupies bits 0 through 47 (octets 0-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}}
+: The 4 bit version field as defined by {{version_field}}, set to 0b0101 (5).
+  Occupies bits 48 through 51 of octet 6.
 
 sha1_mid:
 : 12 more bits of the layout consisting of the least significant,
   right-most 12 bits of 16 bits immediately following sha1_high
   from the computed SHA-1 value.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 sha1_low:
 : The final 62 bits of the layout immediately following the var field to be
   filled by skipping the 2 most significant, left-most bits of the remaining SHA-1 hash
   and then using the next 62 most significant, left-most bits.
-  Any leftover SHA-1 bits are discarded and unused.
+  Any leftover SHA-1 bits are discarded and unused. Occupies bits 66 through 127 (octets 8-15).
 
 ## UUID Version 6 {#uuidv6}
 
@@ -1085,22 +1094,22 @@ The format for the 16-byte, 128 bit UUIDv6 is shown in {{v6layout}}.
 
 time_high:
 : The most significant 32 bits of the 60 bit starting timestamp.
-  Occupies bits 0 through 31 (octets 0-3)
+  Occupies bits 0 through 31 (octets 0-3).
 
 time_mid:
 : The middle 16 bits of the 60 bit starting timestamp.
-  Occupies bits 32 through 47 (octets 4-5)
+  Occupies bits 32 through 47 (octets 4-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}} set to 0110.
-  Occupies bits 48 through 51 of Octet 6.
+: The 4 bit version field as defined by {{version_field}}, set to 0b0110 (6).
+  Occupies bits 48 through 51 of octet 6.
 
 time_low:
 : 12 bits that will contain the least significant 12 bits from the 60 bit starting timestamp.
-  Occupies bits 52 through 63 (octets 6-7)
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}} set to 10.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
   Occupies bits 64 and 65 of octet 8.
 
 clock_seq:
@@ -1109,7 +1118,7 @@ clock_seq:
 
 node:
 : 48 bit spatially unique identifier
-  Occupies bits 80 through 127 (octets 10-15)
+  Occupies bits 80 through 127 (octets 10-15).
 
 With UUIDv6 the steps for splitting the timestamp into time_high and time_mid
 are OPTIONAL
@@ -1155,19 +1164,28 @@ possible.
 {: vspace='0'}
 
 unix_ts_ms:
-: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as per {{timestamp_considerations}}.
+: 48 bit big-endian unsigned number of Unix epoch timestamp in milliseconds as
+  per {{timestamp_considerations}}.
+  Occupies bits 0 through 47 (octets 0-5).
 
 ver:
-: 4 bit UUIDv7 version set as per {{version_field}}
+: The 4 bit version field as defined by {{version_field}}, set to 0b0111 (7).
+  Occupies bits 48 through 51 of octet 6.
 
 rand_a:
-: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}} and/or optional constructs to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: 12 bits pseudo-random data to provide uniqueness as per {{unguessability}}
+  and/or optional constructs to guarantee additional monotonicity as
+  per {{monotonicity_counters}}.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 rand_b:
-: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}} and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
+: The final 62 bits of pseudo-random data to provide uniqueness as per {{unguessability}}
+  and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
+  Occupies bits 66 through 127 (octets 8-15).
 
 ## UUID Version 8 {#v8}
 
@@ -1214,20 +1232,24 @@ Some example situations in which UUIDv8 usage could occur:
 
 custom_a:
 : The first 48 bits of the layout that can be filled as an implementation sees
-  fit.
+  fit. Occupies bits 0 through 47 (octets 0-5).
 
 ver:
-: The 4 bit version field as defined by {{version_field}}
+: The 4 bit version field as defined by {{version_field}}, set to 0b1000 (8).
+  Occupies bits 48 through 51 of octet 6.
 
 custom_b:
 : 12 more bits of the layout that can be filled as an implementation sees fit.
+  Occupies bits 52 through 63 (octets 6-7).
 
 var:
-: The 2 bit variant field as defined by {{variant_field}}.
+: The 2 bit variant field as defined by {{variant_field}}, set to 0b10.
+  Occupies bits 64 and 65 of octet 8.
 
 custom_c:
 : The final 62 bits of the layout immediately following the var field to be
   filled as an implementation sees fit.
+  Occupies bits 66 through 127 (octets 8-15).
 
 ## Nil UUID {#niluuid}
 The nil UUID is special form of UUID that is specified to have all
@@ -1430,7 +1452,7 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   take the count of possible values that fit in those bits (4096, or 2 to the 12th power)
   and multiply it by our millisecond fraction value of 0.4567 and truncate the result to
   an integer, which gives an integer value of 1870. Expressed as hexadecimal it is
-  0x74E, or the binary bits 011101001110.  One can then use those 12 bits
+  0x74E, or the binary bits 0b011101001110.  One can then use those 12 bits
   as the most significant (left-most) portion of the random section of the UUID
   (e.g., the rand_a field in UUIDv7).
   This works for any desired bit length that fits into a UUID, and applications
@@ -1960,8 +1982,8 @@ time_low   32   0xC232AB00
 time_mid   16   0x9414
 ver         4   0x1
 time_high  12   0x1EC
-var         2   b10
-clock_seq  14   b11, 0x3C8
+var         2   0b10
+clock_seq  14   0b11, 0x3C8
 node       48   0x9E6BDECED846
 -------------------------------------------
 total      128
@@ -1990,8 +2012,8 @@ field     bits value
 md5_high  48   0x5df418813aed
 ver        4   0x3
 md5_mid   12   0x515
-var        2   b10
-md5_low   62   b00, 0x8a72f4a814cf09e
+var        2   0b10
+md5_low   62   0b00, 0x8a72f4a814cf09e
 -------------------------------------------
 total     128
 -------------------------------------------
@@ -2021,8 +2043,8 @@ field     bits value
 random_a  48   0x919108f752d1
 ver        4   0x4
 random_b  12   0x320
-var        2   b10
-random_c  62   b01, 0xbacf847db4148a8
+var        2   0b10
+random_c  62   0b01, 0xbacf847db4148a8
 -------------------------------------------
 total     128
 -------------------------------------------
@@ -2059,8 +2081,8 @@ field      bits value
 sha1_high  48   0x2ed6657de927
 ver         4   0x5
 sha1_mid   12   0x68b
-var         2   b10
-sha1_low   62   b01, 0x5e12665a8aea6a2
+var         2   0b10
+sha1_low   62   0b01, 0x5e12665a8aea6a2
 -------------------------------------------
 total      128
 -------------------------------------------
@@ -2086,8 +2108,8 @@ time_high   32   0x1EC9414C
 time_mid    16   0x232A
 ver          4   0x6
 time_high   12   0xB00
-var          2   b10
-clock_seq   14   b11, 0x3C8
+var          2   0b10
+clock_seq   14   0b11, 0x3C8
 node        48   0x9E6BDECED846
 -------------------------------------------
 total       128
@@ -2115,8 +2137,8 @@ field       bits value
 unix_ts_ms  48   0x17F22E279B0
 ver          4   0x7
 rand_a      12   0xCC3
-var          2   b10
-rand_b      62   b01, 0x8C4DC0C0C07398F
+var          2   0b10
+rand_b      62   0b01, 0x8C4DC0C0C07398F
 -------------------------------------------
 total       128
 -------------------------------------------
@@ -2149,8 +2171,8 @@ field     bits value
 custom_a  48   0x320C3D4DCC00
 ver        4   0x8
 custom_b  12   0x75B
-var        2   b10
-custom_c  62   b00, 0xEC932D5F69181C0
+var        2   0b10
+custom_c  62   0b00, 0xEC932D5F69181C0
 -------------------------------------------
 total     128
 -------------------------------------------
@@ -2180,8 +2202,8 @@ field     bits value
 custom_a  48   0x401835fda627
 ver        4   0x8
 custom_b  12   0x70a
-var        2   b10
-custom_c  62   b0, 0x73fed73f2bc5b2c
+var        2   0b10
+custom_c  62   0b00, 0x73fed73f2bc5b2c
 -------------------------------------------
 total     128
 -------------------------------------------
