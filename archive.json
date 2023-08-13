@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-10T01:26:17.602469+00:00",
+  "timestamp": "2023-08-13T01:14:44.273993+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4886,7 +4886,7 @@
       "labels": [],
       "body": "- Add '0b' binary prefix where fitting\r\n- Add decimal values in addition to binary where it makes sense\r\n- Add \"occupies bits...\" where needed to make more consistent\r\n- Match capitalization of \"octet\" and terminal punctuation\r\n\r\nFixes #125",
       "createdAt": "2023-08-01T19:35:03Z",
-      "updatedAt": "2023-08-04T13:22:24Z",
+      "updatedAt": "2023-08-10T21:12:43Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "69bebededd43ed570394ca50910d415c734da7a7",
