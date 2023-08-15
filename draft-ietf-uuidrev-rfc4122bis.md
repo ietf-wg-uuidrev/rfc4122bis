@@ -519,6 +519,7 @@ draft-10
 
 {: spacing="compact"}
 - ARTART Review and Feedback #130
+- Clarify Hash Space IDs listed are not the only options #132
 
 draft-09
 
@@ -1945,7 +1946,7 @@ NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
 ~~~~
 
 # Some Hash Space IDs {#hashspaces}
-This appendix lists the hash space IDs for use with UUIDv8 name-based UUIDs.
+This appendix lists some hash space IDs for use with UUIDv8 name-based UUIDs.
 
 ~~~~ code
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
