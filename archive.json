@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-13T01:14:44.273993+00:00",
+  "timestamp": "2023-08-15T01:11:20.403542+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2497,9 +2497,17 @@
       "labels": [],
       "body": "```\r\nReviewer: Marco Tiloca\r\nReview result: Ready with Nits\r\n\r\nI reviewed this document as part of the Applications and Real-Time (ART) Area Review Team's ongoing effort to review all IETF documents being processed by the IESG. These comments were written primarily for the benefit of the ART Area Directors. Document authors, document editors, and WG chairs should treat these comments just like any other IETF Last Call comments.\r\n\r\n[Section 2.1]\r\n\r\n* As expanded format for UUID version, point 4 uses \"Version 1 UUIDs\". Later in the document, a different expanded format is used, i.e., \"UUID Version 1\" in Section 5.1.\r\n\r\n   It would be better to consistently use a single expanded format to indicate\r\n   the UUID version throughout the document. The format \"UUID Version 1\" seems\r\n   a better choice.\r\n\r\n   A note about the equivalence of \"UUIDvX\" and \"Version X UUIds\" can be worth\r\n   adding in Section 3.2 \"Abbreviations\".\r\n\r\n* On points 5 and 6, please have RFC 4122 as an actual reference.\r\n\r\n* \"RFC4122 did not distinguish between the requirements for generation of a UUID versus an application that simply stores one, which are often different.\"\r\n\r\n   Suggested rephrasing:\r\n\r\n   \"RFC4122 did not distinguish between the requirements for generating a UUID\r\n   and those for simply storing one, although they are often different.\"\r\n\r\n[Section 4]\r\n\r\n* s/is 16 octets (128 bits);/is 16 octets (128 bits) in size;\r\n\r\n[Section 5.0]\r\n\r\n* \"within bit layout consisting four octets to a row\"\r\n\r\n   I think you mean \"within a bit layout consisting of four octets per row\"\r\n\r\n[Section 6.1]\r\n\r\n* \"The length of a given timestamp directly impacts how long a given UUID will be valid. ... UUID version 1 and 6 utilize a 60 bit timestamp valid until 5623 AD and UUIDv7 features a 48 bit timestamp valid until the year 10889 AD.\"\r\n\r\n   I am not sure that \"valid\" is the best word here, as it makes (me) think\r\n   more about security aspects such as time-based access control rules for\r\n   accepting a timestamp that is otherwise possible to understand and process.\r\n\r\n   Also, let's say that a UUIDv7 is released before 10889 AD. Does the passing\r\n   of 10889 AD per se automatically make the UUID not *valid*? I think it just\r\n   means that no more UUIDs Version 7 can be issued from then on, right?\r\n\r\n   I believe you actually refer to the impact on the time span during which a\r\n   UUID can be generated. Like mentioned in the second sentence of the\r\n   paragraph, then it boils down to how many UUIDs one can generate before the\r\n   maximum value for the timestamp field is reached.\r\n\r\n   Perhaps it's just better to focus on the length of the time span that the\r\n   timestamps cover (see above).\r\n\r\n[Section 6.5]\r\n\r\n* \"An important note for secure hashing algorithms that produce variable rate outputs, such as those found in SHAKE, ...\"\r\n\r\n   I guess you actually mean \"produce outputs of arbitrary size\", right?\r\n\r\n[Nits]\r\n\r\n* Section 2.1\r\n- s/is as database keys/is database keys\r\n- s/The negative performance effects of which/The resulting negative performance effects - s/has lead/has led\r\n\r\n* Section 4.0\r\n- s/Binary Figure 2/Binary (Figure 2)\r\n- s/Integer Figure 3/Integer (Figure 3)\r\n- s/URN Figure 4/URN (Figure 4)\r\n- s/of Table 1/of Table 1.\r\n\r\n* Section 4.1\r\n- s/document bits 64/document, bits 64\r\n\r\n* Section 5.1\r\n- s/The 14-bits/The 14 bits\r\n- s/clock sequence associated/the clock sequence associated\r\n\r\n* Section 5.2\r\n- s/such the definition/such, the definition\r\n\r\n* Section 5.3\r\n- s/Where possible UUIDv5/Where, possible UUIDv5\r\n\r\n* Section 5.5\r\n- s/As such it/As such, it\r\n\r\n* Section 5.6\r\n- s/where there are existing v1 UUIDs/where UUIDv1 is used\r\n- s/With UUIDv6 the steps/With UUIDv6, the steps\r\n\r\n* Section 5.8\r\n- s/bits are the version and variant/bits are those of the version and variant fields\r\n\r\n* Section 5.10\r\n- s/The Max UUID is special form/The Max UUID is a special form\r\n\r\n* Section 6\r\n- s/and up to the implementer/and it is up to the implementer\r\n\r\n* Section 6.1\r\n- s/Take care to ensure/Care must be taken to ensure\r\n- s/with zeros to fill/with zeroes to fill\r\n- s/to counter rollover/to a counter rollover\r\n\r\n* Section 6.2\r\n- s/unguessablity/unguessability\r\n- s/Take care to/Care must be taken to\r\n- s/by ensuring the total/by ensuring that the total\r\n- s/As such the/As such, the\r\n\r\n* Section 6.4\r\n- s/that although this ... completeness; implementations/that, although this ... completeness, implementations\r\n\r\n* Section 6.5\r\n- s/select of of the/select one of the\r\n- s/Ensure the version and variant and variant bits/ Ensure that the version and variant bits - s/to detail SHA-256 was used to create a given UUIDv8 name-based UUID an/to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an - s/this need not be/this needs not be\r\n\r\n* Section 6.9\r\n- s/node ID set to one to create/node ID to 1, in order to create\r\n\r\n* Section 12\r\n- s/and thus maybe simpler/, which thus may make it simpler\r\n```\r\n\r\nShould be able to fix all of these with editorial updates in a single PR.\r\nNo technical items that I can surmise upon first review.",
       "createdAt": "2023-08-08T16:59:22Z",
-      "updatedAt": "2023-08-08T16:59:31Z",
+      "updatedAt": "2023-08-14T22:14:23Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Changed everything except the following which seems incorrect:\r\n\r\n```\r\n* Section 5.3\r\n- s/Where possible UUIDv5/Where, possible UUIDv5\r\n```\r\n",
+          "createdAt": "2023-08-14T22:14:23Z",
+          "updatedAt": "2023-08-14T22:14:23Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4936,6 +4944,32 @@
           "updatedAt": "2023-08-03T13:03:54Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 131,
+      "id": "PR_kwDOH6Ln3M5X7Wkv",
+      "title": "WLGC ARTART Review",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/131",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Items to close #130 \r\nAlso normalized some r'\\d+-bit' uses to r'\\d+ bit'",
+      "createdAt": "2023-08-14T22:13:30Z",
+      "updatedAt": "2023-08-14T22:13:30Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "23b5da2fc6c573b63ba485322872a8e2cd28c336",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "wglc-artart",
+      "headRefOid": "d05e06bb462f31cc5f4af15c495ec05a97d85585",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
