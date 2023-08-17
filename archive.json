@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-15T01:11:20.403542+00:00",
+  "timestamp": "2023-08-17T01:09:51.090527+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2508,6 +2508,30 @@
           "updatedAt": "2023-08-14T22:14:23Z"
         }
       ]
+    },
+    {
+      "number": 132,
+      "id": "I_kwDOH6Ln3M5uXHVo",
+      "title": "Clarify Hash Space IDs listed are not the only options",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/132",
+      "state": "OPEN",
+      "author": "danielmarschall",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "It's probably too late for any amendments, so maybe it will only be an errata after publishing instead.\r\n\r\n_Appendix B:\r\nThis appendix lists **_the_** hash space IDs for use with UUIDv8 name-based UUIDs._\r\n=> The word \"the\" suggests that there can only be these hash space IDs and nothing else.\r\n\r\nIn comparison:\r\n_Appendix A:\r\nThis appendix lists **the** name space IDs **for some** potentially interesting name spaces_ \r\n=> so appendix A implies that there can be many name space IDs.\r\n\r\n\r\nMy suggestion is that for Appendix B, remove the word \"the\" or replace it is \"some\", to imply that there can be other hash space IDs. (I guess this was your intention)\r\n",
+      "createdAt": "2023-08-15T14:36:14Z",
+      "updatedAt": "2023-08-15T18:04:11Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yeah, I can sneak that in to my open PR.",
+          "createdAt": "2023-08-15T18:01:14Z",
+          "updatedAt": "2023-08-15T18:01:14Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4958,19 +4982,40 @@
       "labels": [],
       "body": "Items to close #130 \r\nAlso normalized some r'\\d+-bit' uses to r'\\d+ bit'",
       "createdAt": "2023-08-14T22:13:30Z",
-      "updatedAt": "2023-08-14T22:13:30Z",
+      "updatedAt": "2023-08-16T15:27:38Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "23b5da2fc6c573b63ba485322872a8e2cd28c336",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "wglc-artart",
-      "headRefOid": "d05e06bb462f31cc5f4af15c495ec05a97d85585",
+      "headRefOid": "838dbb27e4ca3c8d376174f450c04d813bdeba41",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5eOoWN",
+          "commit": {
+            "abbreviatedOid": "838dbb2"
+          },
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-16T15:27:37Z",
+          "updatedAt": "2023-08-16T15:27:37Z",
+          "comments": [
+            {
+              "originalPosition": 68,
+              "body": "Lowercase \"version\" is generally used in the document?",
+              "createdAt": "2023-08-16T15:27:37Z",
+              "updatedAt": "2023-08-16T15:27:37Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
