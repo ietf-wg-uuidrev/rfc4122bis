@@ -520,6 +520,7 @@ draft-10
 {: spacing="compact"}
 - ARTART Review and Feedback #130
 - Clarify Hash Space IDs listed are not the only options #132
+- Add example to timestamp fuzzing #133
 
 draft-09
 
@@ -1367,7 +1368,7 @@ Length:
 Altering, Fuzzing, or Smearing:
 : Implementations MAY alter the actual timestamp. Some examples include security
   considerations around providing a real clock value within a UUID, to correct
-  inaccurate clocks, or to handle leap seconds. This specification makes no
+  inaccurate clocks, to handle leap seconds, or for performance reasons such as dividing a microsecond by 1024 (or some other value) instead of 1000 to obtain a millisecond value. This specification makes no
   requirement or guarantee about how close the clock value needs to be to the actual
   time.
   If UUIDs do not need to be frequently generated, the UUIDv1 or UUIDv6 timestamp can
