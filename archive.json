@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-24T01:11:05.431522+00:00",
+  "timestamp": "2023-08-27T01:16:09.242279+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2547,6 +2547,22 @@
       "createdAt": "2023-08-22T13:05:01Z",
       "updatedAt": "2023-08-23T13:55:04Z",
       "closedAt": "2023-08-23T13:55:04Z",
+      "comments": []
+    },
+    {
+      "number": 134,
+      "id": "I_kwDOH6Ln3M5vUIj5",
+      "title": "IANA Review: Verbiage to update RFC4122 references",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/134",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> \"All references to RFC 4122 in the IANA registries should be replaced with references to this document. References to that document's Section 4.1.2 should be updated to refer to this document's Section 4.\"\r\n\r\n> https://www.iana.org/assignments/urn-namespaces/\r\n> https://www.iana.org/assignments/cbor-tags/\r\n> https://www.iana.org/assignments/urn-formal/cdx\r\n> https://www.iana.org/assignments/uri-schemes/prov/teliaeid",
+      "createdAt": "2023-08-25T18:58:47Z",
+      "updatedAt": "2023-08-25T18:58:47Z",
+      "closedAt": null,
       "comments": []
     }
   ],
