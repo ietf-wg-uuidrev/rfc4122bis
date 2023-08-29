@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-27T01:16:09.242279+00:00",
+  "timestamp": "2023-08-29T01:13:12.315749+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2562,6 +2562,76 @@
       "body": "> \"All references to RFC 4122 in the IANA registries should be replaced with references to this document. References to that document's Section 4.1.2 should be updated to refer to this document's Section 4.\"\r\n\r\n> https://www.iana.org/assignments/urn-namespaces/\r\n> https://www.iana.org/assignments/cbor-tags/\r\n> https://www.iana.org/assignments/urn-formal/cdx\r\n> https://www.iana.org/assignments/uri-schemes/prov/teliaeid",
       "createdAt": "2023-08-25T18:58:47Z",
       "updatedAt": "2023-08-25T18:58:47Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 135,
+      "id": "I_kwDOH6Ln3M5vcuNn",
+      "title": "Crosspost: Typo in Approximate UUID timestamp calculations",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/135",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From https://github.com/uuid6/uuid6-ietf-draft/issues/131",
+      "createdAt": "2023-08-28T13:45:20Z",
+      "updatedAt": "2023-08-28T13:45:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 136,
+      "id": "I_kwDOH6Ln3M5vcvBy",
+      "title": "DNSDIR re-review",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/136",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\nReviewer: Geoff Huston\r\nReview result: Ready with Issues\r\n\r\nI have been selected as the DNS Directorate reviewer for this draft. The DNS Directorate seeks to review all DNS or DNS-related drafts as they pass through IETF last call and IESG review, and sometimes on special request. The purpose of the review is to provide assistance to the ADs.\r\nFor more information about the DNS Directorate, please see https://wiki.ietf.org/en/group/dnsdir\r\n\r\nThis document references the DNS as one of multiple possible name spaces for Name-Based UUID Generation. It has no considerations that reflect on the DNS.\r\n\r\nPrevious iterations of this draft have been reviewed by the DNS Directorate for the -08 [1]  and -09 [2] versions of this draft.\r\n\r\nThe changes between -09 and -10 address specific comments from the ATART review and make some clarifying changes to the document which do not appear to have a substantive impact on the specification.\r\n\r\nIssue:\r\n\r\nI would like to note that the issues noted in the DNSDIR -08 review [1], namely:\r\n\r\n  \"Section 5.3, 5.5 and 6.5 refer to \"a canonical sequence of octets in\r\n   network byte order\". It is not specified what that canonical sequence\r\n   is nor is there a reference to a document that specifies the canonical\r\n   sequence for any of the name spaces.\"\r\n\r\nand \r\n\r\n  \"Section 6.5 also has this:\r\n     *  UUIDs generated at different times from the same name in the same\r\n        namespace MUST be equal.\"\r\n        \r\ndo not appear to have been resolved in -09 or -10 versions of this document.\r\n\r\nThe suggestions made in the -08 review on how to to resolve this issue appears not to have been resolved in any tangible manner in the subsequent document versions\r\n\r\n\r\nGeoff Huston\r\n\r\n[1] https://datatracker.ietf.org/doc/review-ietf-uuidrev-rfc4122bis-08-dnsdir-lc-obser-2023-07-26/\r\n[2] https://datatracker.ietf.org/doc/review-ietf-uuidrev-rfc4122bis-09-dnsdir-lc-obser-2023-08-04/\r\n```\r\n\r\nThread: https://mailarchive.ietf.org/arch/msg/uuidrev/hFiEUoa4BIQ_VGO5HX5kV18BIEE/",
+      "createdAt": "2023-08-28T13:47:09Z",
+      "updatedAt": "2023-08-28T18:12:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Replied via email here: https://mailarchive.ietf.org/arch/msg/uuidrev/njBLWEdlHpp_nZu1MrT9_1rpPzI/\r\n\r\nWill update this thread with any changes that are needed.",
+          "createdAt": "2023-08-28T13:47:35Z",
+          "updatedAt": "2023-08-28T13:47:35Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Major issue is around \u201ccanonical\u201d verbiage from RFC4122 as per Geoff:\r\n\r\n```\r\nIt looks like you have taken the text in section 4.3 of RFC4122 \r\n\r\n\"Convert the name to a canonical sequence of octets (as defined by the standards or conventions of its name space); put the name space ID in network byte order.\u201d\r\n\r\nand rephrased it in this draft.\r\n\r\nMy question remains - what is a \u201ccanonical\u201d sequence of octets? Or even its opposite - what is a sequence of octets that is NOT \u201ccanonical\u201d?\r\n\r\nIn a standards document it seems reasonable to ask for extremely clear specifications, and I just don\u2019t understand what you are getting at with the use of the term \u201ccanonical\u201d here.\r\n```\r\n\r\nSource: https://mailarchive.ietf.org/arch/msg/uuidrev/WAMXvzzcXTLF-lGXBIJWenIcJ-4/",
+          "createdAt": "2023-08-28T18:10:42Z",
+          "updatedAt": "2023-08-28T18:12:57Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My suggestion: https://mailarchive.ietf.org/arch/msg/uuidrev/uEIwBdg24NGF9MCuOiqQdtzjlqc/\r\n\r\n```\r\nPersonally, I have never been a fan of \"canonical\" verbiage in the original document, so I suggest we remove it from the text.\r\n>From what I can see \"canonical\" usage is just a fancy way of saying \"Select a Name value formatted as per the underlying specs usual representation format\". Sources: [1][2][3].\r\n\r\nFor example in UUIDv3, with \"canonical\" removed, the text would say:\r\n> UUIDv3 values are created by computing an MD5 [RFC1321] hash over a given name space value concatenated with the desired name value after both have been converted to a sequence of octets in network byte order.\r\n\r\nThen I can add a line above the Appendix callout for Namespaces with guidance on how to select said name value and representation from an underlying spec when there are many to choose from.\r\n\r\n> Information around selecting a desired name value's representation/conveyance format within a given name space can be found in section 6.5, \"A note on names\".\r\n> Some common namespace values have been defined via Appendix A.\r\n\r\nThen repeat this for UUIDv5 and remove \"canonical\" from the v8 callout in 6.5.\r\n\r\nFinally, update the line about names and namespaces being equal to state to include a line about the representation format.\r\n> The UUIDs generated at different times from the same name (using the same name representation/conveyance format) in the same namespace MUST be equal.\r\n\r\nDefine \"canonical\":\r\n[1] https://www.gnu.org/software/libc/manual/html_node/Byte-Order.html\r\n[2] https://en.wikipedia.org/wiki/Canonicalization\r\n[3] https://en.wikipedia.org/wiki/Canonical_form\r\n```\r\n\r\nWill create a PR for this since Geoff agreed to these changes: https://mailarchive.ietf.org/arch/msg/uuidrev/MPSDMazoe6ObYcG02xfi3aQqJsk/",
+          "createdAt": "2023-08-28T18:12:43Z",
+          "updatedAt": "2023-08-28T18:12:43Z"
+        }
+      ]
+    },
+    {
+      "number": 137,
+      "id": "I_kwDOH6Ln3M5vdkuh",
+      "title": "Normalize \"name space\" to \"namespace\" everywhere",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/137",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC4122 used both \"name space\" and \"namespace\"\r\nAs per my searches, \"namespace\" seems to see more usage than \"name space\".\r\nHence I think we should normalize it to one word without spaces throughout the document.\r\n",
+      "createdAt": "2023-08-28T15:49:53Z",
+      "updatedAt": "2023-08-28T15:49:53Z",
       "closedAt": null,
       "comments": []
     }
