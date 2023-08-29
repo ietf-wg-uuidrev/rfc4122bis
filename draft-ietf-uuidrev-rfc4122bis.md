@@ -520,6 +520,7 @@ draft-11
 {: spacing="compact"}
 - Normalize "name space" to "namespace" everywhere #137
 - IANA Review: Verbiage to update RFC4122 references #134
+- DNSDIR re-review: Better Define "a canonical sequence of octets" #136
 
 draft-10
 
@@ -932,6 +933,8 @@ after both have been converted to a canonical sequence of octets in network byte
 This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
+Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
+
 Some common namespace values have been defined via {{namespaces}}.
 
 Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
@@ -1036,6 +1039,8 @@ hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
+
+Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
 
 Some common namespace values have been defined via {{namespaces}}.
 
@@ -1674,23 +1679,23 @@ be willing to rely on the random number source at all hosts.
 ## Name-Based UUID Generation {#name_based_uuid_generation}
 The requirements for name-based UUIDs are as follows:
 
-* UUIDs generated at different times from the same name in the
+* UUIDs generated at different times from the same name (using the same canonical format) in the
   same namespace MUST be equal.
 
-* UUIDs generated from two different names in the same namespace
+* UUIDs generated from two different names (same or differing canonical format) in the same namespace
   should be different (with very high probability).
 
-* UUIDs generated from the same name in two different namespaces
+* UUIDs generated from the same name (same or differing canonical format) in two different namespaces
   should be different (with very high probability).
 
-* If two UUIDs that were generated from names are equal, then they
+* If two UUIDs that were generated from names (using the same canonical format) are equal, then they
   were generated from the same name in the same namespace (with very
   high probability).
 
 {: vspace='0'}
 
 A note on names:
-: The concept of name (and namespace) should be broadly construed and not limited to textual names.
+: The concept of name (and namespace) should be broadly construed and not limited to textual names. A canonical sequence of octets is one that conforms to the specification for that name form's canonical representation. A name can have many usual forms, only one of which can be canonical. An implementer of new namespaces for UUIDs need to use the specification for the canonical form of names in that space, or define such a canonical for the namespace if it does not exist.
   For example, at the time of this specification, {{RFC8499}} domain name system (DNS) has three conveyance formats: common (www.example.com), presentation (www.example.com.) and wire format (3www7example3com0).
   Looking at {{X500}} distinguished names (DNs), the previous version of this specification allowed either text based or binary distinguished encoding rules (DER) based names as inputs.
   For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
