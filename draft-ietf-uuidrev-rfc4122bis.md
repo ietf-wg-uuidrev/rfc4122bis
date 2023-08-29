@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-10
+docname: draft-ietf-uuidrev-rfc4122bis-11
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -515,6 +515,11 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-11
+
+{: spacing="compact"}
+- Normalize "name space" to "namespace" everywhere #137
+
 draft-10
 
 {: spacing="compact"}
@@ -918,15 +923,15 @@ As such, the definition of these UUIDs is outside the scope of this specificatio
 
 ## UUID Version 3 {#uuidv3}
 UUID version 3 is meant for generating UUIDs from "names"
-that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
+that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
-hash over a given name space value concatenated with the desired name value
+hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
-Some common name space values have been defined via {{namespaces}}.
+Some common namespace values have been defined via {{namespaces}}.
 
 Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
 For more information on MD5 security considerations see {{RFC6151}}.
@@ -1023,15 +1028,15 @@ random_c:
 
 ## UUID Version 5 {#uuidv5}
 UUID version 5 is meant for generating UUIDs from "names"
-that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
+that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
-hash over a given name space value concatenated with the desired name value
+hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
-Some common name space values have been defined via {{namespaces}}.
+Some common namespace values have been defined via {{namespaces}}.
 
 There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
 As such, it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
@@ -1690,8 +1695,8 @@ A note on names:
   For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
   When it comes to {{X660}} object identifiers (OIDs) one could choose dot-notation without the leading dot (2.999), choose to include the leading dot (.2.999) or select one of the many formats from {{X680}} such as OID Internationalized Resource Identifier (OID-IRI) (/Joint-ISO-ITU-T/Example).
   While most users may default to the common format for DNS, FQDN format for a URL, text format for X.500 and dot-notation without a leading dot for OID; name-based UUID implementations generally SHOULD allow arbitrary input which will compute name-based UUIDs for any of the aforementioned example names and others not defined here.
-  Each name format within a name space will output different UUIDs. 
-  As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their name spaces are beyond the scope of this specification.
+  Each name format within a namespace will output different UUIDs. 
+  As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their namespaces are beyond the scope of this specification.
 
 A note on namespaces:
 : While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
@@ -1711,8 +1716,8 @@ Name-based UUIDs using UUIDv8:
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying the algorithm.
-  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hashspace ID proves useful for identifying the algorithm.
+  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
@@ -1934,9 +1939,9 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 --- back
 
-# Some Name Space IDs {#namespaces}
+# Some Namespace IDs {#namespaces}
 
-This appendix lists the name space IDs for some potentially interesting name spaces such those for
+This appendix lists the namespace IDs for some potentially interesting namespaces such those for
 {{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 
 ~~~~ code
@@ -1946,8 +1951,8 @@ NameSpace_OID  = "6ba7b812-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
 ~~~~
 
-# Some Hash Space IDs {#hashspaces}
-This appendix lists some hash space IDs for use with UUIDv8 name-based UUIDs.
+# Some Hashspace IDs {#hashspaces}
+This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
 
 ~~~~ code
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
@@ -2025,7 +2030,7 @@ while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swapping for version and variant see {{v3vervar}}.
 
 ~~~~
-Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Namespace (DNS):  6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:             www.example.com
 ------------------------------------------------------
 MD5:              5df418813aed051548a72f4a814cf09e
@@ -2094,7 +2099,7 @@ while the field mapping and all values are illustrated in {{v5fields}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-1 value see {{v5vervar}}.
 
 ~~~~
-Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Namespace (DNS):  6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:             www.example.com
 ----------------------------------------------------------
 SHA-1:            2ed6657de927468b55e12665a8aea6a22dee3e35
@@ -2208,13 +2213,13 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces {{hashspaces}} alongside namespace {{namespaces}} and names.
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hashspaces {{hashspaces}} alongside namespaces {{namespaces}} and names.
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
 ~~~~
-Hash Space (SHA2_256): 3fb32780-953c-4464-9cfd-e85dbbe9843d
-Name Space (DNS):      6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Hashspace (SHA2_256):  3fb32780-953c-4464-9cfd-e85dbbe9843d
+Namespace (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:                  www.example.com
 ----------------------------------------------------------------
 SHA-256:
