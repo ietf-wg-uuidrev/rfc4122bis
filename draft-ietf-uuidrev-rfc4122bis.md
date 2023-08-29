@@ -519,6 +519,7 @@ draft-11
 
 {: spacing="compact"}
 - Normalize "name space" to "namespace" everywhere #137
+- IANA Review: Verbiage to update RFC4122 references #134
 
 draft-10
 
@@ -1872,7 +1873,11 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
+All references to {{RFC4122}} in the IANA registries should be replaced with references to this document.
+References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to this document's {{format}}.
+
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
+
 Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
 
 # Security Considerations {#Security}
