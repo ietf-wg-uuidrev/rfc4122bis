@@ -929,7 +929,7 @@ that are drawn from, and unique within, some "namespace" as per {{name_based_uui
 
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
 hash over a given namespace value concatenated with the desired name value
-after both have been converted to a canonical sequence of octets in network byte order.
+after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
@@ -1036,7 +1036,7 @@ that are drawn from, and unique within, some "namespace" as per {{name_based_uui
 
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given namespace value concatenated with the desired name value
-after both have been converted to a canonical sequence of octets in network byte order.
+after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
@@ -1695,7 +1695,7 @@ The requirements for name-based UUIDs are as follows:
 {: vspace='0'}
 
 A note on names:
-: The concept of name (and namespace) should be broadly construed and not limited to textual names. A canonical sequence of octets is one that conforms to the specification for that name form's canonical representation. A name can have many usual forms, only one of which can be canonical. An implementer of new namespaces for UUIDs need to use the specification for the canonical form of names in that space, or define such a canonical for the namespace if it does not exist.
+: The concept of name (and namespace) should be broadly construed and not limited to textual names. A canonical sequence of octets is one that conforms to the specification for that name form's canonical representation. A name can have many usual forms, only one of which can be canonical. An implementer of new namespaces for UUIDs needs to reference the specification for the canonical form of names in that space, or define such a canonical for the namespace if it does not exist.
   For example, at the time of this specification, {{RFC8499}} domain name system (DNS) has three conveyance formats: common (www.example.com), presentation (www.example.com.) and wire format (3www7example3com0).
   Looking at {{X500}} distinguished names (DNs), the previous version of this specification allowed either text based or binary distinguished encoding rules (DER) based names as inputs.
   For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
@@ -1715,14 +1715,14 @@ Name-based UUIDs using UUIDv8:
  To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
  Creation of name-based UUID values using UUIDv8 follows the same logic defined in {{uuidv5}}, but the hashspace should be used as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
- Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
+ Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
  Ensure that the version and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
  An important note for secure hashing algorithms that produce outputs of an arbitrary size, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
  See {{uuidv8_example_name}} for a SHA-256 UUIDv8 example test vector.
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hashspace ID proves useful for identifying the algorithm.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 namespace UUID is required, sharing the hashspace ID proves useful for identifying the algorithm.
   That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
