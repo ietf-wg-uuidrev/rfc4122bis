@@ -521,6 +521,7 @@ draft-11
 - Normalize "name space" to "namespace" everywhere #137
 - IANA Review: Verbiage to update RFC4122 references #134
 - DNSDIR re-review: Better Define "a canonical sequence of octets" #136
+- Crosspost: Typo in Approximate UUID timestamp calculations #135
 
 draft-10
 
