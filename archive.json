@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-29T01:13:12.315749+00:00",
+  "timestamp": "2023-08-31T01:13:20.626622+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2584,7 +2584,7 @@
     {
       "number": 136,
       "id": "I_kwDOH6Ln3M5vcvBy",
-      "title": "DNSDIR re-review",
+      "title": "DNSDIR re-review: Better Define \"a canonical sequence of octets\"",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/136",
       "state": "OPEN",
       "author": "kyzer-davis",
@@ -2593,7 +2593,7 @@
       "labels": [],
       "body": "```\r\nReviewer: Geoff Huston\r\nReview result: Ready with Issues\r\n\r\nI have been selected as the DNS Directorate reviewer for this draft. The DNS Directorate seeks to review all DNS or DNS-related drafts as they pass through IETF last call and IESG review, and sometimes on special request. The purpose of the review is to provide assistance to the ADs.\r\nFor more information about the DNS Directorate, please see https://wiki.ietf.org/en/group/dnsdir\r\n\r\nThis document references the DNS as one of multiple possible name spaces for Name-Based UUID Generation. It has no considerations that reflect on the DNS.\r\n\r\nPrevious iterations of this draft have been reviewed by the DNS Directorate for the -08 [1]  and -09 [2] versions of this draft.\r\n\r\nThe changes between -09 and -10 address specific comments from the ATART review and make some clarifying changes to the document which do not appear to have a substantive impact on the specification.\r\n\r\nIssue:\r\n\r\nI would like to note that the issues noted in the DNSDIR -08 review [1], namely:\r\n\r\n  \"Section 5.3, 5.5 and 6.5 refer to \"a canonical sequence of octets in\r\n   network byte order\". It is not specified what that canonical sequence\r\n   is nor is there a reference to a document that specifies the canonical\r\n   sequence for any of the name spaces.\"\r\n\r\nand \r\n\r\n  \"Section 6.5 also has this:\r\n     *  UUIDs generated at different times from the same name in the same\r\n        namespace MUST be equal.\"\r\n        \r\ndo not appear to have been resolved in -09 or -10 versions of this document.\r\n\r\nThe suggestions made in the -08 review on how to to resolve this issue appears not to have been resolved in any tangible manner in the subsequent document versions\r\n\r\n\r\nGeoff Huston\r\n\r\n[1] https://datatracker.ietf.org/doc/review-ietf-uuidrev-rfc4122bis-08-dnsdir-lc-obser-2023-07-26/\r\n[2] https://datatracker.ietf.org/doc/review-ietf-uuidrev-rfc4122bis-09-dnsdir-lc-obser-2023-08-04/\r\n```\r\n\r\nThread: https://mailarchive.ietf.org/arch/msg/uuidrev/hFiEUoa4BIQ_VGO5HX5kV18BIEE/",
       "createdAt": "2023-08-28T13:47:09Z",
-      "updatedAt": "2023-08-28T18:12:57Z",
+      "updatedAt": "2023-08-30T14:00:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -2616,6 +2616,20 @@
           "body": "My suggestion: https://mailarchive.ietf.org/arch/msg/uuidrev/uEIwBdg24NGF9MCuOiqQdtzjlqc/\r\n\r\n```\r\nPersonally, I have never been a fan of \"canonical\" verbiage in the original document, so I suggest we remove it from the text.\r\n>From what I can see \"canonical\" usage is just a fancy way of saying \"Select a Name value formatted as per the underlying specs usual representation format\". Sources: [1][2][3].\r\n\r\nFor example in UUIDv3, with \"canonical\" removed, the text would say:\r\n> UUIDv3 values are created by computing an MD5 [RFC1321] hash over a given name space value concatenated with the desired name value after both have been converted to a sequence of octets in network byte order.\r\n\r\nThen I can add a line above the Appendix callout for Namespaces with guidance on how to select said name value and representation from an underlying spec when there are many to choose from.\r\n\r\n> Information around selecting a desired name value's representation/conveyance format within a given name space can be found in section 6.5, \"A note on names\".\r\n> Some common namespace values have been defined via Appendix A.\r\n\r\nThen repeat this for UUIDv5 and remove \"canonical\" from the v8 callout in 6.5.\r\n\r\nFinally, update the line about names and namespaces being equal to state to include a line about the representation format.\r\n> The UUIDs generated at different times from the same name (using the same name representation/conveyance format) in the same namespace MUST be equal.\r\n\r\nDefine \"canonical\":\r\n[1] https://www.gnu.org/software/libc/manual/html_node/Byte-Order.html\r\n[2] https://en.wikipedia.org/wiki/Canonicalization\r\n[3] https://en.wikipedia.org/wiki/Canonical_form\r\n```\r\n\r\nWill create a PR for this since Geoff agreed to these changes: https://mailarchive.ietf.org/arch/msg/uuidrev/MPSDMazoe6ObYcG02xfi3aQqJsk/",
           "createdAt": "2023-08-28T18:12:43Z",
           "updatedAt": "2023-08-28T18:12:43Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Alternative from Paul Leach, also okay'd by Geoff:\r\n\r\n> A canonical sequence of octets is one that conforms to the specification for that name form's canonical representation. A name can have many usual forms, only one of which can be canonical. Implementers of new namespaces for UUIDs need to use the specification for the canonical form of names in that space, or define such a canonical for the name space if it does not exist.",
+          "createdAt": "2023-08-29T13:51:30Z",
+          "updatedAt": "2023-08-29T13:51:30Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Re-add the \"as defined by the standards or conventions of its namespace\" \r\n\r\n> a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.\r\n\r\n> a canonical sequence of octets (as defined by the standards or conventions of its namespace) in network byte order.",
+          "createdAt": "2023-08-30T14:00:32Z",
+          "updatedAt": "2023-08-30T14:00:32Z"
         }
       ]
     },
@@ -2631,9 +2645,17 @@
       "labels": [],
       "body": "RFC4122 used both \"name space\" and \"namespace\"\r\nAs per my searches, \"namespace\" seems to see more usage than \"name space\".\r\nHence I think we should normalize it to one word without spaces throughout the document.\r\n",
       "createdAt": "2023-08-28T15:49:53Z",
-      "updatedAt": "2023-08-28T15:49:53Z",
+      "updatedAt": "2023-08-29T18:52:21Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will also do the same for \"hash space\" to \"hashspace\"",
+          "createdAt": "2023-08-29T18:52:20Z",
+          "updatedAt": "2023-08-29T18:52:20Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5116,6 +5138,99 @@
               "body": "Lowercase \"version\" is generally used in the document?",
               "createdAt": "2023-08-16T15:27:37Z",
               "updatedAt": "2023-08-16T15:27:37Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 138,
+      "id": "PR_kwDOH6Ln3M5ZEOYy",
+      "title": "Draft 11",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/138",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Normalize \"name space\" to \"namespace\" everywhere #137\r\n- IANA Review: Verbiage to update RFC4122 references #134\r\n- DNSDIR re-review: Better Define \"a canonical sequence of octets\" #136\r\n- Crosspost: Typo in Approximate UUID timestamp calculations #135",
+      "createdAt": "2023-08-29T19:11:37Z",
+      "updatedAt": "2023-08-30T14:15:59Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "dd5b0982219f5475ebc7325a4ed0d7534b81104b",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "dns-rereview",
+      "headRefOid": "bc4411051b99cbb9bc6b104fe9d415316fe98ba2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5fb2KP",
+          "commit": {
+            "abbreviatedOid": "93ee3ba"
+          },
+          "author": "chrylis",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-29T19:24:48Z",
+          "updatedAt": "2023-08-29T19:25:45Z",
+          "comments": [
+            {
+              "originalPosition": 89,
+              "body": "s/need/needs/, and should \"use\" be \"reference\" or otherwise more specific?",
+              "createdAt": "2023-08-29T19:24:48Z",
+              "updatedAt": "2023-08-29T19:25:45Z"
+            },
+            {
+              "originalPosition": 108,
+              "body": "is \"Hashspace\" a proper noun (not capitalized below)?",
+              "createdAt": "2023-08-29T19:25:25Z",
+              "updatedAt": "2023-08-29T19:25:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5fcmo8",
+          "commit": {
+            "abbreviatedOid": "93ee3ba"
+          },
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-29T21:51:07Z",
+          "updatedAt": "2023-08-29T21:51:07Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "s/name-space/namespace/ too?",
+              "createdAt": "2023-08-29T21:51:07Z",
+              "updatedAt": "2023-08-29T21:51:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5fiIZS",
+          "commit": {
+            "abbreviatedOid": "93ee3ba"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-30T13:59:11Z",
+          "updatedAt": "2023-08-30T13:59:12Z",
+          "comments": [
+            {
+              "originalPosition": 108,
+              "body": "I didn't even see the \"name-space\" let me fix that and lowercase the hashspace.",
+              "createdAt": "2023-08-30T13:59:12Z",
+              "updatedAt": "2023-08-30T13:59:12Z"
             }
           ]
         }
