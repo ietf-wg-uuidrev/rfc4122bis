@@ -304,9 +304,7 @@ to implement services using UUIDs, UUIDs in combination with URNs {{RFC8141}}, o
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
 specifications have been aligned and are fully technically
-compatible.  In addition, a global registration function is being
-provided by the Telecommunications Standardization Bureau of ITU-T;
-for details see [](https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx).
+compatible.
 Nothing in this document should be construed to override the DCE standards that defined UUIDs.
 
 # Motivation {#motivation}
@@ -522,6 +520,7 @@ draft-11
 - IANA Review: Verbiage to update RFC4122 references #134
 - DNSDIR re-review: Better Define "a canonical sequence of octets" #136
 - Crosspost: Typo in Approximate UUID timestamp calculations #135
+- INTDIR Review #139
 
 draft-10
 
@@ -843,7 +842,7 @@ address, usually the host address.  For systems with multiple IEEE
 802 addresses, any available one MAY be used.  The lowest addressed
 octet (octet number 10) contains the global/local bit and the
 unicast/multicast bit, and is the first octet of the address
-transmitted on an 802.3 LAN.
+transmitted on an 802.3/802.11 LAN.
 
 ~~~~
  0                   1                   2                   3
@@ -887,7 +886,7 @@ clock_seq:
   Occupies bits 66 through 79 (octets 8-9).
 
 node:
-: 48 bit spatially unique identifier
+: 48 bit spatially unique identifier.
   Occupies bits 80 through 127 (octets 10-15).
 
 For systems that do not have UTC available, but do have the local
@@ -917,8 +916,9 @@ across systems.  This provides maximum protection against node
 identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
-For systems with no IEEE address, a randomly or pseudo-randomly
+For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly
 generated value may be used; see {{unguessability}} and {{unidentifiable}}.
+For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits may be used.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
@@ -1158,7 +1158,7 @@ clock_seq:
   Occupies bits 66 through 79 (octets 8-9).
 
 node:
-: 48 bit spatially unique identifier
+: 48 bit spatially unique identifier.
   Occupies bits 80 through 127 (octets 10-15).
 
 With UUIDv6, the steps for splitting the timestamp into time_high and time_mid
@@ -1811,6 +1811,8 @@ message digest such as MD5 {{RFC1321}} or SHA-1 {{FIPS180-4}}, take an arbitrary
 bytes from the hash value, and set the multicast bit as described
 above.
 
+Implementations can also leverage MAC address randomization techniques (IEEE 802.11bh) as an alternative to the pseudo-random logic provided in this section.
+
 ## Sorting {#sorting}
 
 UUIDv6 and UUIDv7 are designed so that implementations that require sorting
@@ -1899,7 +1901,7 @@ slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
-MAC addresses pose inherent security risks and SHOULD NOT be used within
+MAC addresses pose inherent security risks around privacy and SHOULD NOT be used within
 a UUID.
 Instead CSPRNG data SHOULD be selected from a source with sufficient entropy
 to ensure guaranteed
