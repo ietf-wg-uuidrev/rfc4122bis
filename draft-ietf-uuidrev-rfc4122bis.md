@@ -917,8 +917,8 @@ identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
 For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly
-generated value may be used; see {{unguessability}} and {{unidentifiable}}.
-For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits may be used.
+generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
+For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
