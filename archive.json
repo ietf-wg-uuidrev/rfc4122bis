@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-08-31T01:13:20.626622+00:00",
+  "timestamp": "2023-09-03T01:16:45.182418+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2656,6 +2656,121 @@
           "updatedAt": "2023-08-29T18:52:20Z"
         }
       ]
+    },
+    {
+      "number": 139,
+      "id": "I_kwDOH6Ln3M5vylwB",
+      "title": "INTDIR Review",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/139",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\n## Section 1\r\n\r\nTwo sentences appear to contradict each others:\r\n\r\n- `A UUID is 128 bits long and requires no central registration process`\r\n- `In addition, a global registration function is being provided by the\r\nTelecommunications Standardization Bureau of ITU-T`\r\n\r\n## Section 2\r\n\r\nShould there be an informative reference to `IEEE 802 node identifiers` ?\r\n\r\n## Section 2.1\r\n\r\nWhat is the impact of randomised MAC address (cfr MADINAS WG and IEEE work) on\r\nbullet 4. Should this randomised MAC address be mentioned in the text ?\r\n\r\n## Section 5.1\r\n\r\nWhy only IEEE 802.3 LAN what about 802.11 or 802.15.4 ? Should the text be\r\nrelaxed ?\r\n\r\n## Section 8\r\n\r\nShould privacy be added in `MAC addresses pose inherent security risks ` ?\r\n\r\n# NITS\r\n\r\n## Section 3.3\r\n\r\nThe usual wording is more like `Note to RFC Editor: This section needs to be\r\nremoved before publication as RFC`.\r\n\r\n## Sections C.1 & C.5\r\n\r\nPlease use a documentation MAC address per section 2.1.2 of RFC 7042. *IF* the\r\nnode is assumed to be a MAC address.\r\n```\r\n\r\nSections Section 3.3 and Sections C.1 & C.5 comments can be disregarded. No change required after further discussion.",
+      "createdAt": "2023-08-31T13:27:06Z",
+      "updatedAt": "2023-09-01T20:10:01Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Note: the last item about C.1 and C.5 won't be needed since the leading text of Appendix C states this data is not a MAC but rather randomized data.\r\n> Both UUIDv1 and UUIDv6 utilize the same values in clock_seq, and node. All of which have been generated with random data.\r\n\r\nAlso, on this item:\r\n> The usual wording is more like `Note to RFC Editor: This section needs to be removed before publication as RFC`.\r\nThe text being used is from the Kramdown template item \"{:removeinrfc}\" and is generated automatically by author-tools.ietf.org when converting to XML/TXT/HTML.\r\n",
+          "createdAt": "2023-08-31T13:32:33Z",
+          "updatedAt": "2023-08-31T13:32:33Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "In regards the \"_global registration function is being provided by the Telecommunications Standardization Bureau of ITU-T_\":\r\n\r\nActually, ITU-T had a registration function for **_UUID-OIDs_** (2.25.xx) long time ago. But since there is a 1:1 relation between UUID and UUID-OID, we can say that the registration function also applied to UUIDs.\r\n\r\nHowever, the registration function is deprecated and not used today. Long time ago, UUID-OID created at the ITU-T website had to be registered at oid-info.com. Nowadays, oid-info.com do not accept UUID-OIDs anymore, and ITU-T has dropped the rule that UUID-OID must be registered.\r\n\r\n\r\nAddendum:\r\nHere is how the page looks today https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx\r\nand how the page looked back then https://web.archive.org/web/20061129101621/http://www.itu.int/ITU-T/asn1/uuid.html#UUID%20Generation%20&%20Registration\r\nInterestingly, they even had a contradiction back then. \"_UUIDs are registered in the OID repository as subsequent arcs of {joint-iso-itu-t(2) uuid(25)}_\" vs. \"_This enables users to generate OIDs without any registration procedure_.\"\r\n",
+          "createdAt": "2023-08-31T13:43:22Z",
+          "updatedAt": "2023-08-31T13:59:32Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Hi, I don't know if we need to be backwards compatible for EUI-48 based UUIDs, but if we don't, then I suggest upgrading 16-bit, and 48-bit OUIs to the 64-bit equivalents, and then use that.   Well, I can't find a way to turn 16-bit ones into 64-bit, and I question if 16-bit mac addresses, which are dynamically assigned in 802.15.4 networks have any entropy at all.",
+          "createdAt": "2023-08-31T15:08:57Z",
+          "updatedAt": "2023-08-31T15:08:57Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, interesting points! \r\n> the registration function is deprecated and not used today. \r\nI assume it would be safe to simply remove the line to avoid the contradiction.\r\n \r\n---\r\n\r\n@mcr, I think in terms of the MACs, it is worth discussing randomized MAC in that it is something I would say is acceptable \"if a MAC must be used at all\". e.g Random Data > Random MAC > Static MAC\r\n\r\nEUI-48 vs EUI-64, keep in mind where the MAC is used within v1/v6 for `node` the space is 48 bits.\r\nI think it would be easy enough to keep 48 and put a one liner about obtaining 48 bits from the 64  which should also 802.15.4 which use EUI-64 right [1]. (I wasn't able to find anything about 16-bit mac.)\r\n\r\nI also found how one could convert from 48 to 64 [2][3], I assume if FFFE is in play one could undo this conversion to get the 48 bit option. _I am not sure if there are EUI-64 MACs without FFFE..._ but in a scenario where it was not converted use left-most 48 bits?\r\n\r\n---\r\n\r\n[1] https://en.wikipedia.org/wiki/MAC_address#Applications\r\n[2] https://networkengineering.stackexchange.com/a/30864\r\n[3] https://community.cisco.com/t5/networking-knowledge-base/understanding-ipv6-eui-64-bit-address/ta-p/3116953",
+          "createdAt": "2023-08-31T16:41:00Z",
+          "updatedAt": "2023-08-31T16:41:00Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "802.15.4 has two formats for the L2 frame: one has 2x 64-bit slots and the other has two 2x 16-bit slots.\r\n(Actually there are mixes too).  16-bits are not assigned in any random way, so let's ignore them.\r\nIf we are mixing the 48-bits in LITERALLY, then I agree: just truncate and take lower 48.\r\nI thought it was going through a PRF for some reason.\r\n",
+          "createdAt": "2023-08-31T18:25:38Z",
+          "updatedAt": "2023-08-31T18:25:38Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, there are 64-bit MACs without the FFFE.  ",
+          "createdAt": "2023-08-31T18:26:02Z",
+          "updatedAt": "2023-08-31T18:26:02Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "(Found a missing fullstop)\r\nSection 5.1.   `s/unique identifier Occupies bits/unique identifier. Occupies bits`\r\n",
+          "createdAt": "2023-08-31T22:31:09Z",
+          "updatedAt": "2023-08-31T22:31:09Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mcr, so with this logic my changes to text include the following topics for MAC:s\r\n- Support EUI-48 based Support (e.g 802.3 and 802.11)\r\n- Support 48 Bit MACs derived from EUI-64 (Either by unwinding FFFE types or grabbing least-significant, right-most 48 bits)\r\n- Support for 802.15.4 16-bit MACs is out of scope, use some psuedorandom value in section 6.9 instead\r\n- Where randomized MACs are concerned; Supported and encouraged over static MAC but pseudorandom is better.\r\n- Section 8, explicitly call out Privacy in MAC section. \r\n- Cite all these 802.3/11/15 topics as informative references. \r\n\r\nAlternative, on the non-EUI-48 topic, since we really don't want folks using MACs. \r\nGiving more options to use a MAC could go against this... we could simply state that \"Only specifications using EUI-48 MACs are supported (802.3/802.11) and those using other types such as EUI-64 or 802.15.4 are out of scope. Instead implantations should follow what is outlined in section 6.9 to obtain a 48 bit pseudorandom value instead\" \r\n\r\nAny idea if \"IEEE 802 node identifiers\" is covered in either of these changes. I am not familiar with this.",
+          "createdAt": "2023-09-01T13:22:45Z",
+          "updatedAt": "2023-09-01T13:23:31Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Alternative, on the non-EUI-48 topic, since we really don't want folks using MACs.\r\n\r\nI personally like using my MAC address in my UUIDs. It allows me to give the UUIDs some kind of \"signature\", and I can easily see if these UUIDs are mine or not. I think you should leave the decision to the developers/users if they want to use a real MAC or a pseudo-random MAC, by using the unicast/multicast bit as defined in section 6.9.",
+          "createdAt": "2023-09-01T13:38:00Z",
+          "updatedAt": "2023-09-01T13:38:00Z"
+        },
+        {
+          "author": "evyncke",
+          "authorAssociation": "NONE",
+          "body": "If you do not mind my presence in this thread...\r\n\r\nThere must be some text about 16-bit and 64-bit MAC address. This can be as simple as \"16-bit address MUST not be used, the least significant 48 bits of a 64-bit MAC address MUST be used\".\r\n\r\nAs a side note, the bit that you want to flip is not unicast/multicast but probably local/global.\r\n\r\n-\u00e9ric",
+          "createdAt": "2023-09-01T13:52:15Z",
+          "updatedAt": "2023-09-01T13:52:15Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\r\n> As a side note, the bit that you want to flip is not unicast/multicast but probably local/global.\r\n\r\nYes, local/global would be the more correct one, but unfortunately, for backwards compatibility I guess it needs to stay unicast/multicast\r\n",
+          "createdAt": "2023-09-01T13:59:00Z",
+          "updatedAt": "2023-09-01T13:59:00Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Took a pass at updating the text in commit: https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/bd1f37c5b5c1ac1b40105275b15fccefaf97f705. \r\nLet me know if this encompass all of the changes @mcr, @danielmarschall, @evyncke ",
+          "createdAt": "2023-09-01T17:31:25Z",
+          "updatedAt": "2023-09-01T17:31:25Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "There is written:  \"_For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly\r\ngenerated value may be used_\" . Shouldn't it be \"MUST be used\"? (since we cannot use the 16 bit address in a 48 bit field) ",
+          "createdAt": "2023-09-01T18:10:53Z",
+          "updatedAt": "2023-09-01T18:11:11Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, yeah, modified them in https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/e33e137c0738dc59b495003526ffc015e9bc3a0e",
+          "createdAt": "2023-09-01T20:10:00Z",
+          "updatedAt": "2023-09-01T20:10:00Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5153,15 +5268,15 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "- Normalize \"name space\" to \"namespace\" everywhere #137\r\n- IANA Review: Verbiage to update RFC4122 references #134\r\n- DNSDIR re-review: Better Define \"a canonical sequence of octets\" #136\r\n- Crosspost: Typo in Approximate UUID timestamp calculations #135",
+      "body": "- #137\r\n- #134\r\n- #136\r\n- #135\r\n- #139",
       "createdAt": "2023-08-29T19:11:37Z",
-      "updatedAt": "2023-08-30T14:15:59Z",
+      "updatedAt": "2023-09-01T20:09:19Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "dd5b0982219f5475ebc7325a4ed0d7534b81104b",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "dns-rereview",
-      "headRefOid": "bc4411051b99cbb9bc6b104fe9d415316fe98ba2",
+      "headRefOid": "e33e137c0738dc59b495003526ffc015e9bc3a0e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
