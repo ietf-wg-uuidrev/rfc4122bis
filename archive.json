@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-03T01:16:45.182418+00:00",
+  "timestamp": "2023-09-05T01:11:38.478182+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2669,7 +2669,7 @@
       "labels": [],
       "body": "```\r\n## Section 1\r\n\r\nTwo sentences appear to contradict each others:\r\n\r\n- `A UUID is 128 bits long and requires no central registration process`\r\n- `In addition, a global registration function is being provided by the\r\nTelecommunications Standardization Bureau of ITU-T`\r\n\r\n## Section 2\r\n\r\nShould there be an informative reference to `IEEE 802 node identifiers` ?\r\n\r\n## Section 2.1\r\n\r\nWhat is the impact of randomised MAC address (cfr MADINAS WG and IEEE work) on\r\nbullet 4. Should this randomised MAC address be mentioned in the text ?\r\n\r\n## Section 5.1\r\n\r\nWhy only IEEE 802.3 LAN what about 802.11 or 802.15.4 ? Should the text be\r\nrelaxed ?\r\n\r\n## Section 8\r\n\r\nShould privacy be added in `MAC addresses pose inherent security risks ` ?\r\n\r\n# NITS\r\n\r\n## Section 3.3\r\n\r\nThe usual wording is more like `Note to RFC Editor: This section needs to be\r\nremoved before publication as RFC`.\r\n\r\n## Sections C.1 & C.5\r\n\r\nPlease use a documentation MAC address per section 2.1.2 of RFC 7042. *IF* the\r\nnode is assumed to be a MAC address.\r\n```\r\n\r\nSections Section 3.3 and Sections C.1 & C.5 comments can be disregarded. No change required after further discussion.",
       "createdAt": "2023-08-31T13:27:06Z",
-      "updatedAt": "2023-09-01T20:10:01Z",
+      "updatedAt": "2023-09-03T19:35:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -2769,6 +2769,13 @@
           "body": "@danielmarschall, yeah, modified them in https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/e33e137c0738dc59b495003526ffc015e9bc3a0e",
           "createdAt": "2023-09-01T20:10:00Z",
           "updatedAt": "2023-09-01T20:10:00Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "https://datatracker.ietf.org/doc/html/rfc4944#section-6 explains how to do things with 16-bit MACs, but in general, I'm quite happy with your text.",
+          "createdAt": "2023-09-03T19:35:15Z",
+          "updatedAt": "2023-09-03T19:35:15Z"
         }
       ]
     }
