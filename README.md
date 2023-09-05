@@ -8,17 +8,17 @@ This is the working area for the IETF [UUIDREV Working Group](https://datatracke
 
 # Latest
 ```
-Name:		draft-ietf-uuidrev-rfc4122bis
-Revision:	10
-Title:		Universally Unique IDentifiers (UUID)
-Document date:	2023-08-23
-Group:		uuidrev
-Pages:		51
-URL:            https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-10.txt
-Status:         https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/
-Html:           https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-10.html
-Htmlized:       https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis
-Diff:           https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-10
+Name:     draft-ietf-uuidrev-rfc4122bis
+Revision: 11
+Title:    Universally Unique IDentifiers (UUID)
+Date:     2023-09-05
+Group:    uuidrev
+Pages:    52
+URL:      https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-11.txt
+Status:   https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/
+HTML:     https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-11.html
+HTMLized: https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis
+Diff:     https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-11
 ```
 
 ## Contributing
