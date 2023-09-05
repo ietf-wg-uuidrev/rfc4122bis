@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-10
+docname: draft-ietf-uuidrev-rfc4122bis-11
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -304,9 +304,7 @@ to implement services using UUIDs, UUIDs in combination with URNs {{RFC8141}}, o
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
 specifications have been aligned and are fully technically
-compatible.  In addition, a global registration function is being
-provided by the Telecommunications Standardization Bureau of ITU-T;
-for details see [](https://www.itu.int/en/ITU-T/asn1/Pages/UUID/uuids.aspx).
+compatible.
 Nothing in this document should be construed to override the DCE standards that defined UUIDs.
 
 # Motivation {#motivation}
@@ -514,6 +512,15 @@ OID
 
 ## Changelog {#changelog}
 {:removeinrfc}
+
+draft-11
+
+{: spacing="compact"}
+- Normalize "name space" to "namespace" everywhere #137
+- IANA Review: Verbiage to update RFC4122 references #134
+- DNSDIR re-review: Better Define "a canonical sequence of octets" #136
+- Crosspost: Typo in Approximate UUID timestamp calculations #135
+- INTDIR Review #139
 
 draft-10
 
@@ -835,7 +842,7 @@ address, usually the host address.  For systems with multiple IEEE
 802 addresses, any available one MAY be used.  The lowest addressed
 octet (octet number 10) contains the global/local bit and the
 unicast/multicast bit, and is the first octet of the address
-transmitted on an 802.3 LAN.
+transmitted on an 802.3/802.11 LAN.
 
 ~~~~
  0                   1                   2                   3
@@ -879,7 +886,7 @@ clock_seq:
   Occupies bits 66 through 79 (octets 8-9).
 
 node:
-: 48 bit spatially unique identifier
+: 48 bit spatially unique identifier.
   Occupies bits 80 through 127 (octets 10-15).
 
 For systems that do not have UTC available, but do have the local
@@ -909,8 +916,9 @@ across systems.  This provides maximum protection against node
 identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
-For systems with no IEEE address, a randomly or pseudo-randomly
-generated value may be used; see {{unguessability}} and {{unidentifiable}}.
+For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly
+generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
+For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
@@ -918,15 +926,17 @@ As such, the definition of these UUIDs is outside the scope of this specificatio
 
 ## UUID Version 3 {#uuidv3}
 UUID version 3 is meant for generating UUIDs from "names"
-that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
+that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
-hash over a given name space value concatenated with the desired name value
-after both have been converted to a canonical sequence of octets in network byte order.
+hash over a given namespace value concatenated with the desired name value
+after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
-Some common name space values have been defined via {{namespaces}}.
+Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
+
+Some common namespace values have been defined via {{namespaces}}.
 
 Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
 For more information on MD5 security considerations see {{RFC6151}}.
@@ -1023,15 +1033,17 @@ random_c:
 
 ## UUID Version 5 {#uuidv5}
 UUID version 5 is meant for generating UUIDs from "names"
-that are drawn from, and unique within, some "name space" as per {{name_based_uuid_generation}}.
+that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
-hash over a given name space value concatenated with the desired name value
-after both have been converted to a canonical sequence of octets in network byte order.
+hash over a given namespace value concatenated with the desired name value
+after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
 
-Some common name space values have been defined via {{namespaces}}.
+Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
+
+Some common namespace values have been defined via {{namespaces}}.
 
 There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
 As such, it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
@@ -1146,7 +1158,7 @@ clock_seq:
   Occupies bits 66 through 79 (octets 8-9).
 
 node:
-: 48 bit spatially unique identifier
+: 48 bit spatially unique identifier.
   Occupies bits 80 through 127 (octets 10-15).
 
 With UUIDv6, the steps for splitting the timestamp into time_high and time_mid
@@ -1368,7 +1380,7 @@ Length:
 Altering, Fuzzing, or Smearing:
 : Implementations MAY alter the actual timestamp. Some examples include security
   considerations around providing a real clock value within a UUID, to correct
-  inaccurate clocks, to handle leap seconds, or for performance reasons such as dividing a microsecond by 1024 (or some other value) instead of 1000 to obtain a millisecond value. This specification makes no
+  inaccurate clocks, to handle leap seconds, or instead of dividing a number of microseconds by 1000 to obtain a millisecond value; dividing by 1024 (or some other value) for performance reasons. This specification makes no
   requirement or guarantee about how close the clock value needs to be to the actual
   time.
   If UUIDs do not need to be frequently generated, the UUIDv1 or UUIDv6 timestamp can
@@ -1668,30 +1680,30 @@ be willing to rely on the random number source at all hosts.
 ## Name-Based UUID Generation {#name_based_uuid_generation}
 The requirements for name-based UUIDs are as follows:
 
-* UUIDs generated at different times from the same name in the
+* UUIDs generated at different times from the same name (using the same canonical format) in the
   same namespace MUST be equal.
 
-* UUIDs generated from two different names in the same namespace
+* UUIDs generated from two different names (same or differing canonical format) in the same namespace
   should be different (with very high probability).
 
-* UUIDs generated from the same name in two different namespaces
+* UUIDs generated from the same name (same or differing canonical format) in two different namespaces
   should be different (with very high probability).
 
-* If two UUIDs that were generated from names are equal, then they
+* If two UUIDs that were generated from names (using the same canonical format) are equal, then they
   were generated from the same name in the same namespace (with very
   high probability).
 
 {: vspace='0'}
 
 A note on names:
-: The concept of name (and namespace) should be broadly construed and not limited to textual names.
+: The concept of name (and namespace) should be broadly construed and not limited to textual names. A canonical sequence of octets is one that conforms to the specification for that name form's canonical representation. A name can have many usual forms, only one of which can be canonical. An implementer of new namespaces for UUIDs needs to reference the specification for the canonical form of names in that space, or define such a canonical for the namespace if it does not exist.
   For example, at the time of this specification, {{RFC8499}} domain name system (DNS) has three conveyance formats: common (www.example.com), presentation (www.example.com.) and wire format (3www7example3com0).
   Looking at {{X500}} distinguished names (DNs), the previous version of this specification allowed either text based or binary distinguished encoding rules (DER) based names as inputs.
   For {{RFC1738}} uniform resource locators (URLs), one could provide a fully-qualified domain-name (FQDN) with or without the protocol identifier (www.example.com) or (https://www.example.com).
   When it comes to {{X660}} object identifiers (OIDs) one could choose dot-notation without the leading dot (2.999), choose to include the leading dot (.2.999) or select one of the many formats from {{X680}} such as OID Internationalized Resource Identifier (OID-IRI) (/Joint-ISO-ITU-T/Example).
   While most users may default to the common format for DNS, FQDN format for a URL, text format for X.500 and dot-notation without a leading dot for OID; name-based UUID implementations generally SHOULD allow arbitrary input which will compute name-based UUIDs for any of the aforementioned example names and others not defined here.
-  Each name format within a name space will output different UUIDs. 
-  As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their name spaces are beyond the scope of this specification.
+  Each name format within a namespace will output different UUIDs. 
+  As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their namespaces are beyond the scope of this specification.
 
 A note on namespaces:
 : While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
@@ -1704,15 +1716,15 @@ Name-based UUIDs using UUIDv8:
  To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
  Creation of name-based UUID values using UUIDv8 follows the same logic defined in {{uuidv5}}, but the hashspace should be used as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
- Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets in network byte order.
+ Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
  Ensure that the version and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
  An important note for secure hashing algorithms that produce outputs of an arbitrary size, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
  See {{uuidv8_example_name}} for a SHA-256 UUIDv8 example test vector.
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-space UUID is required, sharing the Hash Space ID proves useful for identifying the algorithm.
-  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hash space which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 namespace UUID is required, sharing the hashspace ID proves useful for identifying the algorithm.
+  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
@@ -1799,6 +1811,8 @@ message digest such as MD5 {{RFC1321}} or SHA-1 {{FIPS180-4}}, take an arbitrary
 bytes from the hash value, and set the multicast bit as described
 above.
 
+Implementations can also leverage MAC address randomization techniques (IEEE 802.11bh) as an alternative to the pseudo-random logic provided in this section.
+
 ## Sorting {#sorting}
 
 UUIDv6 and UUIDv7 are designed so that implementations that require sorting
@@ -1867,7 +1881,11 @@ and feedback.
 
 
 # IANA Considerations {#IANA}
+All references to {{RFC4122}} in the IANA registries should be replaced with references to this document.
+References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to this document's {{format}}.
+
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
+
 Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
 
 # Security Considerations {#Security}
@@ -1883,7 +1901,7 @@ slightly transposed in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
-MAC addresses pose inherent security risks and SHOULD NOT be used within
+MAC addresses pose inherent security risks around privacy and SHOULD NOT be used within
 a UUID.
 Instead CSPRNG data SHOULD be selected from a source with sufficient entropy
 to ensure guaranteed
@@ -1934,9 +1952,9 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 --- back
 
-# Some Name Space IDs {#namespaces}
+# Some Namespace IDs {#namespaces}
 
-This appendix lists the name space IDs for some potentially interesting name spaces such those for
+This appendix lists the namespace IDs for some potentially interesting namespaces such those for
 {{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 
 ~~~~ code
@@ -1946,8 +1964,8 @@ NameSpace_OID  = "6ba7b812-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
 ~~~~
 
-# Some Hash Space IDs {#hashspaces}
-This appendix lists some hash space IDs for use with UUIDv8 name-based UUIDs.
+# Some Hashspace IDs {#hashspaces}
+This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
 
 ~~~~ code
 SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
@@ -2025,7 +2043,7 @@ while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swapping for version and variant see {{v3vervar}}.
 
 ~~~~
-Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Namespace (DNS):  6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:             www.example.com
 ------------------------------------------------------
 MD5:              5df418813aed051548a72f4a814cf09e
@@ -2094,7 +2112,7 @@ while the field mapping and all values are illustrated in {{v5fields}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-1 value see {{v5vervar}}.
 
 ~~~~
-Name Space (DNS): 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Namespace (DNS):  6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:             www.example.com
 ----------------------------------------------------------
 SHA-1:            2ed6657de927468b55e12665a8aea6a22dee3e35
@@ -2208,13 +2226,13 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Test Vector'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hash spaces {{hashspaces}} alongside namespace {{namespaces}} and names.
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hashspaces {{hashspaces}} alongside namespaces {{namespaces}} and names.
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
 
 ~~~~
-Hash Space (SHA2_256): 3fb32780-953c-4464-9cfd-e85dbbe9843d
-Name Space (DNS):      6ba7b810-9dad-11d1-80b4-00c04fd430c8
+Hashspace (SHA2_256):  3fb32780-953c-4464-9cfd-e85dbbe9843d
+Namespace (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:                  www.example.com
 ----------------------------------------------------------------
 SHA-256:
