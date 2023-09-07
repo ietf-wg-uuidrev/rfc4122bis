@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-05T01:11:38.478182+00:00",
+  "timestamp": "2023-09-07T01:13:27.905297+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2554,15 +2554,15 @@
       "id": "I_kwDOH6Ln3M5vUIj5",
       "title": "IANA Review: Verbiage to update RFC4122 references",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/134",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> \"All references to RFC 4122 in the IANA registries should be replaced with references to this document. References to that document's Section 4.1.2 should be updated to refer to this document's Section 4.\"\r\n\r\n> https://www.iana.org/assignments/urn-namespaces/\r\n> https://www.iana.org/assignments/cbor-tags/\r\n> https://www.iana.org/assignments/urn-formal/cdx\r\n> https://www.iana.org/assignments/uri-schemes/prov/teliaeid",
       "createdAt": "2023-08-25T18:58:47Z",
-      "updatedAt": "2023-08-25T18:58:47Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-05T15:23:30Z",
+      "closedAt": "2023-09-05T15:23:29Z",
       "comments": []
     },
     {
@@ -2570,15 +2570,15 @@
       "id": "I_kwDOH6Ln3M5vcuNn",
       "title": "Crosspost: Typo in Approximate UUID timestamp calculations",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/135",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "From https://github.com/uuid6/uuid6-ietf-draft/issues/131",
       "createdAt": "2023-08-28T13:45:20Z",
-      "updatedAt": "2023-08-28T13:45:20Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-05T15:23:30Z",
+      "closedAt": "2023-09-05T15:23:30Z",
       "comments": []
     },
     {
@@ -2586,15 +2586,15 @@
       "id": "I_kwDOH6Ln3M5vcvBy",
       "title": "DNSDIR re-review: Better Define \"a canonical sequence of octets\"",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/136",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\nReviewer: Geoff Huston\r\nReview result: Ready with Issues\r\n\r\nI have been selected as the DNS Directorate reviewer for this draft. The DNS Directorate seeks to review all DNS or DNS-related drafts as they pass through IETF last call and IESG review, and sometimes on special request. The purpose of the review is to provide assistance to the ADs.\r\nFor more information about the DNS Directorate, please see https://wiki.ietf.org/en/group/dnsdir\r\n\r\nThis document references the DNS as one of multiple possible name spaces for Name-Based UUID Generation. It has no considerations that reflect on the DNS.\r\n\r\nPrevious iterations of this draft have been reviewed by the DNS Directorate for the -08 [1]  and -09 [2] versions of this draft.\r\n\r\nThe changes between -09 and -10 address specific comments from the ATART review and make some clarifying changes to the document which do not appear to have a substantive impact on the specification.\r\n\r\nIssue:\r\n\r\nI would like to note that the issues noted in the DNSDIR -08 review [1], namely:\r\n\r\n  \"Section 5.3, 5.5 and 6.5 refer to \"a canonical sequence of octets in\r\n   network byte order\". It is not specified what that canonical sequence\r\n   is nor is there a reference to a document that specifies the canonical\r\n   sequence for any of the name spaces.\"\r\n\r\nand \r\n\r\n  \"Section 6.5 also has this:\r\n     *  UUIDs generated at different times from the same name in the same\r\n        namespace MUST be equal.\"\r\n        \r\ndo not appear to have been resolved in -09 or -10 versions of this document.\r\n\r\nThe suggestions made in the -08 review on how to to resolve this issue appears not to have been resolved in any tangible manner in the subsequent document versions\r\n\r\n\r\nGeoff Huston\r\n\r\n[1] https://datatracker.ietf.org/doc/review-ietf-uuidrev-rfc4122bis-08-dnsdir-lc-obser-2023-07-26/\r\n[2] https://datatracker.ietf.org/doc/review-ietf-uuidrev-rfc4122bis-09-dnsdir-lc-obser-2023-08-04/\r\n```\r\n\r\nThread: https://mailarchive.ietf.org/arch/msg/uuidrev/hFiEUoa4BIQ_VGO5HX5kV18BIEE/",
       "createdAt": "2023-08-28T13:47:09Z",
-      "updatedAt": "2023-08-30T14:00:33Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-05T15:23:30Z",
+      "closedAt": "2023-09-05T15:23:30Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2638,15 +2638,15 @@
       "id": "I_kwDOH6Ln3M5vdkuh",
       "title": "Normalize \"name space\" to \"namespace\" everywhere",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/137",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "RFC4122 used both \"name space\" and \"namespace\"\r\nAs per my searches, \"namespace\" seems to see more usage than \"name space\".\r\nHence I think we should normalize it to one word without spaces throughout the document.\r\n",
       "createdAt": "2023-08-28T15:49:53Z",
-      "updatedAt": "2023-08-29T18:52:21Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-05T15:23:31Z",
+      "closedAt": "2023-09-05T15:23:31Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2662,15 +2662,15 @@
       "id": "I_kwDOH6Ln3M5vylwB",
       "title": "INTDIR Review",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/139",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\n## Section 1\r\n\r\nTwo sentences appear to contradict each others:\r\n\r\n- `A UUID is 128 bits long and requires no central registration process`\r\n- `In addition, a global registration function is being provided by the\r\nTelecommunications Standardization Bureau of ITU-T`\r\n\r\n## Section 2\r\n\r\nShould there be an informative reference to `IEEE 802 node identifiers` ?\r\n\r\n## Section 2.1\r\n\r\nWhat is the impact of randomised MAC address (cfr MADINAS WG and IEEE work) on\r\nbullet 4. Should this randomised MAC address be mentioned in the text ?\r\n\r\n## Section 5.1\r\n\r\nWhy only IEEE 802.3 LAN what about 802.11 or 802.15.4 ? Should the text be\r\nrelaxed ?\r\n\r\n## Section 8\r\n\r\nShould privacy be added in `MAC addresses pose inherent security risks ` ?\r\n\r\n# NITS\r\n\r\n## Section 3.3\r\n\r\nThe usual wording is more like `Note to RFC Editor: This section needs to be\r\nremoved before publication as RFC`.\r\n\r\n## Sections C.1 & C.5\r\n\r\nPlease use a documentation MAC address per section 2.1.2 of RFC 7042. *IF* the\r\nnode is assumed to be a MAC address.\r\n```\r\n\r\nSections Section 3.3 and Sections C.1 & C.5 comments can be disregarded. No change required after further discussion.",
       "createdAt": "2023-08-31T13:27:06Z",
-      "updatedAt": "2023-09-03T19:35:15Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-05T15:23:31Z",
+      "closedAt": "2023-09-05T15:23:31Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2776,6 +2776,244 @@
           "body": "https://datatracker.ietf.org/doc/html/rfc4944#section-6 explains how to do things with 16-bit MACs, but in general, I'm quite happy with your text.",
           "createdAt": "2023-09-03T19:35:15Z",
           "updatedAt": "2023-09-03T19:35:15Z"
+        }
+      ]
+    },
+    {
+      "number": 140,
+      "id": "I_kwDOH6Ln3M5wLIui",
+      "title": "INDIR Review 2",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/140",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\nI have the following DISCUSS level issues:\r\n\r\nSection 2.1, page 5: I think a MAC address identifies a network interface, not a \"machine\". Also, for MAC addresses, this document should Reference RFC 7042 or, even better, draft-ietf-intarea-rfc7042bis (which is through WGLC and, in my opinion, ready for publication request). Those documents point out the existence of 64-bit MAC addresses and where they have been and are currently used so this document should say something about how those are handled (perhaps by discarding the top 16 bits).\r\nOLD\r\n       address in the node field of UUID version 1.  Exposed MAC\r\n       addresses can be used as an attack surface to locate machines and\r\n       reveal various other information about such machines (minimally\r\nNEW\r\n       address in the node field of UUID version 1.  Exposed MAC\r\n       addresses can be used as an attack surface to locate network interfaces\r\n       and reveal various other information about such interfaces (minimally\r\n\r\nSection 6.1, Page 27, 1st paragraph: The last sentence of this paragraph is \"The count will range between zero and the number of 100-nanosecond intervals per system time interval.\" This is confusing. Why couldn't the count exceed that number?\r\n\r\nSection 7: I think it is improper in the IANA Considerations to talk about what \"the authors and the working group have concluded\". The RFC this document will be is issued as the consensus of the IETF, not as the opinion of its authors or even the working group. I suggest replacing this section in its entirety with the following:\r\n\"This document requires no IANA actions. In particular, no update is required to the IANA URN namespace registration [URNNamespaces] for UUID filed in [RFC4122] and IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.\"\r\n\r\n\r\nThe following are other issues I found with this document that SHOULD be corrected before publication:\r\nSection 5.5, page 20: \"This SHA-1 value is then used to populate all 128 bits of the UUID layout.  Excess bits beyond 128 are discarded.\" Seems like you can and should be more precise. Maybe \"The high order 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 low order bits of SHA-1 output are discarded\"\r\n\r\nSection 6.2, page 29: \"Using floating point math,\" appears to mandate the use of floating point which might not be available on some small platforms. Suggest \"Using floating point or scaled integer arithmetic,\"\r\n\r\nSection 6.2, Page 30, paragraph headed \"Fixed-Length Dedicated Counter Seeding\":\r\n+    \"However, when the timestamp has not incremented, the counter is frozen and\r\n      incremented via the desired increment logic.\" To my mind, frozen means it is not changed and is inconsistent with incrementing it. Perhaps \"When the timestamp has not increased, the counter is instead incremented by the desired increment logic.\"\r\n+    \"For example, a 24 bit counter could have\r\n      the 23 bits in least-significant, right-most, position randomly\r\n      initialized.  The remaining most significant, left-most counter\r\n      bits are initialized as zero for the sole purpose of guarding\r\n      against counter rollovers.\" This is inconsistent. Either it should say \"the 23 or fewer bits\" in the first sentence or it should say \"bit is initialized to zero\" in the second sentence.\r\n\r\nSection 6.3, page 32, 3rd paragraph: Frequent generation of random numbers also puts more stress on any entropy source and or entropy pool being used as the basis for such random numbers. This should be mentioned.\r\n\r\nSection 6.9: The discussion of the local/global bit here would be a good place to reference RFC 7042 or, even better, draft-ietf-intarea-ref4042bis.\r\n\r\nSection 6.10: This section uses \"quite large\" without any indication of how large. A factor of ten? A factor of ten to the tenth power? Can some hint of how large be given? Similarly Section 2.1, item 1.\r\n\r\nSection 8, Page 39: I think \"transposed\" is the wrong word. That just means to swap around various parts of something. While that is one type of modification, I think you mean any type of slight modification. \"slightly transposed\" -> \"slightly modified\"\r\n\r\n\r\nThe following are minor issues (typos, misspelling, minor text improvements) with the document:\r\n\r\nSection 1, paragraph 3, page 3:\r\nOLD\r\nto implement services using UUIDs, UUIDs in combination with URNs [RFC8141], or otherwise.\r\nNEW\r\nto implement services using UUIDs either in combination with URNs [RFC8141] or otherwise.\r\n\r\nSection 3.2: The expansions of UUIDv1 through UUIDv8 are quite repetitive and uninformative. Since you have already expanded UUID in the previous line, I don't think it needs to be expanded here. I suggest:\r\n   UUIDv1    Gregorian time-based UUID\r\n   UUIDv2    DCE Security version UUID\r\n   UUIDv3    Name-based UUID with MD5\r\n   UUIDv4    Pseudo-random UUID\r\n   UUIDv5    Name-based UUID with SHA-1\r\n   UUIDv6    Re-ordered Gregorian time-based UUID\r\n   UUIDv7    Unix Epoch time-based UUID\r\n   UUIDv8    Custom UUID\r\n\r\nI think Section 6.2 is too long and should have subsections (6.2.1, 6.2.2, ...).\r\n\r\nSection 6.2, page 29: \"which is sorts\" -> \"which sorts\"\r\n\r\nSection 6.2, page 30: \"randomly initialize a portion counter\" -> \"randomly initialize a portion of the counter\"\r\n\r\nSection 6.2., page 31: \"the random being incremented.\" -> \"the random value being incremented.\"\r\n\r\nSection 6.5, last paragraph, page 35: \"needs not be the only\" -> \"need not be the only\"\r\n\r\n```",
+      "createdAt": "2023-09-05T13:18:29Z",
+      "updatedAt": "2023-09-05T13:18:47Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will end up in Draft 12, no time to get this done by draft 11 deadline.",
+          "createdAt": "2023-09-05T13:18:47Z",
+          "updatedAt": "2023-09-05T13:18:47Z"
+        }
+      ]
+    },
+    {
+      "number": 141,
+      "id": "I_kwDOH6Ln3M5wOCsO",
+      "title": "SECDIR Review",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/141",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\nSection 6.6\r\n   High Impact:\r\n      A duplicate key causes an airplane to receive the wrong course\r\n      which puts people's lives at risk.  In this scenario there is no\r\n      margin for error.  Collisions MUST be avoided and failure is\r\n      unacceptable.  Applications dealing with this type of scenario\r\n      MUST employ as much collision resistance as possible within the\r\n      given application context.\r\n\r\nNot to trivialize the seriousness of the described scenario, but normative\r\nlanguage around airplane design and operation doesn\u2019t seem appropriate or in\r\nscope for the WG.  Furthermore \u201cas much collision resistance as possible\u201d isn\u2019t\r\nparticularly precise.  Recommend s/MUST/must/\r\n\r\n** Section 6.9\r\n   A generic approach, however, is\r\n   to accumulate as many sources as possible into a buffer, use a\r\n   message digest such as MD5 [RFC1321] or SHA-1 [FIPS180-4], take an\r\n   arbitrary 6 bytes from the hash value, and set the multicast bit as\r\n   described above.\r\n\r\nRFC4112 referenced MD5 and SHA-1, but didn\u2019t tie the implementation to them,\r\nwhy can\u2019t a modern hash algorithm (SHA-256) be recommended here instead?\r\n\r\n** Section 6.11\r\n\r\n   UUIDs SHOULD be treated as opaque values and implementations SHOULD\r\n   NOT examine the bits in a UUID.  However, inspectors MAY refer to\r\n   Section 4.1 and Section 4.2 when required to determine UUID version\r\n   and variant.\r\n\r\n   As general guidance, we recommend not parsing UUID values\r\n   unnecessarily, and instead treating them as opaquely as possible.\r\n   Although application-specific concerns could of course require some\r\n   degree of introspection (e.g., to examine the variant, version or\r\n   perhaps the timestamp of a UUID), the advice here is to avoid this or\r\n   other parsing unless absolutely necessary.\r\n\r\nWhy are both of these paragraphs needed?  The first seems to say the same thing\r\nas the second except with normative language.\r\n\r\n** Section 8\r\nImplementations SHOULD NOT assume that UUIDs are hard to guess. For example,\r\nthey MUST NOT be used as security capabilities (identifiers whose mere\r\npossession grants access).\r\n\r\n-- Why isn\u2019t this a \u201cMUST NOT assume\u201d?\r\n\r\n** Section 8\r\n   MAC addresses pose inherent security risks and SHOULD NOT be used within a\r\n   UUID.\r\n\r\nIs there any advisory language that can be provided that could explain when a\r\nMAC address should be used?\r\n```",
+      "createdAt": "2023-09-05T21:10:07Z",
+      "updatedAt": "2023-09-05T21:58:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will get to this in draft 12",
+          "createdAt": "2023-09-05T21:11:43Z",
+          "updatedAt": "2023-09-05T21:11:43Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have two thoughts/annotations:\r\n\r\n(1)\r\nI am confused about the definition \"_Implementations SHOULD NOT assume that UUIDs are hard to guess_.\".\r\nWhy is this so?  If I generate a UUIDv4 using a CSRNG and use it as BEARER in a REST-API, I basically have a 122-bit random number created using a CSRNG. This is very secure.\r\nOn the other hand, I know that not all UUID are that \"secure\". For example, a UUIDv2 is easy to guess and has a horrible time resolution.\r\n\r\nIn my opinion, since \"some\" UUID (e.g. UUIDv4 using CSRNG) are good as credentials, I think that it should stay \"SHOULD NOT assume\" and not \"MUST NOT assume\". I believe there are a lot of products that use UUIDv4 for tokens (e.g. Session Identifiers), and if you change the definition to \"MUST NOT\", it would mean that all these products must change their code.\r\n\r\n---\r\n\r\n(2) \r\n\"_Is there any advisory language that can be provided that could explain when a MAC address should be used_?\"\r\nI cannot provide an advisory language, but I want to give a personal opinion and thoughts... Personally, I am an advocate for using real MAC in a UUID.\r\n1. I see the MAC address as a kind of \"signature\". I can easily see if these UUIDs are created by myself or not. I think it is a nice touch when you develop Microsoft COM interfaces and all your UUIDs have the same ending. So people know \"Hey, if the CLSID ends with 112233445566, this is a interface written by Contoso Ltd.\"\r\n2. I can imagine that in a distributed computing environment, machines are generating data and identifying them with a UUID with a real MAC address. In case something is not good with the data, the machine producing the defective data can be identified. (I believe such \"meta data\" was extensively used in UUIDv2)\r\n3. When choosing a random number as Node ID, the probability of a UUID collision is mathematically greater than zero. If we use a real MAC address, the probability of collision is mathematically zero. I am stressing the word \"mathematically\" because I know that a collision is **_practically_** unlikely/impossible.\r\n",
+          "createdAt": "2023-09-05T21:51:05Z",
+          "updatedAt": "2023-09-05T21:58:41Z"
+        }
+      ]
+    },
+    {
+      "number": 142,
+      "id": "I_kwDOH6Ln3M5wUY1M",
+      "title": "SECDIR Review 2",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/142",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\n----------------------------------------------------------------------\r\nCOMMENT:\r\n----------------------------------------------------------------------\r\n\r\n        Padding:\r\n\r\n                When timestamp padding is required, implementations\r\n                MUST pad the most significant bits (left-most) bits\r\n                with zeros. An example is padding the most significant,\r\n                left-most bits of a Unix timestamp with zeroes to fill\r\n                out the 48 bit timestamp in UUIDv7. An alternative is to\r\n                pad the most significant, left-most bits with the number\r\n                of 32 bit Unix timestamp roll-overs after 2038-01-19.\r\n\r\nHow can this MUST clause have an alternative? Should it be a SHOULD? If\r\nso, when would one use the alternative specified here?\r\n\r\n\r\n        sharing the hashspace ID proves useful for identifying the algorithm.\r\n\r\nIt is not clear what the term \"hashspace ID\" refers to.\r\n\r\n        Implementations SHOULD utilize a cryptographically secure\r\n        pseudo-random number generator (CSPRNG) to provide values that\r\n        are both difficult to predict (\"unguessable\") and have a low\r\n        likelihood of collision (\"unique\").\r\n\r\nCouldn't Verifiable Random Functions (VRF) also be used instead of a CSPRNG?\r\n\r\n        use a message digest such as MD5 [RFC1321] or SHA-1 [FIPS180-4],\r\n        take an arbitrary 6 bytes from the hash value, and set the\r\n        multicast bit as described above.\r\n\r\nWhile it might not matter, use of a more modern message digest algorithm is\r\nstill recommended here. One reason is that the IETF is trying to phase out\r\nthese older digests, and prefers to not reference these in new RFCs. A second\r\nreason is that sometimes, cryptographic libraries are prevented from using\r\nthese older type of digests (eg when running in FIPS mode)\r\n\r\n        Implementations can also leverage MAC address randomization\r\n        techniques (IEEE 802.11bh) as an alternative to the pseudo-random\r\n        logic provided in this section.\r\n\r\nI'm not sure why the Section didn't lead with this more obvious approach?\r\n\r\nNITS:\r\n\r\nfor readability, change:\r\n\r\n        The increment value MAY be one when the number of UUIDs generated\r\n        in a particular period of time is ...\r\n\r\nto\r\n\r\n        The increment value MAY be 1 when the number of UUIDs generated\r\n        in a particular period of time is ...\r\n\r\n\r\n\r\n        However, it SHOULD NOT be used by implementations that favor\r\n        unguessability, as the resulting values are easily guessable.\r\n\r\nWhat does \"it\" refer to? Incrementing by 1? Write it out instead of using \"it\"\r\n\r\n```",
+      "createdAt": "2023-09-06T16:48:00Z",
+      "updatedAt": "2023-09-06T17:01:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 143,
+      "id": "I_kwDOH6Ln3M5wUbi_",
+      "title": "Alternative proposal for Hashspace ID Values",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Paul Wouters\r\n```\r\nWhy are hashspace IDs chosen to look like random uuids? Eg why not encode\r\n\"SHA2_224\" (hex 534841325F323234) as 53484132-5F32-3234-0000-000000000000\r\nor 00000000-0000-0000-5348-41325F323234 (plus or minus variant/version bits)\r\nso that it becomes far more clear this is not an ordinary random uuid?\r\n```\r\n\r\n\r\n### Current, All random\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-0f30e2e83145\"\r\nSHA2_256     = \"3fb32780-953c-4464-9cfd-e85dbbe9843d\"\r\nSHA2_384     = \"e6800581-f333-484b-8778-601ff2b58da8\"\r\nSHA2_512     = \"0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9\"\r\nSHA2_512_224 = \"003c2038-c4fe-4b95-a672-0c26c1b79542\"\r\nSHA2_512_256 = \"9475ad00-3769-4c07-9642-5e7383732306\"\r\nSHA3_224     = \"9768761f-ac5a-419e-a180-7ca239e8025a\"\r\nSHA3_256     = \"2034d66b-4047-4553-8f80-70e593176877\"\r\nSHA3_384     = \"872fb339-2636-4bdd-bda6-b6dc2a82b1b3\"\r\nSHA3_512     = \"a4920a5d-a8a6-426c-8d14-a6cafbe64c7b\"\r\nSHAKE_128    = \"7ea218f6-629a-425f-9f88-7439d63296bb\"\r\nSHAKE_256    = \"2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a\"\r\n```",
+      "createdAt": "2023-09-06T16:55:09Z",
+      "updatedAt": "2023-09-06T23:52:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Alternative from me:\r\nPick a random UUID to start, increment the lowest bits by 1 for each.\r\n\r\nLogic for Namespace is a specific UUIDv1 \r\n`6ba7b810-9dad-11d1-80b4-00c04fd430c8` starts and next is `6ba7b811-9dad-11d1-80b4-00c04fd430c8` is next where the 6ba7b81**0** and 6ba7b81**1** increments for each up through 0-4 in that position.\r\n\r\n\r\n### Increment by UUID in least significant position. \r\n- First part is UUIDv4 was initiated from random and frozen to `59031ca3-fbdb-47fb-9f6c`\r\n\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-000000000000\"\r\nSHA2_256     = \"59031ca3-fbdb-47fb-9f6c-000000000001\"\r\nSHA2_384     = \"59031ca3-fbdb-47fb-9f6c-000000000002\"\r\nSHA2_512     = \"59031ca3-fbdb-47fb-9f6c-000000000003\"\r\nSHA2_512_224 = \"59031ca3-fbdb-47fb-9f6c-000000000004\"\r\nSHA2_512_256 = \"59031ca3-fbdb-47fb-9f6c-000000000005\"\r\nSHA3_224     = \"59031ca3-fbdb-47fb-9f6c-000000000006\"\r\nSHA3_256     = \"59031ca3-fbdb-47fb-9f6c-000000000007\"\r\nSHA3_384     = \"59031ca3-fbdb-47fb-9f6c-000000000008\"\r\nSHA3_512     = \"59031ca3-fbdb-47fb-9f6c-000000000009\"\r\nSHAKE_128    = \"59031ca3-fbdb-47fb-9f6c-00000000000A\"\r\nSHAKE_256    = \"59031ca3-fbdb-47fb-9f6c-00000000000B\"\r\n```",
+          "createdAt": "2023-09-06T16:57:24Z",
+          "updatedAt": "2023-09-06T17:17:24Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Paul's proposal, TEXT to HEX, is tough because the current hashspace ID labels for a value is at minimum 16 characters and at max 24 characters after encoding in hex. (See the end)\r\nThe Version/Variant bits need to be set which leaves position that isn't ideal to slot these in easily.\r\n- X, the start of the UUID 12 chars\r\n- Y, the end of the UUID 15 chars\r\n- Z, the middle of the UUID 3 chars\r\n\r\n```\r\nxxxxxxxx-xxxx-Mzzz-Nyyy-yyyyyyyyyyyy\r\n```\r\n\r\n### Text to Hex\r\n```\r\nSHA2_224     = 534841325f323234\r\nSHA2_256     = 534841325f323536\r\nSHA2_384     = 534841325f333834\r\nSHA2_512     = 534841325f353132\r\nSHA2_512_224 = 534841325f3531325f323234\r\nSHA2_512_256 = 534841325f3531325f323536\r\nSHA3_224     = 534841335f323234\r\nSHA3_256     = 534841335f323536\r\nSHA3_384     = 534841335f333834\r\nSHA3_512     = 534841335f353132\r\nSHAKE_128    = 5348414b455f313238\r\nSHAKE_256    = 5348414b455f323536\r\n```\r\n\r\nEdit: I could change the names labels, remove underscore but it does not scale nicely unless they can all be 12-15 chars after the encoding or one must navigate the Ver/Var hex.",
+          "createdAt": "2023-09-06T17:23:42Z",
+          "updatedAt": "2023-09-06T17:27:06Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "For [my online service](https://misc.daniel-marschall.de/tools/uuid_mac_decoder/index.php#gen_uuidv35) I have done the following approach:\r\n\r\n    HashSpaceUuid<AlgoName> := UUIDv5(\"1ee317e2-1853-64b2-8fe9-3c4a92df8582\", AlgoName).\r\n\r\nwhich results in the following UUIDs  [the list currently excludes algorithms which are defined in RFC4122 and RFC4122bis]:\r\n\r\n```\r\nHashSpaceUuid<GOST>         := \"be782e40-b9e8-59c4-8500-31a6cfb91a75\".   (Note to self:  OID = 1.2.643.2.2.9)\r\nHashSpaceUuid<GOST-CRYPTO>  := \"9c1d4a70-75ec-5c6a-84e2-09b400fe8f21\".\r\nHashSpaceUuid<HAVAL128,3>   := \"176e81e1-9fc8-50f3-b569-08f264e5ae58\".\r\nHashSpaceUuid<HAVAL128,4>   := \"55d554f5-7c2e-5e08-a8e3-cd6ecbac1e32\".\r\nHashSpaceUuid<HAVAL128,5>   := \"9d40aac4-d8e5-5846-ad91-dc3429294d0d\".\r\nHashSpaceUuid<HAVAL160,3>   := \"8d160752-d034-54e0-ac73-930ec60580c2\".\r\nHashSpaceUuid<HAVAL160,4>   := \"5d3d8b32-d57d-54b4-9a01-342e8fa9df5b\".\r\nHashSpaceUuid<HAVAL160,5>   := \"764e5acb-88c4-5b24-b3bd-cca0941de88a\".\r\nHashSpaceUuid<HAVAL192,3>   := \"1f53cfc9-a36c-5a36-b27c-6dc88074ca38\".\r\nHashSpaceUuid<HAVAL192,4>   := \"c7c66b4d-4299-5489-aa29-991b7bd4aa52\".\r\nHashSpaceUuid<HAVAL192,5>   := \"4455573f-5ff9-5cac-aadc-7ecf5c0c7ad1\".\r\nHashSpaceUuid<HAVAL224,3>   := \"56ef61fc-16de-55f4-bd3f-f44856d3d436\".\r\nHashSpaceUuid<HAVAL224,4>   := \"5c86a1f5-6b47-576e-a900-087897bf83a7\".\r\nHashSpaceUuid<HAVAL224,5>   := \"0336bbe3-f703-5184-b52d-4e9d8163ddcd\".\r\nHashSpaceUuid<HAVAL256,3>   := \"66111477-b9e1-54cc-a38f-b73b228964cc\".\r\nHashSpaceUuid<HAVAL256,4>   := \"5851bbb5-56a3-55b3-8775-371739d251ca\".\r\nHashSpaceUuid<HAVAL256,5>   := \"5f4a8511-9e92-5d62-b94d-0b910a1e3d9a\".\r\nHashSpaceUuid<MD2>          := \"6ca7dd19-4755-5c6a-8b3f-3056ef6bebf6\".   (Note to self:  OID = 1.2.840.113549.2.2)\r\nHashSpaceUuid<MD4>          := \"15329616-0af7-535a-b4b6-41c4eba21457\".   (Note to self:  OID = 1.2.840.113549.2.4)\r\nHashSpaceUuid<MURMUR3C>     := \"b941a86c-9e70-5044-9496-da00eec9b934\".\r\nHashSpaceUuid<MURMUR3F>     := \"4a2262be-0dec-587f-843a-eb50c707d779\".\r\nHashSpaceUuid<RIPEMD128>    := \"efd0677a-e9f4-5337-8764-51be1c353d4a\".   (Note to self:  OID = 1.3.36.3.2.2)\r\nHashSpaceUuid<RIPEMD160>    := \"b54b1a0a-ce07-5d4b-9d03-96d57da2bf29\".   (Note to self:  OID = 1.3.36.3.2.1)\r\nHashSpaceUuid<RIPEMD256>    := \"e288aa2a-5260-5aaf-825a-f40ce0514d19\".   (Note to self:  OID = 1.3.36.3.2.3)\r\nHashSpaceUuid<RIPEMD320>    := \"2919713b-ae42-58a3-916a-039989f07300\".\r\nHashSpaceUuid<SNEFRU>       := \"d38f5891-c553-5d58-88de-199cbf48291e\".\r\nHashSpaceUuid<SNEFRU256>    := \"30b628e4-4587-5f06-ae1b-be9d0cba1187\".\r\nHashSpaceUuid<TIGER128,3>   := \"6f5ba86a-a362-50f1-bc6a-62787ee998b8\".\r\nHashSpaceUuid<TIGER128,4>   := \"13ff3c12-da5d-5437-89d9-a76e44abd0c8\".\r\nHashSpaceUuid<TIGER160,3>   := \"50d3d8af-6a6c-5ea3-bfad-450424668dee\".\r\nHashSpaceUuid<TIGER160,4>   := \"31d39089-28e0-584b-bf72-7cf33c2caeea\".\r\nHashSpaceUuid<TIGER192,3>   := \"63cfdad3-a720-55e2-83a4-b8c762ad4012\".\r\nHashSpaceUuid<TIGER192,4>   := \"5b07ff46-f679-5d3c-97e1-10b800be9246\".\r\nHashSpaceUuid<WHIRLPOOL>    := \"74fd261c-1f13-5015-81cc-fdc9a7354ae5\".\r\nHashSpaceUuid<XXH128>       := \"1a66c377-af3d-5f24-b9fb-d6c067d8b588\".\r\n```\r\n\r\nSo, I am taking a common algorithm name and produce an UUIDv5 of it.\r\n\r\nFor example, \"GOST\" becomes:\r\n\r\n    UUIDv5(\"1ee317e2-1853-64b2-8fe9-3c4a92df8582\", \"gost\") = \"be782e40-b9e8-59c4-8500-31a6cfb91a75\"\r\n\r\nWhat do you think about it?\r\n",
+          "createdAt": "2023-09-06T18:02:11Z",
+          "updatedAt": "2023-09-06T22:53:08Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "I know that not being a hash function expert, I shouldn't even question the advantage and simplicity of incrementing a base UUID. However, in terms of [avalanche effect](https://arishs.medium.com/analyze-your-hash-functions-the-avalanche-metrics-calculation-767b7445ee6f), which is better: changing only 1 bit or <s>changing 128 bits</s> changing more bits?\r\n\r\nI also know that **it is not** a requirement that an ID produced with a hashspace has a very high probability of not clashing with IDs produced with a different hashspace. SHA-x algorithms already guarantee that changing 1 bit in the input produces a drastically different output, so this probability must be extremely low to be taken into account. However, if it is possible to maximize this effect by changing as many input bits as possible, wouldn't that be more desirable?\r\n\r\n--\r\n\r\n**EDIT:** I crossed out the \"changing 128 bits\" phrase because changing 128 bits means inverting all bits, which is the result of an XOR operation. It seems more appropriate to change more than 1 bit, but not all.",
+          "createdAt": "2023-09-06T18:15:46Z",
+          "updatedAt": "2023-09-06T19:58:59Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "> For [my online service](https://misc.daniel-marschall.de/tools/uuid_mac_decoder/index.php#gen_uuidv35) I have done the following approach:\r\n> \r\n> HashSpaceUuid<AlgoName> := UUIDv5(\"1ee317e2-1853-64b2-8fe9-3c4a92df8582\", AlgoName).\r\n\r\nSounds logical to me and easy to describe as you only need to define the namespace UUID that will be used with the UUIDv5 function to generate the hashspaces for each algorithm name.\r\n\r\nHowever, it is necessary to use the \"canonical name\" of each algorithm, which implies text encoding (UTF-8, ASCII etc), case sensitivity (uppercase, lowercase), use (or not) of [\"non-word\" characters](https://www.tutorialspoint.com/Find-non-word-character-in-a-string-with-JavaScript-RegExp) (dash, space), etc.\r\n",
+          "createdAt": "2023-09-06T18:30:35Z",
+          "updatedAt": "2023-09-06T18:39:12Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, the canonical name is indeed my concern, too. ~(I wonder, is there a RFC that defines naming schemes for algorithms?)~\r\n\r\n~**_Proposal 1_**~\r\n\r\n~I have the following idea:~\r\n- ~Appendix B could describe the UUIDv5 mechanism and list SHA2, SHA3, and SHAKE as examples (and hence define their name. You have to think about if you prefer uppercase or lowercase and use dashes or hyphens).~\r\n- ~**The naming of other algorithms (like GOST or HAVAL) would be out-of-scope**. However, people can orient on our naming scheme. For example, if we define the name to be \"SHA3\", then it is likely that people will choose \"HAVAL\" instead of \"Haval\" or \"haval\". If we choose the name \"sha3\", then it is likely that people will choose \"haval\" instead of \"HAVAL\" or \"Haval\".~\r\n- ~If you like, you could add a note that the UUIDv5 mechanism is OPTIONAL, which means people are not forced to use it. They can still use UUIDv1 or UUIDv4 for other algorithms if they prefer it that way. (This might make sense in case a hash algorithm is already defined by a UUID)~\r\n\r\n~Here is a proposal (I have calculated the UUIDv5, but please double-check them):~\r\n\r\n```\r\nAppendix B.  Some Hashspace IDs\r\n\r\n   This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.\r\n\r\n   The following UUIDs were created by using a UUIDv5 with namespace ID\r\n   \"1ee317e2-1853-64b2-8fe9-3c4a92df8582\" and the algorithm name in\r\n   upper-case and with underscores as data.  This mechanism of generating a\r\n   hashspace ID is OPTIONAL.  Any UUID can be used as a hashspace UUID.\r\n\r\n   SHA2_224     = \"5385c476-6ffc-578a-908f-91b5cd2eac03\"\r\n   SHA2_256     = \"f660b1c5-f2c9-5f3a-981f-8652227fc329\"\r\n   SHA2_384     = \"43794fb1-7e34-558f-a8a5-5b4b8f8470d5\"\r\n   SHA2_512     = \"250cb2ab-c480-5f24-83fd-16ea8b0b9e36\"\r\n   SHA2_512_224 = \"70bade2b-c68a-5894-b31d-7c3581b6c647\"\r\n   SHA2_512_256 = \"a05efbcf-0a2a-5aab-9c62-8c94d05e0760\"\r\n   SHA3_224     = \"2862da96-f3c7-586a-8cc3-b1f424cdf040\"\r\n   SHA3_256     = \"72727812-3cea-56bd-a57f-ed3445acca4f\"\r\n   SHA3_384     = \"279978a1-86d1-56e6-bce2-019f5eaa3437\"\r\n   SHA3_512     = \"33e6927a-d382-5dbd-b415-402610340bcd\"\r\n   SHAKE_128    = \"8835c536-6ab4-55bc-be61-7029cdcbd1db\"\r\n   SHAKE_256    = \"311a1f8e-0a71-554a-bcdb-436c4e9f55e8\"\r\n```\r\n\r\n**_Edit: I withdraw my proposal 1 defining a custom namespace + canonical name as payload.\r\nMy proposal 2 (see below) using hash algorithm OIDs is much better._**",
+          "createdAt": "2023-09-06T20:27:16Z",
+          "updatedAt": "2023-09-06T21:43:22Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "> Here is a proposal (I have calculated the UUIDv5, but please double-check them):\r\n\r\nI prefer to keep the previous defined UUIDv4-based hashspaces, but I think this UUIDv5 mechanism is a better way to define pseudo-random or \"random-looking\" hashspaces which can be easily reproduced to define new hashspaces for cryptographic hash functions that could not be included in the document.\r\n\r\nI just don't know which are the current canonical names for the SHA-2 family. For example, [Wikipedia](https://en.wikipedia.org/wiki/SHA-2) and [Java](https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html#messagedigest-algorithms) use SHA-256 (with a dash), but not SHA**2**_256 (with a 2 and an underline).\r\n\r\nP.S.: can we use this document as a reference?: https://csrc.nist.gov/files/pubs/fips/180-4/upd1/final/docs/fips180-4-draft-aug2014.pdf",
+          "createdAt": "2023-09-06T20:51:25Z",
+          "updatedAt": "2023-09-06T20:59:29Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "**_Proposal 2_**\r\n\r\nThere is another method which does not rely on canonical names (or even English language) at all.\r\n\r\nA lot of hash algorithms are identified by OIDs. Some of them are located in this arc:\r\nhttp://oid-info.com/get/2.16.840.1.101.3.4.2\r\n\r\nWe could use a UUIDv5 with namespace OID (6ba7b812-9dad-11d1-80b4-00c04fd430c8)\r\nand the hash algorithm OID as payload.\r\n\r\nHere is my proposal:\r\n\r\n```\r\nAppendix B.  Some Hashspace IDs\r\n\r\n   This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.\r\n\r\n   The following UUIDs were created by using a UUIDv5 with the OID namespace ID\r\n   (\"6ba7b812-9dad-11d1-80b4-00c04fd430c8\") and the OID identifying the\r\n   hash algorithm.  This mechanism of generating a hashspace ID is OPTIONAL.\r\n   Any UUID can be used as a hashspace UUID.\r\n\r\n   SHA2_224     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.4\")  = \"e0f20710-25d9-54ab-8325-ccf2d456ad0b\"\r\n   SHA2_256     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.1\")  = \"29f7f1c6-6258-5be3-b9f0-2adc24eb96c6\"\r\n   SHA2_384     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.2\")  = \"728cae51-ddd4-5401-b52c-5775cd8913d8\"\r\n   SHA2_512     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.3\")  = \"a5dd0c9d-04b0-5f15-9332-c0ff97053dda\"\r\n   SHA2_512_224 = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.5\")  = \"3b72d097-ee4d-54e0-a3ab-cbc072d6d159\"\r\n   SHA2_512_256 = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.6\")  = \"af4f3a3f-167e-53b5-8817-66d5201cb05a\"\r\n   SHA3_224     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.7\")  = \"4b5be759-1e10-56ff-9187-1a34f5773d9f\"\r\n   SHA3_256     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.8\")  = \"2eea60a9-2f2b-5d32-93b2-dc9688165cfa\"\r\n   SHA3_384     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.9\")  = \"f49d66f8-0755-5500-b747-ef5f7a18e9bc\"\r\n   SHA3_512     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.10\") = \"e3936772-aa32-5463-870b-0a05a6bb2dd3\"\r\n   SHAKE_128    = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.11\") = \"bd2da541-a66d-52a7-8cf7-3773e204c114\"\r\n   SHAKE_256    = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.12\") = \"a1a5a6ea-b4fd-5f93-91e3-a25de6121457\"\r\n```",
+          "createdAt": "2023-09-06T21:05:45Z",
+          "updatedAt": "2023-09-06T21:27:24Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "@danielmarschall \r\n\r\nI think it's way better.\r\n\r\nWhy not using the [URN notation](https://www.ietf.org/rfc/rfc3061.txt) in lowercase mode only, e.g. `urn:oid:2.16.840.1.101.3.4.2.4`?\r\n\r\n",
+          "createdAt": "2023-09-06T21:13:37Z",
+          "updatedAt": "2023-09-06T21:14:03Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@fabiolimace Are you confused about my notation `UUIDv5(OID 2.16.840.1.101.3.4.2.6)` ? With this notation I meant taking the OID namespace ID (\"6ba7b812-9dad-11d1-80b4-00c04fd430c8\") and use the OID \"2.16.840.1.101.3.4.2.6\" as payload.",
+          "createdAt": "2023-09-06T21:19:29Z",
+          "updatedAt": "2023-09-06T21:54:07Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "Sorry I meant the string \"urn:oid:2.16.840.1.101.3.4.2.4\" as the name input for the UUIDv5 function.\r\n\r\nThis:\r\n\r\n```\r\n   SHA2_224     = UUIDv5(urn:oid:2.16.840.1.101.3.4.2.4)  = 85eed581-369c-5931-a7fe-0d8158e83871\r\n```\r\n\r\nNot this:\r\n\r\n```\r\n   SHA2_224     = UUIDv5(OID 2.16.840.1.101.3.4.2.4)  = e0f20710-25d9-54ab-8325-ccf2d456ad0b\r\n```\r\n\r\nBut I'm not sure if it's important.",
+          "createdAt": "2023-09-06T21:21:21Z",
+          "updatedAt": "2023-09-06T21:22:02Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "UUIDv5 requires two parameters:  Namespace ID and Payload.  So the notation `UUIDv5(urn:oid:2.16.840.1.101.3.4.2.4)` is incomplete.\r\n\r\nThe full notation of `UUIDv5(OID 2.16.840.1.101.3.4.2.4)` would be `UUIDv5(\"6ba7b812-9dad-11d1-80b4-00c04fd430c8\", \"2.16.840.1.101.3.4.2.4\")`, but then the line becomes too long.\r\n\r\n\r\nEdit: I have changed my proposal to `UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.4\")` . This should be more clear what I mean.",
+          "createdAt": "2023-09-06T21:25:26Z",
+          "updatedAt": "2023-09-06T21:27:56Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "> The full notation of UUIDv5(OID 2.16.840.1.101.3.4.2.4) would be UUIDv5(\"6ba7b812-9dad-11d1-80b4-00c04fd430c8\", \"2.16.840.1.101.3.4.2.4\"), but then the line becomes too long.\r\n\r\nYes, I noticed that the namespace parameter was implicit.",
+          "createdAt": "2023-09-06T21:28:06Z",
+          "updatedAt": "2023-09-06T21:28:32Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "> The following UUIDs were created by using a UUIDv5 with the OID namespace ID\r\n   (\"6ba7b812-9dad-11d1-80b4-00c04fd430c8\") and the OID identifying the\r\n   hash algorithm. \r\n>    SHA2_224     = UUIDv5(NS_OID, \"2.16.840.1.101.3.4.2.4\")  = \"e0f20710-25d9-54ab-8325-ccf2d456ad0b\"\r\n\r\nI completely agree now. \u2764\ufe0f \r\n\r\n-- \r\n\r\nP.S.\r\nIt also breaks [my implementation](https://github.com/f4b6a3/uuid-creator/blob/master/src/main/java/com/github/f4b6a3/uuid/alt/GUID.java#L342) of UUIDv8 using SHA-256. \ud83d\ude22 ",
+          "createdAt": "2023-09-06T21:34:33Z",
+          "updatedAt": "2023-09-06T21:53:32Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, it breaks some implementations, including mine. But after all, Internet Drafts are supposed to change. :-)\r\nI really hope my proposal gets accepted, because I think it is perfect to use OIDs. They are unambiguous and so everyone can define their own hashspace IDs.",
+          "createdAt": "2023-09-06T21:57:10Z",
+          "updatedAt": "2023-09-06T21:57:52Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, Your proposal of `UUIDv5(NS_OID, \"Hash_OID_NO_LEADING_DOT\")` works for the NIST ones that have OIDs. \r\nAre we to assume every cryptographic hashing function will have an OID?\r\n\r\nChecking against your list earlier:\r\n```\r\nMD2               = \"1.2.840.113549.2.2\"\r\nMD4               = \"1.2.840.113549.2.4\"\r\nMD5               = \"1.2.840.113549.2.5\" (But probably just use v3)\r\nTIGER/192         = \"1.3.6.1.4.1.11591.12.2\"\r\nRIPEMD160         = \"1.0.10118.3.0.49\" or \"1.3.36.3.2.1\"\r\nRIPEMD128         = \"1.0.10118.3.0.50\" or \"1.3.36.3.2.2\"\r\nRIMEMD256         = \"1.3.36.3.2.3\"\r\nWHIRLPOOL         = \"1.0.10118.3.0.55\"?\r\nGOST3410-2012-256 = \"1.2.643.7.1.1.3.2\"\r\nGOST3410-2012-512 = \"1.2.643.7.1.1.3.3\"\r\nHAVAL-3-128       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nHAVAL-3-160       = \"1.3.6.1.4.1.18105.2.1.1.2\"\r\nHAVAL-3-192       = \"1.3.6.1.4.1.18105.2.1.1.3\"\r\nHAVAL-3-224       = \"1.3.6.1.4.1.18105.2.1.1.4\"\r\nHAVAL-3-256       = \"1.3.6.1.4.1.18105.2.1.1.5\"\r\nHAVAL-4-128       = \"1.3.6.1.4.1.18105.2.1.1.6\"\r\nHAVAL-4-160       = \"1.3.6.1.4.1.18105.2.1.1.7\"\r\nHAVAL-4-192       = \"1.3.6.1.4.1.18105.2.1.1.8\"\r\nHAVAL-4-224       = \"1.3.6.1.4.1.18105.2.1.1.9\"\r\nHAVAL-4-256       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nHAVAL-5-128       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nHAVAL-5-160       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nHAVAL-5-192       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nHAVAL-5-224       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nHAVAL-5-256       = \"1.3.6.1.4.1.18105.2.1.1.1\"\r\nSNEFRU            = ???\r\n```\r\n\r\nRIPEMD may have two and SNEFRU does not have one that I can find?\r\nHow would we handle something like that?\r\n\r\n---\r\n\r\n@fabiolimace \r\n> I just don't know which are the current canonical names for the SHA-2 family. For example, [Wikipedia](https://en.wikipedia.org/wiki/SHA-2) and [Java](https://docs.oracle.com/en/java/javase/11/docs/specs/security/standard-names.html#messagedigest-algorithms) use SHA-256 (with a dash), but not SHA2_256 (with a 2 and an underline).\r\n\r\nI can change them to the NIST document items easy enough. I added the \"2\" so they were somewhat inline with SHA3 from a formatting perspective and I I swapped the \"/\" char for an underscore. Underscores were used because they matched the underscores used in the namespace items. \r\n\r\nBut I am not partial. I can change them to the following as defined by [FIPS180-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf>) and [FIPS202](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf)\r\n```\r\nSHA-224      = \"...whatever we choose...\"\r\nSHA-256      = \"...whatever we choose...\"\r\nSHA-384      = \"...whatever we choose...\"\r\nSHA-512      = \"...whatever we choose...\"\r\nSHA-512/224  = \"...whatever we choose...\"\r\nSHA-512/256  = \"...whatever we choose...\"\r\nSHA3-224     = \"...whatever we choose...\"\r\nSHA3-256     = \"...whatever we choose...\"\r\nSHA3-384     = \"...whatever we choose...\"\r\nSHA3-512     = \"...whatever we choose...\"\r\nSHAKE128     = \"...whatever we choose...\"\r\nSHAKE256     = \"...whatever we choose...\"\r\n```\r\n",
+          "createdAt": "2023-09-06T23:19:11Z",
+          "updatedAt": "2023-09-06T23:19:11Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The new names according to FIPS180-4 and FIPS202 look good to me.\r\nI think \"SHA-512/256\" reads much better than \"SHA2_512_256\".\r\n\r\n---\r\n\r\nAbout algorithms with multiple OIDs, I would try to find the \"official\" ones.\r\nBut I know that task can be hard and it might be ambigous.\r\n\r\nAbout algorithms without known OID, I think this could be out-of-scope.\r\nSince the mechanism is optional, people would need to define own UUIDs,\r\ne.g. UUIDv1 or UUIDv4 for these hash algorithms.\r\n\r\nI am not sure if my proposal 1 (that used algorithm names in a custom namespace,\r\ne.g. `UUIDv5(\"1ee317e2-1853-64b2-8fe9-3c4a92df8582\", \"SHA-512/224\")` ) would be better.\r\n@kyzer-davis  What is your opinion to my proposal 1 ?\r\nMany people and even implementations like PHP use hash algorithm names like \"GOST\",\r\nbut there are so many GOST algorithms, that we do not know what is implemented,\r\nso the risk is that someone does this:  `UUIDv5(\"1ee317e2-1853-64b2-8fe9-3c4a92df8582\", \"GOST\")`\r\n",
+          "createdAt": "2023-09-06T23:43:25Z",
+          "updatedAt": "2023-09-06T23:52:46Z"
+        }
+      ]
+    },
+    {
+      "number": 144,
+      "id": "I_kwDOH6Ln3M5wUd0u",
+      "title": "IANA registry Rereview",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/144",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Paul Wouters:\r\n```\r\nI am not sure that I agree that no IANA registry is required for hashspace\r\nID's. If another document adds new hashspace IDs, there won't be a single\r\ndocument anymore that lists all of them, or massive duplication. This is\r\nexactly what we use IANA registries for. Reconsider creating a new IANA registry.\r\n```\r\n\r\nIANA registration encompass;\r\n\r\n1. UUID Variants\r\n2. UUID \"sub-versioning\" (as linked to a variant) \r\n   - See them all here: https://github.com/uuid6/uuid6-ietf-draft/issues/26#issuecomment-1062164457\r\n   - Nil/Max UUID\r\n4. UUID Namespace IDs\r\n5. UUID Hashspace IDs",
+      "createdAt": "2023-09-06T17:01:02Z",
+      "updatedAt": "2023-09-06T17:36:10Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Commenting for @ben221199 as per his vote for this under \r\nhttps://github.com/ietf-wg-uuidrev/rfc4122bis/issues/83#issuecomment-1548210298",
+          "createdAt": "2023-09-06T17:01:31Z",
+          "updatedAt": "2023-09-06T17:01:31Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I'm definitely planning to have IANA considerations in the historical RFC that I want to make with @kyzer-davis after RFC4122bis is published. However, if we already can add some basic IANA considerations in RFC4122bis, I'm okay with that, but we should think this out very well. I don't want a shitty table which I regret making, because in that case I prefer having the IANA considerations only in the historical RFC.",
+          "createdAt": "2023-09-06T17:36:10Z",
+          "updatedAt": "2023-09-06T17:36:10Z"
         }
       ]
     }
@@ -5270,24 +5508,26 @@
       "id": "PR_kwDOH6Ln3M5ZEOYy",
       "title": "Draft 11",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/138",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- #137\r\n- #134\r\n- #136\r\n- #135\r\n- #139",
       "createdAt": "2023-08-29T19:11:37Z",
-      "updatedAt": "2023-09-01T20:09:19Z",
+      "updatedAt": "2023-09-05T15:23:32Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "dd5b0982219f5475ebc7325a4ed0d7534b81104b",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "dns-rereview",
       "headRefOid": "e33e137c0738dc59b495003526ffc015e9bc3a0e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-09-05T15:23:28Z",
+      "mergedAt": "2023-09-05T15:23:28Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "765b8326ed3a317992fd3c05e23cd12a57a83f17"
+      },
       "comments": [],
       "reviews": [
         {
