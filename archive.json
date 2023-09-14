@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-12T01:11:37.439711+00:00",
+  "timestamp": "2023-09-14T01:12:45.417524+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -3047,7 +3047,7 @@
       "labels": [],
       "body": "From Paul Wouters:\r\n```\r\nI am not sure that I agree that no IANA registry is required for hashspace\r\nID's. If another document adds new hashspace IDs, there won't be a single\r\ndocument anymore that lists all of them, or massive duplication. This is\r\nexactly what we use IANA registries for. Reconsider creating a new IANA registry.\r\n```\r\n\r\nIANA registration encompass;\r\n\r\n1. UUID Variants\r\n2. UUID \"sub-versioning\" (as linked to a variant) \r\n   - See them all here: https://github.com/uuid6/uuid6-ietf-draft/issues/26#issuecomment-1062164457\r\n   - Nil/Max UUID\r\n4. UUID Namespace IDs\r\n5. UUID Hashspace IDs",
       "createdAt": "2023-09-06T17:01:02Z",
-      "updatedAt": "2023-09-11T18:27:37Z",
+      "updatedAt": "2023-09-13T18:59:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -3210,6 +3210,13 @@
           "body": "I'm also fine with the minimal version, if that causes us to get somewhere already. In that case, we only register `UUID Namespace IDs` and `UUID Hashspace IDs` for now. However, the only objection I have for hashspaces is that it is linked to UUIDv8, as I told in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/144#issuecomment-1712463318. The solution could be one of the following:\r\n - Introduce a UUIDv9 that will take the time-based and name-based formats of UUIDv8 and leave UUIDv8 with only the vendor-specific custom format.\r\n - Remove the time-based and name-based formats from UUIDv8 and specify UUIDv9 in another RFC.\r\n - Leave out UUIDv8 entirely.\r\n\r\nI don't think it will work out well if we use UUIDv8 for 3 different formats.",
           "createdAt": "2023-09-11T18:27:36Z",
           "updatedAt": "2023-09-11T18:27:36Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I just had an idea in re hash space ID registry.\r\n\r\nSince hash space ID and OID are connected, maybe it would be good having a registry for hash algorithms in general, instead?\r\nI had a very hard time finding the OIDs of the most common hash algorithms (the result: see https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1709117798 ) so I think it would be super helpful if there would be a registry similar to this:\r\n\r\n- Algorithm name (prefer the NIST naming, but maybe IANA want to introduce a different naming scheme? In any case, the algorithm name becomes more standardized and less ambigous)\r\n- OID(s), optional\r\n- Hash Space ID (optional)\r\n\r\nThere might be cases where the algorithm name is known, but neither an OID nor a custom hash space is known. In this case, the fields could be left empty. Or maybe IANA could automatically generate a random Hash Space ID when adding the algorithm to the registry.\r\n\r\n---\r\n\r\n### In re UUIDv8 and UUIDv9\r\n\r\n> I'm also fine with the minimal version, if that causes us to get somewhere already. In that case, we only register `UUID Namespace IDs` and `UUID Hashspace IDs` for now. However, the only objection I have for hashspaces is that it is linked to UUIDv8, as I told in [#144 (comment)](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/144#issuecomment-1712463318). The solution could be one of the following:\r\n> \r\n> * Introduce a UUIDv9 that will take the time-based and name-based formats of UUIDv8 and leave UUIDv8 with only the vendor-specific custom format.\r\n> * Remove the time-based and name-based formats from UUIDv8 and specify UUIDv9 in another RFC.\r\n> * Leave out UUIDv8 entirely.\r\n> \r\n> I don't think it will work out well if we use UUIDv8 for 3 different formats.\r\n\r\nI don't think UUIDv9 should be in a new RFC, and UUIDv8 should stay, because I think it is a very good idea and important. It would mean that we have to do all the formal stuff again and it would be a lot of work. I don't think that it would be catastrophic if UUIDv8 has two use-cases (custom time-based and fully custom).\r\nI have a proposal for UUIDv9, which I have put in a new issue (#147), so that this issue can continue focussing on the IANA registration part.\r\n\r\n\r\n\r\n",
+          "createdAt": "2023-09-13T15:20:33Z",
+          "updatedAt": "2023-09-13T18:59:45Z"
         }
       ]
     },
@@ -3273,6 +3280,72 @@
       "updatedAt": "2023-09-07T18:21:19Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 147,
+      "id": "I_kwDOH6Ln3M5w77zb",
+      "title": "UUIDv9 for new name-based UUIDs",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147",
+      "state": "OPEN",
+      "author": "danielmarschall",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(Continuation of a discussion in #144)\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
+      "createdAt": "2023-09-13T15:18:24Z",
+      "updatedAt": "2023-09-13T22:05:07Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "Maybe off-topic, but...\r\n\r\nIt is too late to replace the compound adjective \u201cname-based\u201d with \u201chash-based\u201d in v3, v5 (and v9); or at least treat them as interchangeable terms in the document? I see both when I inspect some implementations.\r\n",
+          "createdAt": "2023-09-13T15:29:12Z",
+          "updatedAt": "2023-09-13T15:30:20Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Hm\u2026 i think I used both terms, but without intention. I think it is okay if UUIDv9 gets named like UUIDv3 and UUIDv5 (i.e. name-based)",
+          "createdAt": "2023-09-13T15:52:56Z",
+          "updatedAt": "2023-09-13T15:52:56Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "I still have no opinion on the creation of UUIDv9. But we should be careful with expressions like \"fully custom UUIDv8\" and \"time-based UUIDv8\" as if they were side by side in the hierarchy. \r\n\r\nThere should be only one UUIDv8, which is \"Fully Custom UUID\" (if I'm correct). The time-based example is just one instance of a possible implementation of UUIDv8.\r\n\r\nI think the confusion remains because UUIDv8 was originally a time-based UUID with custom timestamp precision. There is a lot of outdated webpages that still say that UUIDv8 is, in essence, a time-based version. \r\n\r\nHowever, all UUIDv8 requirements have been eliminated except the variant and version bits, making it fully custom/free form/proprietary format.\r\n\r\nPlease, see the original discussion about UUIDv8: https://github.com/uuid6/uuid6-ietf-draft/issues/31.\r\n",
+          "createdAt": "2023-09-13T15:57:19Z",
+          "updatedAt": "2023-09-13T16:41:02Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Uhm. It's really about six months too late for this suggestion.\r\n",
+          "createdAt": "2023-09-13T17:39:14Z",
+          "updatedAt": "2023-09-13T17:39:14Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> It is too late to replace the compound adjective \u201cname-based\u201d with \u201chash-based\u201d in v3, v5 (and v9); or at least treat them as interchangeable terms in the document? I see both when I inspect some implementations.\r\n\r\nThat is probably a tolerable change at this point.\r\n",
+          "createdAt": "2023-09-13T17:41:16Z",
+          "updatedAt": "2023-09-13T17:41:16Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Uhm. It's really about six months too late for this suggestion.\r\n\r\nActually, I do feel terrible for making a proposal at this point. But maybe there is a slight chance that it is possible. I really wish I had known about the UUID-Rev group 6+ months ago, then I would have contributed much more :-)\r\n\r\nIn theory (if the proposal is accepted in substantially), the editing steps are rather small:\r\n- Rename section 5.9 (Nil UID) and 5.10 (Max UID) to 5.10 and 5.11.\r\n- Move section C.8 (Example of UUIDv8) and rename it to 5.10 \"UUID Version 9\".\r\n- Section 3.2 (Abbreviations): Add UUIDv9\r\n- Section 5.5 (UUIDv5): Recommendation for other hashes change UUIDv8 to UUIDv9.\r\n- Section 6.5 (Best practises): Change Named bed UUIDs using UUIDv8 to UUIDv9\r\n- Appendix B: Change UUIDv8 to UUIDv9.\r\n- Check references still valid after renaming sections? (But I guess the Editor will do it in the finalization?)\r\n\r\nIf my proposal could be formally and substantially accepted, then I would like to help as good as I can by reading the whole draft from top to bottom to verify all references.",
+          "createdAt": "2023-09-13T18:53:55Z",
+          "updatedAt": "2023-09-13T18:57:02Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "> Custom time-based stays UUIDv8\r\n\r\nI don't agree on this one yet.",
+          "createdAt": "2023-09-13T22:05:07Z",
+          "updatedAt": "2023-09-13T22:05:07Z"
+        }
+      ]
     }
   ],
   "pulls": [
