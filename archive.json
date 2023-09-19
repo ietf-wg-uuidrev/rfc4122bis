@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-17T01:17:36.189912+00:00",
+  "timestamp": "2023-09-19T01:14:38.561891+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2862,7 +2862,7 @@
       "labels": [],
       "body": "From Paul Wouters\r\n```\r\nWhy are hashspace IDs chosen to look like random uuids? Eg why not encode\r\n\"SHA2_224\" (hex 534841325F323234) as 53484132-5F32-3234-0000-000000000000\r\nor 00000000-0000-0000-5348-41325F323234 (plus or minus variant/version bits)\r\nso that it becomes far more clear this is not an ordinary random uuid?\r\n```\r\n\r\n\r\n### Current, All random\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-0f30e2e83145\"\r\nSHA2_256     = \"3fb32780-953c-4464-9cfd-e85dbbe9843d\"\r\nSHA2_384     = \"e6800581-f333-484b-8778-601ff2b58da8\"\r\nSHA2_512     = \"0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9\"\r\nSHA2_512_224 = \"003c2038-c4fe-4b95-a672-0c26c1b79542\"\r\nSHA2_512_256 = \"9475ad00-3769-4c07-9642-5e7383732306\"\r\nSHA3_224     = \"9768761f-ac5a-419e-a180-7ca239e8025a\"\r\nSHA3_256     = \"2034d66b-4047-4553-8f80-70e593176877\"\r\nSHA3_384     = \"872fb339-2636-4bdd-bda6-b6dc2a82b1b3\"\r\nSHA3_512     = \"a4920a5d-a8a6-426c-8d14-a6cafbe64c7b\"\r\nSHAKE_128    = \"7ea218f6-629a-425f-9f88-7439d63296bb\"\r\nSHAKE_256    = \"2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a\"\r\n```",
       "createdAt": "2023-09-06T16:55:09Z",
-      "updatedAt": "2023-09-17T00:14:41Z",
+      "updatedAt": "2023-09-18T01:33:03Z",
       "closedAt": null,
       "comments": [
         {
@@ -3081,6 +3081,20 @@
           "body": "<del>v7 works, so does v4, I think though.</del>\r\n\r\n**EDIT**: v4 is better because of its randomness. Hash space IDs are passed to another hash function so should be very different from each other.",
           "createdAt": "2023-09-16T23:18:19Z",
           "updatedAt": "2023-09-17T00:14:41Z"
+        },
+        {
+          "author": "chorman0773",
+          "authorAssociation": "NONE",
+          "body": "I saw the OID proposal above, and I'd like to second that.\r\n\r\nThis would allow 3rd parties can also define new Hashspace UUIDs, if they have an OID they can control (and hand out sub-OIDs from), which they can get from the IANA. It would also allow users of v9 to substitute a v5 UUID in out-of-band transport with simply the OID for the algorithm itself. The main risk of doing this, in my opinion, without a centralized registry is that one algorithm might end up with 2 different OIDs in different contexts. If this route is taken, there should be guidance to avoid anti-collisions.",
+          "createdAt": "2023-09-17T21:43:59Z",
+          "updatedAt": "2023-09-17T21:43:59Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Since it's v8, any third party can generate a UUID and use it in their application as a hashspace ID for any hash function. Perhaps, we should expand the following statement in Section 6.5 to clarify that any user-defined UUID value may be used as a hashspace ID within an application context. This point is not sufficiently clear in the current draft, despite #132.\r\n\r\n> These MAY leverage newer hashing protocols such as ... or _even protocols that have not been defined yet_.\r\n\r\nWithin an implementation can the implementer do whatever they want, but a standard has to focus in the coordination of such implementations. What if SHA-4 has a parameter that is not expressed in the OID? What if a widespread implementation applies SHA-5 differently than expected? These circumstances may risk the future interoperability under the OID-based hashspace scheme. Plus, observing such a situation, future RFC authors might even avoid ratifying an OID-based hashspace ID because officially specifying the meaning of widely used hashspace ID can destroy the existing implementations.\r\n",
+          "createdAt": "2023-09-18T01:33:03Z",
+          "updatedAt": "2023-09-18T01:33:03Z"
         }
       ]
     },
@@ -3096,7 +3110,7 @@
       "labels": [],
       "body": "From Paul Wouters:\r\n```\r\nI am not sure that I agree that no IANA registry is required for hashspace\r\nID's. If another document adds new hashspace IDs, there won't be a single\r\ndocument anymore that lists all of them, or massive duplication. This is\r\nexactly what we use IANA registries for. Reconsider creating a new IANA registry.\r\n```\r\n\r\nIANA registration encompass;\r\n\r\n1. UUID Variants\r\n2. UUID \"sub-versioning\" (as linked to a variant) \r\n   - See them all here: https://github.com/uuid6/uuid6-ietf-draft/issues/26#issuecomment-1062164457\r\n   - Nil/Max UUID\r\n4. UUID Namespace IDs\r\n5. UUID Hashspace IDs",
       "createdAt": "2023-09-06T17:01:02Z",
-      "updatedAt": "2023-09-14T12:12:03Z",
+      "updatedAt": "2023-09-18T21:37:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -3266,6 +3280,34 @@
           "body": "I just had an idea in re hash space ID registry.\r\n\r\nSince hash space ID and OID are connected, maybe it would be good having a registry for hash algorithms in general, instead?\r\nI had a very hard time finding the OIDs of the most common hash algorithms (the result: see https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1709117798 ) so I think it would be super helpful if there would be a registry similar to this:\r\n\r\n- Algorithm name (prefer the NIST naming, but maybe IANA want to introduce a different naming scheme? In any case, the algorithm name becomes more standardized and less ambigous)\r\n- OID(s), optional\r\n- Hash Space ID (optional)\r\n\r\nThere might be cases where the algorithm name is known, but neither an OID nor a custom hash space is known. In this case, the fields could be left empty. Or maybe IANA could automatically generate a random Hash Space ID when adding the algorithm to the registry.\r\n\r\n**Edit: It turns out that this idea is already by kyzer-davis here https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1711804042\r\n\r\n---\r\n\r\n### In re UUIDv8 and UUIDv9\r\n\r\n> I'm also fine with the minimal version, if that causes us to get somewhere already. In that case, we only register `UUID Namespace IDs` and `UUID Hashspace IDs` for now. However, the only objection I have for hashspaces is that it is linked to UUIDv8, as I told in [#144 (comment)](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/144#issuecomment-1712463318). The solution could be one of the following:\r\n> \r\n> * Introduce a UUIDv9 that will take the time-based and name-based formats of UUIDv8 and leave UUIDv8 with only the vendor-specific custom format.\r\n> * Remove the time-based and name-based formats from UUIDv8 and specify UUIDv9 in another RFC.\r\n> * Leave out UUIDv8 entirely.\r\n> \r\n> I don't think it will work out well if we use UUIDv8 for 3 different formats.\r\n\r\nI don't think UUIDv9 should be in a new RFC, and UUIDv8 should stay, because I think it is a very good idea and important. It would mean that we have to do all the formal stuff again and it would be a lot of work. I don't think that it would be catastrophic if UUIDv8 has two use-cases (custom time-based and fully custom).\r\nI have a proposal for UUIDv9, which I have put in a new issue (#147), so that this issue can continue focussing on the IANA registration part.\r\n\r\n\r\n\r\n",
           "createdAt": "2023-09-13T15:20:33Z",
           "updatedAt": "2023-09-14T12:12:03Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "https://mailarchive.ietf.org/arch/msg/uuidrev/dhxgO66xkpNBrOtSy0AY8nV9bAE/ @sergeyprokhorenko @danielmarschall @ben221199 @LiosK @chorman0773  If this matters, then please participate.",
+          "createdAt": "2023-09-18T18:24:49Z",
+          "updatedAt": "2023-09-18T18:24:49Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@danielmarschall,    Please clarify your proposal taking into account the discussion that took place.\r\n\r\nIt would be terrible if we had to re-do the entire approval process of this long-awaited RFC because of frankly completely useless details regarding almost unused hash UUIDs.\r\n\r\n@mcr,    I completely agree with @LiosK's point of view and give him my vote",
+          "createdAt": "2023-09-18T19:26:53Z",
+          "updatedAt": "2023-09-18T19:26:53Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "I suggest to freeze the draft RFC and stop making any changes to it because it's too late and improvements could go on forever. There was a lot of time to make the discussed amendments in the previous stages of RFC development. Stakeholders will be able to propose changes to an already approved RFC",
+          "createdAt": "2023-09-18T19:59:29Z",
+          "updatedAt": "2023-09-18T19:59:29Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For what it's worth, unless there is some specific and real-world problem these hashed UUID solve (not just \"what if maybe in the future\" stuff), _I say skip it and move on_.  If nobody has a use case, after all the time and effort that's been put into the drafts, doesn't seem worth fussing over. \r\n\r\nAnd from a logical perspective, just to mention it as part of this: One of the reasons I tend to not put too much stock in the argument that MD5 and SHA-1 are out of date and so we should have a way to replace them - is that one of the factors that makes SHA-256 and others strong hashes is because they are longer (whereas UUIDs are fixed at 128 bits).  Obviously there's more to it than that, but taking a SHA-256 value and truncating it to some smaller size and saying that it's an improvement or more collision resistant or anything because it's based on SHA-256 and not SHA-1... seems like at the very least not thoroughly researched, and at worst just flat out incorrect.  Does anyone actually know the math on collisions for just the first N bits of a SHA-256 hash?  Is it actually worse in terms of collision resistance than MD5 or the current SHA-1 implementation? - based on the math? (Not just the \"well everyone knows MD5 is broken\" - like exactly how many collisions are we talking about...)\r\n\r\nAnd that conundrum is another reason I (and I think a lot of other people on this thread would agree) just go back to: **Is there any practical these hash UUIDs would solve?  (What specifically, with some examples showing how the work done so far on this RFC doesn't cover it...)  If so, great, let's discuss _that_ specifically in more detail.  If there's no good answer to that question, then I don't see any reason we can't ignore it, and I vote let's move on and get this RFC approved.**",
+          "createdAt": "2023-09-18T21:37:43Z",
+          "updatedAt": "2023-09-18T21:37:58Z"
         }
       ]
     },
@@ -3340,9 +3382,9 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "(Continuation of a discussion in #144)\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
+      "body": "(Continuation of a discussion in #144)\r\n\r\n\r\n**_Edit: I have revised my proposal, added more arguments, and added explanations/context in case some readers are not familiar with these GitHub discussions or the draft. Feel free to skip to the \"Reasons\" section.\r\nhttps://1drv.ms/w/s!Aq8PcXiGvLchiJozKQxKX-C5RSlH8g?e=YBePzy_**\r\n\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
       "createdAt": "2023-09-13T15:18:24Z",
-      "updatedAt": "2023-09-15T07:28:49Z",
+      "updatedAt": "2023-09-18T23:41:36Z",
       "closedAt": null,
       "comments": [
         {
@@ -3421,6 +3463,160 @@
           "body": "> No, I think examples are always good.\r\n\r\nExamples are, but for me it now seems more like a version definition than an example. I think we should be more clear about that. Don't understand the test vectors of UUIDv8 either.\r\n\r\nFor all other parts, I think that @danielmarschall and I are mostly on the same line.",
           "createdAt": "2023-09-14T08:51:37Z",
           "updatedAt": "2023-09-14T08:51:37Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'd point out one thing that seems to be missed in the recent discussion around the new name-based scheme: the uniqueness of hashspace-based UUIDs is absolutely dependent on the hash function used.\r\n\r\nThe current draft allows arbitrary hash functions chosen by implementers, and thus the uniqueness is dependent on the application-specific choice of hash functions. This application-specific nature makes the hashspace approach a very good example of v8.\r\n\r\nIn my opinion, it isn't really useful or meaningful to spare a separate version number without eliminating this application-specific nature, and to achieve that, we have to do at least the following work:\r\n\r\n- Select the appropriate hash functions to be allowed\r\n- Substantiate a reasonable level of uniqueness guarantee between UUIDs created from the selected hash functions\r\n\r\nPerhaps, it's considerably late to complete these.\r\n\r\nIn addition, the above bullet points pose a subtle question relating to #143 and #144: what hash functions should we officially list in the specification? The current hashspace approach accepts whatever hash function (because it's v8), but it doesn't make sense to list and promote _unsafe_ hash functions in the specification. I don't know how IANA works, but if it doesn't have a mechanism to reject nonsensical hash functions from being listed, IANA will not be a good choice. The OID-based hashspace IDs would make noise because it allows any hash function to get an official-ish hashspace ID without selection.",
+          "createdAt": "2023-09-17T23:45:48Z",
+          "updatedAt": "2023-09-17T23:45:48Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I'd point out one thing that seems to be missed in the recent discussion around the new name-based scheme: the uniqueness of hashspace-based UUIDs is absolutely dependent on the hash function used.\r\n> \r\n> The current draft allows arbitrary hash functions chosen by implementers, and thus the uniqueness is dependent on the application-specific choice of hash functions. This application-specific nature makes the hashspace approach a very good example of v8.\r\n> \r\n\r\nI am not sure if I understood what you mean. Yes, if different hash methods are used, the resulting UUIDv9 is different. However, you need to think about the hash algorithm be an input of the hash function.\r\n\r\n```\r\nUUIDv3(Namespace, Value) := MD5(Namespace || Value)\r\nUUIDv5(Namespace, Value) := SHA1(Namespace || Value)\r\nUUIDv9(Hash, Namespace, Value) := Hash(HashId || Namespace || Value)\r\n```\r\n\r\nAs I mentioned above, if we stay at UUIDv8, then we do not know \"which\" UUIDv8 was chosen. Was it a fully custom, a custom time format, or a custom hash format? We don't know.\r\n\r\nFor UUIDv9, if the hash is unambiguous, then the UUIDv9 is unambiguous.\r\n\r\n> The current hashspace approach accepts whatever hash function (because it's v8), but it doesn't make sense to list and promote _unsafe_ hash functions in the specification. I don't know how IANA works, but if it doesn't have a mechanism to reject nonsensical hash functions from being listed, IANA will not be a good choice. The OID-based hashspace IDs would make noise because it allows any hash function to get an official-ish hashspace ID without selection.\r\n\r\nIf a hash algorithm is \"unsafe\" is dependant of the time. We know a few hash functions which are unsafe today. But we don't know if SHA2 or SHA3 might become unsafe tomorrow, if someone finds a flaw. So safe/unsafe should be out of scope for the RFC. However, the requirement of the hash function should be that it has at least 122 bits output (or it needs to be zero-padded).\r\n\r\nI think the selection of hash algorithms in the current draft is good. It contains the NIST algorithms which are VERY well-known and are currently (2023) safe to use. If other hash algorithms emerge in the future and/or SHA2 and SHA3 become very insecure, then there can be a revision of the RFC with a different Appendix B. But this is not mandatory because the mechanism of hash spaces and/or the IANA registry of hashes allows the developer to simply choose a different algorithm.",
+          "createdAt": "2023-09-18T10:15:44Z",
+          "updatedAt": "2023-09-18T10:20:24Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "> As I mentioned above, if we stay at UUIDv8, then we do not know \"which\" UUIDv8 was chosen. Was it a fully custom, a custom time format, or a custom hash format? We don't know.\r\n\r\nYes, and we don't care at all. This hash UUID was not the intent of this RFC. And now this hash UUID is delaying the approval of everyone's expected UUIDv7. The uniqueness of the hash UUID is questionable not only because of problems with satisfactory hash functions, but also because the hash functions argument is not unique. Worse, the variability of the hash functions argument leads to variability in the hash UUID, but a volatile key is unsuitable for databases and other information systems. And hash UUIDs are also unordered, so they are no better than UUIDv4. We should throw hash UUID into the UUIDv8 category as soon as possible and stop delaying final RFC approval.",
+          "createdAt": "2023-09-18T12:36:35Z",
+          "updatedAt": "2023-09-18T12:45:18Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Yes, and we don't care at all.\r\n\r\nWho is \"we\"?\r\n\r\n> This hash UUID was not the intent of this RFC.\r\n\r\nAnd why did it end up in the latest draft then?\r\n\r\n> a volatile key is unsuitable for databases and other information systems\r\n\r\nThen you also need to strike UUIDv4.",
+          "createdAt": "2023-09-18T13:43:10Z",
+          "updatedAt": "2023-09-18T13:43:58Z"
+        },
+        {
+          "author": "chorman0773",
+          "authorAssociation": "NONE",
+          "body": "> Worse, the variability of the hash functions argument leads to variability in the hash UUID, but a volatile key is unsuitable for databases and other information systems\r\n\r\nThen you don't use them for databases. \r\n\r\nI would like for a standardized mechanism for non-SHA-1 hash UUIDs for sure. I use UUIDs as device identifiers in the operating system I'm working on, and standard device names get fixed IDs assigned by using namespace UUIDS. Using something other than SHA-1 or md5 would be nice.",
+          "createdAt": "2023-09-18T13:58:59Z",
+          "updatedAt": "2023-09-18T13:58:59Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@danielmarschall\r\n\r\nThe current hashspace method accepts an arbitrary hash function, so I can define one as follows, give it a hashspace ID, and generate UUIDv8 name-based UUIDs.\r\n\r\n```go\r\nfunc MiracleHash(message []byte) []byte {\r\n    digest := make([]byte, 16, 16) // prepare zero-filled byte sequence\r\n    time.Sleep(42 * time.Second)   // wait for a miracle to compute digest\r\n    return digest\r\n}\r\n```\r\n\r\nThis `MiracleHash` function is obviously nonsense, but it's absolutely fine within the v8 space if it meets the application-specific needs.\r\n\r\nHowever, out of the v8 space, in my opinion, the spec must reject _unsafe_ (in terms of uniqueness) hash functions. UUID isn't an almighty identifier framework but is just a universally unique identifier standard. All the versions provided in the document (except for v8, which is clearly marked as implementation-specific) must provide a reasonable guarantee of universal uniqueness, because that is exactly what general readers of the standard are looking for. This is my personal opinion, but I believe this way of thinking maximizes the utility of the UUID standard.\r\n\r\nThe hashspace approach as in the current draft should be good enough as an informative guidance, but there are several questions we have to answer to make it a normative definition that gives a reasonable uniqueness guarantee. For example:\r\n\r\n- What hash functions should we allow? Do we really need all the SHA-2 and SHA-3 items? We have to pick one not just because it has some users but because it provides uniqueness.\r\n- Is it safe to truncate a digest to 128 bits? FIPS 180-4 explicitly allows truncation while other standards do not.\r\n- Is it safe to mix multiple hash functions in one version space? Do similar SHA functions not correlate with each other? SHA functions are each designed not to produce the same value, but the collision resistance across multiple algorithms shouldn't have been a primary design goal.\r\n- What if a hash function is proven unsafe in the future? How do we remove from a list of name-based UUIDs an unsafe algorithm-based UUID that may collide with other values generated in the future?\r\n\r\nThese questions are kept on hold when the current hashspace approach was first introduced because it was expected to be just an informative example. Thinking twice, we might conclude this approach is not the best option to deal with the above questions. Perhaps, we need to reconsider the other ideas of name-based schemes [we have explored before](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/50). Anyway, developing a normative name-based scheme isn't that easy, and perhaps we have run out of time.\r\n\r\nBtw, I don't really care the delay caused. I am thankful to @danielmarschall for raising this discussion.\r\n",
+          "createdAt": "2023-09-18T14:28:05Z",
+          "updatedAt": "2023-09-18T14:28:05Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "If you say UUIDv8 is fully custom, is not good to give an example which is the only example where hashspaces are used and then register those hashspaces at IANA. Then the only right to exist of hashspaces are based on an example; and then you are actually not talking about a example anymore, but about a new format.\r\n\r\nUUIDv8 is fully custom. You are able to give implementation examples, but know that giving examples can give the suggestion that it are real formats that need to implemented, which should not be the case. So caution is advised.\r\n\r\nMy advise options for time-based UUIDv8 example:\r\n - Remove it to avoid confusion\r\n - Revise the text to be FULLY clear about it being an example\r\n\r\nMy advise options for name-based UUIDv8 example:\r\n - Remove it to avoid confusion\r\n - Move it to UUIDv9",
+          "createdAt": "2023-09-18T14:38:11Z",
+          "updatedAt": "2023-09-18T14:38:11Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "> > Yes, and we don't care at all.\r\n> \r\n> Who is \"we\"?\r\n> \r\n> > This hash UUID was not the intent of this RFC.\r\n> \r\n> And why did it end up in the latest draft then?\r\n> \r\n> > a volatile key is unsuitable for databases and other information systems\r\n> \r\n> Then you also need to strike UUIDv4.\r\n\r\n@danielmarschall\r\n\r\nThe goals of this RFC are well stated in [2.1. Update Motivation](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-11.html#name-update-motivation)\r\nEssentially the main goal is to replace UUIDv1 and UUIDv4 with UUIDv7 as a key in databases. All other goals are secondary",
+          "createdAt": "2023-09-18T14:39:33Z",
+          "updatedAt": "2023-09-18T14:39:33Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "> The goals of this RFC are well stated in [2.1. Update Motivation](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-11.html#name-update-motivation)\r\nEssentially the main goal is to replace UUIDv1 and UUIDv4 with UUIDv7 as a key in databases. All other goals are secondary\r\n\r\nI'm fine with UUIDv6 and UUIDv7 as far as I know. So if we fix or drop UUIDv8, the RFC could be published in my opinion. However, I think many also want UUIDv8 in the same RFC, but not with the chaotic definition it has now.",
+          "createdAt": "2023-09-18T14:44:25Z",
+          "updatedAt": "2023-09-18T14:44:25Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@LiosK   In re your `MiracleHash`: I didn't read the definition of \"Hash\", but I think one very strong requirement is that it is deterministic?",
+          "createdAt": "2023-09-18T14:52:23Z",
+          "updatedAt": "2023-09-18T14:52:23Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@ben221199\r\n\r\nI agree that the UUIDv8 examples should be removed completely as they can be taken as a guide to action.\r\nI don't mind UUIDv6 and the fixed UUIDv8 without examples",
+          "createdAt": "2023-09-18T14:59:17Z",
+          "updatedAt": "2023-09-18T14:59:17Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Removing UUIDv8 examples (without introducing UUIDv9) would mean that we strike the complete SHA2/SHA3 functionality and we are left with MD5 and SHA1. That would be horrible.",
+          "createdAt": "2023-09-18T15:17:59Z",
+          "updatedAt": "2023-09-18T15:17:59Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@danielmarschall\r\n\r\n> Removing UUIDv8 examples (without introducing UUIDv9) would mean that we strike the complete SHA2/SHA3 functionality and we are left with MD5 and SHA1. That would be horrible.\r\n\r\nYou can simply list depricated technologies and accepted technologies for UUIDv8 without examples. You can also specify a list of UUIDv8 categories (time-based, hash-based and so on)",
+          "createdAt": "2023-09-18T15:31:41Z",
+          "updatedAt": "2023-09-18T15:32:54Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "https://mailarchive.ietf.org/arch/msg/uuidrev/dhxgO66xkpNBrOtSy0AY8nV9bAE/ @sergeyprokhorenko @danielmarschall @ben221199 @LiosK @chorman0773  If this matters, then please participate.",
+          "createdAt": "2023-09-18T18:23:38Z",
+          "updatedAt": "2023-09-18T18:23:38Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@danielmarschall,    Please clarify your proposal taking into account the discussion that took place.\r\n\r\nIt would be terrible if we had to re-do the entire approval process of this long-awaited RFC because of frankly completely useless details regarding almost unused hash UUIDs.\r\n\r\n@mcr,    I completely agree with @LiosK's point of view and give him my vote",
+          "createdAt": "2023-09-18T19:21:21Z",
+          "updatedAt": "2023-09-18T19:21:21Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> @danielmarschall, Please clarify your proposal taking into account the discussion that took place.\r\n\r\nOkay. I will carefully read through the discussion and adjust the initial post of this GitHub issue. Maybe also re-phrasing some parts for better understanding.\r\n\r\n> It would be terrible if we had to re-do the entire approval process of this long-awaited RFC ......\r\n\r\nIs it true that the approval process needs to be done again, or is this change something that just needs a Re-review of the ADs (i.e. they only re-review the changes, not everything?)\r\n\r\n> ....... because of frankly completely useless details regarding almost unused hash UUIDs.\r\n\r\nIt depends on the use-cases. I understand that UUIDv7 is very important for databases because of their order. But that doesn't mean that the other UUID versions are useless for everyone. I have worked on a lot of projects where hash based UUIDv3 and UUIDv5 were required. Having SHA2/3 or Any-Hash would be an important improvement for the UUIDv3 and UUIDv5 use-cases.",
+          "createdAt": "2023-09-18T19:45:40Z",
+          "updatedAt": "2023-09-18T19:45:40Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "I suggest to freeze the draft RFC and stop making any changes to it because it's too late and improvements could go on forever. There was a lot of time to make the discussed amendments in the previous stages of RFC development. Stakeholders will be able to propose changes to an already approved RFC",
+          "createdAt": "2023-09-18T19:58:40Z",
+          "updatedAt": "2023-09-18T19:58:40Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall I tend to agree with the others here about UUIDv8 seeming sufficient and not needing UUIDv9.\r\n\r\nUUIDv6, 7, 8 and each have very specific purposes and problems they solve. v6 is a low-effort way to adapt v1 to be time ordered when treated opaquely (good for easily adapting existing systems).  v7 is time ordered plus random data removes some unnecessary restrictions (best choice for new time-ordered values). And v8 is a catchall so you are not forced to use one of these others if it doesn't suit you.\r\n\r\nThat said, **is there is a specific clear use case - like something you actually are trying to get done right now or in the foreseeable future which needs the distinctions you're describing for UUIV9?** If so please describe what that use case is.",
+          "createdAt": "2023-09-18T21:17:58Z",
+          "updatedAt": "2023-09-18T21:21:52Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> That said, **is there is a specific clear use case - like something you actually are trying to get done right now or in the foreseeable future which needs the distinctions you're describing for UUIV9?** If so please describe what that use case is.\r\n\r\n@bradleypeabody  The discussion here at GitHub has already become very busy. I do not want to discuss various use cases and whether they are good or bad, this would be very off-topic and the discussion would never end. Personally I have used name-based UUIDs very often and I think they are useful. However, I can understand that some people never used them at all.\r\n\r\n\r\nI have revised my proposal, added more arguments, and added explanations/context in case some readers (or the October meeting members) are not familiar with these GitHub discussions. Feel free to skip to the \"Reasons\" section.\r\nhttps://1drv.ms/w/s!Aq8PcXiGvLchiJozKQxKX-C5RSlH8g?e=YBePzy\r\n\r\n\r\nAdditional information (and maybe a trade-off?):\r\n\r\n- Like I explained in my proposal, one of the things that bothers me the most is that the \"name-based UUIDv8\" are just an example. Examples are no programming requirements, so everybody could implement SHA2 UUIDs differently.\r\nIf UUIDv9 will not be accepted, then I would be at least happy if the name-based UUIDs become ANYTHING other than an example. Maybe make a distinction between \"Name-Based UUIDv8\" and \"Custom UUIDv8\", or something like that. SHA2 and SHA3 are too important to be just an example.\r\n\r\n- And I recommend to strike or change that time-based example (section C.7). An UUID which wraps its time after 78 hours is a very bad example.",
+          "createdAt": "2023-09-18T22:28:18Z",
+          "updatedAt": "2023-09-18T22:57:46Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall Thanks for that information, the link definitely helps explain things more.  I do think it's extremely important to discuss specific examples of intended uses, and if you're going to propose changes this is a suitable place to discuss. Waiting until the meeting to hash these things out (pun not intended) will not improve the situation.\r\n\r\nJust to recap my understanding of that doc, you're basically saying:\r\n\r\n* **Hash based UUIDs are useful because they are deterministic** (whereas all of the time-based UUIDs are of course not deterministic).  Specifically, and just to be 100% clear - \"deterministic\" means here that there is some sort of name being fed into a UUID generation function and given the exact same name it will produce the exact same UUID value.\r\n* **UUIDv3 and UUIDv5 are deterministic but insecure, because they use insecure hash algorithms.**\r\n* **Therefore we should replace them** in the new spec with a more secure hash algorithm while updating this document.\r\n\r\nCorrect?\r\n\r\nIf that's the case, I have the following questions/points:\r\n\r\n* Please provide some examples of how these are used - **like specifically what is a case where you've used name-based UUIDs?**  (I'm not challenging that there are some useful cases, I'm sure there are, but please say what exactly you're trying to do and why you need that deterministic property.)\r\n* **What does \"insecure\" mean in this context?**  MD5 is considered \"insecure\" because the effort required to find a collision is too low for various security purposes.  More specifically and by way of example, if you hash a document with MD5 (e.g. maybe an ISO file with a CD image on it), and then an bad actor wants to substitute another document (a bad ISO file infected with a virus) that results in the same hash, this is potentially possible to do with a reasonable amount of effort.  However, in the case of UUIDs, we only have a maximum of 128 bits total, minus version and variant (7 bits).  So if the entire premise of your proposal is that someone cannot use UUIDv3 or UUIDv5 because they are insecure, please give a specific example of a security problem created by using these UUID values.  Does your name-based example from the bullet above include a necessity to be resistant against a bad actor attempting to use a different name to hash to the same UUID? If so, I would like to A) know about that specific example, and B) understand how UUIDv9 would address that problem, considering the fact that the output of e.g. a SHA-256 hash would need to be truncated, thus greatly increasing the probability of collision (and thus making it \"less secure\").",
+          "createdAt": "2023-09-18T22:58:10Z",
+          "updatedAt": "2023-09-18T23:41:36Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Is it true that the approval process needs to be done again, or is this change something that just needs a Re-review of the ADs (i.e. they only re-review the changes, not everything?)\r\n\r\nIt doesn't really matter.  You have to get into their Q, and it matters little if it takes them 2 minutes or 10 minutes. What matters if the latency to get to the front of the queue.\r\n",
+          "createdAt": "2023-09-18T23:04:31Z",
+          "updatedAt": "2023-09-18T23:04:31Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@bradleypeabody\r\n\r\nI can guess that hash UUIDs are used so that legacy IDs (not originally UUIDs) can be written to the same database table field as new IDs, such as UUIDv7. For example, PostgreSQL has a UUID data type. The UUID of any version can be written to a field with this UUID data type and it will work correctly, although there will be performance issues. Correct me if my assumption is wrong.\r\n\r\nI think that @danielmarschall\u2019s concerns could be addressed with a couple of phrases about acceptable hashing algorithms in the description of UUIDv8 (along with mention of time-based UUIDv8), deprecation of UUIDv3 and UUIDv5 and the exclusion of any intrusive examples of UUIDv8.",
+          "createdAt": "2023-09-18T23:25:15Z",
+          "updatedAt": "2023-09-18T23:41:14Z"
         }
       ]
     }
@@ -6004,6 +6200,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 148,
+      "id": "PR_kwDOH6Ln3M5ahOBH",
+      "title": "Typo?",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/148",
+      "state": "OPEN",
+      "author": "LiosK",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "UUIDv8 namespace UUID -> UUIDv8 name-based UUID",
+      "createdAt": "2023-09-18T00:44:42Z",
+      "updatedAt": "2023-09-18T00:44:42Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "8c35afe407715bab27bcdc44c15612bdd7dcc173",
+      "headRepository": "LiosK/rfc4122bis",
+      "headRefName": "main",
+      "headRefOid": "d1c896fe1421adb2323b386ee4758c15f153f4fd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
