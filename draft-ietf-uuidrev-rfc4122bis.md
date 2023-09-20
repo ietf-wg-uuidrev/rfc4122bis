@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-11
+docname: draft-ietf-uuidrev-rfc4122bis-12
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -512,6 +512,12 @@ OID
 
 ## Changelog {#changelog}
 {:removeinrfc}
+
+draft-12
+
+{: spacing="compact"}
+- Typos #148
+- SECDIR Review #141
 
 draft-11
 
@@ -1749,8 +1755,8 @@ Low Impact:
 High Impact:
 : A duplicate key causes an airplane to receive the wrong course which puts
   people's lives at risk. In this scenario there is no margin for error. Collisions
-  MUST be avoided and failure is unacceptable. Applications dealing with this
-  type of scenario MUST employ as much collision resistance as possible within
+  must be avoided and failure is unacceptable. Applications dealing with this
+  type of scenario must employ as much collision resistance as possible within
   the given application context.
 
 
@@ -1807,7 +1813,7 @@ The exact algorithm to generate a node ID using these data is system
 specific, because both the data available and the functions to obtain
 them are often very system specific.  A generic approach, however, is
 to accumulate as many sources as possible into a buffer, use a
-message digest such as MD5 {{RFC1321}} or SHA-1 {{FIPS180-4}}, take an arbitrary 6
+message digest (such as SHA-256 or SHA-512 defined by {{FIPS180-4}}), take an arbitrary 6
 bytes from the hash value, and set the multicast bit as described
 above.
 
@@ -1834,15 +1840,10 @@ is available for custom UUID formats.
 
 
 ## Opacity {#opacity}
-
-UUIDs SHOULD be treated as opaque values and implementations SHOULD NOT examine
-the bits in a UUID. However,
-inspectors MAY refer to {{variant_field}} and {{version_field}} when required to determine UUID version and variant.
-
-As general guidance, we recommend not parsing UUID values unnecessarily,
-and instead treating them as opaquely as possible.  Although application-specific
+As general guidance, it is recommend to avoid parsing UUID values unnecessarily,
+and instead treating UUIDs as opaquely as possible.  Although application-specific
 concerns could of course require some degree of introspection
-(e.g., to examine the variant, version or perhaps the timestamp of a UUID),
+(e.g., to examine the {{variant_field}}, {{version_field}} or perhaps the timestamp of a UUID),
 the advice here is to avoid this or other parsing unless absolutely necessary.
 Applications typically tend to be simpler, more interoperable, and perform better,
 when this advice is followed.
