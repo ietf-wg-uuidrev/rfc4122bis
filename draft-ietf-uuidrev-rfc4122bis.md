@@ -518,6 +518,7 @@ draft-12
 {: spacing="compact"}
 - Typos #148
 - SECDIR Review #141
+- SECDIR Review 2 #142
 
 draft-11
 
@@ -1395,9 +1396,9 @@ Altering, Fuzzing, or Smearing:
 
 Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
-  bits (left-most) bits with zeros. An example is padding the most significant,
-  left-most bits of a Unix timestamp with zeroes to fill out the 48
-  bit timestamp in UUIDv7. An alternative is to pad the most significant, left-most bits with the number of 32 bit Unix timestamp roll-overs after 2038-01-19.
+  bits (left-most) bits with data. An example for this padding data is to fill the most significant,
+  left-most bits of a Unix timestamp with zeroes to complete the 48
+  bit timestamp in UUIDv7. An alternative approach for padding data is to fill the most significant, left-most bits with the number of 32 bit Unix timestamp roll-overs after 2038-01-19.
 
 Truncating:
 : When timestamps need to be truncated, the lower, least significant
@@ -1466,8 +1467,8 @@ Monotonic Random (Method 2):
   The increment value for every UUID generation is a random integer
   of any desired length larger than zero. It ensures the UUIDs retain the required
   level of unguessability provided by the underlying entropy.
-  The increment value MAY be one when the number of UUIDs generated in a particular
-  period of time is important and guessability is not an issue. However, it
+  The increment value MAY be 1 when the number of UUIDs generated in a particular
+  period of time is important and guessability is not an issue. However, incrementing the counter by 1
   SHOULD NOT be used by implementations that favor unguessability, as the resulting
   values are easily guessable.
 
@@ -1729,7 +1730,7 @@ Name-based UUIDs using UUIDv8:
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID proves useful for identifying the algorithm.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID from {{hashspaces}} proves useful for identifying the algorithm.
   That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
@@ -1790,9 +1791,10 @@ Further advice on generating cryptographic-quality random numbers can be found i
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
 802 address is not available, or its use is not desired.
 
-Implementations obtain a 47 bit cryptographic-quality random
-number as per {{unguessability}} and use it as the low 47 bits of the node ID.
+Implementations MAY leverage MAC address randomization techniques (IEEE 802.11bh) as an alternative to the pseudo-random logic provided in this section.
 
+Alternatively, implementations MAY elect to obtain a 47 bit cryptographic-quality random
+number as per {{unguessability}} and use it as the low 47 bits of the node ID.
 Implementations MUST set the least significant bit of the first octet of the node ID set to 1, to create a 48 bit node id.
 This bit is the unicast/multicast bit, which will never be set in IEEE 802
 addresses obtained from network cards.  Hence, there can never be a
@@ -1816,8 +1818,6 @@ to accumulate as many sources as possible into a buffer, use a
 message digest (such as SHA-256 or SHA-512 defined by {{FIPS180-4}}), take an arbitrary 6
 bytes from the hash value, and set the multicast bit as described
 above.
-
-Implementations can also leverage MAC address randomization techniques (IEEE 802.11bh) as an alternative to the pseudo-random logic provided in this section.
 
 ## Sorting {#sorting}
 
