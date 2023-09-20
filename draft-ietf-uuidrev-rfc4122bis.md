@@ -299,7 +299,7 @@ many cases, become exposed in many non-standard ways.
 This specification attempts to standardize that practice as openly as
 possible and in a way that attempts to benefit the entire Internet.
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs, UUIDs in combination with URNs {{RFC8141}}, or otherwise.
+to implement services using UUIDs either in combination with URNs {{RFC8141}} or otherwise.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -366,7 +366,7 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
 
 1. Privacy and network security issues arise from using a MAC address in the
   node field of UUID version 1.
-  Exposed MAC addresses can be used as an attack surface to locate machines
+  Exposed MAC addresses can be used as an attack surface to locate network interfaces
   and reveal various other
   information about such machines (minimally manufacturer, potentially other
   details). Additionally, with the advent of virtual machines and containers,
@@ -520,6 +520,7 @@ draft-12
 - SECDIR Review #141
 - SECDIR Review 2 #142
 - OPSDIR Review #145
+- INDIR Review 2 #140
 
 draft-11
 
@@ -1046,7 +1047,7 @@ that are drawn from, and unique within, some "namespace" as per {{name_based_uui
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
-This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
+The most significant, left-most 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 least significant, right-most bits of SHA-1 output are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding exess bits can be found in {{uuidv5_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
@@ -1374,7 +1375,7 @@ Sub-second Precision and Accuracy:
   a high resolution timestamp can be simulated by keeping a count of
   the number of UUIDs that have been generated with the same value of
   the system time, and using it to construct the low order bits of the
-  timestamp.  The count will range between zero and the number of
+  timestamp.  The count of the high resolution timestamp will range between zero and the number of
   100-nanosecond intervals per system time interval.
 
 Length:
@@ -1486,10 +1487,10 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   expressed as a fraction of clock's tick value (fraction of a millisecond
   for UUIDv7).  Compute the count of possible values that can be represented in
   the available bit space, 4096 for the UUIDv7 rand_a field.
-  Using floating point math, multiply this fraction of a millisecond
+  Using floating point or scaled integer arithmetic, multiply this fraction of a millisecond
   value by 4096 and round down (toward zero) to an integer result to arrive at a number
   between 0 and the maximum allowed for the indicated bits
-  which is sorts monotonically based on time. Each increasing fractional
+  which sorts monotonically based on time. Each increasing fractional
   value will result in an increasing bit field value, to the
   precision available with these bits.
 
@@ -1523,18 +1524,17 @@ fixed-length dedicated counters:
 Fixed-Length Dedicated Counter Seeding:
 : Implementations utilizing the fixed-length counter method randomly initialize
   the counter with each new timestamp tick.
-  However, when the timestamp has not incremented, the counter is frozen
-  and incremented via the desired increment logic.
+  However, when the timestamp has not increased, the counter is instead incremented by the desired increment logic.
   When utilizing a randomly seeded counter alongside Method 1, the random value MAY
   be regenerated with each counter increment without impacting sortability.
   The downside is that Method 1 is prone to overflows if a counter of adequate
   length is not selected or the random data generated leaves little room for
   the required number of increments.
   Implementations utilizing fixed-length counter method MAY also choose to
-  randomly initialize a portion counter rather than the entire counter. For
+  randomly initialize a portion of the counter rather than the entire counter. For
   example, a 24 bit counter could have the 23 bits in least-significant, right-most,
   position randomly initialized. The remaining most significant, left-most
-  counter bits are initialized as zero for the sole purpose of guarding against
+  counter bit is initialized as zero for the sole purpose of guarding against
   counter rollovers.
 
 Fixed-Length Dedicated Counter Length:
@@ -1560,7 +1560,7 @@ Counter Rollover Guards:
   helpful to mitigate counter rollover issues.
   This same technique can be used with monotonic random counter methods
   by ensuring that the total length of a possible increment in the least significant,
-  right most position is less than the total length of the random being incremented.
+  right most position is less than the total length of the random value being incremented.
   As such, the most significant, left-most, bits can be incremented as rollover
   guarding.
 
@@ -1616,7 +1616,7 @@ If an implementation does not have any stable store available, then
 it MAY proceed with UUID generation as if this was the first UUID created within a batch.
 This is the least desirable implementation because it will increase the frequency
 of creation of values such as clock sequence, counters, or random data, which increases the
-probability of duplicates.
+probability of duplicates. Further, frequent generation of random numbers also puts more stress on any entropy source and or entropy pool being used as the basis for such random numbers.
 
 An implementation MAY also return an application error in the event that collision resistance is of the utmost concern.
 The semantics of this error are up to the application and implementation.
@@ -1732,7 +1732,7 @@ Name-based UUIDs using UUIDv8:
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
   As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID from {{hashspaces}} proves useful for identifying the algorithm.
-  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
@@ -1888,7 +1888,7 @@ References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to
 
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
 
-Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
+IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
 
 # Security Considerations {#Security}
 
@@ -1899,7 +1899,7 @@ access).  Discovery of predictability in a random number source will
 result in a vulnerability.
 
 Implementations MUST NOT assume that it is easy to determine if a UUID has been
-slightly transposed in order to redirect a reference to another
+slightly modified in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
