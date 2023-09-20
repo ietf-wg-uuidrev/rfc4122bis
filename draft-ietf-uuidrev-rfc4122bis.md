@@ -521,6 +521,7 @@ draft-12
 - SECDIR Review 2 #142
 - OPSDIR Review #145
 - INDIR Review 2 #140
+- IESG Grammar #146
 
 draft-11
 
@@ -1832,7 +1833,7 @@ As a result objects are more easily clustered together for better performance.
 The real-world differences in this approach of index locality vs random data
 inserts can be quite large.
 
-UUIDs formats created by this specification are intended to be lexicographically sortable
+UUID formats created by this specification are intended to be lexicographically sortable
 while in the textual representation.
 
 UUIDs created by this specification are crafted with big-endian byte order
