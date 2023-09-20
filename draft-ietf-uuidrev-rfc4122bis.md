@@ -1723,7 +1723,7 @@ Name-based UUIDs using UUIDv8:
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 namespace UUID is required, sharing the hashspace ID proves useful for identifying the algorithm.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID proves useful for identifying the algorithm.
   That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
