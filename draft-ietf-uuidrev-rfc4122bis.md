@@ -519,6 +519,7 @@ draft-12
 - Typos #148
 - SECDIR Review #141
 - SECDIR Review 2 #142
+- OPSDIR Review #145
 
 draft-11
 
@@ -939,7 +940,7 @@ UUIDv3 values are created by computing an MD5 {{RFC1321}}
 hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution can be found in {{uuidv3_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
 
@@ -1046,7 +1047,7 @@ UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding exess bits can be found in {{uuidv5_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
 
