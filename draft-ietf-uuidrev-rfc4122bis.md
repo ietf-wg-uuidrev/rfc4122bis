@@ -1831,7 +1831,7 @@ Time ordered monotonic UUIDs benefit from greater database index locality
 because the new values are near each other in the index.
 As a result objects are more easily clustered together for better performance.
 The real-world differences in this approach of index locality vs random data
-inserts can be quite large.
+inserts can be one order of magnitude or more.
 
 UUID formats created by this specification are intended to be lexicographically sortable
 while in the textual representation.
