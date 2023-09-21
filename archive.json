@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-19T01:14:38.561891+00:00",
+  "timestamp": "2023-09-21T01:13:13.431912+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2791,7 +2791,7 @@
       "labels": [],
       "body": "```\r\nI have the following DISCUSS level issues:\r\n\r\nSection 2.1, page 5: I think a MAC address identifies a network interface, not a \"machine\". Also, for MAC addresses, this document should Reference RFC 7042 or, even better, draft-ietf-intarea-rfc7042bis (which is through WGLC and, in my opinion, ready for publication request). Those documents point out the existence of 64-bit MAC addresses and where they have been and are currently used so this document should say something about how those are handled (perhaps by discarding the top 16 bits).\r\nOLD\r\n       address in the node field of UUID version 1.  Exposed MAC\r\n       addresses can be used as an attack surface to locate machines and\r\n       reveal various other information about such machines (minimally\r\nNEW\r\n       address in the node field of UUID version 1.  Exposed MAC\r\n       addresses can be used as an attack surface to locate network interfaces\r\n       and reveal various other information about such interfaces (minimally\r\n\r\nSection 6.1, Page 27, 1st paragraph: The last sentence of this paragraph is \"The count will range between zero and the number of 100-nanosecond intervals per system time interval.\" This is confusing. Why couldn't the count exceed that number?\r\n\r\nSection 7: I think it is improper in the IANA Considerations to talk about what \"the authors and the working group have concluded\". The RFC this document will be is issued as the consensus of the IETF, not as the opinion of its authors or even the working group. I suggest replacing this section in its entirety with the following:\r\n\"This document requires no IANA actions. In particular, no update is required to the IANA URN namespace registration [URNNamespaces] for UUID filed in [RFC4122] and IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.\"\r\n\r\n\r\nThe following are other issues I found with this document that SHOULD be corrected before publication:\r\nSection 5.5, page 20: \"This SHA-1 value is then used to populate all 128 bits of the UUID layout.  Excess bits beyond 128 are discarded.\" Seems like you can and should be more precise. Maybe \"The high order 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 low order bits of SHA-1 output are discarded\"\r\n\r\nSection 6.2, page 29: \"Using floating point math,\" appears to mandate the use of floating point which might not be available on some small platforms. Suggest \"Using floating point or scaled integer arithmetic,\"\r\n\r\nSection 6.2, Page 30, paragraph headed \"Fixed-Length Dedicated Counter Seeding\":\r\n+    \"However, when the timestamp has not incremented, the counter is frozen and\r\n      incremented via the desired increment logic.\" To my mind, frozen means it is not changed and is inconsistent with incrementing it. Perhaps \"When the timestamp has not increased, the counter is instead incremented by the desired increment logic.\"\r\n+    \"For example, a 24 bit counter could have\r\n      the 23 bits in least-significant, right-most, position randomly\r\n      initialized.  The remaining most significant, left-most counter\r\n      bits are initialized as zero for the sole purpose of guarding\r\n      against counter rollovers.\" This is inconsistent. Either it should say \"the 23 or fewer bits\" in the first sentence or it should say \"bit is initialized to zero\" in the second sentence.\r\n\r\nSection 6.3, page 32, 3rd paragraph: Frequent generation of random numbers also puts more stress on any entropy source and or entropy pool being used as the basis for such random numbers. This should be mentioned.\r\n\r\nSection 6.9: The discussion of the local/global bit here would be a good place to reference RFC 7042 or, even better, draft-ietf-intarea-ref4042bis.\r\n\r\nSection 6.10: This section uses \"quite large\" without any indication of how large. A factor of ten? A factor of ten to the tenth power? Can some hint of how large be given? Similarly Section 2.1, item 1.\r\n\r\nSection 8, Page 39: I think \"transposed\" is the wrong word. That just means to swap around various parts of something. While that is one type of modification, I think you mean any type of slight modification. \"slightly transposed\" -> \"slightly modified\"\r\n\r\n\r\nThe following are minor issues (typos, misspelling, minor text improvements) with the document:\r\n\r\nSection 1, paragraph 3, page 3:\r\nOLD\r\nto implement services using UUIDs, UUIDs in combination with URNs [RFC8141], or otherwise.\r\nNEW\r\nto implement services using UUIDs either in combination with URNs [RFC8141] or otherwise.\r\n\r\nSection 3.2: The expansions of UUIDv1 through UUIDv8 are quite repetitive and uninformative. Since you have already expanded UUID in the previous line, I don't think it needs to be expanded here. I suggest:\r\n   UUIDv1    Gregorian time-based UUID\r\n   UUIDv2    DCE Security version UUID\r\n   UUIDv3    Name-based UUID with MD5\r\n   UUIDv4    Pseudo-random UUID\r\n   UUIDv5    Name-based UUID with SHA-1\r\n   UUIDv6    Re-ordered Gregorian time-based UUID\r\n   UUIDv7    Unix Epoch time-based UUID\r\n   UUIDv8    Custom UUID\r\n\r\nI think Section 6.2 is too long and should have subsections (6.2.1, 6.2.2, ...).\r\n\r\nSection 6.2, page 29: \"which is sorts\" -> \"which sorts\"\r\n\r\nSection 6.2, page 30: \"randomly initialize a portion counter\" -> \"randomly initialize a portion of the counter\"\r\n\r\nSection 6.2., page 31: \"the random being incremented.\" -> \"the random value being incremented.\"\r\n\r\nSection 6.5, last paragraph, page 35: \"needs not be the only\" -> \"need not be the only\"\r\n\r\n```",
       "createdAt": "2023-09-05T13:18:29Z",
-      "updatedAt": "2023-09-05T13:18:47Z",
+      "updatedAt": "2023-09-20T22:51:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -2800,6 +2800,41 @@
           "body": "Will end up in Draft 12, no time to get this done by draft 11 deadline.",
           "createdAt": "2023-09-05T13:18:47Z",
           "updatedAt": "2023-09-05T13:18:47Z"
+        },
+        {
+          "author": "tgross35",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Do you know what the rough outline or timeline is for the proposal at this point? I assume there will be at least one more draft to address all review concerns, but I am having trouble figuring out what happens after that point.\r\n\r\nAlso confusing is the recent milestone change, since that milestone is set for March 2023 https://mailarchive.ietf.org/arch/msg/uuidrev/Wt03UVzzrxqmHJT5DeM58UT0Hww/",
+          "createdAt": "2023-09-20T03:03:32Z",
+          "updatedAt": "2023-09-20T03:03:32Z"
+        },
+        {
+          "author": "jimfenton",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@tgross35 This sort of question is really better suited for the mailing list, not the GitHub repository.\n\nThe change to the milestones was simply that the document the milestone referred to was left out. I added the reference to the document.\n\n@mcr has sent out a poll to try to have an interim meeting of the working group. The timeframe will depend greatly on WG rough consensus on how much change will be done at this very late stage. Please try to attend if you have an opinion on any of this.\n\n-Jim, co-chair",
+          "createdAt": "2023-09-20T06:13:53Z",
+          "updatedAt": "2023-09-20T06:13:53Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Changes completed in https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/cfcb3b077b96fc6bb460579db368c48d50bea790\r\nAll are done except:\r\n- Section 6.9, spun into new issue, 150\r\n- I did not change UUIDvX abbreviations as the were requested by another individual\r\n- I did not modify Section 6.10, @bradleypeabody would you take a look at how we can change that text?",
+          "createdAt": "2023-09-20T19:30:18Z",
+          "updatedAt": "2023-09-20T19:30:18Z"
+        },
+        {
+          "author": "tgross35",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks @jimfenton, I honestly did not know that the mailing list was open to nontechnical discussion. I appreciate the clarification.",
+          "createdAt": "2023-09-20T21:42:13Z",
+          "updatedAt": "2023-09-20T21:42:13Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@kyzer-davis I think it's safe to replace \"quite large\" with \"one order of magnitude or more\".  I.e.:\r\n\r\n> The real-world differences in this approach of index locality vs random data inserts can be one order of magnitude or more.",
+          "createdAt": "2023-09-20T22:51:32Z",
+          "updatedAt": "2023-09-20T22:51:32Z"
         }
       ]
     },
@@ -2815,7 +2850,7 @@
       "labels": [],
       "body": "```\r\nSection 6.6\r\n   High Impact:\r\n      A duplicate key causes an airplane to receive the wrong course\r\n      which puts people's lives at risk.  In this scenario there is no\r\n      margin for error.  Collisions MUST be avoided and failure is\r\n      unacceptable.  Applications dealing with this type of scenario\r\n      MUST employ as much collision resistance as possible within the\r\n      given application context.\r\n\r\nNot to trivialize the seriousness of the described scenario, but normative\r\nlanguage around airplane design and operation doesn\u2019t seem appropriate or in\r\nscope for the WG.  Furthermore \u201cas much collision resistance as possible\u201d isn\u2019t\r\nparticularly precise.  Recommend s/MUST/must/\r\n\r\n** Section 6.9\r\n   A generic approach, however, is\r\n   to accumulate as many sources as possible into a buffer, use a\r\n   message digest such as MD5 [RFC1321] or SHA-1 [FIPS180-4], take an\r\n   arbitrary 6 bytes from the hash value, and set the multicast bit as\r\n   described above.\r\n\r\nRFC4112 referenced MD5 and SHA-1, but didn\u2019t tie the implementation to them,\r\nwhy can\u2019t a modern hash algorithm (SHA-256) be recommended here instead?\r\n\r\n** Section 6.11\r\n\r\n   UUIDs SHOULD be treated as opaque values and implementations SHOULD\r\n   NOT examine the bits in a UUID.  However, inspectors MAY refer to\r\n   Section 4.1 and Section 4.2 when required to determine UUID version\r\n   and variant.\r\n\r\n   As general guidance, we recommend not parsing UUID values\r\n   unnecessarily, and instead treating them as opaquely as possible.\r\n   Although application-specific concerns could of course require some\r\n   degree of introspection (e.g., to examine the variant, version or\r\n   perhaps the timestamp of a UUID), the advice here is to avoid this or\r\n   other parsing unless absolutely necessary.\r\n\r\nWhy are both of these paragraphs needed?  The first seems to say the same thing\r\nas the second except with normative language.\r\n\r\n** Section 8\r\nImplementations SHOULD NOT assume that UUIDs are hard to guess. For example,\r\nthey MUST NOT be used as security capabilities (identifiers whose mere\r\npossession grants access).\r\n\r\n-- Why isn\u2019t this a \u201cMUST NOT assume\u201d?\r\n\r\n** Section 8\r\n   MAC addresses pose inherent security risks and SHOULD NOT be used within a\r\n   UUID.\r\n\r\nIs there any advisory language that can be provided that could explain when a\r\nMAC address should be used?\r\n```",
       "createdAt": "2023-09-05T21:10:07Z",
-      "updatedAt": "2023-09-05T21:58:41Z",
+      "updatedAt": "2023-09-20T18:11:52Z",
       "closedAt": null,
       "comments": [
         {
@@ -2831,6 +2866,13 @@
           "body": "I have two thoughts/annotations:\r\n\r\n(1)\r\nI am confused about the definition \"_Implementations SHOULD NOT assume that UUIDs are hard to guess_.\".\r\nWhy is this so?  If I generate a UUIDv4 using a CSRNG and use it as BEARER in a REST-API, I basically have a 122-bit random number created using a CSRNG. This is very secure.\r\nOn the other hand, I know that not all UUID are that \"secure\". For example, a UUIDv2 is easy to guess and has a horrible time resolution.\r\n\r\nIn my opinion, since \"some\" UUID (e.g. UUIDv4 using CSRNG) are good as credentials, I think that it should stay \"SHOULD NOT assume\" and not \"MUST NOT assume\". I believe there are a lot of products that use UUIDv4 for tokens (e.g. Session Identifiers), and if you change the definition to \"MUST NOT\", it would mean that all these products must change their code.\r\n\r\n---\r\n\r\n(2) \r\n\"_Is there any advisory language that can be provided that could explain when a MAC address should be used_?\"\r\nI cannot provide an advisory language, but I want to give a personal opinion and thoughts... Personally, I am an advocate for using real MAC in a UUID.\r\n1. I see the MAC address as a kind of \"signature\". I can easily see if these UUIDs are created by myself or not. I think it is a nice touch when you develop Microsoft COM interfaces and all your UUIDs have the same ending. So people know \"Hey, if the CLSID ends with 112233445566, this is a interface written by Contoso Ltd.\"\r\n2. I can imagine that in a distributed computing environment, machines are generating data and identifying them with a UUID with a real MAC address. In case something is not good with the data, the machine producing the defective data can be identified. (I believe such \"meta data\" was extensively used in UUIDv2)\r\n3. When choosing a random number as Node ID, the probability of a UUID collision is mathematically greater than zero. If we use a real MAC address, the probability of collision is mathematically zero. I am stressing the word \"mathematically\" because I know that a collision is **_practically_** unlikely/impossible.\r\n",
           "createdAt": "2023-09-05T21:51:05Z",
           "updatedAt": "2023-09-05T21:58:41Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Changes from https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/aa08603209711448575802658ffb828835199fb4\r\n- Downgraded MUST to non-normative in high impact section\r\n- Swapped MD5/SHA-1 for SHA-256 and SHA-512\r\n- Removed extra paragraph in section 6.11, Opacity\r\n\r\nDid not change language around section 8 (and the last item was already fixed in another issue tracker item.)",
+          "createdAt": "2023-09-20T18:11:52Z",
+          "updatedAt": "2023-09-20T18:11:52Z"
         }
       ]
     },
@@ -2846,9 +2888,17 @@
       "labels": [],
       "body": "```\r\n----------------------------------------------------------------------\r\nCOMMENT:\r\n----------------------------------------------------------------------\r\n\r\n        Padding:\r\n\r\n                When timestamp padding is required, implementations\r\n                MUST pad the most significant bits (left-most) bits\r\n                with zeros. An example is padding the most significant,\r\n                left-most bits of a Unix timestamp with zeroes to fill\r\n                out the 48 bit timestamp in UUIDv7. An alternative is to\r\n                pad the most significant, left-most bits with the number\r\n                of 32 bit Unix timestamp roll-overs after 2038-01-19.\r\n\r\nHow can this MUST clause have an alternative? Should it be a SHOULD? If\r\nso, when would one use the alternative specified here?\r\n\r\n\r\n        sharing the hashspace ID proves useful for identifying the algorithm.\r\n\r\nIt is not clear what the term \"hashspace ID\" refers to.\r\n\r\n        Implementations SHOULD utilize a cryptographically secure\r\n        pseudo-random number generator (CSPRNG) to provide values that\r\n        are both difficult to predict (\"unguessable\") and have a low\r\n        likelihood of collision (\"unique\").\r\n\r\nCouldn't Verifiable Random Functions (VRF) also be used instead of a CSPRNG?\r\n\r\n        use a message digest such as MD5 [RFC1321] or SHA-1 [FIPS180-4],\r\n        take an arbitrary 6 bytes from the hash value, and set the\r\n        multicast bit as described above.\r\n\r\nWhile it might not matter, use of a more modern message digest algorithm is\r\nstill recommended here. One reason is that the IETF is trying to phase out\r\nthese older digests, and prefers to not reference these in new RFCs. A second\r\nreason is that sometimes, cryptographic libraries are prevented from using\r\nthese older type of digests (eg when running in FIPS mode)\r\n\r\n        Implementations can also leverage MAC address randomization\r\n        techniques (IEEE 802.11bh) as an alternative to the pseudo-random\r\n        logic provided in this section.\r\n\r\nI'm not sure why the Section didn't lead with this more obvious approach?\r\n\r\nNITS:\r\n\r\nfor readability, change:\r\n\r\n        The increment value MAY be one when the number of UUIDs generated\r\n        in a particular period of time is ...\r\n\r\nto\r\n\r\n        The increment value MAY be 1 when the number of UUIDs generated\r\n        in a particular period of time is ...\r\n\r\n\r\n\r\n        However, it SHOULD NOT be used by implementations that favor\r\n        unguessability, as the resulting values are easily guessable.\r\n\r\nWhat does \"it\" refer to? Incrementing by 1? Write it out instead of using \"it\"\r\n\r\n```",
       "createdAt": "2023-09-06T16:48:00Z",
-      "updatedAt": "2023-09-06T17:01:59Z",
+      "updatedAt": "2023-09-20T18:26:35Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Changed via https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/8425364794ff3cfe68528f3fd7c88e7376edeabf\r\n- Modified padding to better call out the MUST for padding but then provide two options for said padding data.\r\n- Modified the method 2 counter to better define 1 and \"it\"\r\n- Cited hashspace section to better detail what a \"hashspace ID\" is\r\n- Moved randomized MAC to the top and provided 47 bit CSPRNG+Mcast bit flip as the alternative\r\n- Did not need to hit MD5/SHA1 change, done under https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/aa08603209711448575802658ffb828835199fb4\r\n- Did not touch on Verifiable Random Functions (VRF). While I guess it is true. It could be used. Nobody has brought this up in the 3 years of this document existing. CSPRNG seems to fit the bill.",
+          "createdAt": "2023-09-20T18:26:34Z",
+          "updatedAt": "2023-09-20T18:26:34Z"
+        }
+      ]
     },
     {
       "number": 143,
@@ -2862,7 +2912,7 @@
       "labels": [],
       "body": "From Paul Wouters\r\n```\r\nWhy are hashspace IDs chosen to look like random uuids? Eg why not encode\r\n\"SHA2_224\" (hex 534841325F323234) as 53484132-5F32-3234-0000-000000000000\r\nor 00000000-0000-0000-5348-41325F323234 (plus or minus variant/version bits)\r\nso that it becomes far more clear this is not an ordinary random uuid?\r\n```\r\n\r\n\r\n### Current, All random\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-0f30e2e83145\"\r\nSHA2_256     = \"3fb32780-953c-4464-9cfd-e85dbbe9843d\"\r\nSHA2_384     = \"e6800581-f333-484b-8778-601ff2b58da8\"\r\nSHA2_512     = \"0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9\"\r\nSHA2_512_224 = \"003c2038-c4fe-4b95-a672-0c26c1b79542\"\r\nSHA2_512_256 = \"9475ad00-3769-4c07-9642-5e7383732306\"\r\nSHA3_224     = \"9768761f-ac5a-419e-a180-7ca239e8025a\"\r\nSHA3_256     = \"2034d66b-4047-4553-8f80-70e593176877\"\r\nSHA3_384     = \"872fb339-2636-4bdd-bda6-b6dc2a82b1b3\"\r\nSHA3_512     = \"a4920a5d-a8a6-426c-8d14-a6cafbe64c7b\"\r\nSHAKE_128    = \"7ea218f6-629a-425f-9f88-7439d63296bb\"\r\nSHAKE_256    = \"2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a\"\r\n```",
       "createdAt": "2023-09-06T16:55:09Z",
-      "updatedAt": "2023-09-18T01:33:03Z",
+      "updatedAt": "2023-09-20T19:52:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -3095,6 +3145,13 @@
           "body": "Since it's v8, any third party can generate a UUID and use it in their application as a hashspace ID for any hash function. Perhaps, we should expand the following statement in Section 6.5 to clarify that any user-defined UUID value may be used as a hashspace ID within an application context. This point is not sufficiently clear in the current draft, despite #132.\r\n\r\n> These MAY leverage newer hashing protocols such as ... or _even protocols that have not been defined yet_.\r\n\r\nWithin an implementation can the implementer do whatever they want, but a standard has to focus in the coordination of such implementations. What if SHA-4 has a parameter that is not expressed in the OID? What if a widespread implementation applies SHA-5 differently than expected? These circumstances may risk the future interoperability under the OID-based hashspace scheme. Plus, observing such a situation, future RFC authors might even avoid ratifying an OID-based hashspace ID because officially specifying the meaning of widely used hashspace ID can destroy the existing implementations.\r\n",
           "createdAt": "2023-09-18T01:33:03Z",
           "updatedAt": "2023-09-18T01:33:03Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Getting caught up on these longer threads after being out unexpectedly. \r\nI see there have been lots of discussions...\r\nAs such, I will hold off on changes for the moment. We can aim for this as a topic on the interim call the chairs have requested.",
+          "createdAt": "2023-09-20T19:52:08Z",
+          "updatedAt": "2023-09-20T19:52:08Z"
         }
       ]
     },
@@ -3323,7 +3380,7 @@
       "labels": [],
       "body": "```\r\n----------------------------------------------------------------------\r\nCOMMENT:\r\n----------------------------------------------------------------------\r\n\r\nMinor level comments:\r\n\r\n(2) p 14, sec 4.2.  Version Field\r\n\r\n      Table 2: UUID variant 10x versions defined by this specification\r\n   An example version/variant layout for UUIDv4 follows the table where\r\n   M represents the version placement for the hexadecimal representation\r\n   of 0x4 (0b0100) and the N represents the variant placement for one of\r\n   the four possible hexadecimal representation of variant 10x: 0x8\r\n   (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)\r\n\r\nTable 1 only defines 3 bits and doesn't obviously mention a 4th bit, and yet\r\nthe examples below are displaying 4 bits, where I assume that the 4th bit is\r\neffectively arbitrary data in the UUID definition.  Please consider whether it\r\nwould be helpful to clarify this.\r\n\r\n(3) p 16, sec 5.3.  UUID Version 3\r\n\r\n   UUIDv3 values are created by computing an MD5 [RFC1321] hash over a\r\n   given name space value concatenated with the desired name value after\r\n   both have been converted to a canonical sequence of octets in network\r\n   byte order.  This MD5 value is then used to populate all 128 bits of\r\n   the UUID layout.  The UUID version and variant then replace the\r\n   respective bits as defined by Section 4.2 and Section 4.1.\r\n\r\nPresumably the MD5 is only actually used to populate 122 bits, since the other\r\n6 are already spoken for with 'ver' and 'var'.\r\n\r\n(4) p 29, sec 6.2.  Monotonicity and Counters\r\n\r\n      For example, let's assume a system timestamp of 1 Jan 2023\r\n      12:34:56.1234567.  Taking the precision greater than 1ms gives us\r\n      a value of 0.4567, as a fraction of a millisecond.  If we wish to\r\n      encode this as 12 bits, we can take the count of possible values\r\n      that fit in those bits (4096, or 2 to the 12th power) and multiply\r\n      it by our millisecond fraction value of 0.4567 and truncate the\r\n      result to an integer, which gives an integer value of 1870.\r\n      Expressed as hexadecimal it is 0x74E, or the binary bits\r\n      0b011101001110.  One can then use those 12 bits as the most\r\n      significant (left-most) portion of the random section of the UUID\r\n      (e.g., the rand_a field in UUIDv7).  This works for any desired\r\n      bit length that fits into a UUID, and applications can decide the\r\n      appropriate length based on available clock precision, but for\r\n      UUIDv7, it is limited to 12 bits at maximum to reserve sufficient\r\n      space for random bits.\r\n\r\nWould a valid alternative way of achieving this be to just directly write the\r\n10 bits of the timestamp, giving 2 extra bits of randomness and a slightly\r\ncheaper calculation?\r\n```",
       "createdAt": "2023-09-07T18:12:48Z",
-      "updatedAt": "2023-09-08T04:19:08Z",
+      "updatedAt": "2023-09-20T21:14:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -3353,6 +3410,13 @@
           "body": "I don't think we should include the `(456_700 << 12) / 1_000_000` technique in the document because it's just an implementation detail! In low-level languages, it is very natural to get a nanosecond timestamp from `clock_gettime()` and perhaps many implementers reaches the same technique. Plus, the `/ 1_000_000` is expected to be eliminated by compilers through division-by-constant optimization, so in reality, the current example algorithm does not need to involve floating-point math or integer division.",
           "createdAt": "2023-09-08T04:04:47Z",
           "updatedAt": "2023-09-08T04:04:47Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Pushed https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/8b2e967ed543d235d285ab34058894af7f24d9f9\r\nOnly changed the item calling out the bit swapping operation (and discard for v5).\r\nEdit2: I split the variant item into #153 ",
+          "createdAt": "2023-09-20T18:47:29Z",
+          "updatedAt": "2023-09-20T21:14:26Z"
         }
       ]
     },
@@ -3368,9 +3432,17 @@
       "labels": [],
       "body": "```\r\n### S6.2\r\n\r\n* \"which is sorts\" -> \"which is sorted\"?\r\n\r\n### S6.10\r\n\r\n* \"UUIDs formats\" -> \"UUID formats\"\r\n ```",
       "createdAt": "2023-09-07T18:21:19Z",
-      "updatedAt": "2023-09-07T18:21:19Z",
+      "updatedAt": "2023-09-20T19:32:56Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "First item caught by tracker item 140. Second was fixed in this https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/4cab17d4f20c7ba28b4cad026de76595b0541de5",
+          "createdAt": "2023-09-20T19:32:56Z",
+          "updatedAt": "2023-09-20T19:32:56Z"
+        }
+      ]
     },
     {
       "number": 147,
@@ -3382,9 +3454,9 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "(Continuation of a discussion in #144)\r\n\r\n\r\n**_Edit: I have revised my proposal, added more arguments, and added explanations/context in case some readers are not familiar with these GitHub discussions or the draft. Feel free to skip to the \"Reasons\" section.\r\nhttps://1drv.ms/w/s!Aq8PcXiGvLchiJozKQxKX-C5RSlH8g?e=YBePzy_**\r\n\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
+      "body": "(Continuation of a discussion in #144)\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
       "createdAt": "2023-09-13T15:18:24Z",
-      "updatedAt": "2023-09-18T23:41:36Z",
+      "updatedAt": "2023-09-21T00:27:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -3617,8 +3689,481 @@
           "body": "@bradleypeabody\r\n\r\nI can guess that hash UUIDs are used so that legacy IDs (not originally UUIDs) can be written to the same database table field as new IDs, such as UUIDv7. For example, PostgreSQL has a UUID data type. The UUID of any version can be written to a field with this UUID data type and it will work correctly, although there will be performance issues. Correct me if my assumption is wrong.\r\n\r\nI think that @danielmarschall\u2019s concerns could be addressed with a couple of phrases about acceptable hashing algorithms in the description of UUIDv8 (along with mention of time-based UUIDv8), deprecation of UUIDv3 and UUIDv5 and the exclusion of any intrusive examples of UUIDv8.",
           "createdAt": "2023-09-18T23:25:15Z",
           "updatedAt": "2023-09-18T23:41:14Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "> I think that @danielmarschall\u2019s concerns could be addressed with a couple of phrases about acceptable hashing algorithms in the description of UUIDv8 (along with mention of time-based UUIDv8), deprecation of UUIDv3 and UUIDv5 and the exclusion of any intrusive examples of UUIDv8.\r\n\r\nI don't know if @danielmarschall meant \"**deprecating**\". I think he meant \"**discouraging**\" the use of UUIDv3 and UUIDv5. However, maybe I'm just nit picking about some words.\r\n\r\n> https://1drv.ms/w/s!Aq8PcXiGvLchiJozKQxKX-C5RSlH8g?e=YBePzy\r\n\r\nI love how good this is document is written. I'm not a native English speaker, but I agree about more than 90% of the document and it is written better than I am able to do at the moment.",
+          "createdAt": "2023-09-19T09:22:03Z",
+          "updatedAt": "2023-09-19T09:22:03Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bradleypeabody \r\nOk, I can give you an example where I used name-based UUIDs. I don't claim that my use case is a good example; some people might agree, and some people might disagree. But maybe it helps to understand why I am using name-based UUIDs for some projects instead of random or time-based UUIDs.\r\n\r\nOne of our projects is a communication interface between an invoicing software solution and an accounting software solution. The data from the invoicing software should be transferred to the accounting software. We don't have permission to write or extend the databases of these third-party solutions.\r\n\r\n- The invoicing software has invoices and each invoice has a lot of item lines. The volume (all items of all invoices of all clients) is approximately 220 million item lines.\r\n\r\n- The accounting software needs a UUID for each item line.\r\n\r\nThere are two solutions:\r\n\r\n**_Solution A_**: Either we generate a UUID (v4, v7, etc.) and create a database lookup table that contains a link between \"Item line\" and the UUID.\r\n\r\n![solution_a](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/28412477/78270e42-ed9d-44c9-be16-755bf957d0ad)\r\n\r\n**_Solution B_**: Or we generate the UUID \"on the fly\" by using a name-based UUID:\r\n\r\n`AccountingUUID := UUIDv3(CustomNamespace, ClientId || MandatorId || InvoiceId || LineId)`\r\n\r\n![solution_b](https://github.com/ietf-wg-uuidrev/rfc4122bis/assets/28412477/8a7eb716-9f14-4528-89b4-b998aa6113db)\r\n\r\nWe have chosen solution B.\r\n\r\n\ud83d\udc4d Pro: It is very easy to implement and we don't need a database.\r\n\r\n\ud83d\udc4e Con: However, if there would be a hash conflict, we would be in big trouble. This is why I am a bit anxious about a hash conflict happening between the 220 million lines. I do know that 220,000,000 is much smaller than 2^122, but still...\r\n\r\n\r\n\r\n\r\n@ben221199\r\nActually, I meant \"deprecate\" since I use that term in development very often. But thinking about it, the term is not correct, because deprecation means that the feature will be removed in future releases. However, since UUIDv3 and UUIDv5 are standardized, they will never be removed. So yes, \"discouraging\" is better. Thanks for that hint.  (By the way, I am also not a native speaker.)",
+          "createdAt": "2023-09-19T10:02:31Z",
+          "updatedAt": "2023-09-19T10:35:19Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bradleypeabody \r\nSorry, I missed some of your questions.\r\n\r\nIn re the term \"**_deterministic_**\", yes, I meant that the same input results in the same output:\r\n\r\n    UUIDv8_ImplementationA(SHA3_256, \"hello world\") == UUIDv8_ImplementationB(SHA3_256, \"hello world\")\r\n\r\nIn re the term \"**_secure_**\", I meant that collisions are more likely. **_MAYBE_** if an attacker could control the hash-input, they might be able to create a duplicate UUID that might be security-relevant. But that's just a theory, I don't have such a use case. So, I don't say that this is important.\r\n\r\n---\r\n\r\nPS: Another argument, but I think it is a rather unimportant one, MD5 and SHA1 are simply old-fashioned. Some code-analysis tools like Snyk even mark your source code as \"risky\" if the functions MD5 and SHA1 are used. I know that's not accurate because the usage of MD5 and SHA1 is just discouraged if it is used for security-relevant stuff. But your boss might not understand that technical detail and just say you did a bad job if the security software raises an alert about insecure functions used in the source code.",
+          "createdAt": "2023-09-19T10:35:35Z",
+          "updatedAt": "2023-09-19T11:01:31Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@danielmarschall\r\n\r\nSo far, no hash function, including SHA2 and SHA3, is intended to produce 122 bits for UUID. Arbitrarily cutting off extra bits increases the likelihood of a collision in an unknown way. Therefore, **none of the current hash functions, including SHA2 and SHA3, should be recommended in the new RFC.** Current hash UUIDs definitely fall into the category of custom UUIDv8 for the risk-taking guys. Someone will have to invent a custom hash function specifically for UUIDs.",
+          "createdAt": "2023-09-19T13:06:10Z",
+          "updatedAt": "2023-09-19T13:06:10Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> In re your `MiracleHash`: I didn't read the definition of \"Hash\", but I think one very strong requirement is that it is deterministic?\r\n\r\nThat's not the point. I mean the current Appendix C.8 doesn't preclude use of a nonsense hash function, and thus C.8 won't be helpful even if it's renamed to v9 without substantial effort to narrow down hash function options and to conduct collision resistance research. IMO, the hashspace approach as currently described in the draft isn't of quality worth a separate version number. It started from [my quick idea](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/50#issuecomment-1419980354) and is not battle-tested or scientifically reviewed. I am aware of potential issues of this approach as well as other alternative approaches that must be taken into consideration before publishing as a normative v9 definition.\r\n\r\n> 2. Remove appendix C.7 (Example of a UUIDv8 Value time-based), or at least use a better example.\r\n\r\nPerhaps, we can tweak this example to make it more sensible, though I don't necessarily believe this example is very bad. It's weird, but it clearly demonstrates an identifier design that will never be achieved by v1 through v7 (e.g., nanosecond precision, wrapping timestamp, non-sortable).\r\n\r\nHowever, I don't agree to remove this example. The draft is clear that v8 is the fully custom version and that time-based and name-based are just examples. If you find these examples confusing, we can also add more examples like:\r\n\r\n- time-based\r\n- name-based\r\n- node ID-based (Section 6.4)\r\n- little endian-based (Section 6.10)\r\n\r\nWith multiple examples, perhaps readers will be sure they are just implementation examples.\r\n\r\n> **_Solution B_**: Or we generate the UUID \"on the fly\" by using a name-based UUID:\r\n\r\nIt's actually the very use case of v8. Before v8, the name-based versions were the only solution to map a set of external identifiers to those within the UUID space. With v8, you can simply embed your ClientId || MandatorId || InvoiceId || LineId in v8's 122-bit payload. v8 is introduced to solve this kind of problems. If the external identifier is larger than 122 bits, then you'll need to truncate, compress and/or scramble it, but SHA is not mandatory.\r\n",
+          "createdAt": "2023-09-19T13:21:26Z",
+          "updatedAt": "2023-09-19T13:21:26Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> So far, no hash function, including SHA2 and SHA3, is intended to produce 122 bits for UUID. Arbitrarily cutting off extra bits increases the likelihood of a collision in an unknown way. Therefore, none of the current hash functions, including SHA2 and SHA3, should be recommended in the new RFC. Current hash UUIDs definitely fall into the category of custom UUIDv8 for the risk-taking guys. Someone will have to invent a custom hash function specifically for UUIDs.\r\n\r\nI haven't read the NIST recommendations, but I think someone in that discussion mentioned that cutting off bits is OK by NIST. (And SHA512/224 does this).\r\n\r\nYes, the probability of collissions raises. In the example of SHA3-512 from 1/2^512, up to 1/2^122. But it would not become greater than 1/2^122, since the entropy is equal across the 512 bits, AFAIK.\r\n\r\n> With v8, you can simply embed your ClientId || MandatorId || InvoiceId || LineId in v8's 122-bit payload. \r\n\r\nYes, I know. That would be perfect (and this is why I think fully custom UUID are very useful). Unfortunately for my case, the identifiers altogether are longer than 122 bits, so I needed to use a hash.",
+          "createdAt": "2023-09-19T13:34:34Z",
+          "updatedAt": "2023-09-19T13:42:47Z"
+        },
+        {
+          "author": "chorman0773",
+          "authorAssociation": "NONE",
+          "body": "Keccack and blake3 as general algorithms could likely be recommended - you\r\ncan generate 128 bits from the sponge construction.\r\n\r\nYou could also use something like SipHash128 if you had a way to derive the 128-bit key.\r\n",
+          "createdAt": "2023-09-19T13:40:54Z",
+          "updatedAt": "2023-09-19T13:56:36Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I mean the current Appendix C.8 doesn't preclude use of a nonsense hash function\r\n\r\nOk, I can understand the problem. Some people might decide to use UUIDv9 with \"CRC32\" as a hash function. (Extreme case)\r\n\r\nIn that case, the only thing we can do is to recommend \"strong algorithms\" but leave the definition of \"strong algorithms\" out-of-scope of the RFC. Maybe the list of SHA2/SHA3/SHAKE in Appendix B is enough recommendation? In any case, I don't think it is good to recommend any algorithm, because it lets the document \"age\" faster if the recommended algorithms become unsafe. So I think it should be the obligation of the developer to choose an algorithm that is secure at the time they are developing their app.",
+          "createdAt": "2023-09-19T13:52:59Z",
+          "updatedAt": "2023-09-19T13:52:59Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> the only thing we can do is to recommend \"strong algorithms\" but leave the definition of \"strong algorithms\" out-of-scope of the RFC\r\n\r\nIf there are implementation-specific options, then v8 is sufficient. A standard exists to coordinate implementations. If one is not specific, then it's useless. As for the current hash space approach specifically, the choice of hash function is critical to ensure uniqueness, so once a CRC32-based value sneaks into a primary key column of a database, you can no longer insert another name-based value without a risk of collision. You can't even remove CRC32-based values from the column due to the design of the hash space scheme. You will be able to handle name-based values very well if you carefully control the hash functions used in your application, but that is a sort of care that only v8 may require, in my opinion.\r\n\r\nAt this stage, I am not convinced that a separate version number is necessary for the hash space scheme. There are a plenty of alternatives to explore before standardizing a name-based scheme. Limiting the hash function to SHAKE, as mentioned by @chorman0773, would be an option. If you are concerned about the aging of algorithms, we could introduce a `hash_function` field to distinguish algorithms used. SipHash128 and other algorithms used to implement hash tables would also be interesting because the key problem in the use case mentioned above is the compression of external identifiers to fit into the 122-bit payload.\r\n\r\nI am also concerned about the inactive discussion over name-based UUIDs. It has been seriously inactive for the last couple of years, and accordingly we haven't even been able to identify a clear-cut use case of name-based UUIDs. With the very low level of feedback, we won't be able to evaluate multiple name-based scheme ideas, or won't even be able to identify metrics to evaluate such ideas.\r\n\r\nI would recommend to establish a new RFC project just like [the new textual encoding](https://github.com/uuid6/new-uuid-encoding-techniques-ietf-draft) and [the 111 variant](https://github.com/uuid6/uuid6-ietf-draft/issues/26) to discuss the name-based scheme. We'll need focused time and discussion to develop a right name-based approach. Plus, once the hash space approach is published as a v8 example, we'll be able to observe how implementers deal with the approach and collect feedback to improve the name-based arrangement.\r\n",
+          "createdAt": "2023-09-20T00:42:20Z",
+          "updatedAt": "2023-09-20T00:42:20Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall Thanks for the information, that data makes sense.\r\n\r\nBased on your use case, it seems like:\r\n\r\n* **UUIDv3 or UUIDv5 would still work perfectly well.**  MD5 and SHA-1 are broken for cryptographic purposes, but in terms of collision resistance for a use case like you describe, it seems perfectly suitable.\r\n* **Since you control all of the code** putting data into the existing storage that needs a UUID, you could also use UUIDv8 without any issues - since you don't have to interoperate with any other system.\r\n\r\nFor these reasons I don't see the necessity of creating a UUIDv9.  If there is a use case where UUID v3, v5 or v8 are all unsuitable, please let me know what that is and why.\r\n\r\nOtherwise, based on this, do you agree that we do not need to address creating a UUIDv9 in this document?  (I'm not sure if you realize that this discussion is blocking literally years of work at this point, right at the finish line. So I'm just trying to narrow this down here and see if we can get some agreement on whether we actually need to keep going on this UUIDv9 idea.)\r\n\r\nP.S.  I understand the concern about MD5 and SHA-1 being \"old-fashioned\", but I think we'd need a stronger argument (and use cases) to invent a new UUID version.  If UUID were not limited to 122 available bits and we could just update the hash function to SHA-512 or similar, I would say sure this makes sense let's do it.  But we have to truncate those to fit into 122 bits and so the value in saying that we're now using a secure hash algorithm just goes way down.  We can't follow only part of the recommendations for how to handle hashes and claim that we've now made the system more secure. ",
+          "createdAt": "2023-09-20T01:07:52Z",
+          "updatedAt": "2023-09-20T01:09:20Z"
+        },
+        {
+          "author": "chorman0773",
+          "authorAssociation": "NONE",
+          "body": "So I should note my use case, using UUIDs as well-known device ids, does have issue with collisions - in the OS, device drivers, both those running in user space *and* in kernel space can register their own devices, and as part of that, they can either ask for a UUID (which would be v1 or v7 most likely, or maybe v4) or they can specify one of their own. While malicious collisions don't pose a security risk (attempting to register over an existing device returns an error rather than overwriting the existing device), accidental collisions would cause an error the code may not expect, particularily if it's a kernel-mode driver that's run during startup. I would consider that enough of an issue to avoid using a fully custom v8 for well-known devices, but a standardized extended name-based UUID would be useful IMO. Additionally, there are a few other things in the OS involving dynamic computation of name-based UUIDs that I would like to switch to an algorithm other than md5 or SHA-1, but would not want to use v8 for. For example, legacy unix group and user ids are mapped to principal UUIDs using a hash of a particular OID ending in the group/user id number by default. That could use Keccack or SipHash (SipHash particularily if there's a well-defined way for keyed hash functions, for example using the namespace as the key rather than part of the message, as it's incredibly efficient to compute and I've recently made it faster than llvm's codegen on x86 - overall it's far faster than md5).",
+          "createdAt": "2023-09-20T01:39:33Z",
+          "updatedAt": "2023-09-20T01:40:41Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Btw SipHash (or whatever non-SHA algorithm) really draws my attention. Security shouldn't usually be the primary property sought for a hash function in the context of name-based UUIDs. SHA series is overkill where security isn't the issue; rather, it's complicating the situation. v5 perfectly works even as of now because it doesn't rely on SHA-1's security, but many people believe v5 is obsolete. If there is a non-cryptographic hash function that fully focuses on collision resistance, a name-based UUID based on it won't become obsolete in the future....\r\n\r\n(This is just an off-topic note. This doesn't change my conclusion in the previous post. I'd recommend to discuss this kind of stuff in a separate repository. Name-based schemes aren't mature or worth another six months for formal review at this stage.)",
+          "createdAt": "2023-09-20T03:46:21Z",
+          "updatedAt": "2023-09-20T03:46:21Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Alright, to summarize and suggest a possible solution based on the above info:\r\n\r\nThe problems we're trying to solve:\r\n\r\n* **Determinism** - as above, same input should lead to the same output\r\n* **Interoperability** - it needs to be standardized \"enough\" so that two implementations can point to some place in the document and get the same behavior (note that this does not necessarily require a new UUID version)\r\n* **Collision resistance** - most well-studied hash functions are \"well distributed\", meaning changing a single bit of input results in roughly half of the bits in the output being changed.  I'm pretty sure CRC32 has poor distribution, but most of the newer hash functions have addressed this.\r\n* **Simplicity**: If we can accomplish this without adding a new UUID version, that will make this whole thing go a lot faster. It also means we don't use up UUIDv9 without thinking this all the way through and giving it more time to be studied carefully.\r\n\r\nThe problems we're **not** trying to solve:\r\n\r\n* **Preventing deliberate collisions** (given input X hashes to Y, finding another value Z that also hashes to Y)\r\n* **Preventing guessing the input based on the output** (given hash Y, the difficulty of guessing input X)\r\n* Specifically these security concerns seem fundamentally conflicted with the fact that UUID is limited to an exact size.  It is unlikely there is any hashing solution that is currently and will continue to be secure in the face of this restriction (and changing size of UUID or making it variable length has already been discussed at length and dismissed as out of scope for this document). As such, this tends to point in the direction of not using a cryptographic hash function at all, since this A) sends a signal to other people that cryptographic security is implied and B) will likely suffer the same fate as MD5 and SHA-1 given enough time.\r\n\r\n**Okay, so with all that said, it seems to me like we could address all this by simply providing a suggestion for an implementation of UUIDv8 that uses a specific (non-cryptographic) hash function.**  Since UUIDv8 is by definition unrestricted, I don't think we can really make any arguments about collision resistance against other implementations (i.e. trying to guess how often a hash function might collide with someone else's implementation seems unlikely to be fruitful).  So why not simply have a short section under UUIDv8 that says something like:\r\n\r\n> **For implementations requiring a deterministic UUID that uses a modern hashing function, UUIDv8 can be used.  A suggested implementation is to compute a xxhash-128 value from the input and then write the version and variant bits appropriately.**\r\n\r\nAnd then whoever needs this can just point to the document and say \"our implementation uses UUIDv8 with the suggestion specified at (link to section of the doc with text above)\" and they get all of the benefits above: determinism, interoperability, collision resistance, and it doesn't require us to commit to UUIDv9 right now.\r\n\r\nCould this help point us in the right direction here?  If so, I think we just need to pick the specific hash function and tweak the text to ensure it's specific enough.\r\n\r\n---\r\n\r\nAlso just dropping a few notes on specific non-cryptographic hash algorithms if we go this route:\r\n* xxhash is noted for its run-time speed\r\n* fnv is noted for its simplicity of implementation\r\n* SipHash looks interesting but still seems crypto focused and requires a separate secret key. @LiosK \r\n* I haven't looked into which hash algorithms are specified in RFCs or other standards documents, something standardized might be better than not.",
+          "createdAt": "2023-09-20T07:13:02Z",
+          "updatedAt": "2023-09-20T07:20:43Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bradleypeabody\r\nThank you so much for analyzing/evaluating all this and spending so much time on this topic!\r\n\r\nI fully agree with all your points except for one detail: I do not like the idea of selecting a single hash algorithm. Maybe just say the hash algorithm needs at least 128 bits in size.\r\n\r\n\r\nI have an approach that only affects the section UUIDv8 and does not require UUIDv9. I am not familar with the IETF procedures, so I don't know if this change is acceptable or if it also needs a large re-do of all the reviews. I do not want to destroy the work of many years.\r\n\r\n\r\n\r\nWhat about the following proposal?:\r\n\r\n---\r\n\r\nIn section 5.8 (UUIDv8) we could explicitly state that there are three possibilities:\r\n\r\n1. UUIDv8 custom time-based (and mention that this UUIDv8 variant is required by section 6.1)\r\n2. UUIDv8 name-based (and mention that this UUIDv8 variant is required by section 5.5. Intentionally I do NOT call this \"custom name-based\" because I would like this name-based approach to be defined, see below.)\r\n3. Misc/Fully custom UUIDv8  (we need to agree on a fitting name)\r\n\r\nThen write some explanations for each of these three possibilities.\r\n\r\n**_1. In re \"UUIDv8 custom time-based\":_**\r\n\r\nWe can give some clues about what could be customized:\r\n\r\n- Timing resolution\r\n- Starting point / Epoch\r\n- Additional fields such as clock sequence, random bits, node ID\r\n- Order of the fields\r\n- etc. (Did I forget something?)\r\n\r\nWe can refer to example C.7, but I still think the one nanosecond is a very bad example and should be adjusted, so that the UUID does not wrap around at 78 hours.\r\n\r\nI wouldn't mind if example C.7 is removed, but I leave that up to you.\r\n\r\n\r\n**_2. In re \"UUIDv8 name-based\":_**\r\n\r\nI would be very happy if we could DEFINE how a UUIDv8 name-based is calculated, rather than just naming it an \"example\", otherwise this would allow different implementations.\r\n\r\nDefine (most of this definition can be taken from section C.8):\r\n\r\n1. You can use any hash algorithm, but it should have at least 128 bits in size. (Optionally, you can recommend one specific algorithm, but I think the developer should be able to choose any algorithm with size >= 128 bits)\r\n\r\n2. Create a hash like `UUIDv8 = Hash(HashspaceId || NamespaceId || Data)`\r\nThough I am not sure why HashspaceId does exist at all... does it make the hash any better?\r\nIf the requirement is to avoid that two hash algorithms collide, the approach should rather be:\r\n`UUIDv8 = HashspaceId XOR Hash(NamespaceId || Data)`\r\nBut if we allow the risk that two hash algorithms collide, then the solution can be much simpler:\r\n`UUIDv8 = Hash(NamespaceId || Data)`\r\nIn that case, name-based UUIDv8 behaves exactly like UUIDv3/5, and Appendix B (hash spaces) could be removed, and this simplifies the document and IANA would not need to create a registry for Hashspace IDs.\r\nI am okay with it either way. I just want a fixed definition of name-based UUIDv8 instead of an example.\r\n\r\n3. Cut off any additional bits on the right side.\r\n\r\n4. Replace the variant and version (\"8\") bits.\r\n\r\n\r\n**_3. In re \"Misc/Fully custom UUIDv8\"_**\r\n\r\nWe can keep the sentence:\r\n\"_Fully custom UUIDv8 provides an RFC-compatible format for experimental or vendor-specific use cases_.\"\r\n\r\nI don't think we should provide any examples of fully custom UUIDv8, since there are so many possible things people can do.\r\n\r\n---\r\n\r\nThe advantages of this proposal:\r\n\r\n- The proposal only modifies a single section: UUIDv8.\r\n- We don't need a new UUID version\r\n- People can now say \"I implemented UUIDv8 name-based with hash SHA3 according to RFC xxxx\" and it is 100% clear what they have implemented, since the construction of \"UUIDv8 name based\" is clearly defined and not an example anymore.\r\n- As of the current draft, in sections 5.5 and 6.1 we are already stating \"_MUST use UUIDv8_\". So it is very fitting that the UUIDv8 section addresses these two cases from sections 5.5 and 6.1 (in addition to the fully custom case).\r\n\r\nDisadvantage of this proposal:\r\n\r\n- There is a theoretical risk that name-based, custom time-based, and fully custom UUIDv8 collide. But since hash algorithms usually have a high entropy, I think this chance is so tiny, that it can be ignored.\r\n\r\nWhat do you think?",
+          "createdAt": "2023-09-20T10:23:46Z",
+          "updatedAt": "2023-09-20T10:26:06Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I think UUIDv8 is suitable for the name-based solution @danielmarschall chose to use, so if he uses his own custom vendor-specific name-based format, I don't think there is any problem. He could share the exact generator function with us, but that exact format shouldn't be in the RFC. That is the whole point of UUIDv8 being there.\r\n\r\nIn that case, UUIDv9 isn't needed to be introduced, because the outside the world of @danielmarschall, people use other UUIDv8 types and not neccessary need his format in their software. I think it is clear to us all that we don't introduce UUIDv9 for the upcoming RFC. If we uniformly see a need to define some name-based UUID later, we can come back together and talk about UUIDv9 or UUIDv10 or which other version-nibble is still availble at that time.\r\n\r\nSo, in my opinion:\r\n - @danielmarschall, use UUIDv8 for the time being with your custom format. In the future there maybe is a new version that will introduce a improved version of UUIDv3 and UUIDv5 that is available for us all. There will be no UUIDv9 in this spec and #147 can be closed.\r\n - We should take a big look at the examples for UUIDv8. We rewrite or remove them. If we rewrite them, we could add the sentence `These examples MUST not be implemented, because they only show what UUIDv8 is capable of. It isn't a defined format to use in production code.` or something. I don't say we shouldn't have examples, but we should be extremely carefull with having them. For me, the example section at the moment seems a very big call to action to implement these examples, but that is exactly what we don't want. I suggest we continue the conversation about that in #150.\r\n - Because the UUIDv8 examples are just examples, and because there is no UUIDv9 yet, we will not ask IANA to make a registry for hashspaces. We also don't list them in the RFC, so #143 can be closed. Making those registries will cause people to see the examples as implementation requirements and we don't want that, see my point above. Other registries could be added to IANA, see #144. Talking about IANA will continue in #144.",
+          "createdAt": "2023-09-20T10:35:22Z",
+          "updatedAt": "2023-09-20T10:36:52Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "at least 122 bits in size \n\nnot 128, because 6 bits are used for version and variant\n",
+          "createdAt": "2023-09-20T11:37:56Z",
+          "updatedAt": "2023-09-20T11:37:56Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "The word \"name-based\" is misleading because it could be hash from integer. Hash-based is  unambiguous and specific",
+          "createdAt": "2023-09-20T11:46:02Z",
+          "updatedAt": "2023-09-20T11:46:02Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, hash-based is the better word. I just thought to match the naming with UUIDv3 and UUIDv5\r\n\r\nIn re 122/128 bits: Is it easier to implement to choose 128 bit hash and then overwrite the variant + version bits rather than inserting the bits between the 122 bits.",
+          "createdAt": "2023-09-20T11:47:59Z",
+          "updatedAt": "2023-09-20T11:48:05Z"
+        },
+        {
+          "author": "chorman0773",
+          "authorAssociation": "NONE",
+          "body": "I wouldn't say easier (it's a few bit shifts, so it is trivial either way) but it's more efficient and more obvious IMO than truncating an extra 6 bits and doing a the bit splitting.",
+          "createdAt": "2023-09-20T12:06:30Z",
+          "updatedAt": "2023-09-20T12:06:30Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I have the feeling the thread is getting a bit off-topic.",
+          "createdAt": "2023-09-20T12:18:09Z",
+          "updatedAt": "2023-09-20T12:18:09Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "It would be wrong to prohibit 122 bits\n",
+          "createdAt": "2023-09-20T12:35:44Z",
+          "updatedAt": "2023-09-20T12:35:44Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Initially, I thought that a name-based UUIDv9 would be very simple because section C.8 already had a very nice implementation (and was already accepted by most?). The only discussion there was the choice of hash space IDs which was also [already solved/decided](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1711804042).\r\n\r\n\r\nOk \ud83c\udff3\ufe0f .... due to this discussion, I come to the conclusion that there are a lot of implementation possibilities and opinions about the details of such a name/hash-based UUID that allows modern hash algorithms.\r\n\r\nSome of the implementation possibilities and things to consider are:\r\n\r\n- Requirements for a hash? (Allow \"all\"? Allow only \"secure\"?)\r\n\r\n- Write 128 bits and overwrite bits with variant/version (like UUIDv3/5), or write 122 bits and insert the variant/version bits?\r\n\r\n- Cut off bits at the \"right\" side (LSB, like UUIDv3/5) or at the \"left\" side (MSB)?\r\n\r\n- Allow hash algorithms that are too short? If yes:\r\n\r\n\t- Fill the missing bits with zeros or with a bit pattern?\r\n\r\n\t- Fill at the \"right\" side (LSB) or the \"left\" side (MSB)?\r\n\r\n- How to create the hash?\r\n\r\n\t`UUIDv9 = Hash(HashspaceId || NamespaceId || Data)` (= example in appendix C.8)\r\n\tor\r\n\t`UUIDv9 = HashspaceId XOR Hash(NamespaceId || Data)`\r\n\tor\r\n\t`UUIDv9 = Hash(NamespaceId || Data)`\r\n\tor\r\n\t`UUIDv9 = HashNumber || Hash(NamespaceId || Data)` where `HashNumber` might be 1, 2, 3 for algo X, Y, Z\r\n\tor\r\n\tsomething completely different?\r\n\r\n- If Hashspace IDs are used, how are they chosen?\r\n\r\n\t- Use a UUIDv4? (as of uuidrev draft 11)\r\n\t- Calculate it using a custom UUIDv5 namespace and a canonical hash name? (proposal [here](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1709057651))\r\n\t- Calculate it using the OID UUIDv5 namespace and the [most common] algorithm OID? (proposal [here](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1709117798) and decided [here](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143#issuecomment-1711804042))\r\n\t- Use UUIDv1/6/7?\r\n\t- Don't use UUID as hash space id and rather use the [most common] algorithm OID in dot notation?\r\n\t- Don't use UUID as hash space id and rather use the [most common] algorithm OID in DER notation?\r\n\t- or something completely different?\r\n\r\n- If Hashspace IDs are used, register them at IANA? Register OIDs and algorithm names, too? (#144)\r\n\r\n- Call it \"name-based\" as of UUIDv3/5 or hash-based? (And maybe even rename UUIDv3/5 to \"hash-based\"?)\r\n\r\n- ...\r\n\r\n---\r\n\r\nI do still think that UUIDv9 should be introduced in the future and that it should be a successor to UUIDv3 and UUIDv5 (similarly like UUIDv6 is a successor to UUIDv1), but I understand that the questions I mentioned above need to be answered and that this cannot be done in this RFC.\r\n\r\nIf an RFC is planned in the future featuring these \"name/hash-based any-hash UUIDs\" aka UUIDv9, I hope I will notice it it in time (or get notified if possible); then I will contribute as much as possible. I wish I had noticed this ongoing UUID revision sooner - I found it by accident while Googling UUID implementations.\r\n\r\n---\r\n\r\n**_For this RFC I propose [Proposal version 4, aka ultra light version of my initial proposal]:_**\r\n\r\n- I suggest thinking about the examples; at least change the time resolution of C.7 time-based. (#150)\r\n\r\n- In section 5.8 (UUIDv8) please mention these cases:\r\n\r\n\t- UUIDv8 custom time-based (\"as required by section 6.1\")\r\n\t- UUIDv8 **_custom_** name-based (\"as required by section 5.5\")\r\n\t- UUIDv8 misc/other/fully custom [TODO: decide about name]\r\n\r\n\r\n_Annotation about my suggested 3 cases:_\r\n\r\n_- Now, I do use the word \"custom\" in \"custom name-based\", because the developer needs to decide about the various implementation details._\r\n\r\n_- You could argue that \"custom time-based\" and \"custom name-based\" are both \"custom\", so mentioning three things might be redundant. However, since sections 5.5 and 6.5 both refer to section 5.8 (UUIDv8), I think these references should be addressed. Also, it gives the developer an idea \"Hey, I could use SHA3 in my UUID\" :-)_",
+          "createdAt": "2023-09-20T14:10:42Z",
+          "updatedAt": "2023-09-20T16:50:56Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall\r\n\r\n> except for one detail: I do not like the idea of selecting a single hash algorithm\r\n\r\nIf we don't specify exactly how it's done, then we lose the interoperability requirement, which is essentially what @chorman0773 brought up for that use case.\r\n\r\n---\r\n\r\nAnd there's the point about the examples for UUIDv8 too easily becoming an implementation suggestion.\r\n\r\nI haven't looked at it in detail recently, but **what if we simply replace the UUIDv8 examples with one example of a hash based UUID** - specify it in detail so it can actually be referred to inter-operably if needed, but then that's it.  UUIDv8 remains completely open ended, there's just one example that happens to be a hash based one that solves the uses brought up here.  @chorman0773 you get what you're after, @danielmarschall you can use this or do anything else you want with UUIDv8.\r\n\r\n**I'd like to see how much consensus there is on that idea,** and if we're starting to agree, then we can look at some specific changes and start getting a pull request put together.\r\n",
+          "createdAt": "2023-09-20T18:25:57Z",
+          "updatedAt": "2023-09-20T18:25:57Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "Please no more additional proposals )",
+          "createdAt": "2023-09-20T18:49:52Z",
+          "updatedAt": "2023-09-20T18:49:52Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> If we don't specify exactly how it's done, then we lose the interoperability requirement, which is essentially what @chorman0773 brought up for that use case.\r\n\r\n@bradleypeabody Sorry, I am a bit confused. Do you mean [this post](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1726756421) by @chorman0773 ? My (initial) idea was to specify the mechanism/construction itself, but leaving the algorithm to the developer. Of course, this would mean that the algorithm is required for describing the UUID, i.e. there is not one \"Hash-Based-UUIDv8\" instead there is a \"SHA3-Hash-Based-UUIDv8\", or a \"SipHash-Hash-Based-UUIDv8\", or simply `UUIDv8_Namebased(Hash, Namespace, Data)` ...  Sorry if I misunderstood something.",
+          "createdAt": "2023-09-20T18:59:30Z",
+          "updatedAt": "2023-09-20T19:06:05Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@sergeyprokhorenko keep in mind there also https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/150, and so I was thinking  we might be able to address both of these issues with a relatively small change just to the examples of UUIDv8.  If the goal is to have completely zero changes to the doc so it can be approved as-is, that's one thing.  But if there will be any changes at all, then I think editing the UUIDv8 examples to address these concerns could be workable. ",
+          "createdAt": "2023-09-20T18:59:35Z",
+          "updatedAt": "2023-09-20T18:59:35Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I haven't looked at it in detail recently, but **what if we simply replace the UUIDv8 examples with one example of a hash based UUID** - specify it in detail so it can actually be referred to inter-operably if needed, but then that's it.\r\n\r\n@bradleypeabody  This sounds great!",
+          "createdAt": "2023-09-20T19:01:08Z",
+          "updatedAt": "2023-09-20T19:01:08Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "> I haven't looked at it in detail recently, but **what if we simply replace the UUIDv8 examples with one example of a hash based UUID** - specify it in detail so it can actually be referred to inter-operably if needed, but then that's it.\r\n\r\nI don't know if I agree on that one, but I think it's discussion belongs to #150. At least we have to review them to see what exactly is wrong and what can be changed.",
+          "createdAt": "2023-09-20T19:22:45Z",
+          "updatedAt": "2023-09-20T19:22:45Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall \r\n\r\n> My (initial) idea was to specify it the mechanism/construction itself, but leaving the algorithm to the developer. \r\n\r\nTo clarify my concerns, the main issue I have with that approach is that without a specific hash algorithm and specific way to fit the result into the UUID 128 bits, we lose interoperability.  Specifically, what I mean is that if person A wants to implement a hash-based UUIDv8 and person B wants to do the same thing and ensure that the same input hashes to the same output UUID - we don't get that result unless there is something specific enough to clearly describe exactly how it's done.  For this to work, we need a section of the doc where these two people can just say \"the implementation is per (link)\". (And although an example is less set in stone than a separate version, you can still link to it and refer to it as a specific implementation if you want to.)  If we provide any less detail, we lose interoperability.  And if we're not trying to be interoperable, then what is the point of providing any detail at all?  If you are only concerned about your own implementation, then you can just do whatever you want with UUIDv8, that's its entire purpose, we don't need to change the spec to make it address that scenario, it's already covered.",
+          "createdAt": "2023-09-20T19:28:41Z",
+          "updatedAt": "2023-09-20T19:32:54Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> For this to work, we need a section of the doc where these two people can just say \"the implementation is per (link)\".\r\n\r\n@bradleypeabody Yes, this is what I intend, to have a reference for interoperability. Maybe there was a misunderstanding. Of course, the example should show a specific example, e.g. to construct the hash using SHA3, and then describe how the bits are placed to form the resulting UUID.",
+          "createdAt": "2023-09-20T20:00:45Z",
+          "updatedAt": "2023-09-20T20:12:21Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall Okay understood.  So then if we went down the route you suggest there would just be a lot of variation that would require specification - what to do with hash algorithms that have more or less bits (e.g. 64bit hashes are very common), where is the specification for each hash algorithm (some are more/less standardized than others), are there any limitations of what we allow e.g. is a 16 bit hash allowed? how about 256 bits truncated? Or should they be XORed together, etc., etc.  It's possible to specify, but it doesn't seem simple.\r\n\r\nThat said, **as the original poster of this thread, do you agree that we can address the concerns in this thread through one or more examples of UUIDv8?**  If you agree, and there are no other objections, then we can fold this discussion into #150 and start looking at specific UUIDv8 examples and start narrowing this down into some specific actionable edits to the doc.",
+          "createdAt": "2023-09-20T20:12:21Z",
+          "updatedAt": "2023-09-20T20:12:21Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "> @sergeyprokhorenko keep in mind there also #150, and so I was thinking we might be able to address both of these issues with a relatively small change just to the examples of UUIDv8. If the goal is to have completely zero changes to the doc so it can be approved as-is, that's one thing. But if there will be any changes at all, then I think editing the UUIDv8 examples to address these concerns could be workable.\r\n\r\n@bradleypeabody\r\n\r\nI completely agree with you.\r\n\r\nThe best option would be to leave everything as is, and not slow down the RFC approval process.\r\n\r\nTrue, the quality of the RFC would benefit if all UUIDv8 examples were removed, leaving everything to the will and responsibility of the implementers. If we add any UUIDv8 example, then we are responsible for its quality, and we would not like that. This could now lead to endless discussions to improve this example.\r\n\r\nIf this is not possible, then the best solution would be to replace all UUIDv8 examples with one hash-based example.",
+          "createdAt": "2023-09-20T20:33:37Z",
+          "updatedAt": "2023-09-20T20:33:37Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> That said, **as the original poster of this thread, do you agree that we can address the concerns in this thread through one or more examples of UUIDv8?** If you agree, and there are no other objections, then we can fold this discussion into #150 and start looking at specific UUIDv8 examples and start narrowing this down into some specific actionable edits to the doc.\r\n\r\nYes, absolutely!\r\n\r\n> So then if we went down the route you suggest there would just be a lot of variation that would require specification - what to do with hash algorithms that have more or less bits (e.g. 64bit hashes are very common), where is the specification for each hash algorithm (some are more/less standardized than others), are there any limitations of what we allow e.g. is a 16 bit hash allowed? how about 256 bits truncated? Or should they be XORed together, etc., etc. It's possible to specify, but it doesn't seem simple.\r\n\r\nThe [long list of questions](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1727814436) were all the implementation variations I could imagine. Specifying/explaining them all in the doc would be complicated and probably also unnecessary. For example, if Hashspace IDs get removed, then the readers of the final RFC won't know that hashspaces existed in the first place.\r\n\r\n**_My approach would be:_**\r\n\r\n1. Make one (good) example that can be used as a reference for interoperability.\r\n\r\n2. Try making the UUIDv8 example as simple as possible, so I would recommend not using hashspace IDs and re-use as many implementation details from UUIDv3 and UUIDv5 as possible, rather than defining new ones. People are familiar with UUIDv3/5.\r\n \r\nMy **_personal preference_** for the implementation variations in the [long list of questions](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1727814436) would be the following.\r\n(But the important thing is the consensus and not my personal opinion!)\r\n\r\n- Allow all hashes (and hope that developers are not stupid and use CRC16). [To clarify: I mean \"allow\" all hashes, and the example demonstrates it using a specific test vector, e.g. SHA3]\r\n\r\n- If the hash output size is < 128 bits, fill the right side with zero bits until 128 bits are reached.\r\n\r\n- If the hash output size is > 128 bits, cut the extra bits from the right side. (= same implementation as UUIDv3/5)\r\n\r\n- Write 128 bits and then overwrite the bits with UUID variant/version (= same implementation as UUIDv3/5)\r\n\r\n- Create the hash using `UUIDv8(Hash, Namespace, Data) := Hash(NamespaceId || Data)` , because this is the easiest way and it matches the UUIDv3/5 specification.\r\n\r\n- Call it name-based to match the naming scheme UUIDv3/5.\r\n",
+          "createdAt": "2023-09-20T20:35:45Z",
+          "updatedAt": "2023-09-20T20:45:14Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall\r\n> Ok \ud83c\udff3\ufe0f .... due to this discussion, I come to the conclusion that there are a lot of implementation possibilities and opinions about the details of such a name/hash-based UUID that allows modern hash algorithms.\r\n\r\nFor those that are curious, this thread is a good example as to why it has taken ~3 years to create v6, v7, v8 and deliver this doc. There have been many long threads like this when we were going through the [data, implementation prototypes, discovering corner cases, and many other item](https://github.com/uuid6/uuid6-ietf-draft/issues?q=is%3Aissue). Creating and defining a widely used spec such as this one is no easy task.\r\n\r\n[Though I postulated a SHA256v9 back when I was drafting rfc4122bis](https://github.com/ietf-wg-uuidrev/rfc4122bis/blob/main/editor-files/UUIDv3-v5-Testing.md#sha256-testing-a-v9---5c146b14-3c52-9afd-938a-375d0df1fbf60); I was never able to find a strong use case to assign it a version number. As such I voted, with others, at one of our interim meetings to put it in the v8 category of \"design it if you need it and do it under v8\".\r\n\r\n---\r\n\r\nAs for the latest comment and what I assume is the final verdict of the thread: \r\nWould a single v8 hash-based UUID using SHA-256 (but allowing other options) , www.example.com, and the DNS Namespace without Hashspace IDs be suitable? \r\nBasically v5 SHA-1 but with SHA-256 plugged in and version bits flipped to v8.\r\n\r\nAlso I can change the items in this doc from \"name-based\" to \"hash-based\" which I agree, is a better descriptor.",
+          "createdAt": "2023-09-20T20:47:48Z",
+          "updatedAt": "2023-09-20T20:48:02Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> As for the latest comment and what I assume is the final verdict of the thread: Would a single v8 hash-based UUID using SHA-256 (but allowing other options) , [www.example.com](http://www.example.com), and the DNS Namespace without Hashspace IDs be suitable? Basically v5 SHA-1 but with SHA-256 plugged in and version bits flipped to v8.\r\n\r\nYes, this sounds perfect!\r\n\r\n> Also I can change the items in this doc from \"name-based\" to \"hash-based\" which I agree, is a better descriptor.\r\n\r\nI think \"name-based\" came due to the fact that OIDs and URIs are \"names\" rather than the resulting format which is a hash.\r\nI am fine either way (name-based or hash-based).\r\nBut if it gets changed to hash-based, isn't there a backward compatibility problem, if implementations use the word \"name based\"?",
+          "createdAt": "2023-09-20T20:52:43Z",
+          "updatedAt": "2023-09-20T20:53:00Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall Thanks for that, makes sense.  I agree with your points 1 and 2 and the rest also make sense to me.  Let's try to narrow this into what specific edit(s) to propose.\r\n\r\nLooking at the doc, there's this whole [Named-based UUID section](https://github.com/ietf-wg-uuidrev/rfc4122bis/blob/main/draft-ietf-uuidrev-rfc4122bis.md#name-based-uuid-generation-name_based_uuid_generation) that will likely need to be updated.  However, I strongly recommend starting from the simplest, most basic text for this, and then add what's missing, instead of starting with a large long explanation that then needs to be whittled down.\r\n\r\nSo with that in mind, can you please propose some text which describes this example UUIDv8 - so myself others can give specific feedback on that?  (Again, I urge you to start simple, try for a couple/few paragraphs if you can.)",
+          "createdAt": "2023-09-20T20:53:03Z",
+          "updatedAt": "2023-09-20T20:53:03Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "> https://mailarchive.ietf.org/arch/msg/uuidrev/dhxgO66xkpNBrOtSy0AY8nV9bAE/ @sergeyprokhorenko @danielmarschall @ben221199 @LiosK @chorman0773 If this matters, then please participate.\r\n\r\n@mcr\r\n\r\nWe were put in terrible conditions that we must ensure consensus. This is incorrect because responsibility for the quality of the RFC rests with the three authors who submitted the RFC for approval. But now one belated and picky person from the outside can impose his will on everyone else, and it is not clear how to please him. We are forced under pressure to add into the RFC a deliberately risky technical solution, the quality of which is below any criticism, because it\u2019s easier for someone to make a workaround in his information system.\r\n\r\nI transfer my vote to @LiosK at the virtual interim meeting in early October.\r\n",
+          "createdAt": "2023-09-20T21:00:43Z",
+          "updatedAt": "2023-09-20T21:00:43Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> We were put in terrible conditions that we must ensure consensus. This is incorrect because responsibility for the quality of the RFC rests with the three authors who submitted the RFC for approval. But now one belated and picky person from the outside can impose his will on everyone else, and it is not clear how to please him. We are forced under pressure to add into the RFC a deliberately risky technical solution, the quality of which is below any criticism, because it\u2019s easier for someone to make a workaround in his information system.\r\n\r\nAnd to be clear on my position on this, if there is a path where there are zero edits required and we can get the doc approved as-is, then I absolutely think we need to seriously consider that option and weigh things appropriately.  However, if there are any edits required for anything and thus it needs to be looked at again by various people, then I don't see the harm in adding/editing this UUIDv8 example stuff as described above.",
+          "createdAt": "2023-09-20T21:08:56Z",
+          "updatedAt": "2023-09-20T21:09:28Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Should I now write a draft for an UUIDv8 example as @bradleypeabody requested, or wait for the interim meeting in early October as @sergeyprokhorenko recommends?\r\n\r\nI think the interim meeting was scheduled because of the decision if UUIDv9 should be considered or not. But the UUIDv9 topic is now solved. UUIDv9 will not come. The change/merge/deletion of section C.7 and C.8 is not a change that requires the reviews to be re-done, therefore I do not think the interim meeting is required at this point? (Correct me if I'm wrong, I am not an expert in this standardization procedure)\r\n",
+          "createdAt": "2023-09-20T21:10:05Z",
+          "updatedAt": "2023-09-20T21:11:36Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall If you want changes, the earlier you arrive at what exactly they are (like the actual text edits) and show other people so there can be feedback, the more likely you will get them.  The meeting is already being scheduled, so you might as well use the time until then to figure out exactly what it is that you're proposing and try to gain consensus on it as soon as possible.  Then the meeting can just confirm exactly what we're doing.\r\n\r\nIf you don't want any changes, then by all means, feel free to just say that.  But if you want something changed, please get to it (provide specific text changes so we can work through that), and no don't cancel the meeting after it's already been requested unless you completely withdraw this entire thing and don't want any changes to the document.",
+          "createdAt": "2023-09-20T21:18:06Z",
+          "updatedAt": "2023-09-20T21:18:06Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall and @bradleypeabody, based on my comment https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1728404540\r\nI think I have an idea of what needs to be edited to address this. I can whip it up in a PR under a new branch and let @danielmarschall review. Then we can use the interim to discuss if this should replace the current Hashspace ID text or if any further edits need to be made.\r\n\r\nEdit: I would also like to use the Interim to discuss the IANA topic again as the last interim voted no IANA registry and now there seems to be strong consensus to have IANA registry.",
+          "createdAt": "2023-09-20T21:21:50Z",
+          "updatedAt": "2023-09-20T21:24:37Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> But if you want something changed, please get to it (provide specific text changes so we can work through that), and no don't cancel the meeting after it's already been requested unless you completely withdraw this entire thing and don't want any changes to the document.\r\n\r\nSorry. There was a big misunderstanding. I did not suggest, intend or request any cancellation of the meeting, nor the change of the UUIDv8 example as discussed. I was just very confused by the previous comment... and the language-barrier makes it not easy for me.\r\n\r\n> @danielmarschall and @bradleypeabody, based on my comment [#147 (comment)](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1728404540) I think I have an idea of what needs to be edited to address this. I can whip it up in a PR under a new branch and let @danielmarschall review. Then we can use the interim to discuss if this should replace the current Hashspace ID text or if any further edits need to be made.\r\n\r\nSounds good!",
+          "createdAt": "2023-09-20T21:29:21Z",
+          "updatedAt": "2023-09-20T21:29:50Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis \r\n\r\nHere is a small draft I have written:\r\nFeel free to use parts of it if you like. Or just use the test-vector.\r\nI'm looking forward to your Pullrequest / branch!\r\n\r\n```\r\n(This section replaces C.7 and C.8 and deletes Appendix B)\r\n\r\nC.7. Example of a UUIDv8 Value\r\n\r\nThis example shows one of many use cases of a custom UUID.\r\nIt implements a name-based UUID based on an arbitrary hash function,\r\nsimilar to UUIDv3 (using MD5) and UUIDv5 (using SHA1).\r\n\r\nA hash value is calculated in the same way UUIDv3 and UUIDv5 are calculated,\r\nby concatenating the namespace (from Appendix A) with a name identifier.\r\n\r\nIf the output length of the hash function is smaller than 128 bits,\r\nthen zero bits will be filled to the right (LSB) side until 128 bits are reached.\r\n\r\nIf the output length of the hash function is greater than 128 bits,\r\nthen the extra bits will be removed from the right (LSB) side,\r\nlike done in UUIDv3 and UUIDv5.\r\n\r\nThe computation from is detailed in Figure 27 using the DNS\r\nNameSpace and the Name \"www.example.com\", while figure 28 shows the\r\nbit swapping for version and variant and the unused/discarded\r\npart of the SHA-256 value.\r\n\r\n\r\n   Namespace (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8\r\n   Name:                  www.example.com\r\n   ----------------------------------------------------------------\r\n   SHA-256:\r\n   5c146b143c524afd938a375d0df1fbf6fe12a66b645f72f6158759387e51f3c8\r\n\r\n                      Figure 27: UUIDv8 Example SHA-256\r\n\r\n\r\nA: 5c146b14-3c52-4afd-938a-375d0df1fbf6-fe12a66b645f72f6158759387e51f3c8\r\nB: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx\r\nC: 5c146b14-3c52-8afd-938a-375d0df1fbf6\r\nD:                                     -fe12a66b645f72f6158759387e51f3c8\r\n\r\n  Figure 28: UUIDv8 Example Ver/Var bit swaps and discarded SHA-256\r\n                               segment\r\n\r\n\r\n\r\n\r\n\r\n   -------------------------------------------\r\n   field     bits value\r\n   -------------------------------------------\r\n   custom_a  48   0x5c146b143c52\r\n   ver        4   0x8\r\n   custom_b  12   0xafd\r\n   var        2   0b10\r\n   custom_c  62   0b00, 0x38a375d0df1fbf6\r\n   -------------------------------------------\r\n   total     128\r\n   -------------------------------------------\r\n   final: 5c146b14-3c52-8afd-938a-375d0df1fbf6\r\n\r\n          Figure 29: UUIDv8 Example Name-Based SHA-256 Test Vector\r\n\r\n\r\n\r\n   Examining Figure 29:\r\n\r\n   *  Line A details the full SHA-256 as a hexadecimal value with the\r\n      dashes inserted.\r\n   *  Line B details the version and variant hexadecimal positions which\r\n      must be overwritten.\r\n   *  Line C details the final value after the ver/var have been\r\n      overwritten.\r\n   *  Line D details the discarded, leftover values from the original\r\n      SHA-256 computation.\r\n\r\n```\r\n\r\n\r\nInternal script to calculate the test vector:\r\n\r\n```\r\n<?php\r\nconst UUID_NAMEBASED_NS_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';\r\n$namespace_uuid = str_replace('-', '', UUID_NAMEBASED_NS_DNS);\r\n$namespace_uuid = hex2bin($namespace_uuid);\r\n$hash = hash('sha256', $namespace_uuid.'www.example.com');\r\necho \"$hash\\n\";\r\n$hash[12] = '8'; // version 8\r\n$hash[16] = dechex(hexdec($hash[16]) & 0b0011 | 0b1000); // Set variant to \"10xx\" (RFC4122)\r\necho $hash;\r\n\r\n```",
+          "createdAt": "2023-09-20T21:52:14Z",
+          "updatedAt": "2023-09-20T22:04:03Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "(The PHP script is not part of the draft. Just in case someone wants to verify the test-vector.)",
+          "createdAt": "2023-09-20T21:56:13Z",
+          "updatedAt": "2023-09-20T21:56:13Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall @kyzer-davis Some notes on the text above:\r\n* I think it would be more clear to make the example very specific to one hash function, and fill in any details so it's exact, and then after that is explained it can say that this same idea could be applied to other hash functions.  This also gives it the property that you can just link to this section of the doc and say \"implement this\" and nobody will be confused about which hash function is intended. (I.e. this change will improve interoperability).\r\n* I think we need to make sure we vet which hash function we're using more carefully.  Based on my earlier post about how we're not trying for cryptographic strength, then why use SHA-256?  (And if we were, why not SHA-512?). Avoiding hashes intended for cryptographic use also avoids the example becoming obsolete if/when the chosen algorithm becomes insecure - again, a property which we specifically are not trying to achieve here.   Does anyone have an objection to using https://xxhash.com/ ?  It's fast, evenly distributed, reasonably well-studied and standardized, and has implementations in a plethora of languages, and a version that outputs 128 bits.  And it is very specifically not intended for security use.\r\n* I'm not sure if it's better to truncate longer hashes, or XOR them, or how much it matters.  Something to consider in the additional text that talks about this.\r\n* For shorter UUIDs filling with zeros seems like not a great choice, since we're just wasting very precious bits of entropy.  I don't have a better idea off the top of my head but it feels like something that should be addressed (e.g. maybe we suggest using two different 64-bit hashes together to always fill the required space).\r\n\r\nSpecifically, how about this:\r\n\r\n```\r\nC.7. Example of a UUIDv8 Value using Name-based xxHash\r\n\r\nThis example shows one of many use cases of a custom UUID.\r\nIt implements a name-based UUID based on the XXH3_128bits\r\nhash function (link to external reference - xxhash.com).\r\nThis provides functionality similar to UUID v3 and v5 but using a\r\nmodern non-cryptographic hash.\r\n\r\nA hash value is calculated in the same way UUIDv3 and UUIDv5 are calculated,\r\nby concatenating the namespace (from Appendix A) with a name identifier.\r\n\r\nThe version and variant fields replace the hash output to form a full 128-bit UUID...\r\n```\r\n\r\nAnd then after the detailed example, the additional explanation can be made about other hash functions:\r\n\r\n```\r\nThe same technique can be used effectively with other hash functions,\r\nincluding those with more or less than 128 bits.\r\n\r\n(FIXME: can we do better than zero filling?) If the output length of the\r\nhash function is smaller than 128 bits, then zero bits can be filled to\r\nthe right (LSB) side until 128 bits are reached.\r\n\r\nIf the output length of the hash function is greater than 128 bits, then\r\nthe extra bits can be truncated from the right (LSB) side, as is done\r\nin UUIDv3 and UUIDv5.\r\n```",
+          "createdAt": "2023-09-20T22:34:08Z",
+          "updatedAt": "2023-09-20T22:54:31Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bradleypeabody Your changes look good!\r\n\r\nI have no objections in re xxHash128.\r\n\r\n> I'm not sure if it's better to truncate longer hashes, or XOR them, or how much it matters. Something to consider in the additional text that talks about this.\r\n\r\nI think since [for of modern hashes] the entropy between the bits is equal, it shouldn't make a difference if you just cut 128 bits out of it or XORing the bits together. But disclaimer, I am no expert in that mathematical topic.\r\n\r\n> For shorter UUIDs filling with zeros seems like not a great choice, since we're just wasting very precious bits of entropy. I don't have a better idea off the top of my head but it feels like something that should be addressed (e.g. maybe we suggest using two different 64-bit hashes together to always fill the required space).\r\n\r\nUnfortunately, currently, I have no better idea for the <128 bits hashes than to append zero bits.",
+          "createdAt": "2023-09-20T22:55:48Z",
+          "updatedAt": "2023-09-20T23:01:22Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bradleypeabody @kyzer-davis \r\nHere are test-vectors for xxHash128:\r\n\r\nRaw:\r\nde20549b5ca285224513a89c3a4d399a\r\n\r\nWith var/ver applied:\r\nde20549b5ca285228513a89c3a4d399a\r\n\r\nScript:\r\n\r\n```\r\n<?php\r\nconst UUID_NAMEBASED_NS_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';\r\n$namespace_uuid = str_replace('-', '', UUID_NAMEBASED_NS_DNS);\r\n$namespace_uuid = hex2bin($namespace_uuid);\r\n$hash = hash('xxh128', $namespace_uuid.'www.example.com');\r\necho \"$hash\\n\";\r\n$hash[12] = '8'; // version 8\r\n$hash[16] = dechex(hexdec($hash[16]) & 0b0011 | 0b1000); // Set variant to \"10xx\" (RFC4122)\r\necho $hash;\r\n```\r\n",
+          "createdAt": "2023-09-20T23:05:27Z",
+          "updatedAt": "2023-09-20T23:05:36Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> We were put in terrible conditions that we must ensure consensus. This is incorrect because responsibility for the quality of the RFC rests with the three authors who submitted the RFC for approval. But now one belated and picky person from the outside can impose his will on everyone else, and it is not clear how to please him. We are forced under pressure to add into the RFC a deliberately risky technical solution, the quality of which is below any criticism, because it\u2019s easier for someone to make a workaround in his information system.\r\n\r\nHi you can read https://www.rfc-editor.org/rfc/rfc7282 to understand what rough consensus means.\r\nIt is @jimfenton and my job to judge whether or not the various proposals here are in the rough or not.\r\nWe can't really do this in a github issue.  Thus the virtual interim meeting, at which, btw, there are no votes.\r\n\r\n",
+          "createdAt": "2023-09-20T23:53:58Z",
+          "updatedAt": "2023-09-20T23:53:58Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "It makes sense to remove the hash space approach and put a single hash-based UUIDv8 example that naively follows the v3/v5 procedure with a modern hash algorithm (SHA256 in mind). That's simple, clear, useful, and sufficient as an example.\r\n\r\nBtw, what is the fate of the time-based UUIDv8 example? I think it's also useful as an example. If we spare 60 bits (`custom_a` + `custom_b`) for the nanosecond timestamp, now it takes 36 years to wrap around. If we also employ a custom epoch (e.g., nanoseconds elapsed since 1 Jan 2020), then the time-based example would be a simple and compact example that clearly demonstrates the properties that v1-v7 can not provide.\r\n\r\nWe can also add another example where a 64-bit external identifier is simply embedded in v8's payload, with implementation-specific `external_system_id` and `database_table_id` allocated in the remaining space.\r\n\r\nExamples are good. They illustrate when v1-v7 can not help and why v8 is introduced.\r\n",
+          "createdAt": "2023-09-21T00:27:58Z",
+          "updatedAt": "2023-09-21T00:27:58Z"
         }
       ]
+    },
+    {
+      "number": 149,
+      "id": "I_kwDOH6Ln3M5xfNjq",
+      "title": "16-bit MAC",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/149",
+      "state": "OPEN",
+      "author": "tgross35",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly\r\ngenerated value MUST be used; see {{unguessability}} and {{unidentifiable}}.\r\nFor systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.\r\n\r\nWould it be better to say that 16-bit MACs and other MACs may use those 16 bits plus 32 random bits? Or otherwise weaken the `MUST`  such that shorter nonstandard MACs that still want a node identifier don't technically violate the spec.",
+      "createdAt": "2023-09-20T02:57:08Z",
+      "updatedAt": "2023-09-20T21:40:16Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sure, you could include the 16-bit mac.\r\nWe would need to provide some guidance around where somebody would place the extra 32 bits of random.\r\nE.g at the front  (Random+MAC) or at the end (MAC+Random) \r\nAnd with this in place does an implementation need to flip the MCAST bit?",
+          "createdAt": "2023-09-20T17:57:41Z",
+          "updatedAt": "2023-09-20T17:57:41Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "So, 16-bit MACs are assigned centrally (00,01,02,) so that they are easily compressible.\r\nEvery 802.15.4 system that might use a 16-bit MAC also has a 64-bit MAC, which is \"factory assigned\", so for UUIDs they should always use that.\r\n",
+          "createdAt": "2023-09-20T18:50:39Z",
+          "updatedAt": "2023-09-20T18:50:39Z"
+        },
+        {
+          "author": "tgross35",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Maybe that defeats the purpose then. \"Must\" just seemed a bit strong for devices that do have an identifier but not a 32/64-bit MAC",
+          "createdAt": "2023-09-20T19:04:14Z",
+          "updatedAt": "2023-09-20T19:04:22Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Would it be better to remove it from the first sentence and leave the MUST for those with no identifier and add a new line that states something like:\r\n> Devices utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64-bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.",
+          "createdAt": "2023-09-20T19:41:54Z",
+          "updatedAt": "2023-09-20T19:41:54Z"
+        },
+        {
+          "author": "tgross35",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "That sounds reasonable to me, as long as it doesn't throw a monkey wrench into the ongoing approval process",
+          "createdAt": "2023-09-20T21:40:16Z",
+          "updatedAt": "2023-09-20T21:40:16Z"
+        }
+      ]
+    },
+    {
+      "number": 150,
+      "id": "I_kwDOH6Ln3M5xh167",
+      "title": "Rewrite or remove UUIDv8 examples",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/150",
+      "state": "OPEN",
+      "author": "ben221199",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "As seen in #144 and #147, the examples of UUIDv8 are a big issue. We should do something about it and rewrite or remove them. The reason is that the examples can now be seen as some call to action to implement them literally, and that is not what they are for.",
+      "createdAt": "2023-09-20T10:34:49Z",
+      "updatedAt": "2023-09-20T19:53:27Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@ben221199 I'd like to see how #147 plays out, and then from there we can see if there is a new example that addresses the concerns from that issue, and/or if we want to remove or adjust any other examples.   Regarding #144, I'm hoping that if we are not going to create UUIDv9 as an official hash-based UUID version right now, and just stick with UUIDv8 example(s), then it should simplify the matter, hopefully.",
+          "createdAt": "2023-09-20T19:45:08Z",
+          "updatedAt": "2023-09-20T19:45:08Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "Okay clear. We will see.",
+          "createdAt": "2023-09-20T19:53:27Z",
+          "updatedAt": "2023-09-20T19:53:27Z"
+        }
+      ]
+    },
+    {
+      "number": 151,
+      "id": "I_kwDOH6Ln3M5xlRKM",
+      "title": "Request: Peer Review of 6.9 logic for Node value in Appendix C.1/C.5",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/151",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I split this from from #140 and while I was reviewing the following statement I think there is a mistake in my test vector?\r\nWould somebody double-check? \r\n\r\n> Section 6.9: The discussion of the local/global bit here would be a good place to reference RFC 7042 or, even better, draft-ietf-intarea-ref4042bis.\r\n\r\nhttps://datatracker.ietf.org/doc/html/rfc7042\r\nNote: I am also not sure where/what to cite from this document.\r\n\r\nDraft-11 Text:\r\n> Implementations MUST set the least significant bit of the first octet of the node ID set to 1, to create a 48 bit node id. This bit is the unicast/multicast bit, which will never be set in IEEE 802 addresses obtained from network cards. Hence, there can never be a conflict between UUIDs generated by machines with and without network cards.\r\n> For compatibility with earlier specifications, note that this document uses the unicast/multicast bit, instead of the arguably more correct local/global bit because MAC addresses with the local/global bit set or not are both possible in a network. This is not the case with the unicast/multicast bit. One node cannot have a MAC address that multicasts to multiple nodes.\r\n\r\nCould somebody double check me here:\r\nFor the appendix examples, is `0x9E6BDECED846` okay for node or should I change to `0x9F6BDECED846`?\r\n```\r\n9E = 10011110\r\n9F = 10011111\r\n```\r\n\r\ntl;dr, the hex value should be x3, x7, xB, xF if that bit is set to 1 right? Bottom right square of this table:\r\nhttps://en.wikipedia.org/wiki/MAC_address#Ranges_of_group_and_locally_administered_addresses\r\n\r\n---\r\n\r\nPersonal Note: This section of RFC4122 has always confused me. I am open to change proposals that make those two paragraphs easier to understand by implementors. They currently stand as mostly the same from 4122 in draft-11.",
+      "createdAt": "2023-09-20T19:27:44Z",
+      "updatedAt": "2023-09-20T22:03:26Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Could somebody double check me here:\r\n> For the appendix examples, is 0x9E6BDECED846 okay for node or should I change to 0x9F6BDECED846?\r\n\r\n0x9E6BDECED846 = SAI (Unicast)\r\nhttps://misc.daniel-marschall.de/tools/uuid_mac_decoder/interprete_mac.php?mac=9E%3A6B%3ADE%3ACE%3AD8%3A46\r\n\r\n0x9F6BDECED846 = SAI (Multicast)\r\nhttps://misc.daniel-marschall.de/tools/uuid_mac_decoder/interprete_mac.php?mac=9F%3A6B%3ADE%3ACE%3AD8%3A46\r\n\r\nIt turns out that your example is a Standard Assigned Identifier (SAI), which only IEEE may use.\r\n\r\nThe correct \"legal\" way would be Administrative Assigned Identifier (AAI) which have the second nibble set to x2 (Unicast) or x3 (Multicast)\r\n\r\n0x926BDECED846  = AAI (Unicast)\r\nhttps://misc.daniel-marschall.de/tools/uuid_mac_decoder/interprete_mac.php?mac=92%3A6B%3ADE%3ACE%3AD8%3A46\r\n\r\n0x936BDECED846  = AAI (Multicast)\r\nhttps://misc.daniel-marschall.de/tools/uuid_mac_decoder/interprete_mac.php?mac=93%3A6B%3ADE%3ACE%3AD8%3A46",
+          "createdAt": "2023-09-20T19:48:50Z",
+          "updatedAt": "2023-09-20T22:03:26Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Personal Note: This section of RFC4122 has always confused me. I am open to change proposals that make those two paragraphs easier to understand by implementors. They currently stand as mostly the same from 4122 in draft-11.\r\n\r\n@kyzer-davis What exactly are you confused about in this section? Maybe I can help simplify it.",
+          "createdAt": "2023-09-20T22:02:38Z",
+          "updatedAt": "2023-09-20T22:03:11Z"
+        }
+      ]
+    },
+    {
+      "number": 153,
+      "id": "I_kwDOH6Ln3M5xlyDi",
+      "title": "Add MSB3 to Variant Table",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/153",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Split from #145, obviously this spec only cares about two-bits `1` and `0` but re-uses the table from RFC4122.\r\nThe final value of the \"three bit variant\" is don't care. thus `10x`\r\nHowever, the hex that gets converted is a 4 bit value. Thus later some text I wrote discussed the possible Hex values for the `10x` variant. Which is really `10xx`\r\n\r\nI was reviewing the comment from OPSDIR and trying to figure out how to call out this 4th \"don't care bit\"...\r\n\r\n```\r\n(2) p 14, sec 4.2.  Version Field\r\n\r\n      Table 2: UUID variant 10x versions defined by this specification\r\n   An example version/variant layout for UUIDv4 follows the table where\r\n   M represents the version placement for the hexadecimal representation\r\n   of 0x4 (0b0100) and the N represents the variant placement for one of\r\n   the four possible hexadecimal representation of variant 10x: 0x8\r\n   (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)\r\n\r\nTable 1 only defines 3 bits and doesn't obviously mention a 4th bit, and yet\r\nthe examples below are displaying 4 bits, where I assume that the 4th bit is\r\neffectively arbitrary data in the UUID definition.  Please consider whether it\r\nwould be helpful to clarify this.\r\n```\r\n\r\nMy solution \r\n- Add another don't care bit to the table in MSB3 position (and call out the possible hex Values in a column as well.)\r\n  - As far as I can see this wouldn't cause any problems as it does not change any values.\r\n\r\nThus:\r\n```\r\n{{table1}} lists the contents of the variant field, where the letter \"x\" indicates a \"don't-care\" value.\r\n\r\n| Msb0 | Msb1 | Msb2 | Msb3 | Hex     |Description                                                                    |\r\n|    0 |    x | x    | x    | 1-7     |Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |\r\n|    1 |    0 | x    | x    | 8-9,A-B |The variant specified in this document.                                        |\r\n|    1 |    1 | 0    | x    | C-D     |Reserved, Microsoft Corporation backward compatibility.                        |\r\n|    1 |    1 | 1    | x    | E-F     |Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |\r\n```\r\n",
+      "createdAt": "2023-09-20T21:13:53Z",
+      "updatedAt": "2023-09-20T21:17:04Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -6206,20 +6751,48 @@
       "id": "PR_kwDOH6Ln3M5ahOBH",
       "title": "Typo?",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/148",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LiosK",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "UUIDv8 namespace UUID -> UUIDv8 name-based UUID",
       "createdAt": "2023-09-18T00:44:42Z",
-      "updatedAt": "2023-09-18T00:44:42Z",
+      "updatedAt": "2023-09-20T17:59:49Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "8c35afe407715bab27bcdc44c15612bdd7dcc173",
       "headRepository": "LiosK/rfc4122bis",
       "headRefName": "main",
       "headRefOid": "d1c896fe1421adb2323b386ee4758c15f153f4fd",
+      "closedAt": "2023-09-20T17:59:49Z",
+      "mergedAt": "2023-09-20T17:59:49Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "f94b0512ae8550f94b42f4ff65c91d2f38d1d794"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 152,
+      "id": "PR_kwDOH6Ln3M5a0ROU",
+      "title": "Draft 12",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/152",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Closing #141\r\n- Closing #142\r\n- Closing #145\r\n- Closing #140\r\n- Closing #146\r\n\r\nEdit: Will clean up the tracker to focus on the bigger discussions.",
+      "createdAt": "2023-09-20T19:34:07Z",
+      "updatedAt": "2023-09-20T19:35:18Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f94b0512ae8550f94b42f4ff65c91d2f38d1d794",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-12",
+      "headRefOid": "4cab17d4f20c7ba28b4cad026de76595b0541de5",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
