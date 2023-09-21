@@ -849,11 +849,7 @@ duplicates that could arise when the clock is set backwards in time
 or if the node ID changes.
 
 The node field consists of an IEEE 802 MAC
-address, usually the host address.  For systems with multiple IEEE
-802 addresses, any available one MAY be used.  The lowest addressed
-octet (octet number 10) contains the global/local bit and the
-unicast/multicast bit, and is the first octet of the address
-transmitted on an 802.3/802.11 LAN.
+address, usually the host address or a randomly derived value per {{unguessability}} and {{unidentifiable}}.
 
 ~~~~
  0                   1                   2                   3
@@ -927,11 +923,14 @@ across systems.  This provides maximum protection against node
 identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
-For systems with no IEEE address, a randomly or pseudo-randomly
-generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
-For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
-Devices utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used.
-An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
+Notes about IEEE 802 derived nodes:
+
+{: spacing="compact"}
+
+- Systems with multiple IEEE 802 addresses, any available one MAY be used.
+- Systems with no IEEE address, a randomly or pseudo-randomly generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
+- Systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
+- Systems utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
