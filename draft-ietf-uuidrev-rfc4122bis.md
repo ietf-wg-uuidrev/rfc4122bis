@@ -522,6 +522,7 @@ draft-12
 - OPSDIR Review #145
 - INDIR Review 2 #140
 - IESG Grammar #146
+- Revise 16-bit MAC Node Usage #149
 
 draft-11
 
@@ -926,9 +927,11 @@ across systems.  This provides maximum protection against node
 identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
-For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly
+For systems with no IEEE address, a randomly or pseudo-randomly
 generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
 For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
+Devices utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used.
+An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
