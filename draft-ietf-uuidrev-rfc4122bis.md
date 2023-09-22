@@ -523,6 +523,7 @@ draft-12
 - INDIR Review 2 #140
 - IESG Grammar #146
 - Revise 16-bit MAC Node Usage #149
+- Add MSB3 to Variant Table #153
 
 draft-11
 
@@ -777,11 +778,11 @@ the most significant bits of octet 8 of the UUID.
 {{table1}} lists the contents of the variant field, where
 the letter "x" indicates a "don't-care" value.
 
-| Msb0 | Msb1 | Msb2 | Description                                                                    |
-|    0 |    x | x    | Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |
-|    1 |    0 | x    | The variant specified in this document.                                        |
-|    1 |    1 | 0    | Reserved, Microsoft Corporation backward compatibility.                        |
-|    1 |    1 | 1    | Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |
+| Msb0 | Msb1 | Msb2 | Msb3 | Variant |Description                                                                    |
+|    0 |    x | x    | x    | 1-7     |Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |
+|    1 |    0 | x    | x    | 8-9,A-B |The variant specified in this document.                                        |
+|    1 |    1 | 0    | x    | C-D     |Reserved, Microsoft Corporation backward compatibility.                        |
+|    1 |    1 | 1    | x    | E-F     |Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |
 {: #table1 title='UUID Variants'}
 
 Interoperability, in any form, with variants other than the one
@@ -795,7 +796,7 @@ Accordingly, all bit and field layouts avoid the use of these bits.
 The version number is in the most significant 4 bits of octet 6
 (bits 48 through 51 of the UUID).
 
-{{table2}} lists all of the versions for this UUID variant 10x specified in this document.
+{{table2}} lists all of the versions for this UUID variant 10xx specified in this document.
 
 | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
 |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
@@ -814,11 +815,11 @@ The version number is in the most significant 4 bits of octet 6
 |    1 |    1 |    0 |    1 |      13 | Reserved for future definition.                                               |
 |    1 |    1 |    1 |    0 |      14 | Reserved for future definition.                                               |
 |    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
-{: #table2 title='UUID variant 10x versions defined by this specification'}
+{: #table2 title='UUID variant 10xx versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
 where M represents the version placement for the hexadecimal representation of 0x4 (0b0100)
-and the N represents the variant placement for one of the four possible hexadecimal representation of variant 10x:
+and the N represents the variant placement for one of the four possible hexadecimal representation of variant 10xx:
 0x8 (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)
 
 ~~~~
