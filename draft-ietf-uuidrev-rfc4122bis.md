@@ -342,7 +342,7 @@ well, as the effort required to coordinate sequential numeric identifiers across
 a network can easily become a burden.
 The fact that UUIDs can be used to create unique, reasonably short values
 in distributed systems without requiring coordination makes them a good
-alternative, but UUID versions 1-5 lack certain other desirable characteristics:
+alternative, but UUID versions 1-5, which were originally defined by {{RFC4122}}, lack certain other desirable characteristics:
 
 
 1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}) have poor database index
@@ -357,12 +357,8 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
   and difficult to represent accurately using a standard number format such
   as {{IEEE754}}.
 
-
-
 1. Introspection/parsing is required to order by time sequence, as opposed to
   being able to perform a simple byte-by-byte comparison.
-
-
 
 1. Privacy and network security issues arise from using a MAC address in the
   node field of UUID version 1.
@@ -372,13 +368,9 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
   details). Additionally, with the advent of virtual machines and containers,
   MAC address uniqueness is no longer guaranteed.
 
-
-
 1. Many of the implementation details specified in {{RFC4122}} involved trade
   offs that are neither possible to specify for all applications nor
   necessary to produce interoperable implementations.
-
-
 
 1. {{RFC4122}} did not distinguish between the requirements for generating a UUID
    and those for simply storing one, although they are often different.
@@ -415,7 +407,21 @@ collision handling, and multi-timestamp tick generation sequencing:
 1. {{CUID}} by E. Elliott
 
 An inspection of these implementations and the issues described above has
-led to this document which intends to adapt UUIDs to address these issues.
+led to this document which intends to adapt new UUIDs to address these issues.
+
+Further, {{RFC4122}} itself was in need an overhaul to address a number of topics such as but not limited to the following:
+
+1. Miscellaneous erratas. Mostly around bit layout clarifications which lead to inconsistent implementations.
+
+1. Decouple other UUID versions from UUIDv1 bit layout so that fields like "time_hi_and_version" do not need to be referenced within a non-time-based UUID while also providing "UUIDv1 like" definition sections for UUIDv3, UUIDv4, and UUIDv5.
+
+1. Provide implementation best practices around many real-world scenarios and corner cases observed by existing and prototype implementations.
+
+1. Update the document to address security best practices and considerations for the modern age as it pertains MAC addresses, hashing algorithms, secure randomness, and other topics.
+
+1. Provide implementations a standard-based option for implementation specific and/or experimental UUID designs.
+
+1. Provide more test vectors that illustrate real UUIDs created as per the specification.
 
 # Terminology {#terminology}
 
@@ -524,6 +530,7 @@ draft-12
 - IESG Grammar #146
 - Revise 16-bit MAC Node Usage #149
 - Add MSB3 to Variant Table #153
+- Additional Update Motivations #157
 
 draft-11
 
