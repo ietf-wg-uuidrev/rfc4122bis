@@ -310,7 +310,7 @@ Nothing in this document should be construed to override the DCE standards that 
 # Motivation {#motivation}
 
 One of the main reasons for using UUIDs is that no centralized
-authority is required to administer them (although two formats may use
+authority is required to administer them (although two formats may leverage optional
 IEEE 802 node identifiers, others do not).  As a result, generation
 on demand can be completely automated and used for a variety of
 purposes.  The UUID generation algorithm described here supports very
