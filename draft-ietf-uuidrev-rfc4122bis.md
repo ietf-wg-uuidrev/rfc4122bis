@@ -523,7 +523,7 @@ OID
 draft-12
 
 {: spacing="compact"}
-- Typos #148
+- Typos #148 #156
 - SECDIR Review #141
 - SECDIR Review 2 #142
 - OPSDIR Review #145
