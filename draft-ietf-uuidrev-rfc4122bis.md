@@ -346,11 +346,11 @@ in distributed systems without requiring coordination makes them a good
 alternative, but UUID versions 1-5, which were originally defined by {{RFC4122}}, lack certain other desirable characteristics:
 
 
-1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}), as well as UUIDv3 ({{uuidv3}}) and UUIDv5 ({{uuidv5}}), have poor database index locality. 
+1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}) have poor database index
+  locality.
   This means that new values created in succession are not close to each other in
-  the index and thus require inserts to be performed at random  locations.
-  To further expand, for UUIDv4 this issue arises due to the value changing randomly for each UUID generation.
-  For UUIDv3 and UUIDv5, where the input "name" data changes frequently; the output data will produce highly varied outputs.
+  the index and thus require inserts to be performed at random
+  locations.
   The resulting negative performance effects on common structures used for
   this (B-tree and its variants) can be dramatic.
 
