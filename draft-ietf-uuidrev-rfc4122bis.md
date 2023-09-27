@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-11
+docname: draft-ietf-uuidrev-rfc4122bis-12
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -80,6 +80,7 @@ informative:
   RFC5234: RFC5234
   RFC6151: RFC6151
   RFC6194: RFC6194
+  RFC7042: RFC7042
   RFC8499: RFC8499
   X500:
     seriesinfo:
@@ -299,7 +300,7 @@ many cases, become exposed in many non-standard ways.
 This specification attempts to standardize that practice as openly as
 possible and in a way that attempts to benefit the entire Internet.
 The information here is meant to be a concise guide for those wishing
-to implement services using UUIDs, UUIDs in combination with URNs {{RFC8141}}, or otherwise.
+to implement services using UUIDs either in combination with URNs {{RFC8141}} or otherwise.
 
 There is an ITU-T Recommendation and an ISO/IEC Standard {{X667}} that are
 derived from {{RFC4122}}.  Both sets of
@@ -342,7 +343,7 @@ well, as the effort required to coordinate sequential numeric identifiers across
 a network can easily become a burden.
 The fact that UUIDs can be used to create unique, reasonably short values
 in distributed systems without requiring coordination makes them a good
-alternative, but UUID versions 1-5 lack certain other desirable characteristics:
+alternative, but UUID versions 1-5, which were originally defined by {{RFC4122}}, lack certain other desirable characteristics:
 
 
 1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}) have poor database index
@@ -357,28 +358,20 @@ alternative, but UUID versions 1-5 lack certain other desirable characteristics:
   and difficult to represent accurately using a standard number format such
   as {{IEEE754}}.
 
-
-
 1. Introspection/parsing is required to order by time sequence, as opposed to
   being able to perform a simple byte-by-byte comparison.
 
-
-
 1. Privacy and network security issues arise from using a MAC address in the
   node field of UUID version 1.
-  Exposed MAC addresses can be used as an attack surface to locate machines
+  Exposed MAC addresses can be used as an attack surface to locate network interfaces
   and reveal various other
   information about such machines (minimally manufacturer, potentially other
   details). Additionally, with the advent of virtual machines and containers,
   MAC address uniqueness is no longer guaranteed.
 
-
-
 1. Many of the implementation details specified in {{RFC4122}} involved trade
   offs that are neither possible to specify for all applications nor
   necessary to produce interoperable implementations.
-
-
 
 1. {{RFC4122}} did not distinguish between the requirements for generating a UUID
    and those for simply storing one, although they are often different.
@@ -415,7 +408,21 @@ collision handling, and multi-timestamp tick generation sequencing:
 1. {{CUID}} by E. Elliott
 
 An inspection of these implementations and the issues described above has
-led to this document which intends to adapt UUIDs to address these issues.
+led to this document which intends to adapt new UUIDs to address these issues.
+
+Further, {{RFC4122}} itself was in need an overhaul to address a number of topics such as but not limited to the following:
+
+1. Miscellaneous erratas. Mostly around bit layout clarifications which lead to inconsistent implementations.
+
+1. Decouple other UUID versions from UUIDv1 bit layout so that fields like "time_hi_and_version" do not need to be referenced within a non-time-based UUID while also providing "UUIDv1 like" definition sections for UUIDv3, UUIDv4, and UUIDv5.
+
+1. Provide implementation best practices around many real-world scenarios and corner cases observed by existing and prototype implementations.
+
+1. Update the document to address security best practices and considerations for the modern age as it pertains MAC addresses, hashing algorithms, secure randomness, and other topics.
+
+1. Provide implementations a standard-based option for implementation specific and/or experimental UUID designs.
+
+1. Provide more test vectors that illustrate real UUIDs created as per the specification.
 
 # Terminology {#terminology}
 
@@ -512,6 +519,20 @@ OID
 
 ## Changelog {#changelog}
 {:removeinrfc}
+
+draft-12
+
+{: spacing="compact"}
+- Typos #148 #156
+- SECDIR Review #141
+- SECDIR Review 2 #142
+- OPSDIR Review #145
+- INDIR Review 2 #140
+- IESG Grammar #146
+- Revise 16-bit MAC Node Usage #149
+- Add MSB3 to Variant Table #153
+- Additional Update Motivations #157
+- Fix Randomized Node value's mcast bit in Appendix #151
 
 draft-11
 
@@ -766,11 +787,11 @@ the most significant bits of octet 8 of the UUID.
 {{table1}} lists the contents of the variant field, where
 the letter "x" indicates a "don't-care" value.
 
-| Msb0 | Msb1 | Msb2 | Description                                                                    |
-|    0 |    x | x    | Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |
-|    1 |    0 | x    | The variant specified in this document.                                        |
-|    1 |    1 | 0    | Reserved, Microsoft Corporation backward compatibility.                        |
-|    1 |    1 | 1    | Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |
+| Msb0 | Msb1 | Msb2 | Msb3 | Variant |Description                                                                    |
+|    0 |    x | x    | x    | 1-7     |Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |
+|    1 |    0 | x    | x    | 8-9,A-B |The variant specified in this document.                                        |
+|    1 |    1 | 0    | x    | C-D     |Reserved, Microsoft Corporation backward compatibility.                        |
+|    1 |    1 | 1    | x    | E-F     |Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |
 {: #table1 title='UUID Variants'}
 
 Interoperability, in any form, with variants other than the one
@@ -784,7 +805,7 @@ Accordingly, all bit and field layouts avoid the use of these bits.
 The version number is in the most significant 4 bits of octet 6
 (bits 48 through 51 of the UUID).
 
-{{table2}} lists all of the versions for this UUID variant 10x specified in this document.
+{{table2}} lists all of the versions for this UUID variant 10xx specified in this document.
 
 | Msb0 | Msb1 | Msb2 | Msb3 | Version | Description                                                                   |
 |    0 |    0 |    0 |    0 |       0 | Unused                                                                        |
@@ -803,11 +824,11 @@ The version number is in the most significant 4 bits of octet 6
 |    1 |    1 |    0 |    1 |      13 | Reserved for future definition.                                               |
 |    1 |    1 |    1 |    0 |      14 | Reserved for future definition.                                               |
 |    1 |    1 |    1 |    1 |      15 | Reserved for future definition.                                               |
-{: #table2 title='UUID variant 10x versions defined by this specification'}
+{: #table2 title='UUID variant 10xx versions defined by this specification'}
 
 An example version/variant layout for UUIDv4 follows the table
 where M represents the version placement for the hexadecimal representation of 0x4 (0b0100)
-and the N represents the variant placement for one of the four possible hexadecimal representation of variant 10x:
+and the N represents the variant placement for one of the four possible hexadecimal representation of variant 10xx:
 0x8 (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)
 
 ~~~~
@@ -838,11 +859,7 @@ duplicates that could arise when the clock is set backwards in time
 or if the node ID changes.
 
 The node field consists of an IEEE 802 MAC
-address, usually the host address.  For systems with multiple IEEE
-802 addresses, any available one MAY be used.  The lowest addressed
-octet (octet number 10) contains the global/local bit and the
-unicast/multicast bit, and is the first octet of the address
-transmitted on an 802.3/802.11 LAN.
+address, usually the host address or a randomly derived value per {{unguessability}} and {{unidentifiable}}.
 
 ~~~~
  0                   1                   2                   3
@@ -916,9 +933,14 @@ across systems.  This provides maximum protection against node
 identifiers that may move or switch from system to system rapidly.
 The initial value MUST NOT be correlated to the node identifier.
 
-For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly
-generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
-For systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
+Notes about IEEE 802 derived nodes:
+
+{: spacing="compact"}
+
+- Systems with multiple IEEE 802 addresses, any available one MAY be used.
+- Systems with no IEEE address, a randomly or pseudo-randomly generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
+- Systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
+- Systems utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
@@ -932,7 +954,7 @@ UUIDv3 values are created by computing an MD5 {{RFC1321}}
 hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution can be found in {{uuidv3_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
 
@@ -1038,8 +1060,8 @@ that are drawn from, and unique within, some "namespace" as per {{name_based_uui
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given namespace value concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
-This SHA-1 value is then used to populate all 128 bits of the UUID layout. Excess bits beyond 128 are discarded.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}.
+The most significant, left-most 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 least significant, right-most bits of SHA-1 output are discarded.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding exess bits can be found in {{uuidv5_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
 
@@ -1366,7 +1388,7 @@ Sub-second Precision and Accuracy:
   a high resolution timestamp can be simulated by keeping a count of
   the number of UUIDs that have been generated with the same value of
   the system time, and using it to construct the low order bits of the
-  timestamp.  The count will range between zero and the number of
+  timestamp.  The count of the high resolution timestamp will range between zero and the number of
   100-nanosecond intervals per system time interval.
 
 Length:
@@ -1389,9 +1411,9 @@ Altering, Fuzzing, or Smearing:
 
 Padding:
 : When timestamp padding is required, implementations MUST pad the most significant
-  bits (left-most) bits with zeros. An example is padding the most significant,
-  left-most bits of a Unix timestamp with zeroes to fill out the 48
-  bit timestamp in UUIDv7. An alternative is to pad the most significant, left-most bits with the number of 32 bit Unix timestamp roll-overs after 2038-01-19.
+  bits (left-most) bits with data. An example for this padding data is to fill the most significant,
+  left-most bits of a Unix timestamp with zeroes to complete the 48
+  bit timestamp in UUIDv7. An alternative approach for padding data is to fill the most significant, left-most bits with the number of 32 bit Unix timestamp roll-overs after 2038-01-19.
 
 Truncating:
 : When timestamps need to be truncated, the lower, least significant
@@ -1460,8 +1482,8 @@ Monotonic Random (Method 2):
   The increment value for every UUID generation is a random integer
   of any desired length larger than zero. It ensures the UUIDs retain the required
   level of unguessability provided by the underlying entropy.
-  The increment value MAY be one when the number of UUIDs generated in a particular
-  period of time is important and guessability is not an issue. However, it
+  The increment value MAY be 1 when the number of UUIDs generated in a particular
+  period of time is important and guessability is not an issue. However, incrementing the counter by 1
   SHOULD NOT be used by implementations that favor unguessability, as the resulting
   values are easily guessable.
 
@@ -1478,10 +1500,10 @@ Replace Left-Most Random Bits with Increased Clock Precision (Method 3):
   expressed as a fraction of clock's tick value (fraction of a millisecond
   for UUIDv7).  Compute the count of possible values that can be represented in
   the available bit space, 4096 for the UUIDv7 rand_a field.
-  Using floating point math, multiply this fraction of a millisecond
+  Using floating point or scaled integer arithmetic, multiply this fraction of a millisecond
   value by 4096 and round down (toward zero) to an integer result to arrive at a number
   between 0 and the maximum allowed for the indicated bits
-  which is sorts monotonically based on time. Each increasing fractional
+  which sorts monotonically based on time. Each increasing fractional
   value will result in an increasing bit field value, to the
   precision available with these bits.
 
@@ -1515,18 +1537,17 @@ fixed-length dedicated counters:
 Fixed-Length Dedicated Counter Seeding:
 : Implementations utilizing the fixed-length counter method randomly initialize
   the counter with each new timestamp tick.
-  However, when the timestamp has not incremented, the counter is frozen
-  and incremented via the desired increment logic.
+  However, when the timestamp has not increased, the counter is instead incremented by the desired increment logic.
   When utilizing a randomly seeded counter alongside Method 1, the random value MAY
   be regenerated with each counter increment without impacting sortability.
   The downside is that Method 1 is prone to overflows if a counter of adequate
   length is not selected or the random data generated leaves little room for
   the required number of increments.
   Implementations utilizing fixed-length counter method MAY also choose to
-  randomly initialize a portion counter rather than the entire counter. For
+  randomly initialize a portion of the counter rather than the entire counter. For
   example, a 24 bit counter could have the 23 bits in least-significant, right-most,
   position randomly initialized. The remaining most significant, left-most
-  counter bits are initialized as zero for the sole purpose of guarding against
+  counter bit is initialized as zero for the sole purpose of guarding against
   counter rollovers.
 
 Fixed-Length Dedicated Counter Length:
@@ -1552,7 +1573,7 @@ Counter Rollover Guards:
   helpful to mitigate counter rollover issues.
   This same technique can be used with monotonic random counter methods
   by ensuring that the total length of a possible increment in the least significant,
-  right most position is less than the total length of the random being incremented.
+  right most position is less than the total length of the random value being incremented.
   As such, the most significant, left-most, bits can be incremented as rollover
   guarding.
 
@@ -1608,7 +1629,7 @@ If an implementation does not have any stable store available, then
 it MAY proceed with UUID generation as if this was the first UUID created within a batch.
 This is the least desirable implementation because it will increase the frequency
 of creation of values such as clock sequence, counters, or random data, which increases the
-probability of duplicates.
+probability of duplicates. Further, frequent generation of random numbers also puts more stress on any entropy source and or entropy pool being used as the basis for such random numbers.
 
 An implementation MAY also return an application error in the event that collision resistance is of the utmost concern.
 The semantics of this error are up to the application and implementation.
@@ -1723,8 +1744,8 @@ Name-based UUIDs using UUIDv8:
 
 Advertising the Hash Algorithm:
 : Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID proves useful for identifying the algorithm.
-  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this needs not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
+  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID from {{hashspaces}} proves useful for identifying the algorithm.
+  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
 
 ## Collision Resistance {#collision_resistance}
@@ -1749,8 +1770,8 @@ Low Impact:
 High Impact:
 : A duplicate key causes an airplane to receive the wrong course which puts
   people's lives at risk. In this scenario there is no margin for error. Collisions
-  MUST be avoided and failure is unacceptable. Applications dealing with this
-  type of scenario MUST employ as much collision resistance as possible within
+  must be avoided and failure is unacceptable. Applications dealing with this
+  type of scenario must employ as much collision resistance as possible within
   the given application context.
 
 
@@ -1784,14 +1805,17 @@ Further advice on generating cryptographic-quality random numbers can be found i
 This section describes how to generate a UUIDv1 or UUIDv6 value if an IEEE
 802 address is not available, or its use is not desired.
 
-Implementations obtain a 47 bit cryptographic-quality random
-number as per {{unguessability}} and use it as the low 47 bits of the node ID.
+Implementations MAY leverage MAC address randomization techniques (IEEE 802.11bh) as an alternative to the pseudo-random logic provided in this section.
 
-Implementations MUST set the least significant bit of the first octet of the node ID set to 1, to create a 48 bit node id.
+Alternatively, implementations MAY elect to obtain a 48 bit cryptographic-quality random
+number as per {{unguessability}} to use it as the node ID.
+After generating the 48 bit fully randomized node value, implementations MUST set the least significant bit of the first octet of the node ID set to 1.
 This bit is the unicast/multicast bit, which will never be set in IEEE 802
 addresses obtained from network cards.  Hence, there can never be a
 conflict between UUIDs generated by machines with and without network
 cards.
+An example of generating a randomized 48 bit node value and the subsequent bit modification is detailed in the {{test_vectors}} appendix.
+For more information about IEEE 802 address and the unicast/multicast or local/global bits please review {{RFC7042}}.
 
 For compatibility with earlier specifications, note that this
 document uses the unicast/multicast bit, instead of the arguably more
@@ -1807,11 +1831,9 @@ The exact algorithm to generate a node ID using these data is system
 specific, because both the data available and the functions to obtain
 them are often very system specific.  A generic approach, however, is
 to accumulate as many sources as possible into a buffer, use a
-message digest such as MD5 {{RFC1321}} or SHA-1 {{FIPS180-4}}, take an arbitrary 6
+message digest (such as SHA-256 or SHA-512 defined by {{FIPS180-4}}), take an arbitrary 6
 bytes from the hash value, and set the multicast bit as described
 above.
-
-Implementations can also leverage MAC address randomization techniques (IEEE 802.11bh) as an alternative to the pseudo-random logic provided in this section.
 
 ## Sorting {#sorting}
 
@@ -1823,9 +1845,9 @@ Time ordered monotonic UUIDs benefit from greater database index locality
 because the new values are near each other in the index.
 As a result objects are more easily clustered together for better performance.
 The real-world differences in this approach of index locality vs random data
-inserts can be quite large.
+inserts can be one order of magnitude or more.
 
-UUIDs formats created by this specification are intended to be lexicographically sortable
+UUID formats created by this specification are intended to be lexicographically sortable
 while in the textual representation.
 
 UUIDs created by this specification are crafted with big-endian byte order
@@ -1834,15 +1856,10 @@ is available for custom UUID formats.
 
 
 ## Opacity {#opacity}
-
-UUIDs SHOULD be treated as opaque values and implementations SHOULD NOT examine
-the bits in a UUID. However,
-inspectors MAY refer to {{variant_field}} and {{version_field}} when required to determine UUID version and variant.
-
-As general guidance, we recommend not parsing UUID values unnecessarily,
-and instead treating them as opaquely as possible.  Although application-specific
+As general guidance, it is recommend to avoid parsing UUID values unnecessarily,
+and instead treating UUIDs as opaquely as possible.  Although application-specific
 concerns could of course require some degree of introspection
-(e.g., to examine the variant, version or perhaps the timestamp of a UUID),
+(e.g., to examine the {{variant_field}}, {{version_field}} or perhaps the timestamp of a UUID),
 the advice here is to avoid this or other parsing unless absolutely necessary.
 Applications typically tend to be simpler, more interoperable, and perform better,
 when this advice is followed.
@@ -1886,7 +1903,7 @@ References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to
 
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
 
-Further, at this time the authors and working group have concluded that IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
+IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
 
 # Security Considerations {#Security}
 
@@ -1897,7 +1914,7 @@ access).  Discovery of predictability in a random number source will
 result in a vulnerability.
 
 Implementations MUST NOT assume that it is easy to determine if a UUID has been
-slightly transposed in order to redirect a reference to another
+slightly modified in order to redirect a reference to another
 object.  Humans do not have the ability to easily check the integrity
 of a UUID by simply glancing at it.
 
@@ -1990,6 +2007,8 @@ Both UUIDv1 and UUIDv6 test vectors utilize the same 60 bit timestamp: 0x1EC9414
 
 Both UUIDv1 and UUIDv6 utilize the same values in clock_seq,
 and node. All of which have been generated with random data.
+For the randomized node, the least significant bit of the first octet is set to a value of 1 as per {{unidentifiable}}. 
+Thus the starting value 0x9E6BDECED846 was changed to 0x9F6BDECED846.
 
 The pseudocode used for converting from a 64 bit Unix timestamp to a 100ns Gregorian timestamp value
 has been left in the document for reference purposes.
@@ -2029,7 +2048,7 @@ ver         4   0x1
 time_high  12   0x1EC
 var         2   0b10
 clock_seq  14   0b11, 0x3C8
-node       48   0x9E6BDECED846
+node       48   0x9F6BDECED846
 -------------------------------------------
 total      128
 -------------------------------------------
@@ -2155,7 +2174,7 @@ ver          4   0x6
 time_high   12   0xB00
 var          2   0b10
 clock_seq   14   0b11, 0x3C8
-node        48   0x9E6BDECED846
+node        48   0x9F6BDECED846
 -------------------------------------------
 total       128
 -------------------------------------------
