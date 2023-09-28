@@ -2182,7 +2182,8 @@ final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 
 # Illustrative Examples {#ill_examples}
 The following sections contain illustrative examples which serve to show how one may use UUIDv8 {{uuidv8}} for custom and/or experimental application based logic.
-The examples below are not meant to be implemented and have not been through the same rigorous testing, prototyping, and feedback loop that other algorithms in this document have undergone. The authors encouraged implementors to create your own UUIDv8 algorithm rather than use the items defined in this section.
+The examples below have not been through the same rigorous testing, prototyping, and feedback loop that other algorithms in this document have undergone.
+The authors encouraged implementors to create your own UUIDv8 algorithm rather than use the items defined in this section.
 
 ## Example of a UUIDv8 Value (time-based) {#uuidv8_example}
 
