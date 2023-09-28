@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-26T01:14:43.161316+00:00",
+  "timestamp": "2023-09-28T01:14:07.629836+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2784,15 +2784,15 @@
       "id": "I_kwDOH6Ln3M5wLIui",
       "title": "INDIR Review 2",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/140",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\nI have the following DISCUSS level issues:\r\n\r\nSection 2.1, page 5: I think a MAC address identifies a network interface, not a \"machine\". Also, for MAC addresses, this document should Reference RFC 7042 or, even better, draft-ietf-intarea-rfc7042bis (which is through WGLC and, in my opinion, ready for publication request). Those documents point out the existence of 64-bit MAC addresses and where they have been and are currently used so this document should say something about how those are handled (perhaps by discarding the top 16 bits).\r\nOLD\r\n       address in the node field of UUID version 1.  Exposed MAC\r\n       addresses can be used as an attack surface to locate machines and\r\n       reveal various other information about such machines (minimally\r\nNEW\r\n       address in the node field of UUID version 1.  Exposed MAC\r\n       addresses can be used as an attack surface to locate network interfaces\r\n       and reveal various other information about such interfaces (minimally\r\n\r\nSection 6.1, Page 27, 1st paragraph: The last sentence of this paragraph is \"The count will range between zero and the number of 100-nanosecond intervals per system time interval.\" This is confusing. Why couldn't the count exceed that number?\r\n\r\nSection 7: I think it is improper in the IANA Considerations to talk about what \"the authors and the working group have concluded\". The RFC this document will be is issued as the consensus of the IETF, not as the opinion of its authors or even the working group. I suggest replacing this section in its entirety with the following:\r\n\"This document requires no IANA actions. In particular, no update is required to the IANA URN namespace registration [URNNamespaces] for UUID filed in [RFC4122] and IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.\"\r\n\r\n\r\nThe following are other issues I found with this document that SHOULD be corrected before publication:\r\nSection 5.5, page 20: \"This SHA-1 value is then used to populate all 128 bits of the UUID layout.  Excess bits beyond 128 are discarded.\" Seems like you can and should be more precise. Maybe \"The high order 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 low order bits of SHA-1 output are discarded\"\r\n\r\nSection 6.2, page 29: \"Using floating point math,\" appears to mandate the use of floating point which might not be available on some small platforms. Suggest \"Using floating point or scaled integer arithmetic,\"\r\n\r\nSection 6.2, Page 30, paragraph headed \"Fixed-Length Dedicated Counter Seeding\":\r\n+    \"However, when the timestamp has not incremented, the counter is frozen and\r\n      incremented via the desired increment logic.\" To my mind, frozen means it is not changed and is inconsistent with incrementing it. Perhaps \"When the timestamp has not increased, the counter is instead incremented by the desired increment logic.\"\r\n+    \"For example, a 24 bit counter could have\r\n      the 23 bits in least-significant, right-most, position randomly\r\n      initialized.  The remaining most significant, left-most counter\r\n      bits are initialized as zero for the sole purpose of guarding\r\n      against counter rollovers.\" This is inconsistent. Either it should say \"the 23 or fewer bits\" in the first sentence or it should say \"bit is initialized to zero\" in the second sentence.\r\n\r\nSection 6.3, page 32, 3rd paragraph: Frequent generation of random numbers also puts more stress on any entropy source and or entropy pool being used as the basis for such random numbers. This should be mentioned.\r\n\r\nSection 6.9: The discussion of the local/global bit here would be a good place to reference RFC 7042 or, even better, draft-ietf-intarea-ref4042bis.\r\n\r\nSection 6.10: This section uses \"quite large\" without any indication of how large. A factor of ten? A factor of ten to the tenth power? Can some hint of how large be given? Similarly Section 2.1, item 1.\r\n\r\nSection 8, Page 39: I think \"transposed\" is the wrong word. That just means to swap around various parts of something. While that is one type of modification, I think you mean any type of slight modification. \"slightly transposed\" -> \"slightly modified\"\r\n\r\n\r\nThe following are minor issues (typos, misspelling, minor text improvements) with the document:\r\n\r\nSection 1, paragraph 3, page 3:\r\nOLD\r\nto implement services using UUIDs, UUIDs in combination with URNs [RFC8141], or otherwise.\r\nNEW\r\nto implement services using UUIDs either in combination with URNs [RFC8141] or otherwise.\r\n\r\nSection 3.2: The expansions of UUIDv1 through UUIDv8 are quite repetitive and uninformative. Since you have already expanded UUID in the previous line, I don't think it needs to be expanded here. I suggest:\r\n   UUIDv1    Gregorian time-based UUID\r\n   UUIDv2    DCE Security version UUID\r\n   UUIDv3    Name-based UUID with MD5\r\n   UUIDv4    Pseudo-random UUID\r\n   UUIDv5    Name-based UUID with SHA-1\r\n   UUIDv6    Re-ordered Gregorian time-based UUID\r\n   UUIDv7    Unix Epoch time-based UUID\r\n   UUIDv8    Custom UUID\r\n\r\nI think Section 6.2 is too long and should have subsections (6.2.1, 6.2.2, ...).\r\n\r\nSection 6.2, page 29: \"which is sorts\" -> \"which sorts\"\r\n\r\nSection 6.2, page 30: \"randomly initialize a portion counter\" -> \"randomly initialize a portion of the counter\"\r\n\r\nSection 6.2., page 31: \"the random being incremented.\" -> \"the random value being incremented.\"\r\n\r\nSection 6.5, last paragraph, page 35: \"needs not be the only\" -> \"need not be the only\"\r\n\r\n```",
       "createdAt": "2023-09-05T13:18:29Z",
-      "updatedAt": "2023-09-20T22:51:32Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:50Z",
+      "closedAt": "2023-09-27T20:21:50Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2843,15 +2843,15 @@
       "id": "I_kwDOH6Ln3M5wOCsO",
       "title": "SECDIR Review",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/141",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\nSection 6.6\r\n   High Impact:\r\n      A duplicate key causes an airplane to receive the wrong course\r\n      which puts people's lives at risk.  In this scenario there is no\r\n      margin for error.  Collisions MUST be avoided and failure is\r\n      unacceptable.  Applications dealing with this type of scenario\r\n      MUST employ as much collision resistance as possible within the\r\n      given application context.\r\n\r\nNot to trivialize the seriousness of the described scenario, but normative\r\nlanguage around airplane design and operation doesn\u2019t seem appropriate or in\r\nscope for the WG.  Furthermore \u201cas much collision resistance as possible\u201d isn\u2019t\r\nparticularly precise.  Recommend s/MUST/must/\r\n\r\n** Section 6.9\r\n   A generic approach, however, is\r\n   to accumulate as many sources as possible into a buffer, use a\r\n   message digest such as MD5 [RFC1321] or SHA-1 [FIPS180-4], take an\r\n   arbitrary 6 bytes from the hash value, and set the multicast bit as\r\n   described above.\r\n\r\nRFC4112 referenced MD5 and SHA-1, but didn\u2019t tie the implementation to them,\r\nwhy can\u2019t a modern hash algorithm (SHA-256) be recommended here instead?\r\n\r\n** Section 6.11\r\n\r\n   UUIDs SHOULD be treated as opaque values and implementations SHOULD\r\n   NOT examine the bits in a UUID.  However, inspectors MAY refer to\r\n   Section 4.1 and Section 4.2 when required to determine UUID version\r\n   and variant.\r\n\r\n   As general guidance, we recommend not parsing UUID values\r\n   unnecessarily, and instead treating them as opaquely as possible.\r\n   Although application-specific concerns could of course require some\r\n   degree of introspection (e.g., to examine the variant, version or\r\n   perhaps the timestamp of a UUID), the advice here is to avoid this or\r\n   other parsing unless absolutely necessary.\r\n\r\nWhy are both of these paragraphs needed?  The first seems to say the same thing\r\nas the second except with normative language.\r\n\r\n** Section 8\r\nImplementations SHOULD NOT assume that UUIDs are hard to guess. For example,\r\nthey MUST NOT be used as security capabilities (identifiers whose mere\r\npossession grants access).\r\n\r\n-- Why isn\u2019t this a \u201cMUST NOT assume\u201d?\r\n\r\n** Section 8\r\n   MAC addresses pose inherent security risks and SHOULD NOT be used within a\r\n   UUID.\r\n\r\nIs there any advisory language that can be provided that could explain when a\r\nMAC address should be used?\r\n```",
       "createdAt": "2023-09-05T21:10:07Z",
-      "updatedAt": "2023-09-20T18:11:52Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:50Z",
+      "closedAt": "2023-09-27T20:21:50Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2881,15 +2881,15 @@
       "id": "I_kwDOH6Ln3M5wUY1M",
       "title": "SECDIR Review 2",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/142",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\n----------------------------------------------------------------------\r\nCOMMENT:\r\n----------------------------------------------------------------------\r\n\r\n        Padding:\r\n\r\n                When timestamp padding is required, implementations\r\n                MUST pad the most significant bits (left-most) bits\r\n                with zeros. An example is padding the most significant,\r\n                left-most bits of a Unix timestamp with zeroes to fill\r\n                out the 48 bit timestamp in UUIDv7. An alternative is to\r\n                pad the most significant, left-most bits with the number\r\n                of 32 bit Unix timestamp roll-overs after 2038-01-19.\r\n\r\nHow can this MUST clause have an alternative? Should it be a SHOULD? If\r\nso, when would one use the alternative specified here?\r\n\r\n\r\n        sharing the hashspace ID proves useful for identifying the algorithm.\r\n\r\nIt is not clear what the term \"hashspace ID\" refers to.\r\n\r\n        Implementations SHOULD utilize a cryptographically secure\r\n        pseudo-random number generator (CSPRNG) to provide values that\r\n        are both difficult to predict (\"unguessable\") and have a low\r\n        likelihood of collision (\"unique\").\r\n\r\nCouldn't Verifiable Random Functions (VRF) also be used instead of a CSPRNG?\r\n\r\n        use a message digest such as MD5 [RFC1321] or SHA-1 [FIPS180-4],\r\n        take an arbitrary 6 bytes from the hash value, and set the\r\n        multicast bit as described above.\r\n\r\nWhile it might not matter, use of a more modern message digest algorithm is\r\nstill recommended here. One reason is that the IETF is trying to phase out\r\nthese older digests, and prefers to not reference these in new RFCs. A second\r\nreason is that sometimes, cryptographic libraries are prevented from using\r\nthese older type of digests (eg when running in FIPS mode)\r\n\r\n        Implementations can also leverage MAC address randomization\r\n        techniques (IEEE 802.11bh) as an alternative to the pseudo-random\r\n        logic provided in this section.\r\n\r\nI'm not sure why the Section didn't lead with this more obvious approach?\r\n\r\nNITS:\r\n\r\nfor readability, change:\r\n\r\n        The increment value MAY be one when the number of UUIDs generated\r\n        in a particular period of time is ...\r\n\r\nto\r\n\r\n        The increment value MAY be 1 when the number of UUIDs generated\r\n        in a particular period of time is ...\r\n\r\n\r\n\r\n        However, it SHOULD NOT be used by implementations that favor\r\n        unguessability, as the resulting values are easily guessable.\r\n\r\nWhat does \"it\" refer to? Incrementing by 1? Write it out instead of using \"it\"\r\n\r\n```",
       "createdAt": "2023-09-06T16:48:00Z",
-      "updatedAt": "2023-09-20T18:26:35Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:51Z",
+      "closedAt": "2023-09-27T20:21:51Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -2912,7 +2912,7 @@
       "labels": [],
       "body": "From Paul Wouters\r\n```\r\nWhy are hashspace IDs chosen to look like random uuids? Eg why not encode\r\n\"SHA2_224\" (hex 534841325F323234) as 53484132-5F32-3234-0000-000000000000\r\nor 00000000-0000-0000-5348-41325F323234 (plus or minus variant/version bits)\r\nso that it becomes far more clear this is not an ordinary random uuid?\r\n```\r\n\r\n\r\n### Current, All random\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-0f30e2e83145\"\r\nSHA2_256     = \"3fb32780-953c-4464-9cfd-e85dbbe9843d\"\r\nSHA2_384     = \"e6800581-f333-484b-8778-601ff2b58da8\"\r\nSHA2_512     = \"0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9\"\r\nSHA2_512_224 = \"003c2038-c4fe-4b95-a672-0c26c1b79542\"\r\nSHA2_512_256 = \"9475ad00-3769-4c07-9642-5e7383732306\"\r\nSHA3_224     = \"9768761f-ac5a-419e-a180-7ca239e8025a\"\r\nSHA3_256     = \"2034d66b-4047-4553-8f80-70e593176877\"\r\nSHA3_384     = \"872fb339-2636-4bdd-bda6-b6dc2a82b1b3\"\r\nSHA3_512     = \"a4920a5d-a8a6-426c-8d14-a6cafbe64c7b\"\r\nSHAKE_128    = \"7ea218f6-629a-425f-9f88-7439d63296bb\"\r\nSHAKE_256    = \"2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a\"\r\n```",
       "createdAt": "2023-09-06T16:55:09Z",
-      "updatedAt": "2023-09-25T14:36:13Z",
+      "updatedAt": "2023-09-26T18:41:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -3166,6 +3166,13 @@
           "body": "@mcr \"Slides uploaded to datatracker would also be appreciated.\" yeah, I will get some to the chairs this week!",
           "createdAt": "2023-09-25T14:36:13Z",
           "updatedAt": "2023-09-25T14:36:13Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> @mcr \"Slides uploaded to datatracker would also be appreciated.\" yeah, I will get some to the chairs this week!\r\n\r\nif @danielmarschall  or others still feel they want v9, then they also need to explain the proposal in a slide or two.",
+          "createdAt": "2023-09-26T18:41:38Z",
+          "updatedAt": "2023-09-26T18:41:38Z"
         }
       ]
     },
@@ -3389,15 +3396,15 @@
       "id": "I_kwDOH6Ln3M5wb7Ra",
       "title": "OPSDIR Review",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/145",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\n----------------------------------------------------------------------\r\nCOMMENT:\r\n----------------------------------------------------------------------\r\n\r\nMinor level comments:\r\n\r\n(2) p 14, sec 4.2.  Version Field\r\n\r\n      Table 2: UUID variant 10x versions defined by this specification\r\n   An example version/variant layout for UUIDv4 follows the table where\r\n   M represents the version placement for the hexadecimal representation\r\n   of 0x4 (0b0100) and the N represents the variant placement for one of\r\n   the four possible hexadecimal representation of variant 10x: 0x8\r\n   (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)\r\n\r\nTable 1 only defines 3 bits and doesn't obviously mention a 4th bit, and yet\r\nthe examples below are displaying 4 bits, where I assume that the 4th bit is\r\neffectively arbitrary data in the UUID definition.  Please consider whether it\r\nwould be helpful to clarify this.\r\n\r\n(3) p 16, sec 5.3.  UUID Version 3\r\n\r\n   UUIDv3 values are created by computing an MD5 [RFC1321] hash over a\r\n   given name space value concatenated with the desired name value after\r\n   both have been converted to a canonical sequence of octets in network\r\n   byte order.  This MD5 value is then used to populate all 128 bits of\r\n   the UUID layout.  The UUID version and variant then replace the\r\n   respective bits as defined by Section 4.2 and Section 4.1.\r\n\r\nPresumably the MD5 is only actually used to populate 122 bits, since the other\r\n6 are already spoken for with 'ver' and 'var'.\r\n\r\n(4) p 29, sec 6.2.  Monotonicity and Counters\r\n\r\n      For example, let's assume a system timestamp of 1 Jan 2023\r\n      12:34:56.1234567.  Taking the precision greater than 1ms gives us\r\n      a value of 0.4567, as a fraction of a millisecond.  If we wish to\r\n      encode this as 12 bits, we can take the count of possible values\r\n      that fit in those bits (4096, or 2 to the 12th power) and multiply\r\n      it by our millisecond fraction value of 0.4567 and truncate the\r\n      result to an integer, which gives an integer value of 1870.\r\n      Expressed as hexadecimal it is 0x74E, or the binary bits\r\n      0b011101001110.  One can then use those 12 bits as the most\r\n      significant (left-most) portion of the random section of the UUID\r\n      (e.g., the rand_a field in UUIDv7).  This works for any desired\r\n      bit length that fits into a UUID, and applications can decide the\r\n      appropriate length based on available clock precision, but for\r\n      UUIDv7, it is limited to 12 bits at maximum to reserve sufficient\r\n      space for random bits.\r\n\r\nWould a valid alternative way of achieving this be to just directly write the\r\n10 bits of the timestamp, giving 2 extra bits of randomness and a slightly\r\ncheaper calculation?\r\n```",
       "createdAt": "2023-09-07T18:12:48Z",
-      "updatedAt": "2023-09-20T21:14:26Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:51Z",
+      "closedAt": "2023-09-27T20:21:51Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -3441,15 +3448,15 @@
       "id": "I_kwDOH6Ln3M5wb92t",
       "title": "IESG Grammar",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/146",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\n### S6.2\r\n\r\n* \"which is sorts\" -> \"which is sorted\"?\r\n\r\n### S6.10\r\n\r\n* \"UUIDs formats\" -> \"UUID formats\"\r\n ```",
       "createdAt": "2023-09-07T18:21:19Z",
-      "updatedAt": "2023-09-20T19:32:56Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:52Z",
+      "closedAt": "2023-09-27T20:21:52Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -4170,15 +4177,15 @@
       "id": "I_kwDOH6Ln3M5xfNjq",
       "title": "Revise 16-bit MAC Node Usage",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/149",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tgross35",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "> For systems with no IEEE address or utilizing an IEEE 802.15.4 16 bit address, a randomly or pseudo-randomly\r\ngenerated value MUST be used; see {{unguessability}} and {{unidentifiable}}.\r\nFor systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.\r\n\r\nWould it be better to say that 16-bit MACs and other MACs may use those 16 bits plus 32 random bits? Or otherwise weaken the `MUST`  such that shorter nonstandard MACs that still want a node identifier don't technically violate the spec.",
       "createdAt": "2023-09-20T02:57:08Z",
-      "updatedAt": "2023-09-21T15:57:21Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:52Z",
+      "closedAt": "2023-09-27T20:21:52Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -4274,7 +4281,7 @@
       "id": "I_kwDOH6Ln3M5xlRKM",
       "title": "Fix Randomized Node value's mcast bit in Appendix",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/151",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -4283,8 +4290,8 @@
       ],
       "body": "I split this from from #140 and while I was reviewing the following statement I think there is a mistake in my test vector?\r\nWould somebody double-check? \r\n\r\n> Section 6.9: The discussion of the local/global bit here would be a good place to reference RFC 7042 or, even better, draft-ietf-intarea-ref4042bis.\r\n\r\nhttps://datatracker.ietf.org/doc/html/rfc7042\r\nNote: I am also not sure where/what to cite from this document.\r\n\r\nDraft-11 Text:\r\n> Implementations MUST set the least significant bit of the first octet of the node ID set to 1, to create a 48 bit node id. This bit is the unicast/multicast bit, which will never be set in IEEE 802 addresses obtained from network cards. Hence, there can never be a conflict between UUIDs generated by machines with and without network cards.\r\n> For compatibility with earlier specifications, note that this document uses the unicast/multicast bit, instead of the arguably more correct local/global bit because MAC addresses with the local/global bit set or not are both possible in a network. This is not the case with the unicast/multicast bit. One node cannot have a MAC address that multicasts to multiple nodes.\r\n\r\nCould somebody double check me here:\r\nFor the appendix examples, is `0x9E6BDECED846` okay for node or should I change to `0x9F6BDECED846`?\r\n```\r\n9E = 10011110\r\n9F = 10011111\r\n```\r\n\r\ntl;dr, the hex value should be x3, x7, xB, xF if that bit is set to 1 right? Bottom right square of this table:\r\nhttps://en.wikipedia.org/wiki/MAC_address#Ranges_of_group_and_locally_administered_addresses\r\n\r\n---\r\n\r\nPersonal Note: This section of RFC4122 has always confused me. I am open to change proposals that make those two paragraphs easier to understand by implementors. They currently stand as mostly the same from 4122 in draft-11.",
       "createdAt": "2023-09-20T19:27:44Z",
-      "updatedAt": "2023-09-25T18:13:10Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:52Z",
+      "closedAt": "2023-09-27T20:21:52Z",
       "comments": [
         {
           "author": "danielmarschall",
@@ -4334,6 +4341,13 @@
           "body": "> v1/v6 follow same rules on Node ID so they both adhere to 6.9 for random. More specifically that bit.\r\n\r\nThough I don't have a strong opinion on the test vectors, using `0x9E6BDECED846` for v6 will help clarify Section 5.6. It reads v6 SHOULD use full 48-bit random refreshed every time for node but MAY follow Section 5.1 (and 6.9 accordingly). So v6 MAY follow Section 6.9 but SHOULD depart from it, right?",
           "createdAt": "2023-09-25T18:13:10Z",
           "updatedAt": "2023-09-25T18:13:10Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@LiosK, that is interpretation is correct as the text currently reads in draft-11 (and current draft-12) section 5.6.",
+          "createdAt": "2023-09-26T14:43:23Z",
+          "updatedAt": "2023-09-26T14:43:23Z"
         }
       ]
     },
@@ -4342,15 +4356,15 @@
       "id": "I_kwDOH6Ln3M5xlyDi",
       "title": "Add MSB3 to Variant Table",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/153",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Split from #145, obviously this spec only cares about two-bits `1` and `0` but re-uses the table from RFC4122.\r\nThe final value of the \"three bit variant\" is don't care. thus `10x`\r\nHowever, the hex that gets converted is a 4 bit value. Thus later some text I wrote discussed the possible Hex values for the `10x` variant. Which is really `10xx`\r\n\r\nI was reviewing the comment from OPSDIR and trying to figure out how to call out this 4th \"don't care bit\"...\r\n\r\n```\r\n(2) p 14, sec 4.2.  Version Field\r\n\r\n      Table 2: UUID variant 10x versions defined by this specification\r\n   An example version/variant layout for UUIDv4 follows the table where\r\n   M represents the version placement for the hexadecimal representation\r\n   of 0x4 (0b0100) and the N represents the variant placement for one of\r\n   the four possible hexadecimal representation of variant 10x: 0x8\r\n   (0b1000), 0x9 (0b1001), 0xA (0b1010), 0xB (0b1011)\r\n\r\nTable 1 only defines 3 bits and doesn't obviously mention a 4th bit, and yet\r\nthe examples below are displaying 4 bits, where I assume that the 4th bit is\r\neffectively arbitrary data in the UUID definition.  Please consider whether it\r\nwould be helpful to clarify this.\r\n```\r\n\r\nMy solution \r\n- Add another don't care bit to the table in MSB3 position (and call out the possible hex Values in a column as well.)\r\n  - As far as I can see this wouldn't cause any problems as it does not change any values.\r\n\r\nThus:\r\n```\r\n{{table1}} lists the contents of the variant field, where the letter \"x\" indicates a \"don't-care\" value.\r\n\r\n| Msb0 | Msb1 | Msb2 | Msb3 | Hex     |Description                                                                    |\r\n|    0 |    x | x    | x    | 1-7     |Reserved, NCS backward compatibility and includes Nil UUID as per {{niluuid}}. |\r\n|    1 |    0 | x    | x    | 8-9,A-B |The variant specified in this document.                                        |\r\n|    1 |    1 | 0    | x    | C-D     |Reserved, Microsoft Corporation backward compatibility.                        |\r\n|    1 |    1 | 1    | x    | E-F     |Reserved for future definition and includes Max UUID as per {{maxuuid}}.       |\r\n```\r\n",
       "createdAt": "2023-09-20T21:13:53Z",
-      "updatedAt": "2023-09-20T21:17:04Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:53Z",
+      "closedAt": "2023-09-27T20:21:53Z",
       "comments": []
     },
     {
@@ -4443,16 +4457,18 @@
     {
       "number": 155,
       "id": "I_kwDOH6Ln3M5xsKos",
-      "title": "UUIDv7 recommended for data warehouses",
+      "title": "Discuss why v3/v5 are bad for Database Usage",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/155",
       "state": "OPEN",
       "author": "sergeyprokhorenko",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "I propose to add this paragraph to the Section 2.1. Update Motivation:\r\n\r\n> 7. Hash-based UUID versions such as UUIDv3 (described in Section 5.3) and UUIDv5 (described in Section 5.5) can change their value over time as the hash function argument can unexpectedly change. This makes it difficult to use them as primary keys, including in the Data Vault modeling method.",
       "createdAt": "2023-09-21T17:02:27Z",
-      "updatedAt": "2023-09-24T10:24:18Z",
+      "updatedAt": "2023-09-27T20:22:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -4615,6 +4631,13 @@
           "body": "> DWH is exactly the use case where any identifier (i.e. input of hash function) can change.\r\n\r\nIt depends on individual DWHs. It's the DWH designer's responsibility to choose a right identifier scheme for their own DWH.\r\n\r\n> The customer wants to insure against the arbitrariness of the contractor, and therefore demands compliance with the standard.\r\n\r\nThe customer can simply say \"use UUIDv7\". The standard is just there. That's enough. I have no idea what problem you are solving.\r\n",
           "createdAt": "2023-09-24T10:24:18Z",
           "updatedAt": "2023-09-24T10:24:18Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I modified the title of this one to cover the topic of the issue. \r\n\r\nTo note, I did make some proposed changes via https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a but these have been removed for the time being.\r\nThe idea was to call out how v3/v5, with inputs that change could cause bad performance to a database.\r\n\r\nIMO not as an author, I am not sure this is entirely needed but the commit itself covers the point (which is more or less the same as v4 in terms of impact on a database.) So it fit nicely in bullet 1 of update motivations. \r\n\r\nAgain, this time as an author, I want to re-iterate, we should not overthink/over-iterate on this. Weigh the pros/cons of having this in the doc vs not having it in the doc.",
+          "createdAt": "2023-09-27T20:21:12Z",
+          "updatedAt": "2023-09-27T20:21:12Z"
         }
       ]
     },
@@ -4623,15 +4646,15 @@
       "id": "I_kwDOH6Ln3M5x1nAm",
       "title": "Additional Update Motivations",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/157",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LiosK",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "For example:\r\n\r\n> The fact that UUIDs can be used to create unique, reasonably short values in distributed systems without requiring coordination makes them a good alternative, but UUID versions 1-5<ins>, which were defined by {{RFC4122}},</ins> lack certain other desirable characteristics:\r\n\r\nIt's an obvious fact for us, but that might not be the case decades later....\r\n\r\n**EDIT**: I've got wondering that a concise text stating that the new RFC adds v6/v7/v8/Max and inherits other versions from RFC 4122 in a compatible manner would help both current and future readers understand the changes made as well as the historical context. Do you think we can sneak one into somewhere in the draft?",
       "createdAt": "2023-09-23T13:47:57Z",
-      "updatedAt": "2023-09-25T19:39:11Z",
-      "closedAt": null,
+      "updatedAt": "2023-09-27T20:21:53Z",
+      "closedAt": "2023-09-27T20:21:53Z",
       "comments": [
         {
           "author": "sergeyprokhorenko",
@@ -4674,6 +4697,111 @@
           "body": "@kyzer-davis\r\n\r\n> Updated Title for the changelog. I added this + the other items I wanted go get into update motivations: [f85016f](https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/f85016fc2c030377620b739b984cf698bd57b12d)\r\n> \r\n> Basically \"why did we replace 4122 instead of just update it\" in six succinct bullets.\r\n\r\nFrom the rationale, it seems that the huge project to replace the RFC was carried out due to some vague minor reasons. The real reasons (see [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier)) are hidden:\r\n\r\n> UUID can be suboptimal for many use-cases because:\r\n> \r\n> - It isn't the most character efficient way of encoding 128 bits of randomness      (this hasn't been fixed yet, see [this](https://github.com/uuid6/new-uuid-encoding-techniques-ietf-draft/issues/3))\r\n> - UUID v1/v2 is impractical in many environments, as it requires access to a unique, stable MAC address\r\n> - UUID v3/v5 requires a unique seed and produces randomly distributed IDs, which can cause fragmentation in many data structures\r\n> - UUID v4 provides no other information than randomness which can cause fragmentation in many data structures\r\n\r\n**It\u2019s not good to mislead people** that everything is OK with versions 1-5, and the problems are only in minor typos in the RFC text.\r\n\r\nI want to remind you [how this project began](https://github.com/uuid6/uuid6-ietf-draft/issues/27#issuecomment-920467995). The new RFC will become popular only thanks to its immediate predecessor and inspiration: [ULID with sequence](https://github.com/uuid6/uuid6-ietf-draft/issues/27) (i.e. counter).\r\n",
           "createdAt": "2023-09-25T18:33:27Z",
           "updatedAt": "2023-09-25T19:39:11Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@sergeyprokhorenko,\r\nTo be clear: I did not remove the original update motivations. I simply added additional bullets from an earlier interim meeting discussing the reason behind the IETF's decided to create the 4122bis item vs just adding v6-8 as an RFC that updated 4122 rather than replaces it. \r\n\r\nThe items discussing 1-5 as suboptimal and introduction of v6/v7 still exist as leading text in the update motivations section.",
+          "createdAt": "2023-09-26T14:40:57Z",
+          "updatedAt": "2023-09-26T14:40:57Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "@kyzer-davis\r\n\r\nThank you for the clarification!\r\n\r\n> @sergeyprokhorenko, To be clear: I did not remove the original update motivations. I simply added additional bullets from an earlier interim meeting discussing the reason behind the IETF's decided to create the 4122bis item vs just adding v6-8 as an RFC that updated 4122 rather than replaces it.\r\n> \r\n> The items discussing 1-5 as suboptimal and introduction of v6/v7 still exist as leading text in the update motivations section.\r\n\r\nBut of the significant disadvantagies of versions 1-5 listed in the [ULID](https://github.com/ulid/spec#universally-unique-lexicographically-sortable-identifier), the following disadvantagies has not yet been included in the RFC:\r\n\r\n> - UUID v3/v5 requires a unique seed and produces randomly distributed IDs, which can cause fragmentation in many data structures\r\n\r\nI think by seed they mean the hash function argument, which is unexpectedly changeable in 99% of cases. The second part of this disadvantage is equivalent to the version 4 disadvantage listed in the RFC.",
+          "createdAt": "2023-09-26T16:01:02Z",
+          "updatedAt": "2023-09-26T16:01:02Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "NP, and thanks for the last comment, I fully understand why one would want to cover that in a bullet. Which is also the original ask in #155 (I just caught up on a moment ago.)\r\n\r\nLet me discuss real fast with Brad on some text that could be added to update motivations to specifically call out how hash-based UUIDs don't work nicely for databases so we can bookend that item (and the rest of my PR for draft-12) and move onto the IANA/SHA256 branches with #152 as my base.",
+          "createdAt": "2023-09-26T17:19:09Z",
+          "updatedAt": "2023-09-26T17:19:45Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> UUID v3/v5 requires a unique seed and produces randomly distributed IDs, which can cause fragmentation in many data structures\r\n\r\nI think this would be covered by just tweaking the first bullet point to explain that UUIDs involving hashes have the same problem.\r\n\r\nCurrent text:\r\n\r\n1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}) have poor database index locality. This means that new values created in succession are not close to each other in the index and thus require inserts to be performed at random locations. The resulting negative performance effects on common structures used for this (B-tree and its variants) can be dramatic.\r\n\r\nHow about this instead (only the first sentence changed):\r\n\r\n1. Non-time-ordered UUID versions such as UUIDv4 (described in {{uuidv4}}), as well as UUID versions 3 ({{uuidv3}}) and 5 ({{uuidv3}}) which use hash functions with even bit distribution, have poor database index locality. This means that new values created in succession are not close to each other in the index and thus require inserts to be performed at random locations. The resulting negative performance effects on common structures used for this (B-tree and its variants) can be dramatic.\r\n\r\nThis is the very first bullet point in the Update Motivations section, prominent. I'm not stuck on that being the exact change, but it seems like it covers it to me.\r\n\r\n",
+          "createdAt": "2023-09-26T20:20:19Z",
+          "updatedAt": "2023-09-26T20:30:03Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "Great! But the problem that\r\n\r\n> UUID v3/v5 requires a **unique** seed\r\n\r\nis not mentioned. I would add a new bullet point: \r\n\r\n> UUID versions 3 ({{uuidv3}}) and 5 ({{uuidv3}}) which use hash functions are at risk of unexpectedly changing hash function argument.\r\n\r\nbecause [hash-based versions are not recommended for use cases where the input may change](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/155#issuecomment-1732432433), and the risk may be underestimated",
+          "createdAt": "2023-09-26T20:59:06Z",
+          "updatedAt": "2023-09-26T21:09:56Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Name-based UUIDs do not require an unique seed.\r\n\r\nAgain, it depends on the use-case.\r\n\r\n- If the use case is to have an unique ID for a database, yes, then you need an unique seed. But then `UUIDv3(getRandomBytes())` gives the same contents as `UUIDv4()` (except for the version bits). So there is no need to use name-based UUID in that case. Use UUIDv7 instead.\r\n\r\n- If the use-case is to receive a UUID **_representation_** of an URL/OID/etc. , then UUIDv3 and UUIDv5 is the way to go, e.g. `UUIDv3(NS_OID, '2.999')` . This is NOT an \"Unique Identifier\" (so the name UUID can be confusing), it is a name-based representation.\r\n\r\n> I think by seed they mean the hash function argument, which is unexpectedly changeable in 99% of cases\r\n\r\nI do not know what the 99% are. Can you give me a real-world example?\r\n\r\nAn OID 2.999 stays OID 2.999 to all eternity, and so does its UUID representation.\r\n\r\nURL www.example.com stays URL www.example.com for all eternity, and so does its UUID representation.\r\n",
+          "createdAt": "2023-09-26T21:53:55Z",
+          "updatedAt": "2023-09-26T21:53:55Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@sergeyprokhorenko Sorry, I'm not trying to drag this on unnecessarily, but can you elaborate a bit more on what it is that you're concerned someone might mess up about this?   (I don't fully understand the concern because a hash function by definition gives the same output with the same input, but maybe if I understand what you think people might get wrong about this, that might clarify.)",
+          "createdAt": "2023-09-26T21:54:56Z",
+          "updatedAt": "2023-09-26T21:54:56Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "> and the risk may be underestimated\r\n\r\nI understand your concern, but it's not necessary. The risk is intrinsic. If you change 1 bit of the input of a cryptographic hash function, the output will be different with a very high probability. This is how hash functions work. It is more accurate to call this a guarantee rather than a risk.\r\n\r\nHowever, if you really want this to be in the new document, how about this paragraph:\r\n\r\n_Considering that one of the properties of identifiers is immutability (during the lifetime of the data to which they are attached) and that hash functions produce different results for each input, it is not recommended to employ name-based UUIDs generated with arguments that may change in the future._\r\n\r\nFor example, we know that people names can change when they get married, so it is not recommended to use people names to generate name-based UUIDs. I don't believe anyone would actually do this, it's just a basic example.\r\n",
+          "createdAt": "2023-09-26T21:56:30Z",
+          "updatedAt": "2023-09-26T23:50:10Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> > I think by seed they mean the hash function argument, which is unexpectedly changeable in 99% of cases\r\n\r\nThis is not necessary as I discussed in #155. Please don't cross-post the same argument in every thread.\r\n\r\n> as well as UUID versions 3 ({{uuidv3}}) and 5 ({{uuidv3}}) which use hash functions with even bit distribution,\r\n\r\nI don't think this is necessary either. This insertion blurs the point of the statement. v3/v5 have very different properties and uses cases than v1/v4, so while it is very intuitive and likely that v7 replaces v1/v4 just for the index locality issue, the same thing isn't likely to happen for v3/v5 because hash-based vs. time-ordered needs a serious design decision.\r\n",
+          "createdAt": "2023-09-26T23:10:33Z",
+          "updatedAt": "2023-09-26T23:10:33Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a has been posted. \r\nI did not use the word `seed` but rather `input \"name\" data` to tie it back to the rest of the document's verbiage. \r\n\r\nI think this covers the bullet sufficiently and draws attention to what we all know:\r\nv3/v5 with input data that changes will basically be the same as v4 (in the grand scheme of a database identifier).\r\n\r\nI don't want to over iterate on this. If the text conveys this point please thumbs up so I can merge draft 12 down and move onto larger items with the remaining time I have this week.",
+          "createdAt": "2023-09-27T13:44:16Z",
+          "updatedAt": "2023-09-27T13:44:16Z"
+        },
+        {
+          "author": "LiosK",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I don't think https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a is necessary. The whole point is perfectly clear with the original concise text, and this commit inserts some irrelevant and confusing concepts. Particularly, it's quite odd to discuss v3/v5 in the sortability context because the hash-based properties of v3/v5 require a tailored identifier design, which might not stand together with index locality (for example, imagine Git and BitCoin, as very successful applications with hash-based IDs, though not UUIDs).",
+          "createdAt": "2023-09-27T14:49:31Z",
+          "updatedAt": "2023-09-27T14:49:31Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "> I don't think [529860f](https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a) is necessary. The whole point is perfectly clear with the original concise text, and this commit inserts some irrelevant and confusing concepts. Particularly, it's quite odd to discuss v3/v5 in the sortability context because the hash-based properties of v3/v5 require a tailored identifier design, which might not stand together with index locality (for example, imagine Git and BitCoin, as very successful applications with hash-based IDs, though not UUIDs).\r\n\r\nBitcoin is widely known for its enormous transaction confirmation times. This is a great argument for UUIDv7",
+          "createdAt": "2023-09-27T16:47:12Z",
+          "updatedAt": "2023-09-27T16:47:12Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "> @sergeyprokhorenko Sorry, I'm not trying to drag this on unnecessarily, but can you elaborate a bit more on what it is that you're concerned someone might mess up about this? (I don't fully understand the concern because a hash function by definition gives the same output with the same input, but maybe if I understand what you think people might get wrong about this, that might clarify.)\r\n\r\n@bradleypeabody\r\n\r\nI'll give you an example. Let's assume that an ordinary systems analyst decided to identify regional offices by hash-based UUIDs. He decided to cocatenate the country code and the postal code as the hash function argument. This decision seemed reasonable to him (because he didn't want to make his job more difficult). For three years everything was OK, and this systems analyst even managed to quit and get a more attractive position in another company. But suddenly the postal code of one of the regional offices changed. And now there are hundreds of thousands of records in the database with two different hash-based UUIDs of the same regional office. Now the new systems analyst tasked with fixing the defect curses his predecessor.\r\n\r\nUnfortunately, any arguments of hash functions can change unexpectedly in the future. This is well known to database designers who try to use [surrogate keys](https://en.wikipedia.org/wiki/Surrogate_key#Advantages) instead of [natural (or business) keys](https://en.wikipedia.org/wiki/Natural_key#Disadvantages). Changes to natural keys are specifically recorded with timestamp in [temporal databases](https://en.wikipedia.org/wiki/Temporal_database) including [DWH](https://en.wikipedia.org/wiki/Data_warehouse) for communication with the outside world. But DWH tables are linked by surrogate keys only.",
+          "createdAt": "2023-09-27T17:21:39Z",
+          "updatedAt": "2023-09-27T18:04:24Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@sergeyprokhorenko Thanks for that explanation, totally makes sense.\r\n\r\nIn line with your points above, I think those concerns are implied when using an hash function, but you're absolutely right that historically people have screwed this up by not fully thinking through the implications and picking the wrong solution for a particular use case.\r\n\r\nIf you feel strongly that this is worth making an edit for, perhaps a simple sentence or two with a reference to a third party source that talks about the concerns in more detail would work.  E.g. adding a line like this in the v3 and v5 sections, and if appropriate v8 hash example:\r\n\r\n> **Implementors using UUIDs that utilize hash functions as above, especially when used as a database key, should carefully consider the implications of the possibility of the hash function input changing in the future.  Hash functions as used here imply a \"natural key\" (see https://en.wikipedia.org/wiki/Natural_key), whereas database maintenance often benefits from the use of \"surrogate keys\" (see https://en.wikipedia.org/wiki/Surrogate_key).**\r\n\r\nOr it's possible **there might be a better place in the document for this warning, such as the Name-based UUID Generation section.**",
+          "createdAt": "2023-09-27T19:27:43Z",
+          "updatedAt": "2023-09-27T19:27:43Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "FYI, I backed out https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a so I can get draft-12 base PR merged down and start work on the other two branches I need to get done ASAP.\r\nLet's take this v3/v5 DB discussion back to #155 as I am going to close this issue in the PR. ",
+          "createdAt": "2023-09-27T20:04:57Z",
+          "updatedAt": "2023-09-27T20:04:57Z"
         }
       ]
     }
@@ -7291,31 +7419,33 @@
       "id": "PR_kwDOH6Ln3M5a0ROU",
       "title": "Draft 12",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/152",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Closing #141\r\n- Closing #142\r\n- Closing #145\r\n- Closing #140\r\n- Closing #146\r\n\r\nEdit: Will clean up the tracker to focus on the bigger discussions.",
       "createdAt": "2023-09-20T19:34:07Z",
-      "updatedAt": "2023-09-25T19:36:19Z",
+      "updatedAt": "2023-09-27T20:21:49Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f94b0512ae8550f94b42f4ff65c91d2f38d1d794",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "draft-12",
-      "headRefOid": "db976a54fe261176502f8ed39891b21afc1d432c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "cbf058aa13123caa25f655af7f8161e9f4381a12",
+      "closedAt": "2023-09-27T20:21:49Z",
+      "mergedAt": "2023-09-27T20:21:49Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689"
+      },
       "comments": [
         {
           "author": "sergeyprokhorenko",
           "authorAssociation": "NONE",
           "body": "@kyzer-davis\r\n\r\n**Please read [this](https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/157#issuecomment-1734267152)**",
           "createdAt": "2023-09-25T19:34:39Z",
-          "updatedAt": "2023-09-25T19:36:19Z"
+          "updatedAt": "2023-09-27T18:07:52Z"
         }
       ],
       "reviews": []
@@ -7325,24 +7455,26 @@
       "id": "PR_kwDOH6Ln3M5bCoiI",
       "title": "Count v6 in as IEEE 802 users?",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/156",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LiosK",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Count v6 in as IEEE 802 users and imply the dependency is OPTIONAL",
       "createdAt": "2023-09-23T13:26:23Z",
-      "updatedAt": "2023-09-25T23:36:20Z",
+      "updatedAt": "2023-09-27T13:44:53Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f94b0512ae8550f94b42f4ff65c91d2f38d1d794",
       "headRepository": "LiosK/rfc4122bis",
       "headRefName": "main",
       "headRefOid": "8cb1692eb66894fe8afdd585c5aa240c8ee800aa",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-09-27T13:44:53Z",
+      "mergedAt": "2023-09-27T13:44:52Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "f34f7363cb54cd1d3c7308c93e25c791577fa2c5"
+      },
       "comments": [
         {
           "author": "kyzer-davis",
