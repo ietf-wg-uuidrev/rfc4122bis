@@ -1071,7 +1071,7 @@ Some common namespace values have been defined via {{namespaces}}.
 
 There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
 As such, it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{uuidv8}}.
-For implementation guidance around utilizing UUIDv8 for name-based UUIDs refer to the sub-section of {{name_based_uuid_generation}}.
+An illustrative example of UUIDv8 for SHA-256 name-based UUIDs is provided in the appendix {{uuidv8_example_name}}.
 
 For more information on SHA-1 security considerations see {{RFC6194}}.
 
@@ -1736,23 +1736,6 @@ A note on namespaces:
   For example, any other UUID MAY be generated and used as the desired namespace input for a given application context to
   ensure all names created are unique within the newly created namespace.
 
-Name-based UUIDs using UUIDv8:
-: As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
- These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
- To ensure UUIDv8 name-based UUID values of different hashing protocols can exist in the same bit space; this document defines various "hashspaces" in {{hashspaces}}.
- Creation of name-based UUID values using UUIDv8 follows the same logic defined in {{uuidv5}}, but the hashspace should be used as the starting point with the desired
- namespace and name concatenated to the end of the hashspace.
- Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
- Ensure that the version and variant bits are modified as per {{uuidv8}} bit layout, and finally trim any excess bits beyond 128.
- An important note for secure hashing algorithms that produce outputs of an arbitrary size, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
- See {{uuidv8_example_name}} for a SHA-256 UUIDv8 example test vector.
-
-Advertising the Hash Algorithm:
-: Name-based UUIDs utilizing UUIDv8 do not allocate any available bits to identifying the hashing algorithm.
-  As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID from {{hashspaces}} proves useful for identifying the algorithm.
-  That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
-  The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
-
 ## Collision Resistance {#collision_resistance}
 
 Implementations should weigh the consequences of UUID collisions within their
@@ -1908,7 +1891,7 @@ References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to
 
 There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
 
-IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
+IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces.
 
 # Security Considerations {#Security}
 
@@ -1985,25 +1968,6 @@ NameSpace_URL  = "6ba7b811-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_OID  = "6ba7b812-9dad-11d1-80b4-00c04fd430c8"
 NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
 ~~~~
-
-# Some Hashspace IDs {#hashspaces}
-This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
-
-~~~~ code
-SHA2_224     = "59031ca3-fbdb-47fb-9f6c-0f30e2e83145"
-SHA2_256     = "3fb32780-953c-4464-9cfd-e85dbbe9843d"
-SHA2_384     = "e6800581-f333-484b-8778-601ff2b58da8"
-SHA2_512     = "0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9"
-SHA2_512_224 = "003c2038-c4fe-4b95-a672-0c26c1b79542"
-SHA2_512_256 = "9475ad00-3769-4c07-9642-5e7383732306"
-SHA3_224     = "9768761f-ac5a-419e-a180-7ca239e8025a"
-SHA3_256     = "2034d66b-4047-4553-8f80-70e593176877"
-SHA3_384     = "872fb339-2636-4bdd-bda6-b6dc2a82b1b3"
-SHA3_512     = "a4920a5d-a8a6-426c-8d14-a6cafbe64c7b"
-SHAKE_128    = "7ea218f6-629a-425f-9f88-7439d63296bb"
-SHAKE_256    = "2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a"
-~~~~
-
 
 # Test Vectors {#test_vectors}
 
@@ -2248,17 +2212,23 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 {: title='UUIDv8 Example Time-based Illustrative Example'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
-A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hashspaces {{hashspaces}} alongside namespaces {{namespaces}} and names.
+As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
+These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
+
+A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} as an illustrative example detailing how this can be achieved.
+The creation of the name-based UUIDv8 value in this section follows the same logic defined in {{uuidv5}} with the difference being SHA-256 in place of SHA-1.
+
 The field mapping and all values are illustrated in {{v8fieldssha256}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-256 value see {{v8vervar}}.
+An important note for secure hashing algorithms that produce outputs of an arbitrary size, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
+
 
 ~~~~
-Hashspace (SHA2_256):  3fb32780-953c-4464-9cfd-e85dbbe9843d
 Namespace (DNS):       6ba7b810-9dad-11d1-80b4-00c04fd430c8
 Name:                  www.example.com
 ----------------------------------------------------------------
 SHA-256:
-401835fda627a70a073fed73f2bc5b2c2a8936385a38a9c133de0ca4af0dfaed
+5c146b143c524afd938a375d0df1fbf6fe12a66b645f72f6158759387e51f3c8
 ~~~~
 {: id='v8sha256' title='UUIDv8 Example SHA256'}
 
@@ -2266,23 +2236,23 @@ SHA-256:
 -------------------------------------------
 field     bits value
 -------------------------------------------
-custom_a  48   0x401835fda627
+custom_a  48   0x5c146b143c52
 ver        4   0x8
-custom_b  12   0x70a
+custom_b  12   0xafd
 var        2   0b10
-custom_c  62   0b00, 0x73fed73f2bc5b2c
+custom_c  62   0b00, 0x38a375d0df1fbf6
 -------------------------------------------
 total     128
 -------------------------------------------
-final: 401835fd-a627-870a-873f-ed73f2bc5b2c
+final: 5c146b14-3c52-8afd-938a-375d0df1fbf6
 ~~~~
 {: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA-256 Illustrative Example'}
 
 ~~~~
-A: 401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
+A: 5c146b14-3c52-4afd-938a-375d0df1fbf6-fe12a66b645f72f6158759387e51f3c8
 B: xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
-C: 401835fd-a627-870a-873f-ed73f2bc5b2c
-D:                                     -2a8936385a38a9c133de0ca4af0dfaed
+C: 5c146b14-3c52-8afd-938a-375d0df1fbf6
+D:                                     -fe12a66b645f72f6158759387e51f3c8
 ~~~~
 {: id='v8vervar' title='UUIDv8 Example Ver/Var bit swaps and discarded SHA-256 segment'}
 
