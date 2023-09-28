@@ -534,6 +534,7 @@ draft-12
 - Additional Update Motivations #157
 - Fix Randomized Node value's mcast bit in Appendix #151
 - Clarify "Name-Based" is the same as "Hash-Based" #154
+- Move UUIDv8 Examples out of Test Vectors #150
 
 draft-11
 
@@ -1069,7 +1070,7 @@ Information around selecting a desired name's canonical format within a given na
 Some common namespace values have been defined via {{namespaces}}.
 
 There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
-As such, it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{v8}}.
+As such, it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{uuidv8}}.
 For implementation guidance around utilizing UUIDv8 for name-based UUIDs refer to the sub-section of {{name_based_uuid_generation}}.
 
 For more information on SHA-1 security considerations see {{RFC6194}}.
@@ -1193,7 +1194,7 @@ significant
 UUIDv1 implementation.
 
 
-## UUID Version 7 {#v7}
+## UUID Version 7 {#uuidv7}
 
 UUID version 7 features a time-ordered value field derived from the widely
 implemented and well known Unix Epoch timestamp source, the number of milliseconds
@@ -1251,7 +1252,7 @@ rand_b:
   and/or an optional counter to guarantee additional monotonicity as per {{monotonicity_counters}}.
   Occupies bits 66 through 127 (octets 8-15).
 
-## UUID Version 8 {#v8}
+## UUID Version 8 {#uuidv8}
 
 UUID version 8 provides an RFC-compatible format for experimental or vendor-specific
 use cases.
@@ -1276,6 +1277,7 @@ Some example situations in which UUIDv8 usage could occur:
 * An implementation has other application/language restrictions which
   inhibit the use of one of the current UUIDs.
 
+The appendix, {{ill_examples}}, provides two illustrative examples of custom UUIDv8 algorithms to address two example scenarios.
 
 ~~~~
  0                   1                   2                   3
@@ -1741,7 +1743,7 @@ Name-based UUIDs using UUIDv8:
  Creation of name-based UUID values using UUIDv8 follows the same logic defined in {{uuidv5}}, but the hashspace should be used as the starting point with the desired
  namespace and name concatenated to the end of the hashspace.
  Then an implementation may apply the desired hashing algorithm to the entire value after all have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
- Ensure that the version and variant bits are modified as per {{v8}} bit layout, and finally trim any excess bits beyond 128.
+ Ensure that the version and variant bits are modified as per {{uuidv8}} bit layout, and finally trim any excess bits beyond 128.
  An important note for secure hashing algorithms that produce outputs of an arbitrary size, such as those found in SHAKE, the output hash MUST be 128 bits or larger.
  See {{uuidv8_example_name}} for a SHA-256 UUIDv8 example test vector.
 
@@ -2213,10 +2215,13 @@ final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 ~~~~
 {: title='UUIDv7 Example Test Vector'}
 
+# Illustrative Examples {#ill_examples}
+The following sections contain illustrative examples which serve to show how one may use UUIDv8 {{uuidv8}} for custom and/or experimental application based logic.
+The examples below are not meant to be implemented and have not been through the same rigorous testing, prototyping, and feedback loop that other algorithms in this document have undergone. The authors encouraged implementors to create your own UUIDv8 algorithm rather than use the items defined in this section.
 
 ## Example of a UUIDv8 Value (time-based) {#uuidv8_example}
 
-This example UUIDv8 test vector utilizes a well-known 64 bit Unix epoch timestamp with
+This UUIDv8 illustrative example utilizes a well-known 64 bit Unix epoch timestamp with
 nanosecond precision, truncated to the least-significant, right-most, bits
 to fill the first 48 bits through version.
 
@@ -2225,11 +2230,6 @@ data.
 
 Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00 represented
 as 0x16D6320C3D4DCC00 or 1645557742000000000
-
-It should be noted that this example is just to illustrate one scenario for
-UUIDv8. Test vectors will likely be implementation specific and vary greatly
-from this simple example.
-
 
 ~~~~
 -------------------------------------------
@@ -2245,7 +2245,7 @@ total     128
 -------------------------------------------
 final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 ~~~~
-{: title='UUIDv8 Example Time-based Test Vector'}
+{: title='UUIDv8 Example Time-based Illustrative Example'}
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
 A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} to detail the usage of hashspaces {{hashspaces}} alongside namespaces {{namespaces}} and names.
@@ -2276,7 +2276,7 @@ total     128
 -------------------------------------------
 final: 401835fd-a627-870a-873f-ed73f2bc5b2c
 ~~~~
-{: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA-256 Test Vector'}
+{: id='v8fieldssha256' title='UUIDv8 Example Name-Based SHA-256 Illustrative Example'}
 
 ~~~~
 A: 401835fd-a627-a70a-073f-ed73f2bc5b2c-2a8936385a38a9c133de0ca4af0dfaed
