@@ -2215,7 +2215,7 @@ final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
 
 ## Example of a UUIDv8 Value (name-based) {#uuidv8_example_name}
 As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
-These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
+These MAY leverage newer hashing algorithms such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even algorithms that have not been defined yet.
 
 A SHA-256 version of {{uuidv5_example}} is detailed in {{v8sha256}} as an illustrative example detailing how this can be achieved.
 The creation of the name-based UUIDv8 value in this section follows the same logic defined in {{uuidv5}} with the difference being SHA-256 in place of SHA-1.
