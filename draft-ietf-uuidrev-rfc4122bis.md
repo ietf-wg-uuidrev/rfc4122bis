@@ -533,6 +533,7 @@ draft-12
 - Add MSB3 to Variant Table #153
 - Additional Update Motivations #157
 - Fix Randomized Node value's mcast bit in Appendix #151
+- Clarify "Name-Based" is the same as "Hash-Based" #154
 
 draft-11
 
@@ -1699,6 +1700,8 @@ Distributed applications generating UUIDs at a variety of hosts MUST
 be willing to rely on the random number source at all hosts.
 
 ## Name-Based UUID Generation {#name_based_uuid_generation}
+Although some prefer to use the word "hash-based" to describe UUIDs featuring hashing algorithms (MD5 or SHA-1), this document retains the usage of the adjective "name-based" in order to maintain consistency with historical documents and existing implementations.
+
 The requirements for name-based UUIDs are as follows:
 
 * UUIDs generated at different times from the same name (using the same canonical format) in the
