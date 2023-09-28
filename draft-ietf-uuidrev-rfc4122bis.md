@@ -535,6 +535,7 @@ draft-12
 - Fix Randomized Node value's mcast bit in Appendix #151
 - Clarify "Name-Based" is the same as "Hash-Based" #154
 - Move UUIDv8 Examples out of Test Vectors #150
+- Simplify UUIDv8 Hash-based Example #147
 
 draft-11
 
