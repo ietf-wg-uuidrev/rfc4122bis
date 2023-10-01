@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-09-28T01:14:07.629836+00:00",
+  "timestamp": "2023-10-01T01:23:36.196363+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2912,7 +2912,7 @@
       "labels": [],
       "body": "From Paul Wouters\r\n```\r\nWhy are hashspace IDs chosen to look like random uuids? Eg why not encode\r\n\"SHA2_224\" (hex 534841325F323234) as 53484132-5F32-3234-0000-000000000000\r\nor 00000000-0000-0000-5348-41325F323234 (plus or minus variant/version bits)\r\nso that it becomes far more clear this is not an ordinary random uuid?\r\n```\r\n\r\n\r\n### Current, All random\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-0f30e2e83145\"\r\nSHA2_256     = \"3fb32780-953c-4464-9cfd-e85dbbe9843d\"\r\nSHA2_384     = \"e6800581-f333-484b-8778-601ff2b58da8\"\r\nSHA2_512     = \"0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9\"\r\nSHA2_512_224 = \"003c2038-c4fe-4b95-a672-0c26c1b79542\"\r\nSHA2_512_256 = \"9475ad00-3769-4c07-9642-5e7383732306\"\r\nSHA3_224     = \"9768761f-ac5a-419e-a180-7ca239e8025a\"\r\nSHA3_256     = \"2034d66b-4047-4553-8f80-70e593176877\"\r\nSHA3_384     = \"872fb339-2636-4bdd-bda6-b6dc2a82b1b3\"\r\nSHA3_512     = \"a4920a5d-a8a6-426c-8d14-a6cafbe64c7b\"\r\nSHAKE_128    = \"7ea218f6-629a-425f-9f88-7439d63296bb\"\r\nSHAKE_256    = \"2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a\"\r\n```",
       "createdAt": "2023-09-06T16:55:09Z",
-      "updatedAt": "2023-09-26T18:41:39Z",
+      "updatedAt": "2023-09-28T16:59:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -3173,6 +3173,13 @@
           "body": "> @mcr \"Slides uploaded to datatracker would also be appreciated.\" yeah, I will get some to the chairs this week!\r\n\r\nif @danielmarschall  or others still feel they want v9, then they also need to explain the proposal in a slide or two.",
           "createdAt": "2023-09-26T18:41:38Z",
           "updatedAt": "2023-09-26T18:41:38Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "As per #147, Hashspace IDs were removed. Which would resolve this discuss item if merged.\r\nPlease see the proposal in #147 and leave feedback on that topic there.\r\n",
+          "createdAt": "2023-09-28T16:59:41Z",
+          "updatedAt": "2023-09-28T16:59:41Z"
         }
       ]
     },
@@ -3481,7 +3488,7 @@
       ],
       "body": "(Continuation of a discussion in #144)\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
       "createdAt": "2023-09-13T15:18:24Z",
-      "updatedAt": "2023-09-23T03:43:19Z",
+      "updatedAt": "2023-09-28T20:53:10Z",
       "closedAt": null,
       "comments": [
         {
@@ -4169,6 +4176,41 @@
           "body": "@chorman0773 Since, from what I gather, you control at least the recommendation of what you're suggesting drivers do when generating a UUID, it seems like just providing a specific suggestion of what kind of UUID you recommend would work.\r\n\r\n> The point of using UUIDs is that I don't need to provide any guidance to driver implementors beyond the UUID RFC...\r\n\r\nWhy?  What prevents you from simply telling people who make drivers that the recommendation is to use UUID v3, 5 or v8 following the hash example, and they do something else there is a very small chance that the probability of collision increases. \r\n\r\n> My main worry is that they'd use v8 time-based, or some other custom method for generating v8 IDs that ends up with the same result.\r\n\r\nKeep in mind that there's only so much uniquness you're gong to get in a 128 bit value.  There physically no guarantees with any of the UUID versions that fully absolutely prevent collisions, all you can do is reduce the probability.  And if we assume that whatever other weird stuff people do with UUIDv8 is going to be roughly evenly distributed, it's easy to make the argument that your collision probabily doesn't increase.\r\n\r\nAnyway, this UUID v8 example looks like what we'll realistically be able to get into the RFC.  So if you want to help shape that, great, if not, that's fine too.\r\n\r\nALSO: Keep in mind that it takes various implementations and experience in order to end up with a new standard.  If enough people get behind it, then this v8 example could end up being v9 in a later update to the document, another reason to put effort into this v8 example - it's a starting point.",
           "createdAt": "2023-09-23T02:44:46Z",
           "updatedAt": "2023-09-23T03:43:19Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have greatly reduced the complexity of the UUIDv8 Name/Hash based example in https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/a4f5693dc22513ac67dc059781f0fced5765db8e\r\n\r\nTo summarize this commit:\r\n- Removes Hashspace IDs and scrubs the document of their verbiage.\r\n- Changes the illustrative example in the final appendix to use JUST SHA-256 (e.g UUIDv5 with the only swaps being SHA-256 and the version bit to be v8)\r\n- Removes all text in name-based examples except that of UUIDv5 pointing to the illustrative example as guidance.\r\n\r\nAll-in-All this checks the box of:\r\n- Providing an implementor who may not be able to use SHA1/MD5 and still wants a UUID guidance on how to do so.\r\n- Provides some examples of how to do this (without as much heavy text in official name-based UUID generation sections.)\r\n- Provides a much simpler solution that somebody with knowledge of UUIDv5 can pick up easily. (I modified Python3 UUID.py in two lines and had this example running.)",
+          "createdAt": "2023-09-28T16:58:22Z",
+          "updatedAt": "2023-09-28T16:58:22Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis  Thank you very much for your work! I think it is very good to have this appendix with examples, and that the UUIDv8 are simplified by removing the hash-space.\r\n\r\nI have a few thoughts about https://github.com/ietf-wg-uuidrev/rfc4122bis/blob/hash-based-uuids/draft-ietf-uuidrev-rfc4122bis.md :\r\n\r\n> The examples below are not meant to be implemented\r\n\r\nI am not sure... doesn't this conflict with the idea of a reference for interoperability (which was discussed earlier)?\r\n\r\nIn other words: If one decides to implement SHA-256 UUIDv8 according to RFC xxx Appendix xxx, will they do a \"bad job\" if they implement something that is \"not meant to implemented\"?\r\n\r\n> These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.\r\n\r\nI think it should mean hash algorithms and not hash protocols.\r\n\r\n> This UUIDv8 illustrative example utilizes a well-known 64 bit Unix epoch timestamp with nanosecond precision, truncated to the least-significant, right-most, bits to fill the first 48 bits through version.\r\n\r\nThe horrible example with \"one nanosecond in 48 bits\" is still there... Can't we assign more bits, or anything so that it wraps at least in each 35 years instead of just a few hours?\r\n",
+          "createdAt": "2023-09-28T19:28:15Z",
+          "updatedAt": "2023-09-28T19:45:18Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "For the time-based example, here are alternatives (I am keeping 1 nano second):\r\n\r\nA. `tttttttt-tttt-Xttt-rrrr-Xrrrrrrrrrrr` : 1 nano second in 60 bits = wraps after 36 years (`2^60/(1000*1000*1000*60*60*24*365)`), and has 62 bits are left for random (i.e. chance to collide is 1/2^62)\r\n\r\nB. `tttttttt-tttt-Xttt-trrr-Xrrrrrrrrrrr` : 1 nano second in 64 bits = wraps after 584 years (`2^64/(1000*1000*1000*60*60*24*365)`), and has 58 bits are left for random (i.e. chance to collide is 1/2^58)\r\n\r\nC. `tttttttt-tttt-Xttt-ttrr-Xrrrrrrrrrrr`: 1 nano second in 68 bits = wraps after 9359 years (`2^68/(1000*1000*1000*60*60*24*365)`), and has 54 bits are left for random (i.e. chance to collide is 1/2^54)\r\n\r\nD. `tttttttt-tttt-Xttt-tttt-Xrrrrrrrrrrr` : 1 nano second in 76 bits = wraps after 2395924 years (`2^76/(1000*1000*1000*60*60*24*365)`), and has 46 bits are left for random (i.e. chance to collide is 1/2^46)\r\n\r\nMy preferrence would be >=100 years, so 64 bit.\r\n",
+          "createdAt": "2023-09-28T19:39:23Z",
+          "updatedAt": "2023-09-28T19:50:30Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In terms of hash-based items on https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1739887805\r\n- I can remove the \"The examples below are not meant to be implemented\" and change it to simply \"The examples below have not been through...\" Edit: changed in https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/158/commits/2a29aa0ef2b8f708ee38d3a849348bf9c2add8ef\r\n- Yeah, I should use algorithms, let me change that in a commit. Edit: changed in https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/158/commits/815fa114be66689a659b37881a6568f62fc28784\r\n\r\nTime comment: https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1739901324\r\n- I will take the convo about changing that to a different issue. I don't want threads to start crossing. Hang tight. Edit: Forked to #159 ",
+          "createdAt": "2023-09-28T20:36:24Z",
+          "updatedAt": "2023-09-28T20:45:23Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis Thank you! Looks good to me.",
+          "createdAt": "2023-09-28T20:53:10Z",
+          "updatedAt": "2023-09-28T20:53:10Z"
         }
       ]
     },
@@ -4250,7 +4292,7 @@
       "labels": [],
       "body": "As seen in #144 and #147, the examples of UUIDv8 are a big issue. We should do something about it and rewrite or remove them. The reason is that the examples can now be seen as some call to action to implement them literally, and that is not what they are for.",
       "createdAt": "2023-09-20T10:34:49Z",
-      "updatedAt": "2023-09-22T13:58:48Z",
+      "updatedAt": "2023-09-28T20:59:20Z",
       "closedAt": null,
       "comments": [
         {
@@ -4273,6 +4315,13 @@
           "body": "Copying from the other thread:\r\n\r\n> I was planning to move the v8 \"test vectors\" to a new appendix titled \"illustrative examples\".\r\nThen put some leading text around how they are simply showing how one can use v8 and are not meant to be implemented (unless somebody really likes that logic.) and prefix with lots of \"use at your own risk\" text.",
           "createdAt": "2023-09-22T13:58:35Z",
           "updatedAt": "2023-09-22T13:58:35Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have moved these out of test vectors and into their own appendix as per https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/150#issuecomment-1731471692, and added lots of \"here be dragons\" text in https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/020137452be6dcc225637f246319553e4c7ec384 and https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/2a29aa0ef2b8f708ee38d3a849348bf9c2add8ef",
+          "createdAt": "2023-09-28T16:27:03Z",
+          "updatedAt": "2023-09-28T20:59:20Z"
         }
       ]
     },
@@ -4370,7 +4419,7 @@
     {
       "number": 154,
       "id": "I_kwDOH6Ln3M5xqr9z",
-      "title": "Rename \"Name-Based\" to \"Hash-Based\"",
+      "title": "Clarify  \"Name-Based\" is the same as \"Hash-Based\"",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/154",
       "state": "OPEN",
       "author": "kyzer-davis",
@@ -4379,7 +4428,7 @@
       "labels": [],
       "body": "Tracker item so I don't forget",
       "createdAt": "2023-09-21T13:41:12Z",
-      "updatedAt": "2023-09-25T14:15:33Z",
+      "updatedAt": "2023-09-28T15:56:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -4451,6 +4500,13 @@
           "body": "I can add a line about hash-based vs name-based meaning the same thing. I will do it in the branch with all the other hash-based/named-based changes.\r\nGive me a sec. Does it work if I place it at the start of \"Name-Based UUID Generation\" section that way I don't have to double text?",
           "createdAt": "2023-09-25T14:15:33Z",
           "updatedAt": "2023-09-25T14:15:33Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Added, https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/154#issuecomment-1731579688,  to new branch via https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/11fecf8b634720a378eef5377ab4b76f1798e954",
+          "createdAt": "2023-09-28T15:56:45Z",
+          "updatedAt": "2023-09-28T15:56:45Z"
         }
       ]
     },
@@ -4802,6 +4858,44 @@
           "body": "FYI, I backed out https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a so I can get draft-12 base PR merged down and start work on the other two branches I need to get done ASAP.\r\nLet's take this v3/v5 DB discussion back to #155 as I am going to close this issue in the PR. ",
           "createdAt": "2023-09-27T20:04:57Z",
           "updatedAt": "2023-09-27T20:04:57Z"
+        }
+      ]
+    },
+    {
+      "number": 159,
+      "id": "I_kwDOH6Ln3M5yVfik",
+      "title": "Expand v8 Time-based Example to larger timestamp",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/159",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "              For the time-based example, here are alternatives (I am keeping 1 nano second):\r\n\r\nA. `tttttttt-tttt-Xttt-rrrr-Xrrrrrrrrrrr` : 1 nano second in 60 bits = wraps after 36 years (`2^60/(1000*1000*1000*60*60*24*365)`), and has 62 bits are left for random (i.e. chance to collide is 1/2^62)\r\n\r\nB. `tttttttt-tttt-Xttt-trrr-Xrrrrrrrrrrr` : 1 nano second in 64 bits = wraps after 584 years (`2^64/(1000*1000*1000*60*60*24*365)`), and has 58 bits are left for random (i.e. chance to collide is 1/2^58)\r\n\r\nC. `tttttttt-tttt-Xttt-ttrr-Xrrrrrrrrrrr`: 1 nano second in 68 bits = wraps after 9359 years (`2^68/(1000*1000*1000*60*60*24*365)`), and has 54 bits are left for random (i.e. chance to collide is 1/2^54)\r\n\r\nD. `tttttttt-tttt-Xttt-tttt-Xrrrrrrrrrrr` : 1 nano second in 76 bits = wraps after 2395924 years (`2^76/(1000*1000*1000*60*60*24*365)`), and has 46 bits are left for random (i.e. chance to collide is 1/2^46)\r\n\r\nMy preferrence would be >=100 years, so 64 bit.\r\n\r\n_Originally posted by @danielmarschall in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1739901324_\r\n\r\nReasons: The current example wraps in a few hours, few more bits make it a better example.\r\n            ",
+      "createdAt": "2023-09-28T20:36:43Z",
+      "updatedAt": "2023-09-28T21:03:30Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I am fine with either 60 or 64; \r\n- 60: `custom_a` and `custom_b` that is the easiest for me to modify the text. \r\n- 64: Makes sense to as I just lay down all the bits as is in order through custom a/b/c, little bit more work in editing.\r\n\r\nPersonally, if nobody objects I will go with what is easier thus:\r\n> `custom_a` and `custom_b` is filled with `0x16D6320C3D4DCC00` being:\r\n> `6D6320C3D4DCC00` fills out those 60 bits thus `6D6320C3-D4DC-8C00-8EC9-32D5F69181C0` is the new example.\r\n\r\nI will revising leading text based on whatever is chosen.",
+          "createdAt": "2023-09-28T20:39:38Z",
+          "updatedAt": "2023-09-28T20:44:38Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Before I leave for the day: \r\nI cannot stress how much we do not need to over-iterate on this.\r\nA few more bits to the timestamp and random for the rest. Let's not cook up a million complex scenarios for an appendix item.",
+          "createdAt": "2023-09-28T20:57:33Z",
+          "updatedAt": "2023-09-28T20:57:33Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> A few more bits to the timestamp and random for the rest. Let's not cook up a million complex scenarios for an appendix item.\r\n\r\nAgreed! The example should be as simple as possible. Filling `custom_c` with half random and half time-stamp is too complex, so 60 bits might be better.\r\n\r\nOn the other hand, I think >100 years is good to avoid creating a \"year 2038\" situation (i.e. a wrap-around which we might experience during our lifetime).\r\n\r\nSo, how about \"10ns in 60bits\", which would wrap around in 365 years?\r\n\r\nI am fine with either \"1ns in 60bits (36 years wrap)\" or \"10ns in 60bits (365 years wrap)\", but prefer the latter.",
+          "createdAt": "2023-09-28T21:02:04Z",
+          "updatedAt": "2023-09-28T21:03:30Z"
         }
       ]
     }
@@ -7484,6 +7578,32 @@
           "updatedAt": "2023-09-25T14:27:52Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 158,
+      "id": "PR_kwDOH6Ln3M5bdrYR",
+      "title": "Hash-Based UUID Changes",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/158",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-09-28T16:27:37Z",
+      "updatedAt": "2023-09-28T20:42:42Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "hash-based-uuids",
+      "headRefOid": "815fa114be66689a659b37881a6568f62fc28784",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
