@@ -532,6 +532,7 @@ draft-12
 - Revise 16-bit MAC Node Usage #149
 - Add MSB3 to Variant Table #153
 - Additional Update Motivations #157
+- Expand v8 Time-based Example to larger timestamp #159
 - Fix Randomized Node value's mcast bit in Appendix #151
 
 draft-11
@@ -2214,11 +2215,10 @@ final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F
 ## Example of a UUIDv8 Value (time-based) {#uuidv8_example}
 
 This example UUIDv8 test vector utilizes a well-known 64 bit Unix epoch timestamp with
-nanosecond precision, truncated to the least-significant, right-most, bits
-to fill the first 48 bits through version.
+10ns precision, truncated to the least-significant, right-most, bits
+to fill the first 60 bits of custom_a and custom_b while setting the version bits between these two segments to the version value of 8.
 
-The next two segments of custom_b and custom_c are filled with random
-data.
+The variant bits are set and the final segment, custom_c, is filled with random data.
 
 Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00 represented
 as 0x16D6320C3D4DCC00 or 1645557742000000000
@@ -2232,15 +2232,15 @@ from this simple example.
 -------------------------------------------
 field     bits value
 -------------------------------------------
-custom_a  48   0x320C3D4DCC00
+custom_a  48   0x6D6320C3D4DC
 ver        4   0x8
-custom_b  12   0x75B
+custom_b  12   0xC00
 var        2   0b10
 custom_c  62   0b00, 0xEC932D5F69181C0
 -------------------------------------------
 total     128
 -------------------------------------------
-final: 320C3D4D-CC00-875B-8EC9-32D5F69181C0
+final: 6D6320C3-D4DC-8C00-8EC9-32D5F69181C0
 ~~~~
 {: title='UUIDv8 Example Time-based Test Vector'}
 
