@@ -81,6 +81,7 @@ informative:
   RFC6151: RFC6151
   RFC6194: RFC6194
   RFC7042: RFC7042
+  RFC8126: RFC8126
   RFC8499: RFC8499
   X500:
     seriesinfo:
@@ -533,6 +534,8 @@ draft-12
 - Add MSB3 to Variant Table #153
 - Additional Update Motivations #157
 - Fix Randomized Node value's mcast bit in Appendix #151
+- Request IANA Registry #144
+- Describe allocation logic of Namespace ID #161
 
 draft-11
 
@@ -1901,9 +1904,66 @@ and feedback.
 All references to {{RFC4122}} in the IANA registries should be replaced with references to this document.
 References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to this document's {{format}}.
 
-There is no update required to the IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}}.
+The IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}} should be updated to reference this document.
 
-IANA is not required to track UUIDs used for identifying items such as versions, variants, namespaces, or hashspaces.
+Finally IANA should track UUID Variants, UUID Subtypes, and Special Case "Reserved UUIDs" such as Min, Max, and Namespace IDs as specified in {{iana1}}, {{iana2}}, {{iana3}}.
+
+The policy for these three registries is "Specification Required", per {{RFC8126}}, Section 4.6.
+
+When evaluating requests, the designated expert(s) should consider community feedback, how well-defined is the reference specification, and this specification's requirements.
+Vendor-specific, application-specific, and deployment-specific values are unable to be registered.
+Specification documents should be published in a stable, freely available manner (ideally located with a URL) but need not be standards.
+The designated experts will either approve or deny the registration request, and communicate their decision to IANA. Denials should include an explanation and, if applicable, suggestions as to how to make the request successful.
+
+## IANA UUID Variants Registry and Registration {#iana1}
+This specification defines the "UUID Variants" registry for common, widely used UUID standards.
+
+{{ianaVariants}} should be used as-is for this registry with "This document" replaced as required.
+
+| Name           | Bits | Variant | Reference                  |
+| Apollo NCS     | 0xxx | 1-7     | {{RFC4122}}, This document |
+| OSF DCE / IETF | 10xx | 8-9,A-B | {{RFC4122}}, This document |
+| Microsoft      | 110x | C-D     | {{RFC4122}}, This document |
+| Unused         | 111x | E-F     | {{RFC4122}}, This document |
+{: #ianaVariants title='IANA UUID Variants'}
+
+## IANA UUID Subtype Registry and Registration {#iana2}
+This specification defines the "UUID Subtype" registry for common, widely used UUID standards.
+
+{{ianaSubtypes}} should be used as-is for this registry with "This document" replaced as required.
+
+| Name                           | ID | Hex | Subtype | Variant        | Reference                  |
+| Unused                         |  0 | 0x0 | Version | OSF DCE / IETF | This document              |
+| Gregorian Time-based           |  1 | 0x1 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
+| DCE Security                   |  2 | 0x2 | Version | OSF DCE / IETF | {{C309}}, {{C311}}         |
+| MD5 Name-based                 |  3 | 0x3 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Random                         |  4 | 0x4 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
+| SHA-1 Name-based               |  5 | 0x5 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Reordered Gregorian Time-based |  6 | 0x6 | Version | OSF DCE / IETF | This document              |
+| Unix Time-based                |  7 | 0x7 | Version | OSF DCE / IETF | This document              |
+| Custom                         |  8 | 0x8 | Version | OSF DCE / IETF | This document              |
+| Unspecified                    |  9 | 0x9 | Version | OSF DCE / IETF | This document              |
+| Unspecified                    | 10 | 0xA | Version | OSF DCE / IETF | This document              |
+| Unspecified                    | 11 | 0xB | Version | OSF DCE / IETF | This document              |
+| Unspecified                    | 12 | 0xC | Version | OSF DCE / IETF | This document              |
+| Unspecified                    | 13 | 0xD | Version | OSF DCE / IETF | This document              |
+| Unspecified                    | 14 | 0xE | Version | OSF DCE / IETF | This document              |
+| Unspecified                    | 15 | 0xF | Version | OSF DCE / IETF | This document              |
+{: #ianaSubtypes title='IANA UUID Subtypes'}
+
+## IANA Reserved UUIDs Registry and Registration {#iana3}
+This specification defines the "Reserved UUIDs" registry for common, widely used special purpose UUIDs to promote reuse.
+
+{{ianaSubtypes}} should be used as-is for this registry with "This document" replaced as required.
+
+| Name     | Type         | UUID                                 | Reference                  |
+| Nil UUID | Special ID   | 00000000-0000-0000-0000-000000000000 | {{RFC4122}}, This document |
+| Max UUID | Special ID   | FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF | This document              |
+| DNS      | Namespace ID | 6ba7b810-9dad-11d1-80b4-00c04fd430c8 | {{RFC4122}}, This document |
+| URL      | Namespace ID | 6ba7b811-9dad-11d1-80b4-00c04fd430c8 | {{RFC4122}}, This document |
+| OID      | Namespace ID | 6ba7b812-9dad-11d1-80b4-00c04fd430c8 | {{RFC4122}}, This document |
+| X500     | Namespace ID | 6ba7b814-9dad-11d1-80b4-00c04fd430c8 | {{RFC4122}}, This document |
+{: #ianaReserved title='IANA Reserved UUIDs'}
 
 # Security Considerations {#Security}
 
@@ -1971,15 +2031,28 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 # Some Namespace IDs {#namespaces}
 
-This appendix lists the namespace IDs for some potentially interesting namespaces such those for
+This appendix table, {{namespaceIDs}} the namespace IDs for some potentially interesting namespaces such those for
 {{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 
-~~~~ code
-NameSpace_DNS  = "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
-NameSpace_URL  = "6ba7b811-9dad-11d1-80b4-00c04fd430c8"
-NameSpace_OID  = "6ba7b812-9dad-11d1-80b4-00c04fd430c8"
-NameSpace_X500 = "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
-~~~~
+| Namespace | Namespace ID                         |
+| DNS       | 6ba7b810-9dad-11d1-80b4-00c04fd430c8 |
+| URL       | 6ba7b811-9dad-11d1-80b4-00c04fd430c8 |
+| OID       | 6ba7b812-9dad-11d1-80b4-00c04fd430c8 |
+| X500      | 6ba7b814-9dad-11d1-80b4-00c04fd430c8 |
+{: #namespaceIDs title='Namespace IDs'}
+
+Generally speaking, Namespace IDs are allocated as follows:
+
+{: spacing="compact"}
+- The first Namespace ID, for DNS, was calculated from a time-based UUIDv1 and "6ba7b810-9dad-11d1-80b4-00c04fd430c8" used as a starting point.
+- Subsequent Namespace IDs increment the least-significant, right-most bit of time_low "6ba7b810" while freezing the rest of the UUID to "9dad-11d1-80b4-00c04fd430c8".
+- New Namespace IDs MUST use this same logic and MUST NOT use a previously used Namespace ID value.
+- Thus, "6ba7b815" is the next available time_low for a new Namespace ID with the full ID being "6ba7b815-9dad-11d1-80b4-00c04fd430c8".
+- The upper bound for time_low in this special use, namespace ID, is "ffffffff" or "ffffffff-9dad-11d1-80b4-00c04fd430c8" which should be sufficient space for future namespace IDs.
+
+Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it MUST NOT be used as a Namespace ID.
+
+New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}}.
 
 # Some Hashspace IDs {#hashspaces}
 This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
