@@ -2053,7 +2053,8 @@ Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage 
 
 New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}} if they are to be globally available and fully interoperable.
 Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but know that interoperability is not guaranteed.
-These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to use UUIDv4 or UUIDv8 values as identifiers.
+These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to generate a UUIDv4 or UUIDv7 Namespace ID value.
+If collision probability ({{collision_resistance}}) and uniqueness ({{global_local_uniqueness}}) of the final name-based UUID are not a problem; an implementation MAY also leverage UUIDv8 instead to create a custom, application-specific Namespace ID value.
 
 # Some Hashspace IDs {#hashspaces}
 This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
