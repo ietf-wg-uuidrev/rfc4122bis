@@ -1920,11 +1920,10 @@ This specification defines the "UUID Variants" registry for common, widely used 
 
 {{ianaVariants}} should be used as-is for this registry with "This document" replaced as required.
 
-| Name           | Bits | Variant | Reference                  |
-| Apollo NCS     | 0xxx | 1-7     | {{RFC4122}}, This document |
-| OSF DCE / IETF | 10xx | 8-9,A-B | {{RFC4122}}, This document |
-| Microsoft      | 110x | C-D     | {{RFC4122}}, This document |
-| Unused         | 111x | E-F     | {{RFC4122}}, This document |
+| Name           | Bits | Variant | Reference                                      |
+| Apollo NCS     | 0xxx | 1-7     | {{RFC4122}}, This document                     |
+| OSF DCE / IETF | 10xx | 8-9,A-B | {{C309}}, {{C311}}, {{RFC4122}}, This document |
+| Microsoft      | 110x | C-D     | {{RFC4122}}, This document                     |
 {: #ianaVariants title='IANA UUID Variants'}
 
 ## IANA UUID Subtype Registry and Registration {#iana2}
@@ -1933,22 +1932,15 @@ This specification defines the "UUID Subtype" registry for common, widely used U
 {{ianaSubtypes}} should be used as-is for this registry with "This document" replaced as required.
 
 | Name                           | ID | Hex | Subtype | Variant        | Reference                  |
-| Unused                         |  0 | 0x0 | Version | OSF DCE / IETF | This document              |
-| Gregorian Time-based           |  1 | 0x1 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
-| DCE Security                   |  2 | 0x2 | Version | OSF DCE / IETF | {{C309}}, {{C311}}         |
-| MD5 Name-based                 |  3 | 0x3 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
-| Random                         |  4 | 0x4 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
-| SHA-1 Name-based               |  5 | 0x5 | Version | OSF DCE / IETF | {{RFC4122}}, This document |
-| Reordered Gregorian Time-based |  6 | 0x6 | Version | OSF DCE / IETF | This document              |
-| Unix Time-based                |  7 | 0x7 | Version | OSF DCE / IETF | This document              |
-| Custom                         |  8 | 0x8 | Version | OSF DCE / IETF | This document              |
-| Unspecified                    |  9 | 0x9 | Version | OSF DCE / IETF | This document              |
-| Unspecified                    | 10 | 0xA | Version | OSF DCE / IETF | This document              |
-| Unspecified                    | 11 | 0xB | Version | OSF DCE / IETF | This document              |
-| Unspecified                    | 12 | 0xC | Version | OSF DCE / IETF | This document              |
-| Unspecified                    | 13 | 0xD | Version | OSF DCE / IETF | This document              |
-| Unspecified                    | 14 | 0xE | Version | OSF DCE / IETF | This document              |
-| Unspecified                    | 15 | 0xF | Version | OSF DCE / IETF | This document              |
+| Unused                         |  0 | 0x0 | version | OSF DCE / IETF | This document              |
+| Gregorian Time-based           |  1 | 0x1 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| DCE Security                   |  2 | 0x2 | version | OSF DCE / IETF | {{C309}}, {{C311}}         |
+| MD5 Name-based                 |  3 | 0x3 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Random                         |  4 | 0x4 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| SHA-1 Name-based               |  5 | 0x5 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Reordered Gregorian Time-based |  6 | 0x6 | version | OSF DCE / IETF | This document              |
+| Unix Time-based                |  7 | 0x7 | version | OSF DCE / IETF | This document              |
+| Custom                         |  8 | 0x8 | version | OSF DCE / IETF | This document              |
 {: #ianaSubtypes title='IANA UUID Subtypes'}
 
 ## IANA Reserved UUIDs Registry and Registration {#iana3}
