@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-01T01:23:36.196363+00:00",
+  "timestamp": "2023-10-03T01:15:01.794307+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -3197,7 +3197,7 @@
       ],
       "body": "From Paul Wouters:\r\n```\r\nI am not sure that I agree that no IANA registry is required for hashspace\r\nID's. If another document adds new hashspace IDs, there won't be a single\r\ndocument anymore that lists all of them, or massive duplication. This is\r\nexactly what we use IANA registries for. Reconsider creating a new IANA registry.\r\n```\r\n\r\nIANA registration encompass;\r\n\r\n1. UUID Variants\r\n2. UUID \"sub-versioning\" (as linked to a variant) \r\n   - See them all here: https://github.com/uuid6/uuid6-ietf-draft/issues/26#issuecomment-1062164457\r\n   - Nil/Max UUID\r\n4. UUID Namespace IDs\r\n5. UUID Hashspace IDs",
       "createdAt": "2023-09-06T17:01:02Z",
-      "updatedAt": "2023-09-22T14:00:35Z",
+      "updatedAt": "2023-10-02T22:15:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -3395,6 +3395,20 @@
           "body": "For what it's worth, unless there is some specific and real-world problem these hashed UUID solve (not just \"what if maybe in the future\" stuff), _I say skip it and move on_.  If nobody has a use case, after all the time and effort that's been put into the drafts, doesn't seem worth fussing over. \r\n\r\nAnd from a logical perspective, just to mention it as part of this: One of the reasons I tend to not put too much stock in the argument that MD5 and SHA-1 are out of date and so we should have a way to replace them - is that one of the factors that makes SHA-256 and others strong hashes is because they are longer (whereas UUIDs are fixed at 128 bits).  Obviously there's more to it than that, but taking a SHA-256 value and truncating it to some smaller size and saying that it's an improvement or more collision resistant or anything because it's based on SHA-256 and not SHA-1... seems like at the very least not thoroughly researched, and at worst just flat out incorrect.  Does anyone actually know the math on collisions for just the first N bits of a SHA-256 hash?  Is it actually worse in terms of collision resistance than MD5 or the current SHA-1 implementation? - based on the math? (Not just the \"well everyone knows MD5 is broken\" - like exactly how many collisions are we talking about...)\r\n\r\nAnd that conundrum is another reason I (and I think a lot of other people on this thread would agree) just go back to: **Is there any practical these hash UUIDs would solve?  (What specifically, with some examples showing how the work done so far on this RFC doesn't cover it...)  If so, great, let's discuss _that_ specifically in more detail.  If there's no good answer to that question, then I don't see any reason we can't ignore it, and I vote let's move on and get this RFC approved.**",
           "createdAt": "2023-09-18T21:37:43Z",
           "updatedAt": "2023-09-18T21:37:58Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have drafted text around this under https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162",
+          "createdAt": "2023-10-02T20:08:45Z",
+          "updatedAt": "2023-10-02T20:08:45Z"
+        },
+        {
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "body": "I reviewed #162.",
+          "createdAt": "2023-10-02T22:15:01Z",
+          "updatedAt": "2023-10-02T22:15:01Z"
         }
       ]
     },
@@ -4870,10 +4884,12 @@
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Consensus Requested"
+      ],
       "body": "              For the time-based example, here are alternatives (I am keeping 1 nano second):\r\n\r\nA. `tttttttt-tttt-Xttt-rrrr-Xrrrrrrrrrrr` : 1 nano second in 60 bits = wraps after 36 years (`2^60/(1000*1000*1000*60*60*24*365)`), and has 62 bits are left for random (i.e. chance to collide is 1/2^62)\r\n\r\nB. `tttttttt-tttt-Xttt-trrr-Xrrrrrrrrrrr` : 1 nano second in 64 bits = wraps after 584 years (`2^64/(1000*1000*1000*60*60*24*365)`), and has 58 bits are left for random (i.e. chance to collide is 1/2^58)\r\n\r\nC. `tttttttt-tttt-Xttt-ttrr-Xrrrrrrrrrrr`: 1 nano second in 68 bits = wraps after 9359 years (`2^68/(1000*1000*1000*60*60*24*365)`), and has 54 bits are left for random (i.e. chance to collide is 1/2^54)\r\n\r\nD. `tttttttt-tttt-Xttt-tttt-Xrrrrrrrrrrr` : 1 nano second in 76 bits = wraps after 2395924 years (`2^76/(1000*1000*1000*60*60*24*365)`), and has 46 bits are left for random (i.e. chance to collide is 1/2^46)\r\n\r\nMy preferrence would be >=100 years, so 64 bit.\r\n\r\n_Originally posted by @danielmarschall in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1739901324_\r\n\r\nReasons: The current example wraps in a few hours, few more bits make it a better example.\r\n            ",
       "createdAt": "2023-09-28T20:36:43Z",
-      "updatedAt": "2023-09-28T21:03:30Z",
+      "updatedAt": "2023-10-02T17:43:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -4898,6 +4914,22 @@
           "updatedAt": "2023-09-28T21:03:30Z"
         }
       ]
+    },
+    {
+      "number": 161,
+      "id": "I_kwDOH6Ln3M5yl-hz",
+      "title": "Describe allocation logic of Namespace ID",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/161",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Action item to describe how current Namespace IDs are allocated and methods for adding a new ID following the same logic. \r\nTies into #144 to complete the topic.",
+      "createdAt": "2023-10-02T19:44:24Z",
+      "updatedAt": "2023-10-02T19:44:24Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -7605,6 +7637,121 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 160,
+      "id": "PR_kwDOH6Ln3M5bshy7",
+      "title": "Change v8 Timestamp Resolution",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/160",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-02T17:42:51Z",
+      "updatedAt": "2023-10-02T17:42:51Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "change-v8-example",
+      "headRefOid": "9469671c486518dc8557d2b47b49a5c2bec8a05a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 162,
+      "id": "PR_kwDOH6Ln3M5btYY3",
+      "title": "IANA Registry and Registration",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-02T20:07:38Z",
+      "updatedAt": "2023-10-02T22:13:55Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "iana-registration",
+      "headRefOid": "a75e3ccb9bc650eed9ebd3d74bec77bd8299d6b3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH6Ln3M5ij3CS",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "I made a quick scan through your proposed changes and made comments on the things I found important in my eyes. Not every comment is a request to change, but at least subject to some debate.",
+          "createdAt": "2023-10-02T21:47:37Z",
+          "updatedAt": "2023-10-02T22:13:55Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "Policy choice is debatable, I think.",
+              "createdAt": "2023-10-02T21:47:38Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "`Min` => `Nil`",
+              "createdAt": "2023-10-02T21:48:12Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "Because the version space is very small (0 to 15 are 16 possibilities), I think I prefer requiring RFCs for that part.",
+              "createdAt": "2023-10-02T21:50:05Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 40,
+              "body": "I would not use the `Variant` column in this way. I think we should go with an 8-bit map (e.g. `0xxxxxxx` for Apollo NCS) and have a column that shows an integer range (e.g. `0 - 127` for Apollo NCS).",
+              "createdAt": "2023-10-02T21:55:19Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 52,
+              "body": "I would suggest the subtype to be lowercase, e.g. `version`.",
+              "createdAt": "2023-10-02T21:56:12Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 62,
+              "body": "Don't list unspecified items.",
+              "createdAt": "2023-10-02T21:56:27Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 72,
+              "body": "I don't know if I see those two different type of UUIDs in the same table. In my mind we have 2 different tables for it. Open for discussion?",
+              "createdAt": "2023-10-02T21:57:58Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            },
+            {
+              "originalPosition": 119,
+              "body": "Maybe we can ask Paul Leach more about this origin if this is not done yet. It seems we don't know exactly how they were created and we also don't know what happened with `6ba7b813`. If we know, we can come up with a better way to generate Special UUIDs and eventually even break the current limit.",
+              "createdAt": "2023-10-02T22:10:53Z",
+              "updatedAt": "2023-10-02T22:13:55Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
