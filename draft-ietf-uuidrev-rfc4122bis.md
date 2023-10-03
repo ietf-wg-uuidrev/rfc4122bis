@@ -1729,11 +1729,6 @@ A note on names:
   Each name format within a namespace will output different UUIDs. 
   As such, the mechanisms or conventions used for allocating names and ensuring their uniqueness within their namespaces are beyond the scope of this specification.
 
-A note on namespaces:
-: While {{namespaces}} details a few interesting namespaces; implementations SHOULD provide the ability to input a custom namespace.
-  For example, any other UUID MAY be generated and used as the desired namespace input for a given application context to
-  ensure all names created are unique within the newly created namespace.
-
 Name-based UUIDs using UUIDv8:
 : As per {{uuidv5}} name-based UUIDs that desire to use modern hashing algorithms MUST be created within the UUIDv8 space.
  These MAY leverage newer hashing protocols such as SHA-256 or SHA-512 defined by {{FIPS180-4}}, SHA-3 or SHAKE defined by {{FIPS202}}, or even protocols that have not been defined yet.
@@ -1750,6 +1745,36 @@ Advertising the Hash Algorithm:
   As such where common knowledge about the hashing algorithm for a given UUIDv8 name-based UUID is required, sharing the hashspace ID from {{hashspaces}} proves useful for identifying the algorithm.
   That is, to detail that SHA-256 was used to create a given UUIDv8 name-based UUID, an implementation may also share the "3fb32780-953c-4464-9cfd-e85dbbe9843d" hashspace which uniquely identifies the SHA-256 hashing algorithm for the purpose of UUIDv8. Mind you that this need not be the only method of sharing the hashing algorithm; this is one example of how two systems could share knowledge.
   The protocol of choice, communication channels, and actual method of sharing this data between systems are outside the scope of this specification.
+
+## Namespace ID Usage and Allocation {#namespaces}
+This section and table, {{namespaceIDs}}, details the namespace IDs for some potentially interesting namespaces such those for
+{{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
+Further, this section also details allocation, IANA registration and other details pertinent to Namespace IDs.
+
+| Namespace | Namespace ID                         |
+| DNS       | 6ba7b810-9dad-11d1-80b4-00c04fd430c8 |
+| URL       | 6ba7b811-9dad-11d1-80b4-00c04fd430c8 |
+| OID       | 6ba7b812-9dad-11d1-80b4-00c04fd430c8 |
+| X500      | 6ba7b814-9dad-11d1-80b4-00c04fd430c8 |
+{: #namespaceIDs title='Namespace IDs'}
+
+Generally speaking, Namespace IDs are allocated as follows:
+
+{: spacing="compact"}
+- The first Namespace ID, for DNS, was calculated from a time-based UUIDv1 and "6ba7b810-9dad-11d1-80b4-00c04fd430c8" used as a starting point.
+- Subsequent Namespace IDs increment the least-significant, right-most bit of time_low "6ba7b810" while freezing the rest of the UUID to "9dad-11d1-80b4-00c04fd430c8".
+- New Namespace IDs MUST use this same logic and MUST NOT use a previously used Namespace ID value.
+- Thus, "6ba7b815" is the next available time_low for a new Namespace ID with the full ID being "6ba7b815-9dad-11d1-80b4-00c04fd430c8".
+- The upper bound for time_low in this special use, namespace ID, is "ffffffff" or "ffffffff-9dad-11d1-80b4-00c04fd430c8" which should be sufficient space for future namespace IDs.
+
+Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it SHOULD NOT be used as a Namespace ID.
+
+New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}} if they are to be globally available and fully interoperable.
+Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but know that interoperability is not guaranteed.
+These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to generate a UUIDv4 or UUIDv7 Namespace ID value.
+If collision probability ({{collision_resistance}}) and uniqueness ({{global_local_uniqueness}}) of the final name-based UUID are not a problem; an implementation MAY also leverage UUIDv8 instead to create a custom, application-specific Namespace ID value.
+
+Implementations SHOULD provide the ability to input a custom namespace to account for newly registered IANA Namespace IDs outside of those listed in this section or custom, application specific Namespace IDs.
 
 ## Collision Resistance {#collision_resistance}
 
@@ -2020,33 +2045,6 @@ was also invaluable in achieving coordination with ISO/IEC.
 
 
 --- back
-
-# Some Namespace IDs {#namespaces}
-This appendix table, {{namespaceIDs}}, details the namespace IDs for some potentially interesting namespaces such those for
-{{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
-
-| Namespace | Namespace ID                         |
-| DNS       | 6ba7b810-9dad-11d1-80b4-00c04fd430c8 |
-| URL       | 6ba7b811-9dad-11d1-80b4-00c04fd430c8 |
-| OID       | 6ba7b812-9dad-11d1-80b4-00c04fd430c8 |
-| X500      | 6ba7b814-9dad-11d1-80b4-00c04fd430c8 |
-{: #namespaceIDs title='Namespace IDs'}
-
-Generally speaking, Namespace IDs are allocated as follows:
-
-{: spacing="compact"}
-- The first Namespace ID, for DNS, was calculated from a time-based UUIDv1 and "6ba7b810-9dad-11d1-80b4-00c04fd430c8" used as a starting point.
-- Subsequent Namespace IDs increment the least-significant, right-most bit of time_low "6ba7b810" while freezing the rest of the UUID to "9dad-11d1-80b4-00c04fd430c8".
-- New Namespace IDs MUST use this same logic and MUST NOT use a previously used Namespace ID value.
-- Thus, "6ba7b815" is the next available time_low for a new Namespace ID with the full ID being "6ba7b815-9dad-11d1-80b4-00c04fd430c8".
-- The upper bound for time_low in this special use, namespace ID, is "ffffffff" or "ffffffff-9dad-11d1-80b4-00c04fd430c8" which should be sufficient space for future namespace IDs.
-
-Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it SHOULD NOT be used as a Namespace ID.
-
-New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}} if they are to be globally available and fully interoperable.
-Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but know that interoperability is not guaranteed.
-These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to generate a UUIDv4 or UUIDv7 Namespace ID value.
-If collision probability ({{collision_resistance}}) and uniqueness ({{global_local_uniqueness}}) of the final name-based UUID are not a problem; an implementation MAY also leverage UUIDv8 instead to create a custom, application-specific Namespace ID value.
 
 # Some Hashspace IDs {#hashspaces}
 This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
