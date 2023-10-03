@@ -2052,7 +2052,9 @@ Generally speaking, Namespace IDs are allocated as follows:
 
 Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it MUST NOT be used as a Namespace ID.
 
-New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}}.
+New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}} if they are to be globally available and fully interoperable.
+Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but know that interoperability is not guaranteed.
+These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to use UUIDv4 or UUIDv8 values as identifiers.
 
 # Some Hashspace IDs {#hashspaces}
 This appendix lists some hashspace IDs for use with UUIDv8 name-based UUIDs.
