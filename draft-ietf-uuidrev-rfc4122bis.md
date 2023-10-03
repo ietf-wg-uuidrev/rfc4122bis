@@ -2049,7 +2049,7 @@ Generally speaking, Namespace IDs are allocated as follows:
 - Thus, "6ba7b815" is the next available time_low for a new Namespace ID with the full ID being "6ba7b815-9dad-11d1-80b4-00c04fd430c8".
 - The upper bound for time_low in this special use, namespace ID, is "ffffffff" or "ffffffff-9dad-11d1-80b4-00c04fd430c8" which should be sufficient space for future namespace IDs.
 
-Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it MUST NOT be used as a Namespace ID.
+Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it SHOULD NOT be used as a Namespace ID.
 
 New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}} if they are to be globally available and fully interoperable.
 Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but know that interoperability is not guaranteed.
