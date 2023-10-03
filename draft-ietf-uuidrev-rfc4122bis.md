@@ -1906,7 +1906,7 @@ References to {{RFC4122}} document's Section 4.1.2 should be updated to refer to
 
 The IANA URN namespace registration {{URNNamespaces}} for UUID filed in {{RFC4122}} should be updated to reference this document.
 
-Finally IANA should track UUID Variants, UUID Subtypes, and Special Case "Reserved UUIDs" such as Min, Max, and Namespace IDs as specified in {{iana1}}, {{iana2}}, {{iana3}}.
+Finally IANA should track UUID Variants, UUID Subtypes, and Special Case "Reserved UUIDs" such as Nil, Max, and Namespace IDs as specified in {{iana1}}, {{iana2}}, {{iana3}}.
 
 The policy for these three registries is "Specification Required", per {{RFC8126}}, Section 4.6.
 
