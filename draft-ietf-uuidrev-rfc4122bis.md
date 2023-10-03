@@ -2030,8 +2030,7 @@ was also invaluable in achieving coordination with ISO/IEC.
 --- back
 
 # Some Namespace IDs {#namespaces}
-
-This appendix table, {{namespaceIDs}} the namespace IDs for some potentially interesting namespaces such those for
+This appendix table, {{namespaceIDs}}, details the namespace IDs for some potentially interesting namespaces such those for
 {{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 
 | Namespace | Namespace ID                         |
