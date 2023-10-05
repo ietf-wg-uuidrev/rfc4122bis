@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-03T01:15:01.794307+00:00",
+  "timestamp": "2023-10-05T01:14:52.078032+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4927,9 +4927,31 @@
       "labels": [],
       "body": "Action item to describe how current Namespace IDs are allocated and methods for adding a new ID following the same logic. \r\nTies into #144 to complete the topic.",
       "createdAt": "2023-10-02T19:44:24Z",
-      "updatedAt": "2023-10-02T19:44:24Z",
+      "updatedAt": "2023-10-03T20:58:10Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, @bradleypeabody, @mcr, et all.\r\nWith the inclusion of some normative language in this appendix within #162. I think I should move this up out of the appendix and into a section. Say after or within the \"Name-Based UUID Generation\" section?\r\n\r\nAny objection to that change?",
+          "createdAt": "2023-10-03T19:34:59Z",
+          "updatedAt": "2023-10-03T19:38:32Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Good idea. Yes, I think IANA registration related things should be outside of appendixes.",
+          "createdAt": "2023-10-03T19:45:00Z",
+          "updatedAt": "2023-10-03T19:45:00Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I went ahead and moved it via https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162/commits/bd2a5e770b23e7f29b152600684cc41f96f4bd70. \r\nI collapsed the \"a note on names\" subsection into that new section as well to keep that all in the same location.\r\nThis probably should have been a different PR but its too late now...",
+          "createdAt": "2023-10-03T20:58:10Z",
+          "updatedAt": "2023-10-03T20:58:10Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -7672,22 +7694,138 @@
       "state": "OPEN",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "mcr",
+        "jimfenton"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2023-10-02T20:07:38Z",
-      "updatedAt": "2023-10-02T22:13:55Z",
+      "updatedAt": "2023-10-04T15:01:47Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "iana-registration",
-      "headRefOid": "a75e3ccb9bc650eed9ebd3d74bec77bd8299d6b3",
+      "headRefOid": "bd2a5e770b23e7f29b152600684cc41f96f4bd70",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Indeed it would be very interesting to learn about the origin of the Namespace IDs. I wonder, is it possible that 6ba7b813 does not exist because a bunch of UUIDs were generated, and the CPU just had a tiny delay between the third and the fourth UUID? So, maybe they were never numbered by hand?\r\n\r\n6ba7b810-9dad-11d1-80b4-00c04fd430c8 = 1998-02-04 22:13:53'1511824 GMT\r\n6ba7b811-9dad-11d1-80b4-00c04fd430c8 = 1998-02-04 22:13:53'1511825 GMT\r\n6ba7b812-9dad-11d1-80b4-00c04fd430c8 = 1998-02-04 22:13:53'1511826 GMT\r\n6ba7b814-9dad-11d1-80b4-00c04fd430c8 = 1998-02-04 22:13:53'1511828 GMT\r\n\r\n---\r\n\r\nI don't think it is a good idea to have this counting upwards numbering scheme. Why don't we simplify it and just allow all UUIDs as Namespace IDs?\r\n\r\nContra:\r\n- It doesn't look aesthetically \"nice\" when the UUIDs are not numbered nicely.\r\n\r\nPro:\r\n- The document would be much simpler if we just say that any UUID can be used as a Namespace ID **(IANA can still register and publish them, of course! I do like the idea of a registry very much)**\r\n- People can already use an arbitrary Namespace ID even if it is not yet registered at IANA (or is in the registration process). If we have a strict numbering, then people need to wait until IANA has confirmed that they get the requested number, otherwise if they begin implementing and don't wait for the confirmation, then there is a risk that two people (waiting for the IANA registration procedure to finish) end up using the same number.\r\n- Maybe today someone is already using an arbitrary namespace ID in a well-known application, and they later decide that they want (or should?) publish their namespace ID to IANA, but then IANA would reject it because it does not fit the numbering scheme. But the namespace is already in use, so what to do?\r\n- UUIDv1 is not meant to be created or edited by hand. Machine ID \"00c04fd430c8\" was probably a DELL machine someone (Paul Leach?) used. I think you should not create a UUID with Node ID 00c04fd430c8 because you don't own the machine, and you should not write a number (e.g. 6ba7b8xx) that does not represent the timestamp of now. It feels like you are breaking your own standard by creating UUIDv1 with a (now) false EUI48 and a (now) false time.\r\n\r\nWhat do you think?",
+          "createdAt": "2023-10-03T03:04:44Z",
+          "updatedAt": "2023-10-03T03:09:18Z"
+        },
+        {
+          "author": "fabiolimace",
+          "authorAssociation": "NONE",
+          "body": "1998-02-04 22:13:53'1511824 GMT is the date of this document: https://datatracker.ietf.org/doc/html/draft-leach-uuids-guids-01",
+          "createdAt": "2023-10-03T15:09:44Z",
+          "updatedAt": "2023-10-03T15:09:44Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, some good points. But I audited many UUID implementations and I did not see many namespace IDs other than what the original had. There was a discussion post here by me on adding some others for IOT/Database etc, but it didn't get much feedback either. \r\n\r\nI don't think it needs to be overthought and a simple auto-increment can do the job. \r\n\r\nAs noted above, I did find one library using `6ba7b813` but I was unable to surmise it's description so I said \"don't use this one\" and start at a different number instead: https://github.com/gitpan/UUID-Object/blob/master/t/11_as.t#L53-L64\r\nI figure `6ba7b815` is the safest and easiest choice based on what we know.\r\n\r\nEdit: I also wanted to avoid what happened with Hashspace ID. Specifically the IESG comments about them being somewhat unrecognizable since they are random.",
+          "createdAt": "2023-10-03T17:20:49Z",
+          "updatedAt": "2023-10-03T17:54:48Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis \r\nI am a bit confused about the sentence \"_New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}}._\".\r\nDoes this mean when I am using custom namespaces for UUIDv3 and UUIDv5, I am forced to register the namespace to IANA, otherwise the UUID would be \"illegal\" ? \r\nI have a few use-cases where I do have a custom namespace ID (this was the hash of \"invoice number\" from an ERP system), but it is very vendor-specific, so it is nothing that should be submitted to IANA.\r\n(Of course, nobody can prevent that I am using the namespace ID. However, I am trying to make my code as \"correct\" as possible by following standards)",
+          "createdAt": "2023-10-03T17:28:17Z",
+          "updatedAt": "2023-10-03T17:29:52Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, yeah the logic was that these NS IDs should be well documented since everybody'd in a namespace generating v3/v5 should have an idea of the correct input for the namespace so that they can all generate the same output. \r\nAssuming you want interoperability in that sense. \r\n\r\nIf its just a vendor/implementation specific thing, do it, but don't register it with IANA. \r\nI can put a line around this last statement but I thought it was covered by the statement up in IANA section:\r\n> Vendor-specific, application-specific, and deployment-specific values are unable to be registered.\r\n\r\nMaybe change the NS ID section to this so its all in one spot.\r\n> New Namespace IDs MUST be documented as per {{IANA}} and {{iana3}} if they are to be globally available. Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but interoperability is not guaranteed.",
+          "createdAt": "2023-10-03T17:36:14Z",
+          "updatedAt": "2023-10-03T17:58:27Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis Thanks for clarification. I probably missed that detail.\r\n\r\nOk, so do I correctly understand that there are the \"standardized\" namespace IDs (which are numbered and registered at IANA) and the \"custom/vendor-specific\" namespace IDs? This makes sense and I think that's good. But then it would be very important that vendors MUST NOT use the numbering scheme from IANA, otherwise we end up having multiple \"6ba7b815\" namespaces. If vendors use UUID1/4/6/7 for their custom namespaces, there is no collission.\r\nDo you think this should be mentioned?",
+          "createdAt": "2023-10-03T17:41:48Z",
+          "updatedAt": "2023-10-03T17:43:16Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, yeah, it is worth mentioning that an implementation should avoid using that space and pick something else like UUIDv4 (or UUIDv8) for a custom, implementation specific namespace ID else they should register it using the auto-increment logic (and some spec defining its usage and whatnot).\r\nEdit: Text added in https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162/commits/0555e967a82a39ed05c6f45c7f043f810eee2a71",
+          "createdAt": "2023-10-03T17:44:10Z",
+          "updatedAt": "2023-10-03T17:51:09Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis Thanks for that change! But why do you limit it to UUIDv4 and UUIDv8 ?  UUIDv1 (as long as node ID 00c04fd430c8 is not used), UUIDv6 and especially UUIDv7 are very important.\r\nUUIDv8 on the other hand is rather not good for a namespace ID, since it can collide easily, e.g. if people use `00000000-0000-8000-8000-000000000000` as namespace.",
+          "createdAt": "2023-10-03T17:59:17Z",
+          "updatedAt": "2023-10-03T17:59:17Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, I put `RECOMMENDED` which is just some steering verbiage.\r\nOne can do what you want if you don't care about interoperability with other libraries and the particular NS ID, this is just something to cover the \"well then what else should I use\" question vs leaving it blank/open-ended. I could add other options but sometimes too many choices is just as problematic as too few. \r\n\r\n> [3](https://www.rfc-editor.org/rfc/rfc2119#section-3). SHOULD   This word, or the adjective \"RECOMMENDED\", mean that there\r\n   may exist valid reasons in particular circumstances to ignore a\r\n   particular item, but the full implications must be understood and\r\n   carefully weighed before choosing a different course.\r\n\r\nI would argue that v8 is probably the best use case for some custom application NS ID value since \"custom vendor-specific implementation use case\" is exactly why v8 exists in the first place. So calling it out there made sense to me.",
+          "createdAt": "2023-10-03T18:11:59Z",
+          "updatedAt": "2023-10-03T18:12:36Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis \r\nSorry, but using UUIDv8 as Namespace ID in order to form a UUIDv3/5 is non-sense to me. :-) The payload-to-be-hashed is vendor-specific, and therefore the Namespace ID must be as unique as possible to avoid that the final UUIDv3/5 collides with other vendors's UUIDv3/5.\r\n\r\nSo, either use UUIDv8 **_directly_** (e.g. to include some custom numbers in it) and risk that there is a collission.\r\n\r\nOr use UUIDv3/UUIDv5 with a **_unique namespace ID_**. But if you use a auto-inc-namespace like `00000000-0000-8000-8000-000000000000` then you are very likely to collide with other UUIDv3/UUIDv5 if the payload matches too.\r\nIf the namespace ID is unique, then the collission probability is guaranteed 1/2^122. If UUIDv8 is used as namespace, then the resulting UUIDv3/5 collission probability is much lower than 1/2^122. \r\n\r\n---\r\n\r\n_**Proposal for a different wording (it does not forbid UUIDv8 , because people can do what they want)**_\r\n\r\n~~Proposal A (my personal preference):~~\r\n\r\n~~_These custom Namespace IDs MUST NOT use the logic above and instead use any other UUID version. If UUIDv1 is chosen, then the node id MUST NOT be \"00c04fd430c8\"._~~\r\n\r\n~~Proposal B (this makes advertisment for UUIDv7):~~\r\n\r\n~~_These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to use UUIDv4 or UUIDv7 values as identifiers._~~\r\n\r\n---\r\n\r\n**_Edit_**: For both proposals, we need to be careful that we are talking about the Namespace IDs, not the final identifier. So these proposals would be clearer:\r\n\r\nProposal A (my personal preference):\r\n\r\n_These custom Namespace IDs MUST NOT use the logic above and instead use any other UUID version **as Namespace ID**. If UUIDv1 is chosen, then the node id MUST NOT be \"00c04fd430c8\"._\r\n\r\nProposal B (this makes advertisment for UUIDv7):\r\n\r\n_These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to use UUIDv4 or UUIDv7 values as **Namespace identifiers**._\r\n",
+          "createdAt": "2023-10-03T18:24:51Z",
+          "updatedAt": "2023-10-03T18:47:30Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall, the main point you are calling out is \"custom, implementation specific namespace IDs\". If you want maximum interoperability on a global scale I would of course suggest registering that NS ID globally so everybody is on the same page with their v3/v5 algos.\r\nElse use whatever: v8, v4, v7. I don't think it really matters and I can change the text but the root of the argument is:\r\nYour using a custom NS ID in your application, within your confined context. Interoperability and collision on a global scale does not sound like a need (See section 6.6 and 6.7)\r\n\r\nA v8 NS ID fits that bill. A random UUIDv4 could work too. Sure, allocate a UUIDv7 for it. I can recommend all three. However, omitting the UUID version used for vendor-specific stuff seems weird to me when this is directly relevant to vendor-specific stuff.\r\n\r\nI also saw your edit: Correct this is for the Namespace ID not the final name-based UUID.",
+          "createdAt": "2023-10-03T19:03:19Z",
+          "updatedAt": "2023-10-03T19:03:44Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@kyzer-davis Indeed, I would be glad if you could edit the text.\r\n\r\nI understand what you are saying.\r\n\r\nI just want to clarify: I am **_not_** talking about my personal use-case. All I try to do is to help people reading the RFC to understand that it is crucial that Namespace IDs must be unique in any case. A unique Namespace ID prevents that UUIDv3/5 of different vendors collide. (In the case the UUIDs \"meet\" each other in some collection/domain/database/etc.)\r\n\r\nThe other topic you mention is interoperability. Yes, it is true that interoperability (i.e. two applications desire to output the same UUID for a given thing) is not guaranteed if people do not register the namespace ID and/or don't write a specification.\r\n",
+          "createdAt": "2023-10-03T19:14:14Z",
+          "updatedAt": "2023-10-03T19:25:16Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielmarschall got it, check the commit I just posted: \r\nhttps://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162/commits/f92530b2abb0f5ac5aa57922926d2de58716d4b2",
+          "createdAt": "2023-10-03T19:28:35Z",
+          "updatedAt": "2023-10-03T19:28:35Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Looks good! Thank you.",
+          "createdAt": "2023-10-03T19:30:19Z",
+          "updatedAt": "2023-10-03T19:30:19Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I also posted a Question over to #161 if anybody wants to comment on that over there.",
+          "createdAt": "2023-10-03T19:36:03Z",
+          "updatedAt": "2023-10-03T19:36:03Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Daniel Marschall ***@***.***> wrote:\n    > Does this mean when I am using custom namespaces for UUIDv3 and UUIDv5,\n    > I am forced to register the namespace to IANA, otherwise the UUID would\n    > be \"illegal\" ?\n\nThat is not the intention.\n\nRather, if you are making a v8 namespace that you intend to use for\ninteroperation with others, then you should consider registering a pointer to\nyour stable document.\n\n",
+          "createdAt": "2023-10-04T15:01:46Z",
+          "updatedAt": "2023-10-04T15:01:46Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH6Ln3M5ij3CS",
@@ -7748,6 +7886,246 @@
               "body": "Maybe we can ask Paul Leach more about this origin if this is not done yet. It seems we don't know exactly how they were created and we also don't know what happened with `6ba7b813`. If we know, we can come up with a better way to generate Special UUIDs and eventually even break the current limit.",
               "createdAt": "2023-10-02T22:10:53Z",
               "updatedAt": "2023-10-02T22:13:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5isG1u",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T17:10:23Z",
+          "updatedAt": "2023-10-03T17:10:23Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "I was leaning that way at first but UUIDv2 is a non-RFC and some types like the MS one, or even the 111 var and whatever subtype could be claimed by another standard body. \r\nThus I relaxed it since UUIDs, on a grand scale, are not just in the IETF space.\r\nEdit: there are also ITU/ISO docs around UUIDs which could in theory do something in the space. \r\nSpecification seems logical here over RFC.",
+              "createdAt": "2023-10-03T17:10:23Z",
+              "updatedAt": "2023-10-03T18:18:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5isIiC",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T17:14:49Z",
+          "updatedAt": "2023-10-03T17:14:49Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "Yeah, I just put what I know and detailed how it is currently. There is nothing I could find in my research on the topic of `6ba7b813` and I saw at least one library using it in some code. So I said \"best let sleeping dogs lie\"..\r\n\r\nI think there has to be some guidance if we are registering such a value but again, I don't think we need to overthink it. \r\n\r\nEdit: Updated a bit in https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162/commits/0555e967a82a39ed05c6f45c7f043f810eee2a71",
+              "createdAt": "2023-10-03T17:14:49Z",
+              "updatedAt": "2023-10-03T17:52:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5isMm-",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T17:22:10Z",
+          "updatedAt": "2023-10-03T17:22:10Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "I figured they can be fine with as long as there is a column descriptor stating the usage. \r\nI can split it into a second section easy enough but I felt nil/max make sense lumped in this way.",
+              "createdAt": "2023-10-03T17:22:10Z",
+              "updatedAt": "2023-10-03T17:22:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5isM6Z",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T17:22:58Z",
+          "updatedAt": "2023-10-03T17:22:58Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "I was unable to find any info on if this was good or bad. I planned on bringing it up in the interim.",
+              "createdAt": "2023-10-03T17:22:58Z",
+              "updatedAt": "2023-10-03T17:22:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5isNrd",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T17:25:04Z",
+          "updatedAt": "2023-10-03T17:25:04Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "Are you talking about the column header of `Subtype` change to `Version`? \r\nOr the row items in the column being changed from `Version` to `version`?\r\n\r\nI specifically used \"Subtype\" in the column headers since \"version\" is a construct of this UUID RFC and other subtyping mechanisms exist (in a historical sense at least.)",
+              "createdAt": "2023-10-03T17:25:04Z",
+              "updatedAt": "2023-10-03T17:30:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5isSfZ",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T17:37:34Z",
+          "updatedAt": "2023-10-03T17:37:35Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Sure, easy enough change although nothing technically out there in real world uses more than 4 var bits at the moment right? \r\nIt can be modified later, I was just going off of what we have in the table of _this_ document. ",
+              "createdAt": "2023-10-03T17:37:34Z",
+              "updatedAt": "2023-10-03T17:59:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5itKSf",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T19:48:53Z",
+          "updatedAt": "2023-10-03T19:48:53Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Family is 8-bit on the same byte-location. If we parse the variant also like a 8-bit, it is easy to convert it to an family integer: `if(variant<0x80){ family = variant & 0b1111111; }`. It also gives us the possibility to assign numbers (or number ranges) to a variant, which is not working for variable-size bit maps.",
+              "createdAt": "2023-10-03T19:48:53Z",
+              "updatedAt": "2023-10-03T19:48:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5itKj5",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T19:49:40Z",
+          "updatedAt": "2023-10-03T19:49:40Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "I meant the column value `version`. The word `Subtype` as column header is good enough.",
+              "createdAt": "2023-10-03T19:49:40Z",
+              "updatedAt": "2023-10-03T19:49:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5itLSa",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T19:51:47Z",
+          "updatedAt": "2023-10-03T19:51:48Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "In case of DNS, not all 65536 possibilities for record types are `Unspecified`, so seems bad practice to me to list them.",
+              "createdAt": "2023-10-03T19:51:48Z",
+              "updatedAt": "2023-10-03T19:51:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5itel1",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T20:38:42Z",
+          "updatedAt": "2023-10-03T20:38:42Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "Edit: Modified the table in https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162/commits/e64464efff3f53ba81f6db27b93ca0717c93c033\r\nShould I drop v0? Seems folks forget that's technically a possible version although unused/unspecified.",
+              "createdAt": "2023-10-03T20:38:42Z",
+              "updatedAt": "2023-10-03T20:59:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5itfgR",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T20:41:17Z",
+          "updatedAt": "2023-10-03T20:41:17Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Hmm, okay I see where you are going. \r\nI am going to leave it for the moment based on what we have in this doc. \r\nWe can flyways update the IANA registration later down the line in the historical RFC when we flesh out family. \r\nA side topic, I don't want to derail the thread so I am going to resolve this one for the moment.",
+              "createdAt": "2023-10-03T20:41:17Z",
+              "updatedAt": "2023-10-03T20:41:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5it1OH",
+          "commit": {
+            "abbreviatedOid": "a75e3cc"
+          },
+          "author": "ben221199",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-03T21:46:05Z",
+          "updatedAt": "2023-10-03T21:46:05Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "I know it is possible and I once came across someone who implemented a v0 version. In my opinion, I would set that one on `Reserved` instead of `Unspecified`.",
+              "createdAt": "2023-10-03T21:46:05Z",
+              "updatedAt": "2023-10-03T21:46:05Z"
             }
           ]
         }
