@@ -1750,6 +1750,8 @@ Further, this section also details allocation, IANA registration and other detai
 | X500      | 6ba7b814-9dad-11d1-80b4-00c04fd430c8 |
 {: #namespaceIDs title='Namespace IDs'}
 
+Items may be added to this table using Specification Required policy {{RFC8126}}
+
 Generally speaking, Namespace IDs are allocated as follows:
 
 {: spacing="compact"}
