@@ -1962,6 +1962,8 @@ This specification defines the "UUID Subtype" registry for common, widely used U
 | Custom                         |  8 | 0x8 | version | OSF DCE / IETF | This document              |
 {: #ianaSubtypes title='IANA UUID Subtypes'}
 
+This table may be extended by the Standards Action policy {{RFC8126}}.
+
 ## IANA Reserved UUIDs Registry and Registration {#iana3}
 This specification defines the "Reserved UUIDs" registry for common, widely used special purpose UUIDs to promote reuse.
 
