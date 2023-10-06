@@ -1743,7 +1743,7 @@ This section and table, {{namespaceIDs}}, details the namespace IDs for some pot
 {{RFC8499}} domain name system (DNS), {{RFC1738}} uniform resource locators (URLs), {{X660}} object identifiers (OIDs), and {{X500}} distinguished names (DNs).
 Further, this section also details allocation, IANA registration and other details pertinent to Namespace IDs.
 
-| Namespace | Namespace ID                         |
+| Namespace | Namespace ID                         |  Document |
 | DNS       | 6ba7b810-9dad-11d1-80b4-00c04fd430c8 |
 | URL       | 6ba7b811-9dad-11d1-80b4-00c04fd430c8 |
 | OID       | 6ba7b812-9dad-11d1-80b4-00c04fd430c8 |
