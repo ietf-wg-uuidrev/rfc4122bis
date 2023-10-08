@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-05T01:14:52.078032+00:00",
+  "timestamp": "2023-10-08T01:19:20.494106+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -2905,15 +2905,17 @@
       "id": "I_kwDOH6Ln3M5wUbi_",
       "title": "Alternative proposal for Hashspace ID Values",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/143",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "wontfix"
+      ],
       "body": "From Paul Wouters\r\n```\r\nWhy are hashspace IDs chosen to look like random uuids? Eg why not encode\r\n\"SHA2_224\" (hex 534841325F323234) as 53484132-5F32-3234-0000-000000000000\r\nor 00000000-0000-0000-5348-41325F323234 (plus or minus variant/version bits)\r\nso that it becomes far more clear this is not an ordinary random uuid?\r\n```\r\n\r\n\r\n### Current, All random\r\n```\r\nSHA2_224     = \"59031ca3-fbdb-47fb-9f6c-0f30e2e83145\"\r\nSHA2_256     = \"3fb32780-953c-4464-9cfd-e85dbbe9843d\"\r\nSHA2_384     = \"e6800581-f333-484b-8778-601ff2b58da8\"\r\nSHA2_512     = \"0fde22f2-e7ba-4fd1-9753-9c2ea88fa3f9\"\r\nSHA2_512_224 = \"003c2038-c4fe-4b95-a672-0c26c1b79542\"\r\nSHA2_512_256 = \"9475ad00-3769-4c07-9642-5e7383732306\"\r\nSHA3_224     = \"9768761f-ac5a-419e-a180-7ca239e8025a\"\r\nSHA3_256     = \"2034d66b-4047-4553-8f80-70e593176877\"\r\nSHA3_384     = \"872fb339-2636-4bdd-bda6-b6dc2a82b1b3\"\r\nSHA3_512     = \"a4920a5d-a8a6-426c-8d14-a6cafbe64c7b\"\r\nSHAKE_128    = \"7ea218f6-629a-425f-9f88-7439d63296bb\"\r\nSHAKE_256    = \"2e7fc6a4-2919-4edc-b0ba-7d7062ce4f0a\"\r\n```",
       "createdAt": "2023-09-06T16:55:09Z",
-      "updatedAt": "2023-09-28T16:59:42Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-05T13:36:31Z",
+      "closedAt": "2023-10-05T13:36:31Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -3493,7 +3495,7 @@
       "id": "I_kwDOH6Ln3M5w77zb",
       "title": "Simplify UUIDv8 Hash-based Example",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "danielmarschall",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -3502,8 +3504,8 @@
       ],
       "body": "(Continuation of a discussion in #144)\r\n\r\nI want to propose that part of UUIDv8 gets split in a new format UUIDv9. I hope there is a slight chance that it is still possible at this stage.\r\n\r\nCurrent situation: UUIDv8 has three functions:\r\n1. Fully custom UUID (defined by vendor)\r\n2. Custom time-based\r\n3. New name-based\r\n\r\nProposal:\r\n1. Fully custom UUID stays UUIDv8\r\n2. Custom time-based stays UUIDv8\r\n3. New name-based UUID becomes UUIDv9\r\n\r\n\r\n**_Why do I handle custom time-based and custom name-based differently?_**\r\n\r\nWith Section C.8 (name-based example) and Appendix B (hash spaces, #143), we have a pretty clear definition of how such a name-based UUID is calculated.  We know the OIDs of a lot of algorithms and have a mechanism for how to convert the OID in hash space ID (#143). Even if we don't know the hash space ID, then IANA will probably have it in their registry (#144). The calculation of the UUID is defined very well, and therefore, if the hash space ID is unambiguous, then the UUID is unambiguous.\r\n\r\nIn opposite to custom time-based (which is very custom, because the vendor can define the length of time-part, clock sequence, random part, etc.), the new name-based version does not allow changing any contents/fields.\r\n\r\nSo, I do not think that these new name-based UUIDs should be considered '\"custom\". They are not \"custom\" in my opinion. Therefore I think they should have their own format, UUIDv9.\r\n\r\nSince custom time-based and fully custom UUID are very custom, I don't think it would be an issue if they both share the same version (UUIDv8). After all, people who create custom UUIDs (either by defining a custom time-format, or a fully custom UUID) know that their custom definition is not standardized and might cause collissions.\r\n\r\n\r\n--- \r\n_By the way (personal opinion): I really dislike the time-based example (in section C.7), because the nanoseconds-resolution is rather extreme, causing a wrap-around of the time very quickly. I would have lowered the resolution to make the wrap-around take ~100 years. But on the other hand, the text \"It should be noted that this example is just to illustrate one scenario for UUIDv8.\" is clear that this is not a fixed definition._\r\n",
       "createdAt": "2023-09-13T15:18:24Z",
-      "updatedAt": "2023-09-28T20:53:10Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-05T13:34:52Z",
+      "closedAt": "2023-10-05T13:34:51Z",
       "comments": [
         {
           "author": "fabiolimace",
@@ -4299,15 +4301,15 @@
       "id": "I_kwDOH6Ln3M5xh167",
       "title": "Move UUIDv8 Examples out of Test Vectors",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/150",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ben221199",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "As seen in #144 and #147, the examples of UUIDv8 are a big issue. We should do something about it and rewrite or remove them. The reason is that the examples can now be seen as some call to action to implement them literally, and that is not what they are for.",
       "createdAt": "2023-09-20T10:34:49Z",
-      "updatedAt": "2023-09-28T20:59:20Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-05T13:34:52Z",
+      "closedAt": "2023-10-05T13:34:52Z",
       "comments": [
         {
           "author": "bradleypeabody",
@@ -4435,15 +4437,15 @@
       "id": "I_kwDOH6Ln3M5xqr9z",
       "title": "Clarify  \"Name-Based\" is the same as \"Hash-Based\"",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/154",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Tracker item so I don't forget",
       "createdAt": "2023-09-21T13:41:12Z",
-      "updatedAt": "2023-09-28T15:56:45Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-05T13:34:52Z",
+      "closedAt": "2023-10-05T13:34:52Z",
       "comments": [
         {
           "author": "fabiolimace",
@@ -4880,7 +4882,7 @@
       "id": "I_kwDOH6Ln3M5yVfik",
       "title": "Expand v8 Time-based Example to larger timestamp",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/159",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -4889,8 +4891,8 @@
       ],
       "body": "              For the time-based example, here are alternatives (I am keeping 1 nano second):\r\n\r\nA. `tttttttt-tttt-Xttt-rrrr-Xrrrrrrrrrrr` : 1 nano second in 60 bits = wraps after 36 years (`2^60/(1000*1000*1000*60*60*24*365)`), and has 62 bits are left for random (i.e. chance to collide is 1/2^62)\r\n\r\nB. `tttttttt-tttt-Xttt-trrr-Xrrrrrrrrrrr` : 1 nano second in 64 bits = wraps after 584 years (`2^64/(1000*1000*1000*60*60*24*365)`), and has 58 bits are left for random (i.e. chance to collide is 1/2^58)\r\n\r\nC. `tttttttt-tttt-Xttt-ttrr-Xrrrrrrrrrrr`: 1 nano second in 68 bits = wraps after 9359 years (`2^68/(1000*1000*1000*60*60*24*365)`), and has 54 bits are left for random (i.e. chance to collide is 1/2^54)\r\n\r\nD. `tttttttt-tttt-Xttt-tttt-Xrrrrrrrrrrr` : 1 nano second in 76 bits = wraps after 2395924 years (`2^76/(1000*1000*1000*60*60*24*365)`), and has 46 bits are left for random (i.e. chance to collide is 1/2^46)\r\n\r\nMy preferrence would be >=100 years, so 64 bit.\r\n\r\n_Originally posted by @danielmarschall in https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/147#issuecomment-1739901324_\r\n\r\nReasons: The current example wraps in a few hours, few more bits make it a better example.\r\n            ",
       "createdAt": "2023-09-28T20:36:43Z",
-      "updatedAt": "2023-10-02T17:43:19Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-05T13:37:01Z",
+      "closedAt": "2023-10-05T13:37:01Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -4952,6 +4954,124 @@
           "updatedAt": "2023-10-03T20:58:10Z"
         }
       ]
+    },
+    {
+      "number": 163,
+      "id": "I_kwDOH6Ln3M5y_JZp",
+      "title": "Change RFC8937 and RFC4086 to Informative References",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/163",
+      "state": "OPEN",
+      "author": "jimfenton",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC 8937 is an informative RFC, and therefore not appropriate to be a normative reference from a standards-track RFC. This was pointed out by the Nits tool.\r\n\r\nIMO, the advice on choosing random numbers in Section 6.8 is informative, and [RFC8937] and [RFC4086] should be informative for the same reason as [RANDOM] is.\r\n\r\nOn a related topic, while [RANDOM] seems to be a very good treatment of the subject, I'm a bit concerned about it not being an archival document. What should readers do if it goes away? Find it on Internet Archive?",
+      "createdAt": "2023-10-05T22:17:10Z",
+      "updatedAt": "2023-10-06T20:37:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> On a related topic, while [RANDOM] seems to be a very good treatment of the subject, I'm a bit concerned about it not being an archival document. What should readers do if it goes away? Find it on Internet Archive?\r\n\r\nI had added the RFCs as alternatives to RANDOM for this very reason. At one point it was JUST random and I wanted to provide some other citations in the event something happens.",
+          "createdAt": "2023-10-06T20:37:17Z",
+          "updatedAt": "2023-10-06T20:37:17Z"
+        }
+      ]
+    },
+    {
+      "number": 164,
+      "id": "I_kwDOH6Ln3M5y_UIn",
+      "title": "Fix Timestamp of Time-Based UUIDv8 Example",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/164",
+      "state": "OPEN",
+      "author": "danielmarschall",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Hello,\r\n\r\nI have found a mistake in the Appendix C.1 example:\r\n- Timestamp `1645557742000000000` has one zero too many, since we count in 10ns-steps.\r\n- I have also added `(10ns-steps)` after the timestamp, to make it clear which unit it represents.\r\n- Dividing by 10 changes the 64-bit timestamp `0x16D6320C3D4DCC00` into the desired 60-bit timestamp `0x2489E9AD2EE2E00`.\r\n \r\nCan you please include this fix in your current PR?  Thank you.\r\n\r\nWrong:\r\n\r\n```\r\n   Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00\r\n   represented as 0x16D6320C3D4DCC00 or 1645557742000000000\r\n\r\n   -------------------------------------------\r\n   field     bits value\r\n   -------------------------------------------\r\n   custom_a  48   0x6D6320C3D4DC\r\n   ver        4   0x8\r\n   custom_b  12   0xC00\r\n   var        2   0b10\r\n   custom_c  62   0b00, 0xEC932D5F69181C0\r\n   -------------------------------------------\r\n   total     128\r\n   -------------------------------------------\r\n   final: 6D6320C3-D4DC-8C00-8EC9-32D5F69181C0\r\n```\r\n\r\nCorrect:\r\n\r\n```\r\n   Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00\r\n   represented as 0x2489E9AD2EE2E00 or 164555774200000000 (10ns-steps).\r\n\r\n   -------------------------------------------\r\n   field     bits value\r\n   -------------------------------------------\r\n   custom_a  48   0x2489E9AD2EE2\r\n   ver        4   0x8\r\n   custom_b  12   0xE00\r\n   var        2   0b10\r\n   custom_c  62   0b00, 0xEC932D5F69181C0\r\n   -------------------------------------------\r\n   total     128\r\n   -------------------------------------------\r\n   final: 2489E9AD-2EE2-8E00-8EC9-32D5F69181C0\r\n\r\n```\r\n",
+      "createdAt": "2023-10-05T23:06:43Z",
+      "updatedAt": "2023-10-06T20:46:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Also, I am not sure, do you really mean 64-bit, or 60-bit?\r\n`This example UUIDv8 test vector utilizes a well-known 64 bit Unix epoch timestamp with 10ns precision,`",
+          "createdAt": "2023-10-06T07:45:45Z",
+          "updatedAt": "2023-10-06T07:45:45Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "yeah, that makes sense. I was thinking about it but didn't do the math myself and divide by 10.\r\nEdit: I wanted to state it started from a 64-bit timestamp. As opposed to 32 and then its trimmed down.",
+          "createdAt": "2023-10-06T15:01:05Z",
+          "updatedAt": "2023-10-06T15:02:59Z"
+        }
+      ]
+    },
+    {
+      "number": 165,
+      "id": "I_kwDOH6Ln3M5zEd9M",
+      "title": "Populating all 128 bits",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/165",
+      "state": "OPEN",
+      "author": "jimfenton",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "For UUID version 3 (Section 5.3) and version 5 (Section 5.5), the document says, \"is used to populate all 128 bits of the UUID layout.\" But the variant and version fields are not populated, so only 122 bits are used. For MD5 (version 3), it should tell us which bits of the MD5 output are used. For version 5, it should specify the correct number of bits.",
+      "createdAt": "2023-10-06T16:20:13Z",
+      "updatedAt": "2023-10-06T20:23:12Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think there could be a confusion because indeed all 128 bits are populated with hash bits, and after that the 6 bits version/variant are written, overwriting some of the hash bits.\r\n",
+          "createdAt": "2023-10-06T19:19:40Z",
+          "updatedAt": "2023-10-06T19:19:40Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yeah, the next sentences after states that the 128 bits are then shifted by the ver/var rules.\r\n\r\nV3:\r\n> This MD5 value is then used to populate all 128 bits of the UUID layout. **The UUID version and variant then replace the respective bits as defined by [Section 4.2](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-12#version_field) and [Section 4.1](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-12#variant_field). An example of this bit substitution can be found in [Appendix B.2](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-12#uuidv3_example).**\r\n\r\nV5:\r\n> The most significant, left-most 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 least significant, right-most bits of SHA-1 output are discarded. **The UUID version and variant then replace the respective bits as defined by [Section 4.2](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-12#version_field) and [Section 4.1](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-12#variant_field). An example of this bit substitution and discarding excess bits can be found in [Appendix B.4](https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis-12#uuidv5_example).**\r\n\r\nThis is how it is being done in current implementations; else yeah, I would have said \"generate 122 and then slot in ver/var \"...but that isn't reality today (thanks to RFC4122)\r\nAnd it matters because 122 w/6 bits added or 128 with bit overwrite can produce differing final UUIDs.",
+          "createdAt": "2023-10-06T19:53:16Z",
+          "updatedAt": "2023-10-06T20:23:12Z"
+        }
+      ]
+    },
+    {
+      "number": 166,
+      "id": "I_kwDOH6Ln3M5zFojJ",
+      "title": "Further normalize Namespace verbiage",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/166",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Where \"Namespace Value\" is referenced replace with \"Namespace ID Value\"",
+      "createdAt": "2023-10-06T19:54:04Z",
+      "updatedAt": "2023-10-06T19:54:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 167,
+      "id": "I_kwDOH6Ln3M5zFpTR",
+      "title": "Move citation of Namesapce ID up to first instance in v3/v5",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/167",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently:\r\n\r\n> UUIDv3 values are created by computing an MD5 {{RFC1321}}\r\nhash over a given namespace value concatenated with the desired name value\r\nafter both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.\r\n\r\n[...later...]\r\n\r\n> Some common namespace values have been defined via {{namespaces}}.\r\n\r\n\r\nSimply move the `{{namespaces}}` citation up and remove this line:\r\n\r\n> UUIDv3 values are created by computing an MD5 {{RFC1321}}\r\nhash over a given namespace **({{namespaces}})** value concatenated with the desired name value\r\nafter both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.\r\n\r\nReplicate same change for v5.\r\n",
+      "createdAt": "2023-10-06T19:56:31Z",
+      "updatedAt": "2023-10-06T19:56:31Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -7639,24 +7759,26 @@
       "id": "PR_kwDOH6Ln3M5bdrYR",
       "title": "Hash-Based UUID Changes",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/158",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-09-28T16:27:37Z",
-      "updatedAt": "2023-09-28T20:42:42Z",
+      "updatedAt": "2023-10-05T13:34:34Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "hash-based-uuids",
       "headRefOid": "815fa114be66689a659b37881a6568f62fc28784",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-10-05T13:34:34Z",
+      "mergedAt": "2023-10-05T13:34:33Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "9c8340f0573a446ee1c4b7318ebeea75ecbf06b4"
+      },
       "comments": [],
       "reviews": []
     },
@@ -7665,24 +7787,26 @@
       "id": "PR_kwDOH6Ln3M5bshy7",
       "title": "Change v8 Timestamp Resolution",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/160",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-10-02T17:42:51Z",
-      "updatedAt": "2023-10-02T17:42:51Z",
+      "updatedAt": "2023-10-05T13:36:03Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
-      "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
+      "baseRefOid": "9c8340f0573a446ee1c4b7318ebeea75ecbf06b4",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "change-v8-example",
-      "headRefOid": "9469671c486518dc8557d2b47b49a5c2bec8a05a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7cd4acc7f10a40dc7e7af385b1d6c998e57065cf",
+      "closedAt": "2023-10-05T13:36:03Z",
+      "mergedAt": "2023-10-05T13:36:03Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "f6d0326a7252f58b13b3c63d4c107e8da1e7fb0e"
+      },
       "comments": [],
       "reviews": []
     },
@@ -7701,13 +7825,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-10-02T20:07:38Z",
-      "updatedAt": "2023-10-04T15:01:47Z",
+      "updatedAt": "2023-10-06T20:19:17Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
-      "baseRefOid": "c3264f73fa29ed475f7b478c1aff15d6c0f32689",
+      "baseRefOid": "f6d0326a7252f58b13b3c63d4c107e8da1e7fb0e",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "iana-registration",
-      "headRefOid": "bd2a5e770b23e7f29b152600684cc41f96f4bd70",
+      "headRefOid": "2f4a1762d58aee9436badf03468bcbb9dec21c16",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -7824,6 +7948,27 @@
           "body": "Daniel Marschall ***@***.***> wrote:\n    > Does this mean when I am using custom namespaces for UUIDv3 and UUIDv5,\n    > I am forced to register the namespace to IANA, otherwise the UUID would\n    > be \"illegal\" ?\n\nThat is not the intention.\n\nRather, if you are making a v8 namespace that you intend to use for\ninteroperation with others, then you should consider registering a pointer to\nyour stable document.\n\n",
           "createdAt": "2023-10-04T15:01:46Z",
           "updatedAt": "2023-10-04T15:01:46Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "At the request of the chairs, I have posted draft-12 without the IANA changes in this PR.\r\nThus I have moved this proposed text to draft-13 and it is a topic for the interim meeting as there are still some discussion points and text formatting to iron out. ",
+          "createdAt": "2023-10-05T14:13:17Z",
+          "updatedAt": "2023-10-05T14:13:17Z"
+        },
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think you mean draft-13 prep, not draft-14 prep?",
+          "createdAt": "2023-10-05T14:40:30Z",
+          "updatedAt": "2023-10-05T14:40:30Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I think you mean draft-13 prep, not draft-14 prep?\r\n\r\nYeah, I have no idea how that got to 14.\r\nI double-checked my command line history and everything... I cannot explain it.\r\nI can amend the last commit message if needed but figured it wasn't that big a deal.\r\n\r\nHistory for those curious, it had to have append when I did the `--amend` command...\r\n```bash\r\n  490  cd rfc4122bis/\r\n  491  git branch -f iana-registratoin origin/iana-registration\r\n  492  git checkout iana-registration\r\n  493  git diff\r\n  494  git add .\r\n  495  git commit \"draft-13 prep\"\r\n  496  git commit -m \"draft-13 prep\"\r\n  497  git config --global user.name \"Kyzer Davis\"\r\n  498  git config --global user.email kydavis@cisco.com\r\n  499  git commit --amend --reset-author\r\n  500  git push origin iana-registration\r\n  ```",
+          "createdAt": "2023-10-05T19:44:27Z",
+          "updatedAt": "2023-10-05T19:44:42Z"
         }
       ],
       "reviews": [
@@ -8126,6 +8271,66 @@
               "body": "I know it is possible and I once came across someone who implemented a v0 version. In my opinion, I would set that one on `Reserved` instead of `Unspecified`.",
               "createdAt": "2023-10-03T21:46:05Z",
               "updatedAt": "2023-10-03T21:46:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5jEoG9",
+          "commit": {
+            "abbreviatedOid": "1246cf4"
+          },
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-06T15:39:10Z",
+          "updatedAt": "2023-10-06T15:39:10Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "```suggestion\r\n\r\nItems may be added to this table using Specification Required policy {{RFC8126}}\r\n\r\n```",
+              "createdAt": "2023-10-06T15:39:10Z",
+              "updatedAt": "2023-10-06T15:39:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5jEoTU",
+          "commit": {
+            "abbreviatedOid": "0010a40"
+          },
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-06T15:39:36Z",
+          "updatedAt": "2023-10-06T15:39:36Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "```suggestion\r\n| Namespace | Namespace ID                         |  Document |\r\n```",
+              "createdAt": "2023-10-06T15:39:36Z",
+              "updatedAt": "2023-10-06T15:39:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH6Ln3M5jEud-",
+          "commit": {
+            "abbreviatedOid": "907ac48"
+          },
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-06T15:52:08Z",
+          "updatedAt": "2023-10-06T15:52:08Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "```suggestion\r\n\r\nThis table may be extended by the Standards Action policy {{RFC8126}}.\r\n\r\n```",
+              "createdAt": "2023-10-06T15:52:08Z",
+              "updatedAt": "2023-10-06T15:52:08Z"
             }
           ]
         }
