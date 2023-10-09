@@ -526,6 +526,7 @@ draft-13
 - Describe allocation logic of Namespace ID #161
 - Move citation of Namesapce ID up to first instance in v3/v5 #167
 - Further normalize Namespace verbiage #166
+- Fix Timestamp of Time-Based UUIDv8 Example #164
 
 draft-12
 
@@ -1070,7 +1071,7 @@ UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
 hash over a given namespace ID value ({{namespaces}}) concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 The most significant, left-most 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 least significant, right-most bits of SHA-1 output are discarded.
-The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding exess bits can be found in {{uuidv5_example}}.
+The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding excess bits can be found in {{uuidv5_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
 
@@ -2243,21 +2244,21 @@ to fill the first 60 bits of custom_a and custom_b while setting the version bit
 The variant bits are set and the final segment, custom_c, is filled with random data.
 
 Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00 represented
-as 0x16D6320C3D4DCC00 or 1645557742000000000
+as 0x2489E9AD2EE2E00 or 164555774200000000 (10ns-steps).
 
 ~~~~
 -------------------------------------------
 field     bits value
 -------------------------------------------
-custom_a  48   0x6D6320C3D4DC
+custom_a  48   0x2489E9AD2EE2
 ver        4   0x8
-custom_b  12   0xC00
+custom_b  12   0xE00
 var        2   0b10
 custom_c  62   0b00, 0xEC932D5F69181C0
 -------------------------------------------
 total     128
 -------------------------------------------
-final: 6D6320C3-D4DC-8C00-8EC9-32D5F69181C0
+final: 2489E9AD-2EE2-8E00-8EC9-32D5F69181C0
 ~~~~
 {: title='UUIDv8 Example Time-based Illustrative Example'}
 
