@@ -522,6 +522,8 @@ OID
 {:removeinrfc}
 
 draft-13
+
+{: spacing="compact"}
 - Request IANA Registry #144
 - Describe allocation logic of Namespace ID #161
 - Move citation of Namesapce ID up to first instance in v3/v5 #167
