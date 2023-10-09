@@ -48,9 +48,7 @@ normative:
       registration of Universally Unique Identifiers (UUIDs) and their
       use as ASN.1 Object Identifier components"
     date: 2004
-  RFC4086: RFC4086
   RFC8141: RFC8141
-  RFC8937: RFC8937
   FIPS180-4:
     target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
     title: Secure Hash Standard
@@ -76,6 +74,7 @@ normative:
 informative:
   RFC1321: RFC1321
   RFC1738: RFC1738
+  RFC4086: RFC4086
   RFC4122: RFC4122
   RFC5234: RFC5234
   RFC6151: RFC6151
@@ -83,6 +82,7 @@ informative:
   RFC7042: RFC7042
   RFC8126: RFC8126
   RFC8499: RFC8499
+  RFC8937: RFC8937
   X500:
     seriesinfo:
       ISO/IEC: '9594-1'
@@ -527,6 +527,7 @@ draft-13
 - Move citation of Namesapce ID up to first instance in v3/v5 #167
 - Further normalize Namespace verbiage #166
 - Fix Timestamp of Time-Based UUIDv8 Example #164
+- Change RFC8937 and RFC4086 to Informative References #163
 
 draft-12
 
