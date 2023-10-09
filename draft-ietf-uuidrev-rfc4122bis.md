@@ -524,6 +524,7 @@ OID
 draft-13
 - Request IANA Registry #144
 - Describe allocation logic of Namespace ID #161
+- Move citation of Namesapce ID up to first instance in v3/v5 #167
 
 draft-12
 
@@ -960,14 +961,12 @@ UUID version 3 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
-hash over a given namespace value concatenated with the desired name value
+hash over a given namespace value ({{namespaces}})  concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution can be found in {{uuidv3_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
-
-Some common namespace values have been defined via {{namespaces}}.
 
 Where possible UUIDv5 SHOULD be used in lieu of UUIDv3.
 For more information on MD5 security considerations see {{RFC6151}}.
@@ -1067,14 +1066,12 @@ UUID version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
-hash over a given namespace value concatenated with the desired name value
+hash over a given namespace value ({{namespaces}}) concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 The most significant, left-most 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 least significant, right-most bits of SHA-1 output are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding exess bits can be found in {{uuidv5_example}}.
 
 Information around selecting a desired name's canonical format within a given namespace can be found in {{name_based_uuid_generation}}, "A note on names".
-
-Some common namespace values have been defined via {{namespaces}}.
 
 There may be scenarios, usually depending on organizational security policies, where SHA-1 libraries may not be available or deemed unsafe for use.
 As such, it may be desirable to generate name-based UUIDs derived from SHA-256 or newer SHA methods. These name-based UUIDs MUST NOT utilize UUIDv5 and MUST be within the UUIDv8 space defined by {{uuidv8}}.
