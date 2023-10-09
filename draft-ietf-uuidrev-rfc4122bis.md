@@ -525,6 +525,7 @@ draft-13
 - Request IANA Registry #144
 - Describe allocation logic of Namespace ID #161
 - Move citation of Namesapce ID up to first instance in v3/v5 #167
+- Further normalize Namespace verbiage #166
 
 draft-12
 
@@ -961,7 +962,7 @@ UUID version 3 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv3 values are created by computing an MD5 {{RFC1321}}
-hash over a given namespace value ({{namespaces}})  concatenated with the desired name value
+hash over a given namespace ID value ({{namespaces}})  concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 This MD5 value is then used to populate all 128 bits of the UUID layout.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution can be found in {{uuidv3_example}}.
@@ -1066,7 +1067,7 @@ UUID version 5 is meant for generating UUIDs from "names"
 that are drawn from, and unique within, some "namespace" as per {{name_based_uuid_generation}}.
 
 UUIDv5 values are created by computing an SHA-1 {{FIPS180-4}}
-hash over a given namespace value ({{namespaces}}) concatenated with the desired name value
+hash over a given namespace ID value ({{namespaces}}) concatenated with the desired name value
 after both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.
 The most significant, left-most 128 bits of the SHA-1 value is then used to populate all 128 bits of the UUID layout and the remaining 32 least significant, right-most bits of SHA-1 output are discarded.
 The UUID version and variant then replace the respective bits as defined by {{version_field}} and {{variant_field}}. An example of this bit substitution and discarding exess bits can be found in {{uuidv5_example}}.
@@ -1754,20 +1755,20 @@ Items may be added to this table using "Specification Required" policy as per {{
 For designated experts, generally speaking, Namespace IDs are allocated as follows:
 
 {: spacing="compact"}
-- The first Namespace ID, for DNS, was calculated from a time-based UUIDv1 and "6ba7b810-9dad-11d1-80b4-00c04fd430c8" used as a starting point.
-- Subsequent Namespace IDs increment the least-significant, right-most bit of time_low "6ba7b810" while freezing the rest of the UUID to "9dad-11d1-80b4-00c04fd430c8".
-- New Namespace IDs MUST use this same logic and MUST NOT use a previously used Namespace ID value.
-- Thus, "6ba7b815" is the next available time_low for a new Namespace ID with the full ID being "6ba7b815-9dad-11d1-80b4-00c04fd430c8".
-- The upper bound for time_low in this special use, namespace ID, is "ffffffff" or "ffffffff-9dad-11d1-80b4-00c04fd430c8" which should be sufficient space for future namespace IDs.
+- The first namespace ID value, for DNS, was calculated from a time-based UUIDv1 and "6ba7b810-9dad-11d1-80b4-00c04fd430c8" used as a starting point.
+- Subsequent namespace ID values increment the least-significant, right-most bit of time_low "6ba7b810" while freezing the rest of the UUID to "9dad-11d1-80b4-00c04fd430c8".
+- New namespace ID values MUST use this same logic and MUST NOT use a previously used Namespace ID value.
+- Thus, "6ba7b815" is the next available time_low for a new Namespace ID value with the full ID being "6ba7b815-9dad-11d1-80b4-00c04fd430c8".
+- The upper bound for time_low in this special use, namespace ID values, is "ffffffff" or "ffffffff-9dad-11d1-80b4-00c04fd430c8" which should be sufficient space for future namespace ID values.
 
-Note that the Namespace ID "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it SHOULD NOT be used as a Namespace ID.
+Note that the namespace ID value "6ba7b813-9dad-11d1-80b4-00c04fd430c8" and its usage is not defined by this document or by {{RFC4122}}, as such it SHOULD NOT be used as a Namespace ID value.
 
-New Namespace IDs MUST be documented as per {{IANA}} if they are to be globally available and fully interoperable.
+New Namespace ID values MUST be documented as per {{IANA}} if they are to be globally available and fully interoperable.
 Implementations MAY continue to use vendor-specific, application-specific, and deployment-specific Namespace ID values but know that interoperability is not guaranteed.
-These custom Namespace IDs MUST NOT use the logic above and instead are RECOMMENDED to generate a UUIDv4 or UUIDv7 Namespace ID value.
+These custom Namespace ID values MUST NOT use the logic above and instead are RECOMMENDED to generate a UUIDv4 or UUIDv7 Namespace ID value.
 If collision probability ({{collision_resistance}}) and uniqueness ({{global_local_uniqueness}}) of the final name-based UUID are not a problem; an implementation MAY also leverage UUIDv8 instead to create a custom, application-specific Namespace ID value.
 
-Implementations SHOULD provide the ability to input a custom namespace to account for newly registered IANA Namespace IDs outside of those listed in this section or custom, application specific Namespace IDs.
+Implementations SHOULD provide the ability to input a custom namespace to account for newly registered IANA Namespace ID values outside of those listed in this section or custom, application specific Namespace ID values.
 
 ## Collision Resistance {#collision_resistance}
 
@@ -1951,7 +1952,7 @@ This specification defines the "UUID Subtype" registry for common, widely used U
 This table may be extended by the "Standards Action" policy, per {{RFC8126}}.
 
 ## IANA UUID Namespace ID Registry and Registration {#iana3}
-This specification defines the "UUID Namespace ID" registry for common, widely used Namespace IDs.
+This specification defines the "UUID Namespace ID" registry for common, widely used Namespace ID values.
 
 The full details of this registration are found in {{namespaces}} section.
 
@@ -2076,7 +2077,7 @@ final: C232AB00-9414-11EC-B3C8-9E6BDECED846
 {: title='UUIDv1 Example Test Vector'}
 
 ## Example of a UUIDv3 Value {#uuidv3_example}
-The MD5 computation from is detailed in {{v3md5}} using the DNS NameSpace and the Name "www.example.com".
+The MD5 computation from is detailed in {{v3md5}} using the DNS Namespace ID value and the Name "www.example.com".
 while the field mapping and all values are illustrated in {{v3fields}}.
 Finally to further illustrate the bit swapping for version and variant see {{v3vervar}}.
 
@@ -2145,7 +2146,7 @@ Final:                 919108f7-52d1-4320-9bac-f847db4148a8
 
 
 ## Example of a UUIDv5 Value {#uuidv5_example}
-The SHA-1 computation from is detailed in {{v5sha1}} using the DNS NameSpace and the Name "www.example.com".
+The SHA-1 computation from is detailed in {{v5sha1}} using the DNS Namespace ID value and the Name "www.example.com".
 while the field mapping and all values are illustrated in {{v5fields}}.
 Finally to further illustrate the bit swapping for version and variant and the unused/discarded part of the SHA-1 value see {{v5vervar}}.
 
