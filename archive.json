@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-08T01:19:20.494106+00:00",
+  "timestamp": "2023-10-10T01:14:03.941077+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -3190,7 +3190,7 @@
       "id": "I_kwDOH6Ln3M5wUd0u",
       "title": "Request IANA Registry",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/144",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -3199,8 +3199,8 @@
       ],
       "body": "From Paul Wouters:\r\n```\r\nI am not sure that I agree that no IANA registry is required for hashspace\r\nID's. If another document adds new hashspace IDs, there won't be a single\r\ndocument anymore that lists all of them, or massive duplication. This is\r\nexactly what we use IANA registries for. Reconsider creating a new IANA registry.\r\n```\r\n\r\nIANA registration encompass;\r\n\r\n1. UUID Variants\r\n2. UUID \"sub-versioning\" (as linked to a variant) \r\n   - See them all here: https://github.com/uuid6/uuid6-ietf-draft/issues/26#issuecomment-1062164457\r\n   - Nil/Max UUID\r\n4. UUID Namespace IDs\r\n5. UUID Hashspace IDs",
       "createdAt": "2023-09-06T17:01:02Z",
-      "updatedAt": "2023-10-02T22:15:01Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-09T20:14:42Z",
+      "closedAt": "2023-10-09T20:14:42Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -4540,7 +4540,7 @@
       ],
       "body": "I propose to add this paragraph to the Section 2.1. Update Motivation:\r\n\r\n> 7. Hash-based UUID versions such as UUIDv3 (described in Section 5.3) and UUIDv5 (described in Section 5.5) can change their value over time as the hash function argument can unexpectedly change. This makes it difficult to use them as primary keys, including in the Data Vault modeling method.",
       "createdAt": "2023-09-21T17:02:27Z",
-      "updatedAt": "2023-09-27T20:22:06Z",
+      "updatedAt": "2023-10-09T22:22:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -4710,6 +4710,27 @@
           "body": "I modified the title of this one to cover the topic of the issue. \r\n\r\nTo note, I did make some proposed changes via https://github.com/ietf-wg-uuidrev/rfc4122bis/commit/529860f21c3b4da22210ebd35a083c7c27e4225a but these have been removed for the time being.\r\nThe idea was to call out how v3/v5, with inputs that change could cause bad performance to a database.\r\n\r\nIMO not as an author, I am not sure this is entirely needed but the commit itself covers the point (which is more or less the same as v4 in terms of impact on a database.) So it fit nicely in bullet 1 of update motivations. \r\n\r\nAgain, this time as an author, I want to re-iterate, we should not overthink/over-iterate on this. Weigh the pros/cons of having this in the doc vs not having it in the doc.",
           "createdAt": "2023-09-27T20:21:12Z",
           "updatedAt": "2023-09-27T20:21:12Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "Explanations:\r\n\r\nhttps://github.com/ietf-wg-uuidrev/rfc4122bis/issues/157#issuecomment-1737799318\r\n\r\nhttps://github.com/ietf-wg-uuidrev/rfc4122bis/issues/157#issuecomment-1737958679",
+          "createdAt": "2023-10-09T08:19:11Z",
+          "updatedAt": "2023-10-09T08:19:11Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My take on this is I think it's fair point that database designers are tempted to use hash-based UUIDs because of their existence, but then later find out that this is a bad design choice because inputs they thought would not change actually do.  I've run into this myself a number of times.\r\n\r\nThat said, since we're not removing v3/v5 from the spec, it's physically possible for people to use hash-based IDs in databases - the only control we have over the process is what advice we give in the RFC.  So it boils down to the same thing: what do we want to say about this in the document?\r\n\r\nHow about adding this paragraph to the \"[DBMS and Database Considerations](https://github.com/ietf-wg-uuidrev/rfc4122bis/blob/main/draft-ietf-uuidrev-rfc4122bis.md#dbms-and-database-considerations-database_considerations)\" section:\r\n\r\n**Designers of database schema are cautioned against using hash-based UUIDs as primary keys in tables.  A common issue that has been observed in database schema design is the assumption that a particular value will never change, which then later turns out to be an incorrect assumption.  Postal codes, license or other identification numbers, and numerous other such identifiers, even those which seem or maybe even are unique and unchanging at a given point time, can then later turn out to have edge cases where they need to change, thus invalidating your database structure. In such scenarios it is noted that using any non-hash-based UUID version would have resulted in the field in question being placed somewhere (not as a primary key) that would have been easier to adapt to such changes.  The same arguments that result in the general advice to use surrogate keys instead of natural keys apply here as well.**\r\n\r\n(It would be nice, although not necessarily required, to cite a good source for this advice, something a bit more authoritative than wikipedia.)",
+          "createdAt": "2023-10-09T22:08:19Z",
+          "updatedAt": "2023-10-09T22:22:04Z"
+        },
+        {
+          "author": "bradleypeabody",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sorry, didn't mean to close.  Somehow I hammered the wrong button.",
+          "createdAt": "2023-10-09T22:22:31Z",
+          "updatedAt": "2023-10-09T22:22:31Z"
         }
       ]
     },
@@ -4922,15 +4943,15 @@
       "id": "I_kwDOH6Ln3M5yl-hz",
       "title": "Describe allocation logic of Namespace ID",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/161",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Action item to describe how current Namespace IDs are allocated and methods for adding a new ID following the same logic. \r\nTies into #144 to complete the topic.",
       "createdAt": "2023-10-02T19:44:24Z",
-      "updatedAt": "2023-10-03T20:58:10Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-09T20:14:43Z",
+      "closedAt": "2023-10-09T20:14:43Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -7815,7 +7836,7 @@
       "id": "PR_kwDOH6Ln3M5btYY3",
       "title": "IANA Registry and Registration",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/162",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -7825,17 +7846,19 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-10-02T20:07:38Z",
-      "updatedAt": "2023-10-06T20:19:17Z",
+      "updatedAt": "2023-10-09T20:14:41Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f6d0326a7252f58b13b3c63d4c107e8da1e7fb0e",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "iana-registration",
       "headRefOid": "2f4a1762d58aee9436badf03468bcbb9dec21c16",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-10-09T20:14:41Z",
+      "mergedAt": "2023-10-09T20:14:41Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "ca55a2a0defa236f4058b04bf0a2d1b728764bc8"
+      },
       "comments": [
         {
           "author": "danielmarschall",
@@ -8335,6 +8358,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 168,
+      "id": "PR_kwDOH6Ln3M5cS-xp",
+      "title": "Draft 13 - Misc",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/168",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-09T20:31:01Z",
+      "updatedAt": "2023-10-09T20:32:44Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "ca55a2a0defa236f4058b04bf0a2d1b728764bc8",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-13",
+      "headRefOid": "ae92622abf6a34aed094706407a033cbf1405501",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
