@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-10T01:14:03.941077+00:00",
+  "timestamp": "2023-10-12T01:12:28.307981+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4540,7 +4540,7 @@
       ],
       "body": "I propose to add this paragraph to the Section 2.1. Update Motivation:\r\n\r\n> 7. Hash-based UUID versions such as UUIDv3 (described in Section 5.3) and UUIDv5 (described in Section 5.5) can change their value over time as the hash function argument can unexpectedly change. This makes it difficult to use them as primary keys, including in the Data Vault modeling method.",
       "createdAt": "2023-09-21T17:02:27Z",
-      "updatedAt": "2023-10-09T22:22:31Z",
+      "updatedAt": "2023-10-10T10:45:36Z",
       "closedAt": null,
       "comments": [
         {
@@ -4731,6 +4731,13 @@
           "body": "Sorry, didn't mean to close.  Somehow I hammered the wrong button.",
           "createdAt": "2023-10-09T22:22:31Z",
           "updatedAt": "2023-10-09T22:22:31Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "I would only change the word **hash**-based for **name**-based according to https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/154.",
+          "createdAt": "2023-10-10T10:45:35Z",
+          "updatedAt": "2023-10-10T10:45:35Z"
         }
       ]
     },
