@@ -530,6 +530,7 @@ draft-13
 - Further normalize Namespace verbiage #166
 - Fix Timestamp of Time-Based UUIDv8 Example #164
 - Change RFC8937 and RFC4086 to Informative References #163
+- Discuss why v3/v5 are bad for Database Usage #155
 
 draft-12
 
@@ -1921,7 +1922,12 @@ UUIDs (as opposed to client-generate UUIDs) provides the best UUID monotonicity.
 In addition to UUIDs, additional identifiers MAY be used to ensure integrity
 and feedback.
 
-
+Designers of database schema are cautioned against using name-based UUIDs ({{uuidv3}}/{{uuidv5}}) as primary keys in tables.
+A common issue observed in database schema design is the assumption that a particular value will never change, which then later turns out to be an incorrect assumption.
+Postal codes, license or other identification numbers, and numerous other such identifiers seem unique and unchanging at a given point time; only to later turn out to have edge cases where they need to change.
+The subsequent change of the identifier, used as a "name" input for name-based UUIDs, can invalidate a given database structure.
+In such scenarios it is observed that using any non-name-based UUID version would have resulted in the field in question being placed somewhere that would have been easier to adapt to such changes (primary key excluded from this statement).
+The general advice is to avoid name-based UUID natural keys and instead utilize time-based UUID surrogate keys based on the aforementioned problems detailed in this section.
 
 # IANA Considerations {#IANA}
 All references to {{RFC4122}} in the IANA registries should be replaced with references to this document.
