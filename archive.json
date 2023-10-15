@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-12T01:12:28.307981+00:00",
+  "timestamp": "2023-10-15T01:19:39.412708+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4540,7 +4540,7 @@
       ],
       "body": "I propose to add this paragraph to the Section 2.1. Update Motivation:\r\n\r\n> 7. Hash-based UUID versions such as UUIDv3 (described in Section 5.3) and UUIDv5 (described in Section 5.5) can change their value over time as the hash function argument can unexpectedly change. This makes it difficult to use them as primary keys, including in the Data Vault modeling method.",
       "createdAt": "2023-09-21T17:02:27Z",
-      "updatedAt": "2023-10-10T10:45:36Z",
+      "updatedAt": "2023-10-13T14:58:11Z",
       "closedAt": null,
       "comments": [
         {
@@ -4738,6 +4738,13 @@
           "body": "I would only change the word **hash**-based for **name**-based according to https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/154.",
           "createdAt": "2023-10-10T10:45:35Z",
           "updatedAt": "2023-10-10T10:45:35Z"
+        },
+        {
+          "author": "kyzer-davis",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I took @bradleypeabody's text, modified it a bit to fit the document and added it to the end of the section.\r\nSee https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/168/commits/ea92c30b98719cb0fdd77a29f6fd2a26714575c4\r\n\r\nWill check next week on any text changes. \r\nMy personal deadline for Draft-13 back to IETF is Oct 20th.",
+          "createdAt": "2023-10-13T14:58:11Z",
+          "updatedAt": "2023-10-13T14:58:11Z"
         }
       ]
     },
@@ -8378,13 +8385,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-10-09T20:31:01Z",
-      "updatedAt": "2023-10-09T20:32:44Z",
+      "updatedAt": "2023-10-13T14:56:39Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "ca55a2a0defa236f4058b04bf0a2d1b728764bc8",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "draft-13",
-      "headRefOid": "ae92622abf6a34aed094706407a033cbf1405501",
+      "headRefOid": "ea92c30b98719cb0fdd77a29f6fd2a26714575c4",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
