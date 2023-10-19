@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-15T01:19:39.412708+00:00",
+  "timestamp": "2023-10-19T01:14:41.512120+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -5107,6 +5107,30 @@
       "updatedAt": "2023-10-06T19:56:31Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 169,
+      "id": "I_kwDOH6Ln3M50Hqs7",
+      "title": "Some anti-UUID prejudice and dogma",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/169",
+      "state": "OPEN",
+      "author": "sergeyprokhorenko",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I was just confronted with anti-UUID prejudice and dogma based on mindless copying of information technology. These prejudices and dogmas would seem ridiculous if senior IT managers were not guided by them. Therefore, I would like (before it\u2019s too late) to add the following ideas to the section [6.12. ](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-12.html#section-6.12)[DBMS and Database Considerations](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-12.html#name-dbms-and-database-considera):\r\n\r\n1. Generation is not the only or preferred way to create a UUID. If necessary, UUIDs must be copied. I am talking not only about copying the UUIDs of dimensions or hubs into the fact tables or link/attribute tables associated with them, but also about copying tables along with the UUIDs they contain from one schema or database to another.\r\n2. UUIDs should not be duplicated with human-readable identifiers (codes). However, it is good practice to describe objects denoted by UUIDs if those descriptions are not used as identifiers or for automatic data processing.\r\n3. If UUIDs are used in program code, then it is good practice to add comments to the program code or assign UUID values to variables. However, a more preferable option is to place the UUID along with the business logic in database tables, with the addition of fields that describe the business logic: boolen flags and multivalued conditions of WHEN (SWITCH) control structures.",
+      "createdAt": "2023-10-17T20:08:52Z",
+      "updatedAt": "2023-10-18T21:07:47Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "danielmarschall",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\r\n> 1. Generation is not the only or preferred way to create a UUID. If necessary, UUIDs must be copied. I am talking not only about copying the UUIDs of dimensions or hubs into the fact tables or link/attribute tables associated with them, but also about copying tables along with the UUIDs they contain from one schema or database to another.\r\n\r\nIt might be hard to generalize or describe. Maybe mentioning a few examples will make it clear.\r\nLike, cloning a customer must generate a new UUID for the cloned dataset. But copying the customer from staging environment to production environment, or recovering a dataset from a backup, must preserve the same UUID.\r\n\r\n> 2. UUIDs should not be duplicated with human-readable identifiers (codes). However, it is good practice to describe objects denoted by UUIDs if those descriptions are not used as identifiers or for automatic data processing.\r\n\r\nI don't understand what you mean.\r\n\r\n> 3. If UUIDs are used in program code, then it is good practice to add comments to the program code or assign UUID values to variables.\r\n\r\nAgreed. Though it should be variables **or constants**.\r\n\r\n> However, a more preferable option is to place the UUID along with the business logic in database tables, with the addition of fields that describe the business logic: boolen flags and multivalued conditions of WHEN (SWITCH) control structures.\r\n\r\nHere is an example of a hardcoded UUID in source code:\r\nhttps://github.com/ramsey/uuid/blob/4.x/src/Uuid.php#L70C35-L70C43\r\nThis is perfectly fine. Why should this UUID be taken in a database table?\r\n",
+          "createdAt": "2023-10-18T21:07:46Z",
+          "updatedAt": "2023-10-18T21:07:46Z"
+        }
+      ]
     }
   ],
   "pulls": [
