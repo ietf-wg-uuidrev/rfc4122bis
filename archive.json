@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-19T01:14:41.512120+00:00",
+  "timestamp": "2023-10-22T01:19:39.758614+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -4531,7 +4531,7 @@
       "id": "I_kwDOH6Ln3M5xsKos",
       "title": "Discuss why v3/v5 are bad for Database Usage",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/155",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sergeyprokhorenko",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4540,8 +4540,8 @@
       ],
       "body": "I propose to add this paragraph to the Section 2.1. Update Motivation:\r\n\r\n> 7. Hash-based UUID versions such as UUIDv3 (described in Section 5.3) and UUIDv5 (described in Section 5.5) can change their value over time as the hash function argument can unexpectedly change. This makes it difficult to use them as primary keys, including in the Data Vault modeling method.",
       "createdAt": "2023-09-21T17:02:27Z",
-      "updatedAt": "2023-10-13T14:58:11Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T13:55:31Z",
+      "closedAt": "2023-10-20T13:55:31Z",
       "comments": [
         {
           "author": "sergeyprokhorenko",
@@ -4995,15 +4995,15 @@
       "id": "I_kwDOH6Ln3M5y_JZp",
       "title": "Change RFC8937 and RFC4086 to Informative References",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/163",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jimfenton",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "RFC 8937 is an informative RFC, and therefore not appropriate to be a normative reference from a standards-track RFC. This was pointed out by the Nits tool.\r\n\r\nIMO, the advice on choosing random numbers in Section 6.8 is informative, and [RFC8937] and [RFC4086] should be informative for the same reason as [RANDOM] is.\r\n\r\nOn a related topic, while [RANDOM] seems to be a very good treatment of the subject, I'm a bit concerned about it not being an archival document. What should readers do if it goes away? Find it on Internet Archive?",
       "createdAt": "2023-10-05T22:17:10Z",
-      "updatedAt": "2023-10-06T20:37:41Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T13:55:31Z",
+      "closedAt": "2023-10-20T13:55:31Z",
       "comments": [
         {
           "author": "kyzer-davis",
@@ -5019,15 +5019,15 @@
       "id": "I_kwDOH6Ln3M5y_UIn",
       "title": "Fix Timestamp of Time-Based UUIDv8 Example",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/164",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "danielmarschall",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Hello,\r\n\r\nI have found a mistake in the Appendix C.1 example:\r\n- Timestamp `1645557742000000000` has one zero too many, since we count in 10ns-steps.\r\n- I have also added `(10ns-steps)` after the timestamp, to make it clear which unit it represents.\r\n- Dividing by 10 changes the 64-bit timestamp `0x16D6320C3D4DCC00` into the desired 60-bit timestamp `0x2489E9AD2EE2E00`.\r\n \r\nCan you please include this fix in your current PR?  Thank you.\r\n\r\nWrong:\r\n\r\n```\r\n   Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00\r\n   represented as 0x16D6320C3D4DCC00 or 1645557742000000000\r\n\r\n   -------------------------------------------\r\n   field     bits value\r\n   -------------------------------------------\r\n   custom_a  48   0x6D6320C3D4DC\r\n   ver        4   0x8\r\n   custom_b  12   0xC00\r\n   var        2   0b10\r\n   custom_c  62   0b00, 0xEC932D5F69181C0\r\n   -------------------------------------------\r\n   total     128\r\n   -------------------------------------------\r\n   final: 6D6320C3-D4DC-8C00-8EC9-32D5F69181C0\r\n```\r\n\r\nCorrect:\r\n\r\n```\r\n   Timestamp is Tuesday, February 22, 2022 2:22:22.000000 PM GMT-05:00\r\n   represented as 0x2489E9AD2EE2E00 or 164555774200000000 (10ns-steps).\r\n\r\n   -------------------------------------------\r\n   field     bits value\r\n   -------------------------------------------\r\n   custom_a  48   0x2489E9AD2EE2\r\n   ver        4   0x8\r\n   custom_b  12   0xE00\r\n   var        2   0b10\r\n   custom_c  62   0b00, 0xEC932D5F69181C0\r\n   -------------------------------------------\r\n   total     128\r\n   -------------------------------------------\r\n   final: 2489E9AD-2EE2-8E00-8EC9-32D5F69181C0\r\n\r\n```\r\n",
       "createdAt": "2023-10-05T23:06:43Z",
-      "updatedAt": "2023-10-06T20:46:59Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T13:55:32Z",
+      "closedAt": "2023-10-20T13:55:32Z",
       "comments": [
         {
           "author": "danielmarschall",
@@ -5050,15 +5050,15 @@
       "id": "I_kwDOH6Ln3M5zEd9M",
       "title": "Populating all 128 bits",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/165",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jimfenton",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "For UUID version 3 (Section 5.3) and version 5 (Section 5.5), the document says, \"is used to populate all 128 bits of the UUID layout.\" But the variant and version fields are not populated, so only 122 bits are used. For MD5 (version 3), it should tell us which bits of the MD5 output are used. For version 5, it should specify the correct number of bits.",
       "createdAt": "2023-10-06T16:20:13Z",
-      "updatedAt": "2023-10-06T20:23:12Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T13:55:39Z",
+      "closedAt": "2023-10-20T13:55:39Z",
       "comments": [
         {
           "author": "danielmarschall",
@@ -5081,15 +5081,15 @@
       "id": "I_kwDOH6Ln3M5zFojJ",
       "title": "Further normalize Namespace verbiage",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/166",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Where \"Namespace Value\" is referenced replace with \"Namespace ID Value\"",
       "createdAt": "2023-10-06T19:54:04Z",
-      "updatedAt": "2023-10-06T19:54:04Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T13:55:32Z",
+      "closedAt": "2023-10-20T13:55:32Z",
       "comments": []
     },
     {
@@ -5097,15 +5097,15 @@
       "id": "I_kwDOH6Ln3M5zFpTR",
       "title": "Move citation of Namesapce ID up to first instance in v3/v5",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/167",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Currently:\r\n\r\n> UUIDv3 values are created by computing an MD5 {{RFC1321}}\r\nhash over a given namespace value concatenated with the desired name value\r\nafter both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.\r\n\r\n[...later...]\r\n\r\n> Some common namespace values have been defined via {{namespaces}}.\r\n\r\n\r\nSimply move the `{{namespaces}}` citation up and remove this line:\r\n\r\n> UUIDv3 values are created by computing an MD5 {{RFC1321}}\r\nhash over a given namespace **({{namespaces}})** value concatenated with the desired name value\r\nafter both have been converted to a canonical sequence of octets, as defined by the standards or conventions of its namespace, in network byte order.\r\n\r\nReplicate same change for v5.\r\n",
       "createdAt": "2023-10-06T19:56:31Z",
-      "updatedAt": "2023-10-06T19:56:31Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T13:55:33Z",
+      "closedAt": "2023-10-20T13:55:32Z",
       "comments": []
     },
     {
@@ -5113,15 +5113,15 @@
       "id": "I_kwDOH6Ln3M50Hqs7",
       "title": "Some anti-UUID prejudice and dogma",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/169",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sergeyprokhorenko",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I was just confronted with anti-UUID prejudice and dogma based on mindless copying of information technology. These prejudices and dogmas would seem ridiculous if senior IT managers were not guided by them. Therefore, I would like (before it\u2019s too late) to add the following ideas to the section [6.12. ](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-12.html#section-6.12)[DBMS and Database Considerations](https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-12.html#name-dbms-and-database-considera):\r\n\r\n1. Generation is not the only or preferred way to create a UUID. If necessary, UUIDs must be copied. I am talking not only about copying the UUIDs of dimensions or hubs into the fact tables or link/attribute tables associated with them, but also about copying tables along with the UUIDs they contain from one schema or database to another.\r\n2. UUIDs should not be duplicated with human-readable identifiers (codes). However, it is good practice to describe objects denoted by UUIDs if those descriptions are not used as identifiers or for automatic data processing.\r\n3. If UUIDs are used in program code, then it is good practice to add comments to the program code or assign UUID values to variables. However, a more preferable option is to place the UUID along with the business logic in database tables, with the addition of fields that describe the business logic: boolen flags and multivalued conditions of WHEN (SWITCH) control structures.",
       "createdAt": "2023-10-17T20:08:52Z",
-      "updatedAt": "2023-10-18T21:07:47Z",
-      "closedAt": null,
+      "updatedAt": "2023-10-20T23:38:09Z",
+      "closedAt": "2023-10-20T23:38:09Z",
       "comments": [
         {
           "author": "danielmarschall",
@@ -5129,6 +5129,20 @@
           "body": "\r\n> 1. Generation is not the only or preferred way to create a UUID. If necessary, UUIDs must be copied. I am talking not only about copying the UUIDs of dimensions or hubs into the fact tables or link/attribute tables associated with them, but also about copying tables along with the UUIDs they contain from one schema or database to another.\r\n\r\nIt might be hard to generalize or describe. Maybe mentioning a few examples will make it clear.\r\nLike, cloning a customer must generate a new UUID for the cloned dataset. But copying the customer from staging environment to production environment, or recovering a dataset from a backup, must preserve the same UUID.\r\n\r\n> 2. UUIDs should not be duplicated with human-readable identifiers (codes). However, it is good practice to describe objects denoted by UUIDs if those descriptions are not used as identifiers or for automatic data processing.\r\n\r\nI don't understand what you mean.\r\n\r\n> 3. If UUIDs are used in program code, then it is good practice to add comments to the program code or assign UUID values to variables.\r\n\r\nAgreed. Though it should be variables **or constants**.\r\n\r\n> However, a more preferable option is to place the UUID along with the business logic in database tables, with the addition of fields that describe the business logic: boolen flags and multivalued conditions of WHEN (SWITCH) control structures.\r\n\r\nHere is an example of a hardcoded UUID in source code:\r\nhttps://github.com/ramsey/uuid/blob/4.x/src/Uuid.php#L70C35-L70C43\r\nThis is perfectly fine. Why should this UUID be taken in a database table?\r\n",
           "createdAt": "2023-10-18T21:07:46Z",
           "updatedAt": "2023-10-18T21:07:46Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@sergeyprokhorenko The WG might be open to a document with practical guides for using UUIDs, but this is really too much for the existing document.  Or maybe write a blog or a book... none of what you write can be normative anyway.",
+          "createdAt": "2023-10-19T23:34:32Z",
+          "updatedAt": "2023-10-19T23:34:32Z"
+        },
+        {
+          "author": "sergeyprokhorenko",
+          "authorAssociation": "NONE",
+          "body": "I don't want to delay approval of the RFC. Therefore I want to close this issue. I hope that the real ridiculous case I described will not be repeated by anyone.",
+          "createdAt": "2023-10-20T23:38:09Z",
+          "updatedAt": "2023-10-20T23:38:09Z"
         }
       ]
     }
@@ -8402,24 +8416,26 @@
       "id": "PR_kwDOH6Ln3M5cS-xp",
       "title": "Draft 13 - Misc",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/168",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kyzer-davis",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-10-09T20:31:01Z",
-      "updatedAt": "2023-10-13T14:56:39Z",
+      "updatedAt": "2023-10-20T13:55:30Z",
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "ca55a2a0defa236f4058b04bf0a2d1b728764bc8",
       "headRepository": "ietf-wg-uuidrev/rfc4122bis",
       "headRefName": "draft-13",
       "headRefOid": "ea92c30b98719cb0fdd77a29f6fd2a26714575c4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-10-20T13:55:30Z",
+      "mergedAt": "2023-10-20T13:55:30Z",
+      "mergedBy": "kyzer-davis",
+      "mergeCommit": {
+        "oid": "5d43ce3a5081f82ea197ca40283008c1884c2826"
+      },
       "comments": [],
       "reviews": []
     }
