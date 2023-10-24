@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-13
+docname: draft-ietf-uuidrev-rfc4122bis-14
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -521,6 +521,11 @@ OID
 ## Changelog {#changelog}
 {:removeinrfc}
 
+draft-14
+
+{: spacing="compact"}
+- AD Review #2: Grammar change at the end of 5.1 #172
+
 draft-13
 
 {: spacing="compact"}
@@ -953,10 +958,10 @@ Notes about IEEE 802 derived nodes:
 
 {: spacing="compact"}
 
-- Systems with multiple IEEE 802 addresses, any available one MAY be used.
-- Systems with no IEEE address, a randomly or pseudo-randomly generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
-- Systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
-- Systems utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
+- On systems with multiple IEEE 802 addresses, any available one MAY be used.
+- On systems with no IEEE address, a randomly or pseudo-randomly generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
+- On systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
+- On systems utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
