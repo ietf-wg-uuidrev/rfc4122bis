@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-22T01:19:39.758614+00:00",
+  "timestamp": "2023-10-24T01:14:27.855780+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -5145,6 +5145,54 @@
           "updatedAt": "2023-10-20T23:38:09Z"
         }
       ]
+    },
+    {
+      "number": 170,
+      "id": "I_kwDOH6Ln3M50rztW",
+      "title": "AD Review #2: IANA Subtype Modifications",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/170",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See: https://mailarchive.ietf.org/arch/msg/uuidrev/CmMLIYhIj9_HgMv4YSY-kXBaH5Y/\r\n\r\n- Remove Hex column\r\n- Define range of acceptable version subtypes (0-15) within the IETF / OSF Variant.",
+      "createdAt": "2023-10-23T17:19:17Z",
+      "updatedAt": "2023-10-23T17:19:17Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 171,
+      "id": "I_kwDOH6Ln3M50r1XQ",
+      "title": "AD Review #2: Specify Values for Variant/Subtype Column",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/171",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See: https://mailarchive.ietf.org/arch/msg/uuidrev/CmMLIYhIj9_HgMv4YSY-kXBaH5Y/\r\n\r\nCall out that variant and subtype column are freeform but likely 1 of 4 values that may show up are:\r\n- \"Apollo NCS\"\r\n- \"OSF DCE / IETF\"\r\n- \"Microsoft\"\r\n- \"Reserved for whatever final Variant ends up being\"\r\n\r\nSubtype column is free-form but may end up being only \"version\" or \"family\"",
+      "createdAt": "2023-10-23T17:23:30Z",
+      "updatedAt": "2023-10-23T17:23:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 172,
+      "id": "I_kwDOH6Ln3M50r12u",
+      "title": "AD Review #2: Grammar change at the end of 5.1",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/172",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": " > The bullets at the end of this section don't read clearly.  It might be enough to say \"On systems ...\" for each of them.\r\nSure, that is an easy enough change. If I must modify anything for the aforementioned topics, I can sneak this in else I am not sure a whole draft-14 just for that small change is warranted.\r\n\r\nI'd rather send this with that clarification, since these other things need adjustment anyway.\r\n\r\nSee: https://mailarchive.ietf.org/arch/msg/uuidrev/CmMLIYhIj9_HgMv4YSY-kXBaH5Y/",
+      "createdAt": "2023-10-23T17:24:24Z",
+      "updatedAt": "2023-10-23T17:24:24Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
