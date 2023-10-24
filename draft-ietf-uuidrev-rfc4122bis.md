@@ -524,6 +524,8 @@ OID
 draft-14
 
 {: spacing="compact"}
+- AD Review #2: IANA Subtype Modifications #170
+- AD Review #2: Specify Values for Variant/Subtype Column #171
 - AD Review #2: Grammar change at the end of 5.1 #172
 
 draft-13
@@ -1952,24 +1954,30 @@ This specification defines the "UUID Subtype" registry for common, widely used U
 
 {{ianaSubtypes}} should be used as-is for this registry with "This document" replaced as required.
 
-| Name                           | ID | Hex | Subtype | Variant        | Reference                  |
-| Unused                         |  0 | 0x0 | version | OSF DCE / IETF | This document              |
-| Gregorian Time-based           |  1 | 0x1 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| DCE Security                   |  2 | 0x2 | version | OSF DCE / IETF | {{C309}}, {{C311}}         |
-| MD5 Name-based                 |  3 | 0x3 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| Random                         |  4 | 0x4 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| SHA-1 Name-based               |  5 | 0x5 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| Reordered Gregorian Time-based |  6 | 0x6 | version | OSF DCE / IETF | This document              |
-| Unix Time-based                |  7 | 0x7 | version | OSF DCE / IETF | This document              |
-| Custom                         |  8 | 0x8 | version | OSF DCE / IETF | This document              |
+| Name                           | ID | Subtype | Variant        | Reference                  |
+| Gregorian Time-based           |  1 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| DCE Security                   |  2 | version | OSF DCE / IETF | {{C309}}, {{C311}}         |
+| MD5 Name-based                 |  3 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Random                         |  4 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| SHA-1 Name-based               |  5 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Reordered Gregorian Time-based |  6 | version | OSF DCE / IETF | This document              |
+| Unix Time-based                |  7 | version | OSF DCE / IETF | This document              |
+| Custom                         |  8 | version | OSF DCE / IETF | This document              |
 {: #ianaSubtypes title='IANA UUID Subtypes'}
 
 This table may be extended by the "Standards Action" policy, per {{RFC8126}}.
 
+For designated experts:
+
+{: spacing="compact"}
+- The minimum and maximum "ID" value for the subtype "version" within the "OSF DCE / IETF" variant is 0 through 15. The versions, within {{table1}}, described as "Reserved for future definition" or "unused" are omitted from this IANA registry until properly defined.
+- The "Subtype" column is free-form text however at the time of this publication only "version" and "family" are known UUID subtypes. The "family" subtype is part of the "Apollo NCS" variant space (Both are outside the scope of this specification). The Microsoft variant may have subtyping mechanisms defined however they are unknown and outside of the scope of this specification. Similarly, the final "Reserved for future definition" variant may introduce new subtyping logic at a future date. Subtype IDs are permitted to overlap, that is, an ID of "1" may exist in multiple variant spaces.
+- The "Variant" column is free-form text however it is likely one of four values will be included. The first three are "OSF DCE / IETF", "Apollo NCS", "Microsoft". The final variant value belongs to the "Reserved for future definition" variant and may introduce a new name at a future date.
+
 ## IANA UUID Namespace ID Registry and Registration {#iana3}
 This specification defines the "UUID Namespace ID" registry for common, widely used Namespace ID values.
 
-The full details of this registration are found in {{namespaces}} section.
+The full details of this registration, including information for designated experts, can be found in {{namespaces}}.
 
 # Security Considerations {#Security}
 
