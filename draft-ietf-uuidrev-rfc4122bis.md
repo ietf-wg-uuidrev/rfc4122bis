@@ -1138,7 +1138,7 @@ sha1_low:
 UUID version 6 is a field-compatible version of UUIDv1 {{uuidv1}}, reordered for improved
 DB locality.
 It is expected that UUIDv6 will primarily be used in contexts where UUIDv1 is used.
-Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 instead.
+Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 {{uuidv7}} instead.
 
 Instead of splitting the timestamp into the low, mid, and high sections from
 UUIDv1, UUIDv6 changes this sequence so timestamp bytes are stored from most
