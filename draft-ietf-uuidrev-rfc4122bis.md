@@ -498,13 +498,13 @@ SHA-1
 : Secure Hash Algorithm 1 with message digest of 160 bits
 
 SHA-224
-: Secure Hash Algorithm with message digest size of 224 bits
+: Secure Hash Algorithm 2 with message digest size of 224 bits
 
 SHA-256
-: Secure Hash Algorithm with message digest size of 256 bits
+: Secure Hash Algorithm 2 with message digest size of 256 bits
 
 SHA-512
-: Secure Hash Algorithm with message digest size of 512 bits
+: Secure Hash Algorithm 2 with message digest size of 512 bits
 
 SHA-3
 : Secure Hash Algorithm 3
@@ -527,6 +527,7 @@ draft-14
 - AD Review #2: IANA Subtype Modifications #170
 - AD Review #2: Specify Values for Variant/Subtype Column #171
 - AD Review #2: Grammar change at the end of 5.1 #172
+- SHA and Integer Verbiage clarifications #174
 
 draft-13
 
@@ -771,7 +772,7 @@ f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleStringUUID title='Example String UUID format'}
 
-The same UUID from {{sampleStringUUID}} is represented in Binary ({{sampleBinaryUUID}}), Integer ({{sampleIntegerUUID}}) and as a URN ({{sampleURNUUID}}) defined by {{RFC8141}}.
+The same UUID from {{sampleStringUUID}} is represented in Binary ({{sampleBinaryUUID}}), Unsigned Integer ({{sampleIntegerUUID}}) and as a URN ({{sampleURNUUID}}) defined by {{RFC8141}}.
 
 ~~~~
 111110000001110101001111101011100111110111101100000100011101000\
@@ -782,7 +783,7 @@ The same UUID from {{sampleStringUUID}} is represented in Binary ({{sampleBinary
 ~~~~
 329800735698586629295641978511506172918
 ~~~~
-{: #sampleIntegerUUID title='Example Integer UUID (shown as a decimal number)'}
+{: #sampleIntegerUUID title='Example Unsigned Integer UUID (shown as a decimal number)'}
 
 ~~~~
 urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
