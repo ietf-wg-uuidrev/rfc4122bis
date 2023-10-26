@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-24T01:14:27.855780+00:00",
+  "timestamp": "2023-10-26T01:13:04.880064+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -5193,6 +5193,22 @@
       "updatedAt": "2023-10-23T17:24:24Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 174,
+      "id": "I_kwDOH6Ln3M506ebk",
+      "title": "SHA and Integer Verbiage clarifications",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/174",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "3.2, add \"2\" to SHA-2.\r\n4, add \"unsigned\" to integer.",
+      "createdAt": "2023-10-25T13:52:51Z",
+      "updatedAt": "2023-10-25T13:52:51Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -8484,6 +8500,32 @@
       "mergeCommit": {
         "oid": "5d43ce3a5081f82ea197ca40283008c1884c2826"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 173,
+      "id": "PR_kwDOH6Ln3M5dpD_b",
+      "title": "Draft 14",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/pull/173",
+      "state": "OPEN",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "IANA items from the AD Review",
+      "createdAt": "2023-10-24T13:35:29Z",
+      "updatedAt": "2023-10-25T13:55:53Z",
+      "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "baseRefName": "main",
+      "baseRefOid": "f244d39acda6d0ecf09a23c84eec7e0febcb6d7e",
+      "headRepository": "ietf-wg-uuidrev/rfc4122bis",
+      "headRefName": "draft-14",
+      "headRefOid": "09fe4d2ca30bc84f58edfa3109ec76f51ddda968",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
