@@ -528,6 +528,7 @@ draft-14
 - AD Review #2: Specify Values for Variant/Subtype Column #171
 - AD Review #2: Grammar change at the end of 5.1 #172
 - SHA and Integer Verbiage clarifications #174
+- Disclaimer in nil/max that these do not fall into IETF variants #175
 
 draft-13
 
@@ -1346,6 +1347,8 @@ The nil UUID is special form of UUID that is specified to have all
 
 A Nil UUID value can be useful to communicate the absence of any other UUID value in situations that otherwise require or use a 128 bit UUID.  A Nil UUID can express the concept "no such value here". Thus it is reserved for such use as needed for implementation-specific situations.
 
+Note that the Nil UUID value falls within the range of the Apollo NCS variant as per the first row of {{table1}} rather than the variant defined by this document.
+
 ## Max UUID {#maxuuid}
 
 The Max UUID is a special form of UUID that is specified to have all 128 bits
@@ -1358,6 +1361,8 @@ FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF
 {: title='Max UUID Format'}
 
 A Max UUID value can be used as a sentinel value in situations where a 128 bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
+
+Note that the Max UUID value falls within the range of the "yet to be defined" future UUID variant as per the last row of {{table1}} rather than the variant defined by this document.
 
 # UUID Best Practices {#uuid_best_practices}
 
