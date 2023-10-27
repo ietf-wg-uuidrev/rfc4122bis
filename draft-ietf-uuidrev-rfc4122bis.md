@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ietf-uuidrev-rfc4122bis-13
+docname: draft-ietf-uuidrev-rfc4122bis-14
 cat: std
 obsoletes: '4122'
 consensus: 'true'
@@ -498,13 +498,13 @@ SHA-1
 : Secure Hash Algorithm 1 with message digest of 160 bits
 
 SHA-224
-: Secure Hash Algorithm with message digest size of 224 bits
+: Secure Hash Algorithm 2 with message digest size of 224 bits
 
 SHA-256
-: Secure Hash Algorithm with message digest size of 256 bits
+: Secure Hash Algorithm 2 with message digest size of 256 bits
 
 SHA-512
-: Secure Hash Algorithm with message digest size of 512 bits
+: Secure Hash Algorithm 2 with message digest size of 512 bits
 
 SHA-3
 : Secure Hash Algorithm 3
@@ -520,6 +520,15 @@ OID
 
 ## Changelog {#changelog}
 {:removeinrfc}
+
+draft-14
+
+{: spacing="compact"}
+- AD Review #2: IANA Subtype Modifications #170
+- AD Review #2: Specify Values for Variant/Subtype Column #171
+- AD Review #2: Grammar change at the end of 5.1 #172
+- SHA and Integer Verbiage clarifications #174
+- Disclaimer in nil/max that these do not fall into IETF variants #175
 
 draft-13
 
@@ -764,7 +773,7 @@ f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ~~~~
 {: #sampleStringUUID title='Example String UUID format'}
 
-The same UUID from {{sampleStringUUID}} is represented in Binary ({{sampleBinaryUUID}}), Integer ({{sampleIntegerUUID}}) and as a URN ({{sampleURNUUID}}) defined by {{RFC8141}}.
+The same UUID from {{sampleStringUUID}} is represented in Binary ({{sampleBinaryUUID}}), Unsigned Integer ({{sampleIntegerUUID}}) and as a URN ({{sampleURNUUID}}) defined by {{RFC8141}}.
 
 ~~~~
 111110000001110101001111101011100111110111101100000100011101000\
@@ -775,7 +784,7 @@ The same UUID from {{sampleStringUUID}} is represented in Binary ({{sampleBinary
 ~~~~
 329800735698586629295641978511506172918
 ~~~~
-{: #sampleIntegerUUID title='Example Integer UUID (shown as a decimal number)'}
+{: #sampleIntegerUUID title='Example Unsigned Integer UUID (shown as a decimal number)'}
 
 ~~~~
 urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
@@ -953,10 +962,10 @@ Notes about IEEE 802 derived nodes:
 
 {: spacing="compact"}
 
-- Systems with multiple IEEE 802 addresses, any available one MAY be used.
-- Systems with no IEEE address, a randomly or pseudo-randomly generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
-- Systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
-- Systems utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
+- On systems with multiple IEEE 802 addresses, any available one MAY be used.
+- On systems with no IEEE address, a randomly or pseudo-randomly generated value MUST be used; see {{unguessability}} and {{unidentifiable}}.
+- On systems utilizing a 64 bit MAC address the least significant, right-most 48 bits MAY be used.
+- On systems utilizing an IEEE 802.15.4 16 bit address SHOULD instead utilize their 64 bit MAC address where least significant, right-most 48 bits MAY be used. An alternative is to generate 32 bits of random data and postfix at the end of the 16 bit MAC address to create a 48 bit value.
 
 ## UUID Version 2 {#uuidv2}
 UUID version 2 is known as DCE Security UUIDs {{C309}} and {{C311}}.
@@ -1133,7 +1142,7 @@ sha1_low:
 UUID version 6 is a field-compatible version of UUIDv1 {{uuidv1}}, reordered for improved
 DB locality.
 It is expected that UUIDv6 will primarily be used in contexts where UUIDv1 is used.
-Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 instead.
+Systems that do not involve legacy UUIDv1 SHOULD use UUIDv7 {{uuidv7}} instead.
 
 Instead of splitting the timestamp into the low, mid, and high sections from
 UUIDv1, UUIDv6 changes this sequence so timestamp bytes are stored from most
@@ -1338,6 +1347,8 @@ The nil UUID is special form of UUID that is specified to have all
 
 A Nil UUID value can be useful to communicate the absence of any other UUID value in situations that otherwise require or use a 128 bit UUID.  A Nil UUID can express the concept "no such value here". Thus it is reserved for such use as needed for implementation-specific situations.
 
+Note that the Nil UUID value falls within the range of the Apollo NCS variant as per the first row of {{table1}} rather than the variant defined by this document.
+
 ## Max UUID {#maxuuid}
 
 The Max UUID is a special form of UUID that is specified to have all 128 bits
@@ -1350,6 +1361,8 @@ FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF
 {: title='Max UUID Format'}
 
 A Max UUID value can be used as a sentinel value in situations where a 128 bit UUID is required but a concept such as "end of UUID list" needs to be expressed, and is reserved for such use as needed for implementation-specific situations.
+
+Note that the Max UUID value falls within the range of the "yet to be defined" future UUID variant as per the last row of {{table1}} rather than the variant defined by this document.
 
 # UUID Best Practices {#uuid_best_practices}
 
@@ -1947,24 +1960,30 @@ This specification defines the "UUID Subtype" registry for common, widely used U
 
 {{ianaSubtypes}} should be used as-is for this registry with "This document" replaced as required.
 
-| Name                           | ID | Hex | Subtype | Variant        | Reference                  |
-| Unused                         |  0 | 0x0 | version | OSF DCE / IETF | This document              |
-| Gregorian Time-based           |  1 | 0x1 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| DCE Security                   |  2 | 0x2 | version | OSF DCE / IETF | {{C309}}, {{C311}}         |
-| MD5 Name-based                 |  3 | 0x3 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| Random                         |  4 | 0x4 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| SHA-1 Name-based               |  5 | 0x5 | version | OSF DCE / IETF | {{RFC4122}}, This document |
-| Reordered Gregorian Time-based |  6 | 0x6 | version | OSF DCE / IETF | This document              |
-| Unix Time-based                |  7 | 0x7 | version | OSF DCE / IETF | This document              |
-| Custom                         |  8 | 0x8 | version | OSF DCE / IETF | This document              |
+| Name                           | ID | Subtype | Variant        | Reference                  |
+| Gregorian Time-based           |  1 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| DCE Security                   |  2 | version | OSF DCE / IETF | {{C309}}, {{C311}}         |
+| MD5 Name-based                 |  3 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Random                         |  4 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| SHA-1 Name-based               |  5 | version | OSF DCE / IETF | {{RFC4122}}, This document |
+| Reordered Gregorian Time-based |  6 | version | OSF DCE / IETF | This document              |
+| Unix Time-based                |  7 | version | OSF DCE / IETF | This document              |
+| Custom                         |  8 | version | OSF DCE / IETF | This document              |
 {: #ianaSubtypes title='IANA UUID Subtypes'}
 
 This table may be extended by the "Standards Action" policy, per {{RFC8126}}.
 
+For designated experts:
+
+{: spacing="compact"}
+- The minimum and maximum "ID" value for the subtype "version" within the "OSF DCE / IETF" variant is 0 through 15. The versions, within {{table1}}, described as "Reserved for future definition" or "unused" are omitted from this IANA registry until properly defined.
+- The "Subtype" column is free-form text however at the time of this publication only "version" and "family" are known UUID subtypes. The "family" subtype is part of the "Apollo NCS" variant space (Both are outside the scope of this specification). The Microsoft variant may have subtyping mechanisms defined however they are unknown and outside of the scope of this specification. Similarly, the final "Reserved for future definition" variant may introduce new subtyping logic at a future date. Subtype IDs are permitted to overlap, that is, an ID of "1" may exist in multiple variant spaces.
+- The "Variant" column is free-form text however it is likely one of four values will be included. The first three are "OSF DCE / IETF", "Apollo NCS", "Microsoft". The final variant value belongs to the "Reserved for future definition" variant and may introduce a new name at a future date.
+
 ## IANA UUID Namespace ID Registry and Registration {#iana3}
 This specification defines the "UUID Namespace ID" registry for common, widely used Namespace ID values.
 
-The full details of this registration are found in {{namespaces}} section.
+The full details of this registration, including information for designated experts, can be found in {{namespaces}}.
 
 # Security Considerations {#Security}
 
