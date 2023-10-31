@@ -529,6 +529,7 @@ draft-14
 - AD Review #2: Grammar change at the end of 5.1 #172
 - SHA and Integer Verbiage clarifications #174
 - Disclaimer in nil/max that these do not fall into IETF variants #175
+- Fix v1/v6 final UUID in test vector #176
 
 draft-13
 
@@ -2101,7 +2102,7 @@ node       48   0x9F6BDECED846
 -------------------------------------------
 total      128
 -------------------------------------------
-final: C232AB00-9414-11EC-B3C8-9E6BDECED846
+final: C232AB00-9414-11EC-B3C8-9F6BDECED846
 ~~~~
 {: title='UUIDv1 Example Test Vector'}
 
@@ -2227,7 +2228,7 @@ node        48   0x9F6BDECED846
 -------------------------------------------
 total       128
 -------------------------------------------
-final: 1EC9414C-232A-6B00-B3C8-9E6BDECED846
+final: 1EC9414C-232A-6B00-B3C8-9F6BDECED846
 ~~~~
 {: title='UUIDv6 Example Test Vector'}
 
@@ -2240,14 +2241,14 @@ millisecond precision to fill the first 48 bits.
 rand_a and rand_b are filled with random data.
 
 The timestamp is Tuesday, February 22, 2022 2:22:22.00 PM GMT-05:00 represented
-as 0x17F22E279B0 or 1645557742000
+as 0x017F22E279B0 or 1645557742000
 
 
 ~~~~
 -------------------------------------------
 field       bits value
 -------------------------------------------
-unix_ts_ms  48   0x17F22E279B0
+unix_ts_ms  48   0x017F22E279B0
 ver          4   0x7
 rand_a      12   0xCC3
 var          2   0b10
