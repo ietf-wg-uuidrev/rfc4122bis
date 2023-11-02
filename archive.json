@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-10-29T01:18:46.956015+00:00",
+  "timestamp": "2023-11-02T01:14:43.025611+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -5224,6 +5224,22 @@
       "createdAt": "2023-10-27T14:45:53Z",
       "updatedAt": "2023-10-27T20:45:14Z",
       "closedAt": "2023-10-27T20:45:14Z",
+      "comments": []
+    },
+    {
+      "number": 176,
+      "id": "I_kwDOH6Ln3M51cqIQ",
+      "title": "Fix v1/v6 final UUID in test vector",
+      "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/176",
+      "state": "CLOSED",
+      "author": "kyzer-davis",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\nAppendix A. Test  Vectors says\r\n\r\nBoth UUIDv1 and UUIDv6 utilize the same values in clock_seq, and node.\r\nAll of which have been generated with random data. For the randomized node, the least significant bit of the first octet is set to a value of\r\n1 as perSection 6.10. Thus the starting value 0x9E6BDECED846 was changed to 0x9F6BDECED846.\r\n\r\nthen\r\n\r\nA.1. Example of a UUIDv1 Value\r\n\r\n-------------------------------------------\r\nfield      bits value\r\n-------------------------------------------\r\ntime_low   32   0xC232AB00\r\ntime_mid   16   0x9414\r\nver         4   0x1\r\ntime_high  12   0x1EC\r\nvar         2   0b10\r\nclock_seq  14   0b11, 0x3C8\r\nnode       48   0x9F6BDECED846\r\n-------------------------------------------\r\ntotal      128\r\n-------------------------------------------\r\nfinal: C232AB00-9414-11EC-B3C8-9E6BDECED846\r\n\r\nIt seems that node in the source and in the final are reversed, likely it should be:\r\n\r\nnode       48   0x9E6BDECED846\r\n\r\nand\r\n\r\nfinal: C232AB00-9414-11EC-B3C8-9F6BDECED846\r\n```",
+      "createdAt": "2023-10-31T13:12:53Z",
+      "updatedAt": "2023-10-31T13:23:46Z",
+      "closedAt": "2023-10-31T13:23:46Z",
       "comments": []
     }
   ],
