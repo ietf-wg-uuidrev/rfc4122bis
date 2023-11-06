@@ -1,4 +1,4 @@
-# A Universally Unique IDentifier (UUID) URN Namespace
+# Universally Unique IDentifiers (UUID)
 
 This is the working area for the IETF [UUIDREV Working Group](https://datatracker.ietf.org/wg/uuidrev/documents/) Internet-Draft, "A Universally Unique IDentifier (UUID) URN Namespace".
 
@@ -9,16 +9,16 @@ This is the working area for the IETF [UUIDREV Working Group](https://datatracke
 # Latest
 ```
 Name:     draft-ietf-uuidrev-rfc4122bis
-Revision: 13
+Revision: 14
 Title:    Universally Unique IDentifiers (UUID)
-Date:     2023-10-20
+Date:     2023-11-06
 Group:    uuidrev
 Pages:    58
-URL:      https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-13.txt
+URL:      https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-14.txt
 Status:   https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/
-HTML:     https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-13.html
+HTML:     https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-14.html
 HTMLized: https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis
-Diff:     https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-13
+Diff:     https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-14
 ```
 
 ## Contributing
