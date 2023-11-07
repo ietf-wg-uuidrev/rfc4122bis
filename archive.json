@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-11-02T01:14:43.025611+00:00",
+  "timestamp": "2023-11-07T01:16:58.797726+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -327,14 +327,14 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Makes sense. I agree some clarification is necessary because Table 1 looks to conflict with Max UUID, but by the way, do we need to limit the variant field to one byte rather than the remaining 64 bits? Even after our great-great-grandchildren consume `0b1111_1110`, they can still define `0b1111_1111_0`. The variant field is variable-length by its nature, so perhaps it is more helpful to describe the `10` technique explicitly. I haven't come up with a good idea to do this, but how about something like this?\r\n\r\n| Msb0 | Msb1 | Msb2 | Msb3 | Description                                            |\r\n| ---- | ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | x    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | 0    | Reserved for a future variant.                        |\r\n| 1    | 1    | 1    | 1    | Reserved for future variants and Max UUID.           |\r\n\r\nOr this?\r\n\r\n| Msb0 | Msb1 | Msb2 | Description                                            |\r\n| ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | Reserved for future variants and Max UUID.           |\r\n",
           "createdAt": "2022-11-02T12:41:29Z",
           "updatedAt": "2022-11-02T12:51:01Z"
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "We could also say \"Reserved for the next future variant.\" for `0b1110`.",
           "createdAt": "2022-11-02T12:58:19Z",
           "updatedAt": "2022-11-02T12:58:19Z"
@@ -355,7 +355,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "We can just forget about the family field because, as long as Msb0 is set to 1, no ID will collide with `0b0` variant values. Technically, the `0b1` authors could have done whatever they liked using the remaining 63 bits, but they generously gave up Msb1 so the future authors could use `0b11`. We should pay it forward; those who claim `0b111` should stick to `0b1110` and reserve `0b1111` for future authors. Similarly, `0b1111` should reserve `0b1111_1`, `0b1111_1` should reserve `0b1111_11`, `0b1111_11` should reserve `0b1111_111`, and so on. Accordingly, the table should look like this in full:\r\n\r\n| Msb0 | Msb1 | Msb2 | Msb3 | Msb4 | Msb5 | Msb6 | ... | Msb63 | Msb64 | Description                                            |\r\n| ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- | ----- | ----- | ------------------------------------------------------ |\r\n| 0    | x    | x    | x    | x    | x    | x    | ... | x     | x     | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | x    | x    | x    | x    | ... | x     | x     | The variant specified in this document.                |\r\n| 1    | 1    | 0    | x    | x    | x    | x    | ... | x     | x     | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | 0    | x    | x    | x    | ... | x     | x     | Reserved for the 1st future variant.                   |\r\n| 1    | 1    | 1    | 1    | 0    | x    | x    | ... | x     | x     | Reserved for the 2nd future variant.                   |\r\n| 1    | 1    | 1    | 1    | 1    | 0    | x    | ... | x     | x     | Reserved for the 3rd future variant.                   |\r\n| 1    | 1    | 1    | 1    | 1    | 1    | 0    | ... | x     | x     | Reserved for the 4th future variant.                   |\r\n| ...  | ...  | ...  | ...  | ...  | ...  | ...  | ... | ...   | ...   | ...                                                    |\r\n| 1    | 1    | 1    | 1    | 1    | 1    | 1    | ... | 1     | 0     | Reserved for the last future variant.                  |\r\n| 1    | 1    | 1    | 1    | 1    | 1    | 1    | ... | 1     | 1     | Reserved for Max UUID.                                 |\r\n",
           "createdAt": "2022-11-02T17:40:41Z",
           "updatedAt": "2022-11-02T17:40:41Z"
@@ -369,7 +369,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Perhaps, at this stage, we don't need to say in the RFC what the `0b111` taker should do. So, just keeping Table 1 as is or the following should be enough:\r\n\r\n| Msb0 | Msb1 | Msb2 | Description                                            |\r\n| ---- | ---- | ---- | ------------------------------------------------------ |\r\n| 0    | x    | x    | Reserved, NCS backward compatibility.                  |\r\n| 1    | 0    | x    | The variant specified in this document.                |\r\n| 1    | 1    | 0    | Reserved, Microsoft Corporation backward compatibility |\r\n| 1    | 1    | 1    | Reserved for future variants and Max UUID.             |\r\n\r\nIt doesn't really make sense to reserve one byte and order the next variant author to use `0b1110_0000`. It wastes precious five bits for forward compatibility, which is too costly in my opinion. A new variant will be rarely necessary; the `0b10` variant is sufficient unless there is a serious need to remove the `ver` field, so we don't need to declare a large `var` space right now. Let's just leave it to the `0b111` takers like: https://github.com/uuid6/uuid6-ietf-draft/issues/26\r\n",
           "createdAt": "2022-11-02T22:47:56Z",
           "updatedAt": "2022-11-02T22:47:56Z"
@@ -383,7 +383,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> I think your last row in the table is a very bad thing to do.\r\n\r\nCan you please elaborate on this point?\r\n\r\n> Also, you contradict yourself by saying that my way is too costly, but we also don't need many variants.\r\n\r\nNot contradictory. Because we don't need many variants, reserving one byte for `var` is too costly.\r\n\r\n> Note that version can only hold 16 values, where half of it is already taken. Also, https://github.com/uuid6/uuid6-ietf-draft/issues/26 is out of scope.\r\n\r\nI'm afraid you are confusing versions and variants. Versions are specific to the `0b10` variant and have nothing to do with the future variants. If the future `0b111` authors believe they need sub-variants, they will allocate another version bits somewhere in the 128-bit space. If not, the version field will simply go away and the four bits will be utilized differently. We should let them decide, as we can't foresee the future.\r\n\r\nOn the other hand, if the future authors are considerate enough of the future of UUID spec, they will likely take the `0b1110` variant so the next future authors can take `0b1111`, just as https://github.com/uuid6/uuid6-ietf-draft/issues/26 tried to. E variant is out of scope, but the discussion clearly demonstrates how the `var` field can be utilized in the future. Similarly, `0b1111` takers are likely to reserve `0b1111_1`, `0b1111_1` takers to reserve `0b1111_11`, and so on. In this way, the `var` field can be variable-length, which might grows over many decades. I don't mean we should reserve 64 variants right now.\r\n\r\nI now think it's a good idea to add one paragraph below Table 1 stating the above intention to guide future authors like:\r\n\r\n> Future RFC authors who consume the reserved \"111\" variant are encouraged to (or, simply, SHOULD) define the \"1110\" variant and reserve the \"1111\" variant so that the next future authors can extend the UUID specification using the \"1111\" variant as well as the new variant does not conflict with the Max UUID.\r\n\r\nWe can only encourage (but not enforce) this rule because, as long as `var` starts with `0b111`, the future authors can do whatever they want without conflicting with the old standards. We cannot enforce the \"one byte `var`\" rule either for the same reason.\r\n",
           "createdAt": "2022-11-04T00:23:17Z",
           "updatedAt": "2022-11-04T00:23:17Z"
@@ -425,7 +425,7 @@
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/17",
       "state": "CLOSED",
       "author": "oittaa",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#appendix-C.6\r\n\r\nThere might be a typo in final UUIDv7 test vector.\r\n\r\n```\r\n   -------------------------------\r\n   field      bits    value\r\n   -------------------------------\r\n   unix_ts_ms   48    0x17F22E279B0\r\n   ver           4    0x7\r\n   rand_a       12    0xCC3\r\n   var           2    b10\r\n   rand_b       62    b01, 0x8C4DC0C0C07398F\r\n   -------------------------------\r\n   total       128\r\n   -------------------------------\r\n   final: 017F22E2-79B0-7CC3-98C4-DC0C0C07398F\r\n```\r\n\r\nI think it actually yields 017F22E2-79B0-7CC3-***8***8C4-DC0C0C07398F.\r\n\r\nHere's how I generated it simply from Python command line.\r\n\r\n```python\r\nhex(0x8C4DC0C0C07398F | 2 << 62 | 0xCC3 << 62 + 2 | 0x7 << 62 + 2 + 12 | 0x17F22E279B0 << 62 + 2 + 12 + 4)\r\n'0x17f22e279b07cc388c4dc0c0c07398f'\r\n```\r\n\r\nFor example the version 6 works as expected and matches the result `1EC9414C-232A-6B00-B3C8-9E6BDECED846`.\r\n\r\n```\r\n   -----------------------------------------------\r\n   field                 bits    value\r\n   -----------------------------------------------\r\n   time_high              32     0x1EC9414C\r\n   time_mid               16     0x232A\r\n   time_low_and_version   16     0x6B00\r\n   clk_seq_hi_res          8     0xB3\r\n   clock_seq_low           8     0xC8\r\n   node                   48     0x9E6BDECED846\r\n   -----------------------------------------------\r\n   total                 128\r\n   -----------------------------------------------\r\n   final_hex: 1EC9414C-232A-6B00-B3C8-9E6BDECED846\r\n```\r\n\r\n```python\r\nhex(0x9E6BDECED846 | 0xC8 << 48 | 0xB3 << 48 + 8 | 0x6B00 << 48 + 8 + 8 | 0x232A << 48 + 8 + 8 + 16 | 0x1EC9414C << 48 + 8 + 8 + 16 + 16)\r\n'0x1ec9414c232a6b00b3c89e6bdeced846'\r\n```",
@@ -435,7 +435,7 @@
       "comments": [
         {
           "author": "oittaa",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Oh sorry, I didn't notice `b01` part for some reason. The following works as expected.\r\n\r\n```python\r\n>>> hex(0x8C4DC0C0C07398F | 1 << 60 | 2 << 62 | 0xCC3 << 62 + 2 | 0x7 << 62 + 2 + 12 | 0x17F22E279B0 << 62 + 2 + 12 + 4)\r\n'0x17f22e279b07cc398c4dc0c0c07398f'\r\n```",
           "createdAt": "2022-10-25T16:42:46Z",
           "updatedAt": "2022-10-25T16:42:46Z"
@@ -503,7 +503,7 @@
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/21",
       "state": "CLOSED",
       "author": "LiosK",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "Consensus Requested"
@@ -1026,7 +1026,7 @@
       "comments": [
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> Add Text and steer towards v8 as a use case\r\n\r\n+1",
           "createdAt": "2023-01-20T23:04:08Z",
           "updatedAt": "2023-01-20T23:04:08Z"
@@ -1075,7 +1075,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "One possible approach I'd suggest:\r\n\r\n### Predefine hash algorithm UUIDs and prepend one to name space ID and name\r\n\r\n```python\r\nimport hashlib\r\nimport uuid\r\n\r\n\r\n# predefined by RFC 4122\r\nNAMESPACE_DNS = uuid.UUID(\"6ba7b810-9dad-11d1-80b4-00c04fd430c8\")\r\n\r\n# predefined by new RFC (UUIDv4s I just made up for example)\r\nALGORITHM_SHA256 = uuid.UUID(\"3fb32780-953c-4464-9cfd-e85dbbe9843d\")\r\nALGORITHM_SHA512 = uuid.UUID(\"e6800581-f333-484b-8778-601ff2b58da8\")\r\n\r\n\r\n# concatenate hash_algorithm_uuid + namespace_uuid + name; then hash\r\nsha256 = hashlib.new(\"sha256\")\r\nsha256.update(ALGORITHM_SHA256.bytes)\r\nsha256.update(NAMESPACE_DNS.bytes)\r\nsha256.update(b\"example.com.\")\r\nprint(\"SHA-256:\", sha256.hexdigest()[0:32], \"(truncated)\")\r\n\r\n# ditto\r\nsha512 = hashlib.new(\"sha512\")\r\nsha512.update(ALGORITHM_SHA512.bytes)\r\nsha512.update(NAMESPACE_DNS.bytes)\r\nsha512.update(b\"example.com.\")\r\nprint(\"SHA-512:\", sha512.hexdigest()[0:32], \"(truncated)\")\r\n\r\n# output:\r\n# SHA-256: 564315c658dc181edb907cfa7d55605b (truncated)\r\n# SHA-512: b096e1610da091aa73cdfe4d1132a5aa (truncated)\r\n```\r\n\r\nThis approach ensures that the inputs to hash algorithms are unique per algorithm no matter what the namespace and name are, though such consideration could be meaningless for collision resistance because different hash algorithms are expected to produce very different sequences of bytes.\r\n\r\nThis approach doesn't allow us to identify the hash algorithm used by a given name-based UUID, but I'm not convinced that such reverse engineering is really necessary. It is anyway not possible to reproduce a name-based UUID without knowledge of the namespace ID and the original name, and with such knowledge, it is quite easy to determine the hash algorithm by trying all the few common algorithms. For the same reason, I am skeptical about allocating dedicated hash ID bits in the precious 128-bit space, especially when we have a different idea to guarantee uniqueness.\r\n",
           "createdAt": "2023-02-07T00:20:02Z",
           "updatedAt": "2023-02-07T00:20:02Z"
@@ -1089,7 +1089,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Although I don't have a strong opinion here, I believe a new name-based scheme is not worth a new version and should stay in the v8 because I'd totally agree with the points quoted by Kyzer:\r\n\r\n> - \"Not widely utilized or even implemented in many libraries.\" - Kyzer/Brad\r\n> - \"Studies showed name-based UUIDs made up something like 1% of use cases\" - Robert\r\n> - \"Energy in previous draft was on time-based UUIDs and there was little to no discussion on name-based other than the original documents descriptions around these particular UUIDs is confusing\" - Kyzer\r\n\r\nA standard makes sense only when it coordinates multiple implementations to interoperate with each other. It might logically look flawed to define deprecated algorithm-based v3 and v5 only, but, if there are few people wishing for an updated name-based scheme, it wouldn't be really helpful to introduce a new standard just to fix the _flaw_.\r\n\r\nPlus, v3 and v5 used to be the only mechanisms that could incorporate application-specific ID (name) schemes into the UUID space, but now we have v8 and can include whatever application-specific information in a UUID. I'd anticipate fewer use cases of v3 and v5 after the introduction of v8.\r\n\r\nI'm also concerned about the inactive discussion so far over name-based schemes. I'm not even sure if truncating hash digests is a safe, secure, and valid approach to produce a universally unique identifier.\r\n\r\nAnyway, we can perhaps add the discussion here to the best practice section and see if new name-based practices emerge.",
           "createdAt": "2023-02-07T12:44:57Z",
           "updatedAt": "2023-02-07T12:44:57Z"
@@ -1117,7 +1117,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "By the way, it's interesting that [FIPS 180-4](https://csrc.nist.gov/publications/detail/fips/180/4/final) (SHA-1 and SHA-2 standard) explicitly permits to take leftmost bits of a message digest:\r\n\r\n> Some application may require a hash function with a message digest length different than those provided by the hash functions in this Standard. In such cases, a truncated message digest may be used, whereby a hash function with a larger message digest length is applied to the data to be hashed, and the resulting message digest is truncated by selecting an appropriate number of the leftmost bits. For guidelines on choosing the length of the truncated message digest and information about its security implications for the cryptographic application that uses it, see SP 800-107 [SP 800-107].\r\n\r\nI'm not sure if the same discussion applies to SHA-3 as well. Plus, [FIPS 180-4 is currently under review for revision](https://csrc.nist.gov/News/2022/proposal-to-revise-fips-180-4-secure-hash-standard), and [some public comments expressed concern about truncation](https://csrc.nist.gov/csrc/media/projects/crypto-publication-review-project/documents/initial-comments/fips180-4-initial-public-comments-2022.pdf). So, this section of FIPS 180-4 might not survive in FIPS 180-5, but probably we can find some useful discussion about digest truncation around FIPS 180-4 resources.\r\n\r\nEdit: Perhaps, we should also take a look at [SP 800-90A](https://csrc.nist.gov/publications/detail/sp/800-90a/rev-1/final) to deep dive into name-based schemes. If we can derive 122-bit random (statistically independent and unbiased) data from a name in a deterministic manner, then we can construct a UUID from the random bits. SP 800-90A discusses deterministic random bit generators (DRBGs) and SHA-1/2 functions as building blocks of DRBGs.",
           "createdAt": "2023-02-08T11:28:21Z",
           "updatedAt": "2023-02-08T13:04:09Z"
@@ -1131,7 +1131,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Oh, I didn't mean the RFC should reference SP 800-90A. I was just like saying: if we were to develop a new name-based scheme seriously, we would have to prove that the new scheme guaranteed the universal uniqueness of the outputs, and the NIST doc would be helpful for that.\r\n\r\nAt a glance, SP 800-90A seems to rely on truncated hash digests as a source of random (i.e., statistically independent and unbiased) sequences of bits. If so (I mean, if each SHA function produces leading 122 bits in a statistically independent and unbiased manner), the approach I suggested previously will produce universally unique IDs even if it truncates digests and mixes the results from multiple SHA functions in one 128-bit ID space.",
           "createdAt": "2023-02-08T18:50:51Z",
           "updatedAt": "2023-02-08T18:50:51Z"
@@ -1145,7 +1145,7 @@
         },
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Looks awesome!\r\n\r\nCould sound obvious, but I think we should add some clarifying text to the Some Hash Space IDs section saying like when using SHAKE_128 or SHAKE_256, implementations must extract at least 128 bits for a digest, because these variable length algorithms may technically produce a digest shorter than 128 bits.",
           "createdAt": "2023-02-10T00:26:46Z",
           "updatedAt": "2023-02-10T00:26:46Z"
@@ -1221,7 +1221,7 @@
       "comments": [
         {
           "author": "LiosK",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "A little bit confused because IOT or DB doesn't look like a \"namespace\" (neither does X500 though). I think each IOT/DB/whatever application should generate a UUID and use it as its own application-specific namespace ID. For example:\r\n\r\n```python\r\nDB_APP_A_USER_ID_SPACE = \"c8158cdd-8ad5-477c-ab51-57703a54d286\"  # v4 I made up just now\r\nDB_APP_B_USER_ID_SPACE = \"a79c6917-619f-4e8c-abcf-170a6116878d\"  # ditto\r\n\r\nuuidv5_a = gen_uuidv5(name_space_id=DB_APP_A_USER_ID_SPACE, name=\"LiosK\")\r\nuuidv5_b = gen_uuidv5(name_space_id=DB_APP_B_USER_ID_SPACE, name=\"LiosK\")\r\n```\r\n\r\nA predefined namespace ID that might be shared by multiple applications/namespaces doesn't seem useful here.",
           "createdAt": "2023-01-21T01:28:20Z",
           "updatedAt": "2023-01-21T01:28:20Z"
@@ -5277,7 +5277,7 @@
             "abbreviatedOid": "88e13fd"
           },
           "author": "jimfenton",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "I don't know much about GitHub workflows, but I'm sure Martin knows what's needed. Any comments, Michael? Otherwise I will just merge.",
           "createdAt": "2022-09-07T23:37:36Z",
@@ -5544,7 +5544,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "2c53adc294d5db33a3b3edca2d2550f593d2a9ec",
-      "headRepository": "crutchcorn/rfc4122bis",
+      "headRepository": null,
       "headRefName": "patch-1",
       "headRefOid": "83f5c6eca76ea6d549c32664ce8a6661e371fab0",
       "closedAt": "2023-01-20T18:28:52Z",
@@ -7052,7 +7052,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "aaa7ac9a90c9a541ed06747ed1ec075ce036e1bd",
-      "headRepository": "LiosK/rfc4122bis",
+      "headRepository": null,
       "headRefName": "cleanup_method3",
       "headRefOid": "e40267ba59d0f86ef599ac67ce5aa4a9b73a54d0",
       "closedAt": "2023-05-31T17:30:13Z",
@@ -7080,7 +7080,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "aaa7ac9a90c9a541ed06747ed1ec075ce036e1bd",
-      "headRepository": "LiosK/rfc4122bis",
+      "headRepository": null,
       "headRefName": "consistent_casing",
       "headRefOid": "ffa95bcf498cf70be901ec2720bf977de95c55b0",
       "closedAt": "2023-05-31T17:30:41Z",
@@ -7164,7 +7164,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "71475662721b02eb2ae89e07f8c1826783addffb",
-      "headRepository": "LiosK/rfc4122bis",
+      "headRepository": null,
       "headRefName": "missing_verbs",
       "headRefOid": "9d69ece2b0d1727b0d76d85c20a98f39d0961c77",
       "closedAt": "2023-06-05T19:11:46Z",
@@ -7192,7 +7192,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "71475662721b02eb2ae89e07f8c1826783addffb",
-      "headRepository": "LiosK/rfc4122bis",
+      "headRepository": null,
       "headRefName": "tweak_v7_description",
       "headRefOid": "b1731a8ffced6e34d86d5898cd172765ab6cc78c",
       "closedAt": "2023-06-05T19:13:03Z",
@@ -7839,7 +7839,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "8c35afe407715bab27bcdc44c15612bdd7dcc173",
-      "headRepository": "LiosK/rfc4122bis",
+      "headRepository": null,
       "headRefName": "main",
       "headRefOid": "d1c896fe1421adb2323b386ee4758c15f153f4fd",
       "closedAt": "2023-09-20T17:59:49Z",
@@ -7903,7 +7903,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "f94b0512ae8550f94b42f4ff65c91d2f38d1d794",
-      "headRepository": "LiosK/rfc4122bis",
+      "headRepository": null,
       "headRefName": "main",
       "headRefOid": "8cb1692eb66894fe8afdd585c5aa240c8ee800aa",
       "closedAt": "2023-09-27T13:44:53Z",
