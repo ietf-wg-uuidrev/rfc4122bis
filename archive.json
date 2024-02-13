@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-11T01:18:48.844120+00:00",
+  "timestamp": "2024-02-13T01:14:09.826145+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -1918,7 +1918,7 @@
       "title": "Limitations of 32 bit unix epoch in UUID V7",
       "url": "https://github.com/ietf-wg-uuidrev/rfc4122bis/issues/99",
       "state": "CLOSED",
-      "author": "crc-sstubbs",
+      "author": null,
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [
@@ -1937,7 +1937,7 @@
           "updatedAt": "2023-06-01T14:34:47Z"
         },
         {
-          "author": "crc-sstubbs",
+          "author": null,
           "authorAssociation": "NONE",
           "body": "Thank you! I missed that while looking through. 48 bit is perfect. I'm really excited for this to get approved.",
           "createdAt": "2023-06-01T15:31:56Z",
