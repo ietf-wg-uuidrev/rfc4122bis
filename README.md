@@ -8,17 +8,27 @@ This is the working area for the IETF [UUIDREV Working Group](https://datatracke
 
 # Latest
 ```
-Name:     draft-ietf-uuidrev-rfc4122bis
-Revision: 14
-Title:    Universally Unique IDentifiers (UUID)
-Date:     2023-11-06
-Group:    uuidrev
-Pages:    58
-URL:      https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-14.txt
-Status:   https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/
-HTML:     https://www.ietf.org/archive/id/draft-ietf-uuidrev-rfc4122bis-14.html
-HTMLized: https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis
-Diff:     https://author-tools.ietf.org/iddiff?url2=draft-ietf-uuidrev-rfc4122bis-14
+RFC 9562
+
+Title:      Universally Unique IDentifiers (UUIDs) 
+Author:     K. Davis,
+            B. Peabody,
+            P. Leach
+Status:     Standards Track
+Stream:     IETF
+Date:       May 2024
+Mailbox:    kydavis@cisco.com,
+            brad@peabody.io,
+            pjl7@uw.edu
+Pages:      46
+Obsoletes:  RFC 4122
+
+I-D Tag:    draft-ietf-uuidrev-rfc4122bis-14.txt
+
+URL:        https://www.rfc-editor.org/info/rfc9562
+
+DOI:        10.17487/RFC9562
+
 ```
 
 ## Contributing
