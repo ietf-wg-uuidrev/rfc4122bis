@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-26T01:25:52.119806+00:00",
+  "timestamp": "2024-05-28T01:20:30.967257+00:00",
   "repo": "ietf-wg-uuidrev/rfc4122bis",
   "labels": [
     {
@@ -7466,7 +7466,7 @@
       "baseRepository": "ietf-wg-uuidrev/rfc4122bis",
       "baseRefName": "main",
       "baseRefOid": "92c4a8631fd7d12b582200f263f71ca1b60e8591",
-      "headRepository": "danielmarschall/rfc4122bis",
+      "headRepository": null,
       "headRefName": "patch-1",
       "headRefOid": "066a75f50cc0217cff1b06c4594306fd4bb95a20",
       "closedAt": "2023-07-17T19:48:13Z",
